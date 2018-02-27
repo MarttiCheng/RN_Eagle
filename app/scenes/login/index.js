@@ -9,6 +9,8 @@ import {
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images'
+import contacts from '../contacts/index';
+import { NavigationActions } from 'react-navigation'
 
 // create a component
 class login extends Component<{}>{
@@ -27,27 +29,26 @@ class login extends Component<{}>{
 
     onLogin() {
         Keyboard.dismiss();
-        if(!this.state.email.length) {
-            alert('Please enter email address');
-            return
-        }
-        if(!this.state.password.length) {
-            alert('Please enter password');
-            return
-        }
+        // if(!this.state.email.length) {
+        //     alert('Please enter email address');
+        //     return
+        // }
+        // if(!this.state.password.length) {
+        //     alert('Please enter password');
+        //     return
+        // }
         var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'contact'}))
+        dispatch(NavigationActions.navigate({routeName: 'contacts'}))
     }
 
     render() {
         return (
             <Container style = {styles.container}>
                 <Image source = {images.login_background} style = {styles.backgroundImg}/>
-                <Content>
+                {/*<Content>*/}
                     <View style = {styles.mainContainer}>
                         <Image source = {images.logo} style = {styles.logoImg}/>
-                        <Label style = {styles.logintxt}>Login to your account</Label>
-                        
+                        <Label style = {styles.logintitle}>Login to your account</Label>
                         <Item style = {styles.inputItem1}>
                             <Input
                                 style = {styles.inputTxt}
@@ -59,7 +60,6 @@ class login extends Component<{}>{
                                 autoCorrect = {false}
                                 keyboardType = 'email-address'
                                 returnKeyType = "next"
-                                onSubmitEditing = {(e) => {this.refs.password.focus()}}
                             />
                         </Item>
                         <Item style = {styles.inputItem2}>
@@ -75,9 +75,14 @@ class login extends Component<{}>{
                                 autoCorrect = {false}
                             />
                         </Item>
-                        
+                        <Button style = {styles.loginBtn} transparent onPress = {() => this.onLogin()}>
+                            <Label style = {styles.loginBtnTxt}>Login</Label>
+                        </Button>
+                        <Button style = {styles.forgotBtn} transparent>
+                            <Label style = {styles.forgortTxt}>Forgot password?</Label>
+                        </Button>
                     </View>
-                </Content>
+                {/*</Content>*/}
             </Container>
         );
     }

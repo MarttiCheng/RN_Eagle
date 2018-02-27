@@ -22,9 +22,9 @@ export default {
         width: width - 50,
         height: (width - 50)/2,
         resizeMode: 'contain',
-        marginTop: 30
+        marginTop: -150
     },
-    logintxt: {
+    logintitle: {
         color: 'white',
         fontWeight: 'bold',
         fontSize: 16,
@@ -41,6 +41,32 @@ export default {
         marginTop: 20
     },
     inputTxt: {
-        backgroundColor:'#e9ebea'
+        backgroundColor:'#e9ebea',
+        paddingLeft: 10,
+        paddingRight: 10
     },
+    loginBtn: {
+        width: width - 40,
+        height: 40,
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 5,
+        marginTop: 50,
+        justifyContent: 'center',
+        marginLeft: 20,
+    },
+    loginBtnTxt: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: 'bold'
+    },
+    forgotBtn: {
+        marginLeft: width-140,
+        marginTop: 20
+    },
+    forgortTxt: {
+        color:'white',
+        fontSize: 14,
+        fontWeight: 'bold'
+    }
 }
