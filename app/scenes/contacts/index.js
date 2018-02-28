@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import {
-    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Icon
+    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Drawer
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, StatusBar
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images'
+import Search from 'react-native-search-box';
+import { NavigationActions } from 'react-navigation'
 
+var contactsList = [
+    {name:'John Sample', avatar: images.avatar_john, job: 'Director at Eagle Software'},
+    {name:'Sally Smith', avatar: images.avatar_female, job: 'Buyer, Vendor'},
+    {name:'John Sample', avatar: images.avatar_male, job: 'Freelancer, Vendor'},
+    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+]
 class contacts extends Component<{}>{
-    // static navigationOptions = {
-    //     title: 'Contacts',
-    //     headerTitleStyle: {
-    //         color: 'white'
-    //     },
-    //     headerStyle: {
-    //         backgroundColor: '#2B3643'
-    //     },
-    //     // headerTintColor: {
-    //     //     /*  */
-    //     // },
-    // }
-
     static navigationOptions = ({ navigation, screenProps }) => ({
         title:  'Contacts',
         headerStyle: {
@@ -30,23 +33,49 @@ class contacts extends Component<{}>{
         },
         headerTitleStyle: {
             color: 'white',
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: 'bold',
             alignSelf: 'center'
         },
         headerLeft: <Thumbnail square source = {images.ic_menu} style = {{width: 20, height: 20, marginLeft: 15}}
                                 onPress={ () => { navigation.goBack() }} />,
-        headerRight: <Thumbnail square source = {images.ic_filter} style = {{width: 20, height: 20, marginRight: 15}}
+        headerRight: <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginRight: 15}}
                                 onPress={ () => { navigation.navigate('Settings') }} />,
     });
 
     constructor(props) {
         super(props);
+        const ds = new ListView.DataSource({
+            rowHasChanged:(r1, r2) => r1 !== r2,
+            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+        })
         this.state = {
             email: '',
             password: '',
-            isLoading: false
-        }
+            isLoading: false,
+            dataSource: ds.cloneWithRowsAndSections(contactsList),
+            searchText: '',
+        }   
+    }
+
+    clickContact(item, index) {
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {info: item}}))
+    }
+
+    renderRow(item, index) {
+        return(
+            <TouchableOpacity key = {index} onPress = {() => this.clickContact(item, index)}>
+                <View style = {styles.rowView}>
+                    <Thumbnail square source = {item.avatar} style = {styles.avatarImg}/>
+                    <View style = {styles.rowSubView}>
+                        <Label style = {styles.label1}>{item.name}</Label>
+                        <Label style = {styles.label2}>{item.job}</Label>
+                        <View style = {styles.line}/>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
     }
 
     render() {
@@ -56,10 +85,29 @@ class contacts extends Component<{}>{
                     backgroundColor="blue"
                     barStyle="light-content"
                 />
-                <Content>
-                    <View style = {styles.searchView}>
-                        <Label>234</Label>
+                <Content showsVerticalScrollIndicator = {false}>
+                    <View style = {styles.searchBoxView}>
+                        <Search
+                            ref = 'search'
+                            titleCancelColor = 'black'
+                            backgroundColor = 'lightgray'
+                            cancelTitle = 'Cancel'
+                            contentWidth = {100}
+                            searchIconCollapsedMargin = {30}
+                            searchIconExpandedMargin = {10}
+                            placeholderCollapsedMargin = {15}
+                            placeholderExpandedMargin = {25}
+                            onChangeText = {(text) => this.setState({searchText : text})}
+                            onSearch = {() => this._onPressSearch()}
+                        />
                     </View>
+                    
+                    {
+                        contactsList.map((item, index) => {
+                            return(this.renderRow(item, index))
+                        })
+                    }
+                    
                 </Content>
             </Container>
         )
