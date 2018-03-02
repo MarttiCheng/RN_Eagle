@@ -4,14 +4,14 @@ const { width, height } = Dimensions.get('window')
 export default {
     container: {
         flex: 1,
-        backgroundColor: 'white'
+        backgroundColor: '#ddd'
     },
     headerView: {
         width: width,
         height: 140,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor : '#364150'
+        backgroundColor : '#364150',
     },
     avatarImg: {
         width: 60,
@@ -54,5 +54,24 @@ export default {
         color: 'white', 
         fontSize: 13,
         marginBottom: 8
+    },
+    addBtn: {
+        position: 'absolute',
+        right: 25,
+        bottom: 25,
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: '#364150',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    addTxt: {
+        color: 'white',
+        fontSize: 28,
+        // textAlign: 'center',
+        // textAlignVertical: 'top',
+        fontWeight: '200',
+        marginTop: -2
     }
 }

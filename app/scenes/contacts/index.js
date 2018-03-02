@@ -10,6 +10,7 @@ import styles from './styles'
 import images from '../../themes/images'
 import Search from 'react-native-search-box';
 import { NavigationActions } from 'react-navigation'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 var contactsList = [
     {name:'John Sample', avatar: images.avatar_john, job: 'Director at Eagle Software'},
@@ -37,8 +38,8 @@ class contacts extends Component<{}>{
             fontWeight: 'bold',
             alignSelf: 'center'
         },
-        headerLeft: <Thumbnail square source = {images.ic_menu} style = {{width: 20, height: 20, marginLeft: 15}}
-                                onPress={ () => { navigation.goBack() }} />,
+        headerLeft: <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
+                                onPress={ () => { navigation.navigate('DrawerOpen') }} />,
         headerRight: <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginRight: 15}}
                                 onPress={ () => { navigation.navigate('Settings') }} />,
     });

@@ -32,7 +32,7 @@ class ContactAbout extends Component {
     
     render() {
         return (
-            <Container style = {styles.container}>
+            <View style = {styles.container}>
                 <View style = {styles.categoryView}>
                     {
                         categoryList.map((item, index) => {
@@ -71,8 +71,6 @@ class ContactAbout extends Component {
                         <Label style = {styles.label2}>Is an active investor looking for investment properties that yield over 5%</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-
-                    
                 </View>
                 <View style = {styles.view2}>
                     <Thumbnail square source = {images.avatar_female} style = {styles.avatarImg}/>
@@ -83,7 +81,43 @@ class ContactAbout extends Component {
                     </View>
                 </View>
 
-            </Container>
+                <View style = {styles.subView1}>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Assigned to</Label>
+                        <Label style = {styles.label2}>Luke Paverd</Label>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Source</Label>
+                        <Label style = {styles.label2}>RealEstate.com.au</Label>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Created at</Label>
+                        <Label style = {styles.label2}>Jan 25th 2017 9:17am</Label>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Updated at</Label>
+                        <Label style = {styles.label2}>Jan 25th 2017 9:17am</Label>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                </View>
+
+                <View style = {styles.subView1}>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Subscribed to bulk communications</Label>
+                        <Label style = {styles.label2}>Yes</Label>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Subscribed to SMS</Label>
+                        <Label style = {styles.label2}>Yes</Label>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                </View>
+
+            </View>
         );
     }
 }

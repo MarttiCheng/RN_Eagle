@@ -62,7 +62,12 @@ export default {
         paddingTop: 10,
         paddingBottom: 10,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'white',
+        marginTop: 30,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor:'lightgray'
     },
     rowSubView: {
         marginLeft: 15
@@ -73,5 +78,11 @@ export default {
         resizeMode: 'cover',
         borderRadius: 18,
         marginLeft: 5
-    }, 
+    },
+    subView1: {
+        borderTopWidth: 1,
+        borderColor: 'lightgray',
+        backgroundColor: 'white',
+        marginTop: 30
+    },
 }

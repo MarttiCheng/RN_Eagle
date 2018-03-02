@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import {
-    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input
+    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs
 } from 'native-base'
 import {
     Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
@@ -12,6 +12,9 @@ import images from '../../themes/images'
 import Search from 'react-native-search-box';
 import { NavigationActions } from 'react-navigation'
 import ContactAbout from '../../components/ContactAbout'
+import ContactProperties from '../../components/ContactProperties'
+import ContactActivity from '../../components/ContactActivity'
+import ContactTask from '../../components/ContactTask'
 
 class contactsShow extends Component<{}>{
     static navigationOptions = ({ navigation, screenProps }) => ({
@@ -82,32 +85,32 @@ class contactsShow extends Component<{}>{
     showTabView(){
         if(this.state.isAbout){
             return(
-                <View style = {{flex: 1, backgroundColor: 'white'}}>
+                <View style = {{ backgroundColor: 'white'}}>
                     <ContactAbout navigation = {this.props.navigation}/>
                 </View>
             )
         }
-        /*if(this.state.isProperties){
+        if(this.state.isProperties){
             return(
-                <View style = {{width: Constant.WIDTH_SCREEN, flex: 1, backgroundColor: 'white'}}>
-                    <TabChats navigation = {this.props.navigation}/>
+                <View style = {{ backgroundColor: 'white'}}>
+                    <ContactProperties navigation = {this.props.navigation}/>
                 </View>
             )
         }
         if(this.state.isActivity){
             return(
-                <View style = {{width: Constant.WIDTH_SCREEN, flex: 1, backgroundColor: 'white'}}>
-                    <TabChannels navigation = {this.props.navigation}/>
+                <View style = {{ backgroundColor: 'white'}}>
+                    <ContactActivity navigation = {this.props.navigation}/>
                 </View>
             )
         }
         if(this.state.isTasks){
             return(
-                <View style = {{width: Constant.WIDTH_SCREEN, flex: 1, backgroundColor: 'white'}}>
-                    <TabChannels navigation = {this.props.navigation}/>
+                <View style = {{ backgroundColor: 'white'}}>
+                    <ContactTask navigation = {this.props.navigation}/>
                 </View>
             )
-        }*/
+        }
     }
 
     render() {
@@ -146,6 +149,9 @@ class contactsShow extends Component<{}>{
                         {this.showTabView()}
                     </View>
                 </Content>
+                <TouchableOpacity style = {styles.addBtn}>
+                    <Label style = {styles.addTxt}>+</Label>
+                </TouchableOpacity>
             </Container>
         )
     }
