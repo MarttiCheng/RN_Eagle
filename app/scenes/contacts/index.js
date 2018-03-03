@@ -9,11 +9,12 @@ import {
 import styles from './styles'
 import images from '../../themes/images'
 import Search from 'react-native-search-box';
-import { NavigationActions } from 'react-navigation'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { NavigationActions, Header } from 'react-navigation'
+import {MaterialCommunityIcons} from '@expo/vector-icons'
+import { Font } from 'expo'
 
 var contactsList = [
-    {name:'John Sample', avatar: images.avatar_john, job: 'Director at Eagle Software'},
+    {name:'Luke Paverd', avatar: images.avatar_john, job: 'Director at Eagle Software'},
     {name:'Sally Smith', avatar: images.avatar_female, job: 'Buyer, Vendor'},
     {name:'John Sample', avatar: images.avatar_male, job: 'Freelancer, Vendor'},
     {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
@@ -27,22 +28,9 @@ var contactsList = [
     {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
 ]
 class contacts extends Component<{}>{
-    static navigationOptions = ({ navigation, screenProps }) => ({
-        title:  'Contacts',
-        headerStyle: {
-            backgroundColor: '#2B3643'
-        },
-        headerTitleStyle: {
-            color: 'white',
-            fontSize: 16,
-            fontWeight: 'bold',
-            alignSelf: 'center'
-        },
-        headerLeft: <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
-                                onPress={ () => { navigation.navigate('DrawerOpen') }} />,
-        headerRight: <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginRight: 15}}
-                                onPress={ () => { navigation.navigate('Settings') }} />,
-    });
+    static navigationOptions = {
+        header: null,
+    }
 
     constructor(props) {
         super(props);
@@ -86,6 +74,14 @@ class contacts extends Component<{}>{
                     backgroundColor="blue"
                     barStyle="light-content"
                 />
+                <View style = {styles.menuView}>
+                    <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
+                                onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
+                    <Label style = {[styles.title, {fontFamily: 'open-sans-bold'}]}>Contacts</Label>
+                    <TouchableOpacity style = {styles.searchButton} onPress = {this._onSearch}>
+                        <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginRight: 15}} />
+                    </TouchableOpacity>
+                </View>
                 <Content showsVerticalScrollIndicator = {false}>
                     <View style = {styles.searchBoxView}>
                         <Search

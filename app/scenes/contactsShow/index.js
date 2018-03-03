@@ -17,23 +17,9 @@ import ContactActivity from '../../components/ContactActivity'
 import ContactTask from '../../components/ContactTask'
 
 class contactsShow extends Component<{}>{
-    static navigationOptions = ({ navigation, screenProps }) => ({
-        title:  navigation.state.params.info.name,
-        headerStyle: {
-            backgroundColor: '#2B3643'
-        },
-        headerTitleStyle: {
-            color: 'white',
-            fontSize: 16,
-            fontWeight: 'bold',
-            alignSelf: 'center'
-        },
-        headerLeft: <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white' style = {{marginLeft: 10}}
-                                onPress={ () => { navigation.goBack() }} />,
-        headerRight: <TouchableOpacity>
-                        <Label style = {{color: 'white', marginRight: 10, fontSize: 15}}>Edit</Label>
-                    </TouchableOpacity>
-    });
+    static navigationOptions = {
+        header: null,
+    }
 
     constructor(props) {
         super(props);
@@ -120,6 +106,14 @@ class contactsShow extends Component<{}>{
                     backgroundColor="blue"
                     barStyle="light-content"
                 />
+                <View style = {styles.menuView}>
+                    <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white' style = {{marginLeft: 10}}
+                                onPress={ () => { this.props.navigation.goBack() }} />
+                    <Label style = {[styles.title, {fontFamily: 'open-sans-bold'}]}>{this.props.navigation.state.params.info.name}</Label>
+                    <TouchableOpacity style = {styles.searchButton} onPress = {this._onSearch}>
+                        <Label style = {{color: 'white', marginRight: 15, fontSize: 17, fontFamily: 'open-sans-bold'}}>Edit</Label>
+                    </TouchableOpacity>
+                </View>
                 <Content>
                     <View style = {styles.headerView}>
                         <Thumbnail square source = {this.props.navigation.state.params.info.avatar} style = {styles.avatarImg}/>

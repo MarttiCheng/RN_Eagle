@@ -16,70 +16,77 @@ import {
 	StyleProvider,
 	getTheme,
 	variables,
+	Label,
+    Thumbnail,
 } from 'native-base'
 import styles from './styles'
 import images from '../../themes/images'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialIcons, FontAwesome, Entypo } from '@expo/vector-icons'
 import listings from '../../scenes/listings/index';
 import contacts from '../../scenes/contacts/index';
+import login from '../../scenes/login/index';
+import { connect } from 'react-redux'
 
-const datas = [
-	{
-		name: "Contacts",
-		route: "contacts",
-        icon: <MaterialCommunityIcons name = 'person_outline' size = {25} color = '#B4BCC8'/>
-	},
-    {
-		name: "Listings",
-		route: "listings",
-        icon: <MaterialCommunityIcons name = 'home' size = {25} color = '#B4BCC8'/>
-	},
-    {
-		name: "Open Homes",
-		route: "home",
-        icon: <MaterialCommunityIcons name = 'eye' size = {25} color = '#B4BCC8'/>
-	},
-    {
-		name: "Tasks",
-		route: "tasks",
-        icon: <MaterialCommunityIcons name = 'check_square' size = {25} color = '#B4BCC8'/>
-	},
-]
 // create a component
-class Sidebar extends Component {
+class Sidebar extends Component<{}>{
+    static navigationOptions = {
+        header: null,
+    }
+
     constructor(props) {
 		super(props);
 		this.state = {
-            name:'',
-            blob_id:'',
+            
 		};
 	}
-    _onEdit = () => {
-        this.props.navigation.navigate('ProfileEdit')
-    }
 
     render() {
         return (
-            <Container>
-                <Content bounces={false} style={{ flex: 1, backgroundColor: 'white'}}>
-                    <Content>
-                        <List
-                            style = {{marginTop:15, paddingBottom: 100, backgroundColor:'white', height: 400}} 
-                            dataArray={datas}
-                            renderRow={data =>
-                                <ListItem button noBorder onPress={() => this.props.navigation.navigate(data.route)} style = {{height:50, padding:10}}>
-                                    <Image source = {data.icon} style = {styles.menuIcon}/>
-                                    <Text style = {styles.menuItem}>{data.name}</Text>
-                                </ListItem>
-                            }
-                        >
-                        </List>
-                    </Content>
-                </Content>
-            </Container>
+            <View style = {styles.container}>
+                <View style = {styles.menuProfileView}>
+                    <Thumbnail square source = {images.avatar_john} style = {styles.avartarImg}/>
+                    <Label style = {styles.nameTxt}>Luke Paverd</Label>
+                    <Label style = {styles.emailTxt}>luke@eaglesoftware.com.au</Label>
+                </View>
+
+                <View style = {styles.menuView}>
+                    <View style = {styles.submenuView}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('contacts')}>
+                            <View style = {styles.itemView}>
+                                <MaterialIcons name = 'person-outline' size = {33} color = '#B4BCC8'/>
+                                <Text style = {styles.menuItem}>Contacts</Text>
+                                <View style = {styles.line}/>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('listings')}>
+                            <View style = {styles.itemView}>
+                                <FontAwesome name = 'home' size = {33} color = '#B4BCC8'/>
+                                <Text style = {styles.menuItem}>Listings</Text>
+                                <View style = {styles.line}/>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('home')}>
+                            <View style = {styles.itemView}>
+                                <FontAwesome name = 'eye' size = {33} color = '#B4BCC8'/>
+                                <Text style = {styles.menuItem}>Open Homes</Text>
+                                <View style = {styles.line}/>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('tasks')}>
+                            <View style = {styles.itemView}>
+                                <FontAwesome name = 'check-square' size = {33} color = '#B4BCC8'/>
+                                <Text style = {styles.menuItem}>Tasks</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    
+                    
+                </View>
+                
+            </View>
         );
     }
 }
 
 //make this component available to the app
-export default Sidebar;
+export default connect()(Sidebar);

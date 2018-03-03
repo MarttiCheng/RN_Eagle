@@ -8,14 +8,21 @@ import AppReducer from './app/reducers/index';
 
 
 export default class App extends Component<{}>{
-  store = createStore(AppReducer);
+    store = createStore(AppReducer);
 
-  render(){
-      return (
-          <Provider store = {this.store}>
-              <AppWithNavigationState/>
-          </Provider>
-      );
-  }
+    componentDidMount() {
+        Expo.Font.loadAsync({
+            'open-sans-bold': require('./app/assets/fonts/OpenSans-Bold.ttf'),
+            'open-sans-regular': require('./app/assets/fonts/OpenSans-Regular.ttf'),
+        });
+    }
+
+    render(){
+        return (
+            <Provider store = {this.store}>
+                <AppWithNavigationState/>
+            </Provider>
+        );
+    }
 }
 

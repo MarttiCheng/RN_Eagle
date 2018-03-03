@@ -8,7 +8,7 @@ export default {
     },
     categoryView: {
         width: width,
-        height: 50,
+        height: 60,
         backgroundColor:'#ddd',
         justifyContent: 'center',
         alignItems: 'center',
@@ -17,11 +17,12 @@ export default {
         flexDirection: 'row',
     },
     categoryItemTxt: {
-        fontSize: 13,
-        color: '#364150'
+        fontSize: 16,
+        color: '#2B3643',
+        fontFamily: 'open-sans-regular'
     },
     categoryItem: {
-        marginLeft: 8,
+        marginLeft: 13,
         backgroundColor: 'white',
         borderRadius: 5,
         paddingTop: 5,
@@ -32,17 +33,18 @@ export default {
     view1: {
         paddingLeft: 15,
         paddingRight: 15,
-        paddingTop: 10,
-        paddingBottom: 10
+        paddingTop: 7,
+        paddingBottom: 7
     },
     label1: {
         color: '#999',
-        fontSize: 13
+        fontSize: 13.5,
+        fontFamily: 'open-sans-regular'
     },
     label2: {
         color:'black',
-        fontSize: 18,
-        marginTop: 3
+        fontSize: 22,
+        fontFamily: 'open-sans-regular'
     },
     label3: {
         color: 'black',
