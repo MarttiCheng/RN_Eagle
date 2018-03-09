@@ -107,11 +107,11 @@ class contactsShow extends Component<{}>{
                     barStyle="light-content"
                 />
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white' style = {{marginLeft: 10}}
+                    <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
                                 onPress={ () => { this.props.navigation.goBack() }} />
-                    <Label style = {[styles.title, {fontFamily: 'open-sans-bold'}]}>{this.props.navigation.state.params.info.name}</Label>
-                    <TouchableOpacity style = {styles.searchButton} onPress = {this._onSearch}>
-                        <Label style = {{color: 'white', marginRight: 15, fontSize: 17, fontFamily: 'open-sans-bold'}}>Edit</Label>
+                    <Label style = {[styles.title, {fontFamily: 'open-sans-regular'}]}>{this.props.navigation.state.params.info.name}</Label>
+                    <TouchableOpacity onPress = {this._onSearch}>
+                        <Label style = {{color: 'white', fontSize: 17, fontFamily: 'open-sans-bold'}}>Edit</Label>
                     </TouchableOpacity>
                 </View>
                 <Content>

@@ -16,7 +16,8 @@ export default {
         fontSize: 15,
         borderTopWidth: 1,
         borderBottomWidth: 1,
-        borderColor:'lightgray'
+        borderColor:'lightgray',
+        fontFamily: 'open-sans-regular',
     },
     view1: {
         paddingLeft: 15,
@@ -44,10 +45,12 @@ export default {
         color: '#999',
         fontSize: 13,
         marginTop: 3,
+        fontFamily: 'open-sans-regular',
     },
     label1: {
         color:'black',
         fontSize: 17,  
+        fontFamily: 'open-sans-regular',
     },
     line1: {
         height: 1,
@@ -56,6 +59,7 @@ export default {
     favoriteDate: {
         fontSize: 11,
         color: '#999',
+        fontFamily: 'open-sans-regular',
     },
     favoriteImg: {
         width: 20,

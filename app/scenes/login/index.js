@@ -29,14 +29,14 @@ class login extends Component<{}>{
 
     onLogin() {
         Keyboard.dismiss();
-        if(!this.state.email.length) {
-            alert('Please enter email address');
-            return
-        }
-        if(!this.state.password.length) {
-            alert('Please enter password');
-            return
-        }
+        // if(!this.state.email.length) {
+        //     alert('Please enter email address');
+        //     return
+        // }
+        // if(!this.state.password.length) {
+        //     alert('Please enter password');
+        //     return
+        // }
         var { dispatch } = this.props;
         dispatch(NavigationActions.navigate({routeName: 'contacts'}))
     }

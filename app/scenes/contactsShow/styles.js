@@ -86,6 +86,8 @@ export default {
         alignItems:'center',
         backgroundColor: '#2B3643',
         justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     title: {
         color: 'white',

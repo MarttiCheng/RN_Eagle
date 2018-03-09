@@ -5,16 +5,12 @@ export default {
     container: {
         flex: 1,
         backgroundColor: '#ddd',
-        
-        paddingLeft: 15,
-        paddingRight: 15
-    },
-    activityItem: {
-        marginTop: 20
     },
     view1: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        paddingLeft: 5,
+        paddingTop: 20,
+        paddingBottom: 7,
+        flexDirection: 'row'
     },
     icon: {
         width: 25,
@@ -23,30 +19,28 @@ export default {
     },
     dateTxt: {
         color: '#717171',
-        fontSize: 12,
+        fontSize: 14,
         marginLeft: 5,
         fontFamily: 'open-sans-regular',
     },
     view2: {
-        width: width - 30,
         backgroundColor: 'white',
-        padding: 10,
-        marginTop: 8,
-        shadowColor: '#000',
-        shadowOffset: {width: 0,height: 2},
-        shadowOpacity: 0.8,
-        shadowRadius: 2
+        paddingLeft: 20,
+        paddingRight: 20,
+        flexDirection: 'row',
+        paddingTop: 10,
+        paddingBottom: 10,
+        alignItems: 'center'
     },
     titleTxt: {
         color: '#2B3643',
         fontSize: 14,
         fontFamily: 'open-sans-regular',
     },
-    contactTxt: {
+    duractionTxt: {
         color: '#2B3643',
-        fontSize: 12,
-        marginTop: 3,
+        fontSize: 16,
         fontFamily: 'open-sans-regular',
-    }
-    
+        marginLeft: 10
+    },   
 }

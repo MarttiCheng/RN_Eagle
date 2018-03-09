@@ -12,12 +12,19 @@ const images = {
     is_shadow_box: require('../assets/img/is_shadow_box.png'),
     ic_checkbox: require('../assets/img/ic_checkbox.png'),
     ic_uncheckbox: require('../assets/img/ic_uncheckbox.png'),
+    ic_bed: require('../assets/img/ic_bed.png'),
+    ic_bath: require('../assets/img/ic_bath.png'),
+    ic_car: require('../assets/img/ic_car.png'),
+    ic_expand: require('../assets/img/ic_expand.png'),
+
 
     //Dummy images
     barbados_small : require('../assets/img/assets/barbados_small.png'),
     france_small: require('../assets/img/assets/france_small.png'),
     avatar_male: require('../assets/img/assets/avatar_male.png'),
     avatar_john: require('../assets/img/ic_avatar1.png'),
+    listing_home: require('../assets/img/img_listing_default.png'),
+
     
 }
 

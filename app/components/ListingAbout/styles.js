@@ -67,13 +67,23 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        marginTop: 30,
+        flex:1
+    },
+    propertyItemTitle: {
+        paddingTop: 20,
+        paddingBottom: 5,
+        paddingLeft: 10,
+        width: width,
+        backgroundColor: '#ddd',
+        color:'black',
+        fontSize: 20,
         borderTopWidth: 1,
         borderBottomWidth: 1,
-        borderColor:'lightgray'
+        borderColor:'lightgray',
+        fontFamily: 'open-sans-regular',
     },
     rowSubView: {
-        marginLeft: 15
+        marginLeft: 15,
     },
     avatarImg: {
         width: 36,
@@ -88,4 +98,61 @@ export default {
         backgroundColor: 'white',
         marginTop: 30
     },
+    homeImg: {
+        width: width,
+        height: 285,
+        resizeMode: 'cover'
+    },
+    detailView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+        paddingBottom: 15,
+        backgroundColor: '#364150'
+    },
+    streetTxt: {
+        color: 'white',
+        fontFamily: 'open-sans-bold',
+        fontSize: 22,
+    },
+    streetNameTxt: {
+        color: 'white',
+        fontFamily: 'open-sans-regular',
+        fontSize: 16,
+    },
+    roomdetailView: {
+        width: width - 40,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    iconImg: {
+        width: 25,
+        height: 25,
+        resizeMode: 'contain',
+        marginRight: 5,
+    },
+    line1: {
+        height: 1,
+        width: 200,
+    },
+    venderSubtitle: {
+        color:'white',
+        fontSize: 10,
+        fontFamily: 'open-sans-regular',
+    },
+    venderCategoryView: {
+        backgroundColor: '#B4BCC8',
+        borderRadius: 8,
+        height: 16,
+        width: 56,
+        // paddingLeft: 8,
+        // paddingRight: 8,
+        marginTop: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        
+    }
 }

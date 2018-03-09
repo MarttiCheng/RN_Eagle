@@ -30,7 +30,8 @@ export default {
     },
     label1: {
         color:'black',
-        fontSize: 17,  
+        fontSize: 17, 
+        fontFamily: 'open-sans-regular',
     },
     line1: {
         height: 1,
@@ -39,7 +40,8 @@ export default {
     favoriteDate: {
         fontSize: 11,
         color: '#999',
-        marginLeft: 10
+        marginLeft: 10,
+        fontFamily: 'open-sans-regular',
     },
     favoriteImg: {
         width: 20,

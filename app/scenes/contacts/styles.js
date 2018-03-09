@@ -10,7 +10,7 @@ export default {
     searchBoxView: {
         flex: 1,
         width: width,
-        height: 60,
+        height: 70,
         paddingLeft: 15,
         paddingRight: 15,
         justifyContent: 'center',
