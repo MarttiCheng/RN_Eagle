@@ -30,7 +30,10 @@ export default {
         flexDirection: 'row',
         paddingTop: 10,
         paddingBottom: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
+        borderColor: '#999'
     },
     titleTxt: {
         color: '#2B3643',

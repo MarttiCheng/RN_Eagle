@@ -32,7 +32,7 @@ class ListingInspections extends Component {
                 </View>
                 <View style = {styles.view2}>
                     <FontAwesome name = 'calendar' size = {20} color = '#757575' style = {{marginLeft: 5}} />
-                    <Label style = {styles.duractionTxt}>{item.duration}</Label>
+                    <Label style = {styles.duractionTxt}>{item.duration}</Label> 
                 </View>
             </View>
         )

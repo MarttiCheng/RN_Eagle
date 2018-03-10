@@ -61,22 +61,20 @@ export default {
     },
     addBtn: {
         position: 'absolute',
-        right: 25,
-        bottom: 25,
-        width: 50,
-        height: 50,
-        borderRadius: 25,
+        right: 20,
+        bottom: 20,
+        width: 70,
+        height: 70,
+        borderRadius: 35,
         backgroundColor: '#364150',
         justifyContent: 'center',
         alignItems: 'center'
     },
     addTxt: {
         color: 'white',
-        fontSize: 28,
-        // textAlign: 'center',
-        // textAlignVertical: 'top',
-        fontWeight: '200',
-        marginTop: -2
+        fontSize: 42,
+        fontWeight: '300',
+        marginTop: -5
     },
     menuView: {
         width: width,

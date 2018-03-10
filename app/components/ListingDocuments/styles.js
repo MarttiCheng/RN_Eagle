@@ -31,6 +31,8 @@ export default {
         color:'black',
         fontSize: 16, 
         fontFamily: 'open-sans-regular',
+        marginLeft: 15,
+        flex: 1
     },
     line1: {
         height: 1,

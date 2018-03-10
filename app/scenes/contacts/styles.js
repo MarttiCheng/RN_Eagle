@@ -60,6 +60,42 @@ export default {
     title: {
         color: 'white',
         fontSize: 18
-    }
+    },
+    addBtn: {
+        position: 'absolute',
+        right: 20,
+        bottom: 20,
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        backgroundColor: '#364150',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    addTxt: {
+        color: 'white',
+        fontSize: 42,
+        fontWeight: '300',
+        marginTop: -5
+    },
+    tagView: {
+        flexDirection:'row',
+        flex: 1,
+    },
+    eachtag: {
+        backgroundColor: '#B4BCC8',
+        paddingLeft: 8,
+        paddingRight: 8,
+        height: 16,
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10
+    },
+    tagTxt: {
+        fontSize: 10,
+        color: 'white',
+        fontFamily: 'open-sans-regular',
+    },
 
 }

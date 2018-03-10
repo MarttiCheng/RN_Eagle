@@ -59,7 +59,15 @@ class contacts extends Component<{}>{
                     <Thumbnail square source = {item.avatar} style = {styles.avatarImg}/>
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.name}</Label>
-                        <Label style = {styles.label2}>{item.job}</Label>
+                        <View style = {styles.tagView}>
+                            <View style = {styles.eachtag}>
+                                <Label style = {styles.tagTxt}>Buyer</Label>
+                            </View>
+                            <View style = {styles.eachtag}>
+                                <Label style = {styles.tagTxt}>Property Alerts</Label>
+                            </View>
+                        </View>
+                        
                         <View style = {styles.line}/>
                     </View>
                 </View>
@@ -106,6 +114,9 @@ class contacts extends Component<{}>{
                     }
                     
                 </Content>
+                <TouchableOpacity style = {styles.addBtn}>
+                    <Label style = {styles.addTxt}>+</Label>
+                </TouchableOpacity>
             </Container>
         )
     }

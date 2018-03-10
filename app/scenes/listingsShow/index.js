@@ -16,6 +16,7 @@ import ContactProperties from '../../components/ContactProperties'
 import ContactActivity from '../../components/ContactActivity'
 import ContactTask from '../../components/ContactTask'
 import ListingInspections from '../../components/ListingInspections'
+import ListingDocuments from '../../components/ListingDocuments'
 
 class listingsShow extends Component<{}>{
     static navigationOptions = {
@@ -96,7 +97,7 @@ class listingsShow extends Component<{}>{
                         <ListingInspections />
                     </Tab>
                     <Tab heading="DOCUMENTS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <Label>3</Label>
+                        <ListingDocuments/>
                     </Tab>
                     <Tab heading="TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <ContactTask/>

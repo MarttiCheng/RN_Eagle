@@ -39,13 +39,23 @@ export default {
     },
     label1: {
         color:'black',
-        fontSize: 17,  
+        fontSize: 16,  
         fontFamily: 'open-sans-regular'
     },
+    eachtag: {
+        backgroundColor: '#B4BCC8',
+        paddingLeft: 8,
+        paddingRight: 8,
+        height: 16,
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10
+    },
     label2: {
-        fontSize: 13,
-        color: '#999',
-        fontFamily: 'open-sans-regular'
+        fontSize: 10,
+        color: 'white',
+        fontFamily: 'open-sans-regular',
     },
     line: {
         height: 1,
@@ -66,13 +76,19 @@ export default {
     },
     title: {
         color: 'white',
-        fontSize: 18
+        fontSize: 18,
+        fontFamily: 'open-sans-regular'
     },
     saleTxt: {
         color: 'white',
-        backgroundColor: '#2B3643',
+        backgroundColor: '#B4BCC8',
         padding: 5,
-        fontSize: 13
+        fontSize: 13,
+        fontFamily: 'open-sans-regular'
     },
+    tagView: {
+        flexDirection:'row',
+        flex: 1,
+    }
 
 }

@@ -45,7 +45,14 @@ class listings extends Component<{}>{
                     <Thumbnail square source = {item.avatar} style = {styles.avatarImg}/>
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.address_street}, {item.address_name}</Label>
-                        <Label style = {styles.label2}>{item.job}</Label>
+                        <View style = {styles.tagView}>
+                            <View style = {styles.eachtag}>
+                                 <Label style = {styles.label2}>Active</Label>
+                            </View>
+                            <View style = {styles.eachtag}>
+                                 <Label style = {styles.label2}>House</Label>
+                            </View>
+                        </View>
                         
                     </View>
                     <Label style = {styles.saleTxt}>For Sale</Label>
