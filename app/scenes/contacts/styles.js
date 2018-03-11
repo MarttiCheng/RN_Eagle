@@ -30,7 +30,8 @@ export default {
         marginLeft: 5
     }, 
     rowSubView: {
-        marginLeft: 15
+        marginLeft: 15,
+        flex: 1,
     },
     label1: {
         fontSize: 18,
@@ -46,7 +47,7 @@ export default {
         height: 1,
         width: width,
         backgroundColor: 'lightgray',
-        marginTop: 12
+        marginTop: 13
     },
     menuView: {
         width: width,
@@ -80,6 +81,7 @@ export default {
     },
     tagView: {
         flexDirection:'row',
+        marginTop: 5,
         flex: 1,
     },
     eachtag: {

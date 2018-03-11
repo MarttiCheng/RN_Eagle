@@ -33,7 +33,7 @@ class ListingAbout extends Component {
     
     render() {
         return (
-            <Content style = {styles.container}>
+            <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 <View>
                     <Thumbnail square source = {images.listing_home} style = {styles.homeImg}/>
                     <View style = {styles.detailView}>
@@ -110,13 +110,6 @@ class ListingAbout extends Component {
                         </View>
                     </View>
                 </View>
-
-
-
-
-
-
-
 
                 <View style = {styles.subView1}>
                     <View style = {styles.view1}>

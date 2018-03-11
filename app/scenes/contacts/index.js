@@ -14,7 +14,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
 
 var contactsList = [
-    {name:'Luke Paverd', avatar: images.avatar_john, job: 'Director at Eagle Software'},
+    {name:'Luke PaverdLuke', avatar: images.avatar_john, job: 'Director at Eagle Software'},
     {name:'Sally Smith', avatar: images.avatar_female, job: 'Buyer, Vendor'},
     {name:'John Sample', avatar: images.avatar_male, job: 'Freelancer, Vendor'},
     {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
@@ -112,7 +112,6 @@ class contacts extends Component<{}>{
                             return(this.renderRow(item, index))
                         })
                     }
-                    
                 </Content>
                 <TouchableOpacity style = {styles.addBtn}>
                     <Label style = {styles.addTxt}>+</Label>

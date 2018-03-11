@@ -40,13 +40,13 @@ class ContactActivity extends Component {
     
     render() {
         return (
-            <View style = {styles.container}>
+            <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 {
                     activityList.map((item, index) => {
                         return(this.renderRow(item, index))
                     })
                 }
-            </View>
+            </Content>
         );
     }
 }

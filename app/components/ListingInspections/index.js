@@ -26,7 +26,7 @@ class ListingInspections extends Component {
 
     renderRow(item, index) {
         return(
-            <View style = {styles.activityItem} key = {index}>
+            <Content style = {styles.activityItem} key = {index} >
                 <View style = {styles.view1}>
                     <Label style = {styles.dateTxt}>{item.date}</Label>
                 </View>
@@ -34,19 +34,19 @@ class ListingInspections extends Component {
                     <FontAwesome name = 'calendar' size = {20} color = '#757575' style = {{marginLeft: 5}} />
                     <Label style = {styles.duractionTxt}>{item.duration}</Label> 
                 </View>
-            </View>
+            </Content>
         )
     }
     
     render() {
         return (
-            <View style = {styles.container}>
+            <Content style = {styles.container}>
                 {
                     inspectionsList.map((item, index) => {
                         return(this.renderRow(item, index))
                     })
                 }
-            </View>
+            </Content>
         );
     }
 }

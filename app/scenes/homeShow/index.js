@@ -12,7 +12,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import HomeMine from '../../components/HomeMine/index'
 
 
-class home extends Component<{}>{
+class homeShow extends Component<{}>{
     static navigationOptions = {
         header: null,
     }
@@ -41,20 +41,20 @@ class home extends Component<{}>{
                     barStyle="light-content"
                 />
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
-                                onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
-                    <Label style = {[styles.title, {fontFamily: 'open-sans-bold'}]}>Open Homes</Label>
+                    <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white' style = {{marginLeft: 10}}
+                                onPress={ () => { this.props.navigation.goBack() }} />
+                    <View style = {styles.titleView}>
+                        <Label style = {styles.title}>50 Bay St, Double Bay</Label>
+                        <Label style = {styles.timetitle}>March 10th 10am - 10:30am</Label>
+                    </View>
                     <TouchableOpacity style = {{width: 18, height: 18, marginRight: 15}}/>
                 </View>
                  <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} >
-                    <Tab heading="MINE" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <HomeMine navigation = {this.props.navigation}/>
+                    <Tab heading="NEW ATTENDEE" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
+                        <Label>123</Label>
                     </Tab>
-                    <Tab heading="FOR SALE" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <HomeMine navigation = {this.props.navigation}/>
-                    </Tab>
-                    <Tab heading="FOR RENT" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <HomeMine navigation = {this.props.navigation}/>
+                    <Tab heading="ATTENDEES(5)" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
+                        <Label>123</Label>
                     </Tab>
                 </Tabs>
                 <TouchableOpacity style = {styles.addBtn}>
@@ -66,4 +66,4 @@ class home extends Component<{}>{
 }
 
 //make this component available to the app
-export default connect()(home);
+export default connect()(homeShow);

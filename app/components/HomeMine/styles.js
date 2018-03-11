@@ -17,7 +17,7 @@ export default {
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor:'lightgray',
-        fontFamily: 'open-sans-regular',
+        // fontFamily: 'open-sans-regular',
     },
     view1: {
         paddingLeft: 15,
@@ -70,5 +70,12 @@ export default {
     favoriteView: {
         alignItems: 'center',
         marginLeft: 10
-    }
+    },
+    saleTxt: {
+        color: 'white',
+        backgroundColor: '#B4BCC8',
+        padding: 5,
+        fontSize: 13,
+        fontFamily: 'open-sans-regular'
+    },
 }

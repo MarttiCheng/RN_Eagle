@@ -70,11 +70,11 @@ class listings extends Component<{}>{
                     barStyle="light-content"
                 />
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
+                    <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{}}
                                 onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
                     <Label style = {[styles.title, {fontFamily: 'open-sans-bold'}]}>Listings</Label>
                     <TouchableOpacity>
-                        <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginRight: 15}} />
+                        <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginLeft: 3}} />
                     </TouchableOpacity>
                 </View>
                 <Content showsVerticalScrollIndicator = {false}>
@@ -99,8 +99,10 @@ class listings extends Component<{}>{
                             return(this.renderRow(item, index))
                         })
                     }
-                    
                 </Content>
+                <TouchableOpacity style = {styles.addBtn}>
+                    <Label style = {styles.addTxt}>+</Label>
+                </TouchableOpacity>
             </Container>
         )
     }

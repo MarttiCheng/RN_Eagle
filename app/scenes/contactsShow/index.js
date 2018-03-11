@@ -71,30 +71,30 @@ class contactsShow extends Component<{}>{
     showTabView(){
         if(this.state.isAbout){
             return(
-                <View style = {{ backgroundColor: 'white'}}>
+                // <View style = {{ backgroundColor: 'white'}}>
                     <ContactAbout navigation = {this.props.navigation}/>
-                </View>
+                // </View>
             )
         }
         if(this.state.isProperties){
             return(
-                <View style = {{ backgroundColor: 'white'}}>
+                // <View style = {{ backgroundColor: 'white'}}>
                     <ContactProperties navigation = {this.props.navigation}/>
-                </View>
+                // </View>
             )
         }
         if(this.state.isActivity){
             return(
-                <View style = {{ backgroundColor: 'white'}}>
+                // <View style = {{ backgroundColor: 'white'}}>
                     <ContactActivity navigation = {this.props.navigation}/>
-                </View>
+                // </View>
             )
         }
         if(this.state.isTasks){
             return(
-                <View style = {{ backgroundColor: 'white'}}>
+                // <View style = {{ backgroundColor: 'white'}}>
                     <ContactTask navigation = {this.props.navigation}/>
-                </View>
+                // </View>
             )
         }
     }
@@ -109,40 +109,41 @@ class contactsShow extends Component<{}>{
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
                                 onPress={ () => { this.props.navigation.goBack() }} />
-                    <Label style = {[styles.title, {fontFamily: 'open-sans-regular'}]}>{this.props.navigation.state.params.info.name}</Label>
+                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{this.props.navigation.state.params.info.name}</Label>
                     <TouchableOpacity onPress = {this._onSearch}>
-                        <Label style = {{color: 'white', fontSize: 17, fontFamily: 'open-sans-bold'}}>Edit</Label>
+                        <Label style = {styles.editTxt}>Edit</Label>
                     </TouchableOpacity>
                 </View>
-                <Content>
-                    <View style = {styles.headerView}>
-                        <Thumbnail square source = {this.props.navigation.state.params.info.avatar} style = {styles.avatarImg}/>
-                        <Label style = {styles.nameTxt}>{this.props.navigation.state.params.info.name}</Label>
-                        <Label style = {styles.jobTxt}>{this.props.navigation.state.params.info.job}</Label>
-                    </View>
-                    <View>
-                        <View style = {styles.tabTitleView}>
-                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
-                                <Text style = {styles.tabTxt}>ABOUT</Text>
-                                <View style = {this.state.isAbout? styles.tabline : null}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
-                                <Text style = {styles.tabTxt}>PROPERTIES</Text>
-                                <View style = {this.state.isProperties? styles.tabline : null}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onActivity}>
-                                <Text style = {styles.tabTxt}>ACTIVITY</Text>
-                                <View style = {this.state.isActivity? styles.tabline : null}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onTasks}>
-                                <Text style = {styles.tabTxt}>TASKS</Text>
-                                <View style = {this.state.isTasks? styles.tabline : null}/>
-                            </TouchableOpacity>
-                            
-                        </View>
-                        {this.showTabView()}
-                    </View>
+                <View style = {styles.headerView}>
+                    <Thumbnail square source = {this.props.navigation.state.params.info.avatar} style = {styles.avatarImg}/>
+                    <Label style = {styles.nameTxt}>{this.props.navigation.state.params.info.name}</Label>
+                    <Label style = {styles.jobTxt}>{this.props.navigation.state.params.info.job}</Label>
+                </View>
+                
+                <View style = {styles.tabTitleView}>
+                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
+                        <Text style = {styles.tabTxt}>ABOUT</Text>
+                        <View style = {this.state.isAbout? styles.tabline : null}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
+                        <Text style = {styles.tabTxt}>PROPERTIES</Text>
+                        <View style = {this.state.isProperties? styles.tabline : null}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onActivity}>
+                        <Text style = {styles.tabTxt}>ACTIVITY</Text>
+                        <View style = {this.state.isActivity? styles.tabline : null}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onTasks}>
+                        <Text style = {styles.tabTxt}>TASKS</Text>
+                        <View style = {this.state.isTasks? styles.tabline : null}/>
+                    </TouchableOpacity>
+                    
+                </View>
+                         
+                <Content showsVerticalScrollIndicator = {false}>
+                    {this.showTabView()}
                 </Content>
+                
                 <TouchableOpacity style = {styles.addBtn}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
@@ -153,3 +154,4 @@ class contactsShow extends Component<{}>{
 
 //make this component available to the app
 export default connect()(contactsShow);
+

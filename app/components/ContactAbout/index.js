@@ -32,7 +32,7 @@ class ContactAbout extends Component {
     
     render() {
         return (
-            <View style = {styles.container}>
+            <Content style = {styles.container}>
                 <View style = {styles.categoryView}>
                     {
                         categoryList.map((item, index) => {
@@ -117,7 +117,7 @@ class ContactAbout extends Component {
                     </View>
                 </View>
 
-            </View>
+            </Content>
         );
     }
 }

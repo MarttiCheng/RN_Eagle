@@ -73,6 +73,8 @@ export default {
         alignItems:'center',
         backgroundColor: '#2B3643',
         justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     title: {
         color: 'white',
@@ -89,6 +91,23 @@ export default {
     tagView: {
         flexDirection:'row',
         flex: 1,
-    }
+    },
+    addBtn: {
+        position: 'absolute',
+        right: 20,
+        bottom: 20,
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        backgroundColor: '#364150',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    addTxt: {
+        color: 'white',
+        fontSize: 42,
+        fontWeight: '300',
+        marginTop: -5
+    },
 
 }

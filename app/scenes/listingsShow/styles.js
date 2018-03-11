@@ -15,17 +15,24 @@ export default {
         alignItems:'center',
         backgroundColor: '#2B3643',
         justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     title: {
         color: 'white',
+        width: width - 140,
         fontSize: 18,
-        fontFamily: 'open-sans-regular'
+        fontFamily: 'open-sans-regular',
+        marginLeft: 30,
+        marginRight: 10,
+        textAlign: 'center',
     },
-    editTxt: {
+    editTxt:{
         color: 'white', 
-        marginRight: 15, 
         fontSize: 17, 
-        fontFamily: 'open-sans-regular'
+        fontFamily: 'open-sans-regular',
+        width: 45,
+        textAlign: 'right',
     },
     inactiveTxt: {
         fontSize: 13, 

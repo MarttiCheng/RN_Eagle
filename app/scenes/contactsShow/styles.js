@@ -9,10 +9,12 @@ export default {
     },
     headerView: {
         width: width,
-        height: 140,
+        // height: 140,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor : '#364150',
+        paddingTop: 15,
+        paddingBottom: 15,
     },
     avatarImg: {
         width: 60,
@@ -89,6 +91,19 @@ export default {
     },
     title: {
         color: 'white',
-        fontSize: 18
+        width: width - 140,
+        fontSize: 18,
+        fontFamily: 'open-sans-regular',
+        marginLeft: 30,
+        marginRight: 10,
+        textAlign: 'center',
+    },
+    editTxt:{
+        color: 'white', 
+        fontSize: 17, 
+        fontFamily: 'open-sans-regular',
+        width: 45,
+        textAlign: 'right',
+        // marginRight: 20,
     }
 }

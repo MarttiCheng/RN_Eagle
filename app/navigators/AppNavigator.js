@@ -10,6 +10,7 @@ import home from '../scenes/home/index';
 import tasks from '../scenes/tasks/index';
 import Sidebar from '../components/Sidebar/index';
 import listingsShow from '../scenes/listingsShow/index';
+import homeShow from '../scenes/homeShow/index';
 
 const Drawer = DrawerNavigator(
     {
@@ -28,9 +29,10 @@ const Drawer = DrawerNavigator(
 
 export const AppNavigator = StackNavigator({
     login: { screen: login },
-    contactsShow: { screen: contactsShow },
     Drawer: { screen: Drawer },
+    contactsShow: { screen: contactsShow },
     listingsShow: { screen: listingsShow },
+    homeShow: { screen: homeShow },
     },{
         headerMode: 'none',
     }

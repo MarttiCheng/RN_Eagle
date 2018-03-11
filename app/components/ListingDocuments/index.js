@@ -33,7 +33,7 @@ class ListingDocuments extends Component {
     
     render() {
         return (
-            <View style = {styles.container}>
+            <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 <View style = {styles.taskItemView}>
                     <View style = {styles.view1}>
                         <FontAwesome name = 'file-pdf-o' size = {20} color = '#757575' style = {{marginLeft: 10}} />
@@ -45,7 +45,7 @@ class ListingDocuments extends Component {
                         <Label style = {styles.label1}>Statement of Information.pdf</Label>
                     </View>
                 </View>
-            </View>
+            </Content>
         );
     }
 }
