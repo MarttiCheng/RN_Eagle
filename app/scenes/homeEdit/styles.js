@@ -218,7 +218,17 @@ export default {
         width: width,
         marginLeft: -15,
         height: 60,
-        alignItems: 'center'
-
-    }
+        alignItems: 'center',
+        paddingLeft: 25,
+        paddingRight: 25,
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomWidth: 1,
+        borderColor: 'lightgray'
+    },
+    follwRowTxt: {
+        color: 'black',
+        fontSize: 16,
+        marginLeft: 15,
+    },
 }

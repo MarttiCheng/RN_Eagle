@@ -4,7 +4,7 @@ import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncSt
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, MaterialIcons, FontAwesome} from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
@@ -171,6 +171,7 @@ class homeEdit extends Component {
                             </View>
                         </TouchableOpacity>
                     </View>
+                    
                     <View style = {styles.buttonView}>
                         <TouchableOpacity>
                         </TouchableOpacity>
@@ -180,11 +181,31 @@ class homeEdit extends Component {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <Label style = {styles.editInspectionTxt}>Follow up</Label>
-                    <View style = {styles.followRowView}>
-                        <MaterialCommunityIcons name = 'attach_file' size = {25} color = '#757575' />
-                        <Label>Send Document</Label>
+
+                    <View>
+                        <Label style = {styles.editInspectionTxt}>Follow up</Label>
+                        <View style = {styles.followRowView}>
+                            <MaterialIcons name = 'attach-file' size = {25} color = '#757575' />
+                            <Label style = {styles.follwRowTxt}>Send Document</Label>
+                        </View>
+                        <View style = {styles.followRowView}>
+                            <MaterialIcons name = 'perm-contact-calendar' size = {25} color = '#757575' />
+                            <Label style = {styles.follwRowTxt}>View Profile</Label>
+                        </View>
+                        <View style = {styles.followRowView}>
+                            <FontAwesome name = 'phone' size = {25} color = '#757575' />
+                            <Label style = {styles.follwRowTxt}>Call</Label>
+                        </View>
+                        <View style = {styles.followRowView}>
+                            <MaterialIcons name = 'sms' size = {25} color = '#757575' />
+                            <Label style = {styles.follwRowTxt}>Send SMS</Label>
+                        </View>
+                        <View style = {styles.followRowView}>
+                            <FontAwesome name = 'envelope' size = {25} color = '#757575' />
+                            <Label style = {styles.follwRowTxt}>Send Email</Label>
+                        </View>
                     </View>
+                    
                 </Content>
             </Container>
         );
