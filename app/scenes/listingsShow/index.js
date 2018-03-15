@@ -66,7 +66,7 @@ class listingsShow extends Component<{}>{
             isAbout: false,
             isProperties: false,
             isActivity: false,
-            isTasks: true
+            isTasks: true,
         })
     }
 

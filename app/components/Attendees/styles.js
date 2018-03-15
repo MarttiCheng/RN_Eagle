@@ -7,7 +7,7 @@ export default {
         backgroundColor: 'white',
         paddingLeft: 15,
         paddingRight: 15,
-        paddingTop: 10,
+        // paddingTop: 10,
     },
     rowView: {
         flex:1,
@@ -104,7 +104,6 @@ export default {
     clearTxt: {
         color:'white',
         fontSize: 13,
-        fontFamily: 'open-sans-regular'
     },
     saveBtnView: {
         width: (width - 45) * 2 /3,
@@ -161,6 +160,11 @@ export default {
         bottom: 0,
         left: 60
     },
+    tagView: {
+        flexDirection:'row',
+        marginTop: 5,
+        flex: 1,
+    },
     eachtag: {
         backgroundColor: '#B4BCC8',
         paddingLeft: 8,
@@ -171,21 +175,9 @@ export default {
         alignItems: 'center',
         marginRight: 10
     },
-    tagView: {
-        flexDirection:'row',
-        flex: 1,
-    },
-    checkView: {
-        width: 62,
-        height: 26,
-        borderRadius: 8,
-        backgroundColor: '#2B3643',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    checkTxt: {
-        color: 'white',
+    tagTxt: {
         fontSize: 10,
-        fontFamily: 'open-sans-regular'
+        color: 'white',
+        fontFamily: 'open-sans-regular',
     },
 }

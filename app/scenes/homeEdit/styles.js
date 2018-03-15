@@ -1,13 +1,46 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform, StatusBar } from 'react-native';
+import { Header } from 'react-navigation'
+import {Label} from 'native-base';
 const { width, height } = Dimensions.get('window')
 
 export default {
     container: {
         flex: 1,
         backgroundColor: 'white',
+    },
+    menuView: {
+        width: width,
+        height: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT+20,
+        paddingTop: (Platform.OS == 'ios')? 20 : StatusBar.currentHeight,
+        flexDirection:'row',
+        alignItems:'center',
+        backgroundColor: '#2B3643',
+        justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    title: {
+        color: 'white',
+        width: width - 140,
+        fontSize: 18,
+        fontFamily: 'open-sans-regular',
+        marginLeft: 30,
+        marginRight: 10,
+        textAlign: 'center',
+    },
+    editTxt:{
+        color: 'white', 
+        fontSize: 17, 
+        fontFamily: 'open-sans-regular',
+        width: 45,
+        textAlign: 'right',
+        // marginRight: 20,
+    },
+    mainView: {
+        flex: 1,
+        backgroundColor: 'white',
         paddingLeft: 15,
         paddingRight: 15,
-        paddingTop: 10,
     },
     rowView: {
         flex:1,
@@ -38,10 +71,10 @@ export default {
         borderRadius: 5,
         marginTop: 15 
     },
-    editTxt: {
+    editTxt1: {
         color: 'white',
         fontSize: 13,
-        fontFamily: 'open-sans-regular'
+        fontFamily: 'open-sans-regular',
     },
     editSegementView: {
         flexDirection: 'row',
@@ -93,32 +126,24 @@ export default {
         marginTop: 15,
         marginBottom: 15,
     },
-    clearBtnView: {
-        width: (width - 45) /3,
-        height: 36,
-        borderRadius: 5,
-        backgroundColor: '#CFCFCF',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    clearTxt: {
-        color:'white',
-        fontSize: 13,
-        fontFamily: 'open-sans-regular'
-    },
+
     saveBtnView: {
-        width: (width - 45) * 2 /3,
+        width: width - 30,
         height: 36,
         borderRadius: 5,
         backgroundColor: '#35AA47',
         alignItems: 'center',
         justifyContent: 'center'
     },
-    preregisteredTitle: {
+    saveTxt: {
+        fontSize: 13,
+        color: 'white',
+    },  
+    editInspectionTxt: {
         width: width,
         marginLeft: -15,
         marginTop: -1,
-        paddingTop: 20,
+        paddingTop: 15,
         paddingLeft: 15,
         paddingBottom: 7,
         backgroundColor: '#CFCFCF',
@@ -188,4 +213,12 @@ export default {
         fontSize: 10,
         fontFamily: 'open-sans-regular'
     },
+    followRowView: {
+        flexDirection: 'row',
+        width: width,
+        marginLeft: -15,
+        height: 60,
+        alignItems: 'center'
+
+    }
 }

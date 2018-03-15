@@ -76,8 +76,11 @@ class ContactAbout extends Component {
                     <Thumbnail square source = {images.avatar_female} style = {styles.avatarImg}/>
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label3}>Sally Sample</Label>
-                        <Label style = {styles.label1}>spouse</Label>
-                        <View style = {styles.line}/>
+                        <View style = {styles.tagView}>
+                            <View style = {styles.eachtag}>
+                                <Label style = {styles.tagTxt}>spouse</Label>
+                            </View>
+                        </View>
                     </View>
                 </View>
 

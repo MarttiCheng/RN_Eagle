@@ -73,7 +73,8 @@ export default {
         borderColor:'lightgray'
     },
     rowSubView: {
-        marginLeft: 15
+        marginLeft: 15,
+        flex: 1,
     },
     avatarImg: {
         width: 36,
@@ -86,6 +87,28 @@ export default {
         borderTopWidth: 1,
         borderColor: 'lightgray',
         backgroundColor: 'white',
-        marginTop: 30
+        marginTop: 30,
+        flex: 1,
+    },
+    tagView: {
+        flexDirection:'row',
+        marginTop: 5,
+        flex: 1,
+    },
+    eachtag: {
+        backgroundColor: '#B4BCC8',
+        paddingLeft: 8,
+        paddingRight: 8,
+        height: 16,
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10
+    },
+    tagTxt: {
+        fontSize: 10,
+        color: 'white',
+        fontFamily: 'open-sans-regular',
     },
 }
+

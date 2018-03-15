@@ -71,30 +71,22 @@ class contactsShow extends Component<{}>{
     showTabView(){
         if(this.state.isAbout){
             return(
-                // <View style = {{ backgroundColor: 'white'}}>
-                    <ContactAbout navigation = {this.props.navigation}/>
-                // </View>
+                <ContactAbout navigation = {this.props.navigation}/>
             )
         }
         if(this.state.isProperties){
             return(
-                // <View style = {{ backgroundColor: 'white'}}>
-                    <ContactProperties navigation = {this.props.navigation}/>
-                // </View>
+                <ContactProperties navigation = {this.props.navigation}/>
             )
         }
         if(this.state.isActivity){
             return(
-                // <View style = {{ backgroundColor: 'white'}}>
-                    <ContactActivity navigation = {this.props.navigation}/>
-                // </View>
+                <ContactActivity navigation = {this.props.navigation}/>
             )
         }
         if(this.state.isTasks){
             return(
-                // <View style = {{ backgroundColor: 'white'}}>
-                    <ContactTask navigation = {this.props.navigation}/>
-                // </View>
+                <ContactTask navigation = {this.props.navigation}/>
             )
         }
     }

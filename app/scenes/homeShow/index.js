@@ -10,7 +10,9 @@ import styles from './styles'
 import images from '../../themes/images'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import HomeMine from '../../components/HomeMine/index'
-
+import NewAttendee from '../../components/NewAttendee/index'
+import Attendees from '../../components/Attendees/index'
+import ContactProperties from '../../components/ContactProperties'
 
 class homeShow extends Component<{}>{
     static navigationOptions = {
@@ -49,17 +51,14 @@ class homeShow extends Component<{}>{
                     </View>
                     <TouchableOpacity style = {{width: 18, height: 18, marginRight: 15}}/>
                 </View>
-                 <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} >
+                <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} >
                     <Tab heading="NEW ATTENDEE" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <Label>123</Label>
+                        <NewAttendee/>
                     </Tab>
                     <Tab heading="ATTENDEES(5)" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <Label>123</Label>
+                        <Attendees/>
                     </Tab>
                 </Tabs>
-                <TouchableOpacity style = {styles.addBtn}>
-                    <Label style = {styles.addTxt}>+</Label>
-                </TouchableOpacity>
             </Container>
         )
     }

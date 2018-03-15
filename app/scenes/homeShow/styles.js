@@ -10,7 +10,7 @@ export default {
     },
     menuView: {
         width: width,
-        height: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT+20,
+        height: (Platform.OS == 'ios')? Header.HEIGHT+15: Header.HEIGHT+35,
         paddingTop: (Platform.OS == 'ios')? 20 : StatusBar.currentHeight,
         flexDirection:'row',
         alignItems:'center',
@@ -25,7 +25,8 @@ export default {
     timetitle: {
         fontSize: 12,
         color: 'white',
-        fontFamily: 'open-sans-regular'
+        fontFamily: 'open-sans-regular',
+        marginTop: 5
     },
     inactiveTxt: {
         fontSize: 13, 
@@ -39,9 +40,8 @@ export default {
     },
     titleView: {
         paddingTop: 5,
-        paddingBottom: 5,
+        paddingBottom: 7,
         justifyContent: 'center',
         alignItems: 'center'
-    }
-    
+    },
 }

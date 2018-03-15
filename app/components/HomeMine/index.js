@@ -50,7 +50,7 @@ class HomeMine extends Component {
                         <Label style = {styles.saleTxt}>For Sale</Label>
                     </TouchableOpacity>
                     <View style = {styles.line1}/>
-                    <TouchableOpacity style = {styles.view1}>
+                    <TouchableOpacity style = {styles.view1} onPress = {() =>  this.onClickHome()}>
                         <Thumbnail square source = {images.france_small} style = {styles.avatarImg}/>
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label1}>11am - 11:30am</Label>
@@ -62,23 +62,23 @@ class HomeMine extends Component {
 
                 <View style = {styles.propertyItemView}>
                     <Label style = {styles.propertyItemTitle}>12th March</Label>
-                    <View style = {styles.view1}>
+                    <TouchableOpacity style = {styles.view1} onPress = {() =>  this.onClickHome()}>
                         <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label1}>10am - 10:30am</Label>
                             <Label style = {styles.label2}>50 Bay St, Double Bay</Label>
                         </View>
                         <Label style = {styles.saleTxt}>For Sale</Label>
-                    </View>
+                    </TouchableOpacity>
                     <View style = {styles.line1}/>
-                    <View style = {styles.view1}>
+                    <TouchableOpacity style = {styles.view1} onPress = {() =>  this.onClickHome()}>
                         <Thumbnail square source = {images.france_small} style = {styles.avatarImg}/>
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label1}>11am - 11:30am</Label>
                             <Label style = {styles.label2}>123 Silverdale St, Silverydale</Label>
                         </View>
                         <Label style = {styles.saleTxt}>For Sale</Label>
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
             </Content>

@@ -49,5 +49,4 @@ export default {
         color: 'white',
         fontFamily: 'open-sans-regular'
     },
-    
 }
