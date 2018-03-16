@@ -17,15 +17,15 @@ var contactsList = [
     {name:'Luke PaverdLuke', avatar: images.avatar_john, job: 'Director at Eagle Software'},
     {name:'Sally Smith', avatar: images.avatar_female, job: 'Buyer, Vendor'},
     {name:'John Sample', avatar: images.avatar_male, job: 'Freelancer, Vendor'},
+    {name:'Alex Saburo', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'James Max', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'Viktoriya Moroz', avatar: images.avatar_female, job: 'Looking to rent, Vendor'},
+    {name:'Bozhena Zvarych', avatar: images.avatar_female, job: 'Looking to rent, Vendor'},
+    {name:'Zhenshu Ding', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'Olga Kryvolap', avatar: images.avatar_female, job: 'Looking to rent, Vendor'},
     {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'Tom Chedd', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
+    {name:'Anna Potekhina', avatar: images.avatar_female, job: 'Looking to rent, Vendor'},
 ]
 class contacts extends Component<{}>{
     static navigationOptions = {

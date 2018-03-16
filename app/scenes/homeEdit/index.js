@@ -73,7 +73,7 @@ class homeEdit extends Component {
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.name}</Label>
                         <Label style = {styles.label2}>{item.phone}</Label>
-                        <Label style = {styles.label2}>{item.email}</Label>                        
+                        <Label style = {styles.label2}>{item.email}</Label>    
                     </View>
                     <View style = {styles.checkView}>
                         <Label style = {styles.checkTxt}>CHECK IN</Label>
@@ -84,6 +84,11 @@ class homeEdit extends Component {
         )
     }
     
+    OnViewProfile() {
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {info: {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'}}}))
+    }
+
     render() {
         return (
             <Container style = {styles.container}>
@@ -184,26 +189,36 @@ class homeEdit extends Component {
 
                     <View>
                         <Label style = {styles.editInspectionTxt}>Follow up</Label>
-                        <View style = {styles.followRowView}>
-                            <MaterialIcons name = 'attach-file' size = {25} color = '#757575' />
-                            <Label style = {styles.follwRowTxt}>Send Document</Label>
-                        </View>
-                        <View style = {styles.followRowView}>
-                            <MaterialIcons name = 'perm-contact-calendar' size = {25} color = '#757575' />
-                            <Label style = {styles.follwRowTxt}>View Profile</Label>
-                        </View>
-                        <View style = {styles.followRowView}>
-                            <FontAwesome name = 'phone' size = {25} color = '#757575' />
-                            <Label style = {styles.follwRowTxt}>Call</Label>
-                        </View>
-                        <View style = {styles.followRowView}>
-                            <MaterialIcons name = 'sms' size = {25} color = '#757575' />
-                            <Label style = {styles.follwRowTxt}>Send SMS</Label>
-                        </View>
-                        <View style = {styles.followRowView}>
-                            <FontAwesome name = 'envelope' size = {25} color = '#757575' />
-                            <Label style = {styles.follwRowTxt}>Send Email</Label>
-                        </View>
+                        <TouchableOpacity >
+                            <View style = {styles.followRowView}>
+                                <MaterialIcons name = 'attach-file' size = {25} color = '#757575' />
+                                <Label style = {styles.follwRowTxt}>Send Document</Label>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress = {() => this.OnViewProfile()}>
+                            <View style = {styles.followRowView}>
+                                <MaterialIcons name = 'perm-contact-calendar' size = {25} color = '#757575' />
+                                <Label style = {styles.follwRowTxt}>View Profile</Label>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style = {styles.followRowView}>
+                                <FontAwesome name = 'phone' size = {25} color = '#757575' />
+                                <Label style = {styles.follwRowTxt}>Call</Label>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style = {styles.followRowView}>
+                                <MaterialIcons name = 'sms' size = {25} color = '#757575' />
+                                <Label style = {styles.follwRowTxt}>Send SMS</Label>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style = {styles.followRowView}>
+                                <FontAwesome name = 'envelope' size = {25} color = '#757575' />
+                                <Label style = {styles.follwRowTxt}>Send Email</Label>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                     
                 </Content>

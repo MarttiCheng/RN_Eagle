@@ -206,12 +206,12 @@ export default {
         borderRadius: 8,
         backgroundColor: '#2B3643',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     checkTxt: {
         color: 'white',
         fontSize: 10,
-        fontFamily: 'open-sans-regular'
+        fontFamily: 'open-sans-regular',
     },
     followRowView: {
         flexDirection: 'row',
@@ -224,7 +224,7 @@ export default {
         paddingTop: 10,
         paddingBottom: 10,
         borderBottomWidth: 1,
-        borderColor: 'lightgray'
+        borderColor: 'lightgray',
     },
     follwRowTxt: {
         color: 'black',
