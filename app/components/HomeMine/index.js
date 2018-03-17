@@ -50,7 +50,7 @@ class HomeMine extends Component {
                         <Label style = {styles.saleTxt}>For Sale</Label>
                     </TouchableOpacity>
                     <View style = {styles.line1}/>
-                    <TouchableOpacity style = {styles.view1} onPress = {() =>  this.onClickHome()}>
+                    <TouchableOpacity style = {styles.view1} onPress = {() =>  this.onClickHome()}> 
                         <Thumbnail square source = {images.france_small} style = {styles.avatarImg}/>
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label1}>11am - 11:30am</Label>

@@ -5,13 +5,13 @@ import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
 import { connect } from 'react-redux'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import styles from './styles'
 import images from '../../themes/images'
-import {FontAwesome} from '@expo/vector-icons'
 
-var categoryList = [
-    {job: 'Buyer'},
-    {job: 'Property alerts'},
+var documentList = [
+    {title: 'Contract of sale.pdf'},
+    {title: 'Statement of Information.pdf'},
 ]
 
 // create a component
@@ -25,8 +25,9 @@ class ListingDocuments extends Component {
 
     renderRow(item, index) {
         return(
-            <View style = {styles.categoryItem} key = {index}>
-                <Label style = {styles.categoryItemTxt}>{item.job}</Label>
+            <View style = {styles.view1} key = {index}>
+                <MaterialCommunityIcons name = 'file-pdf' size = {20} color = '#757575' style = {{marginLeft: 10}} />
+                <Label style = {styles.label1}>{item.title}</Label>
             </View>
         )
     }
@@ -35,13 +36,18 @@ class ListingDocuments extends Component {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 <View style = {styles.taskItemView}>
+                    {
+                        documentList.map((item, index) => {
+                            return(this.renderRow(item, index))
+                        })
+                    }
                     <View style = {styles.view1}>
-                        <FontAwesome name = 'file-pdf-o' size = {20} color = '#757575' style = {{marginLeft: 10}} />
+                        <MaterialCommunityIcons name = 'file-pdf' size = {20} color = '#757575' style = {{marginLeft: 10}} />
                         <Label style = {styles.label1}>Contract of sale.pdf</Label>
                     </View>
                     <View style = {styles.line1}/>
                     <View style = {styles.view1}>
-                        <FontAwesome name = 'file-pdf-o' size = {20} color = '#757575' style = {{marginLeft: 10}} />
+                        <MaterialCommunityIcons name = 'file-pdf' size = {20} color = '#757575' style = {{marginLeft: 10}} />
                         <Label style = {styles.label1}>Statement of Information.pdf</Label>
                     </View>
                 </View>
