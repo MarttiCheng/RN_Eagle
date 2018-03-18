@@ -6,9 +6,9 @@ export default {
         backgroundColor: 'white'
     },
     mainContainer: {
-        flex: 1,
+        // flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        // justifyContent: 'center',
     },
     backgroundImg: {
         position: 'absolute',
@@ -22,7 +22,7 @@ export default {
         width: width - 50,
         height: (width - 50)/2,
         resizeMode: 'contain',
-        marginTop: -150
+        marginTop: 30
     },
     logintitle: {
         color: 'white',

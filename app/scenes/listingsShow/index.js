@@ -8,15 +8,15 @@ import {
 } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import styles from './styles'
-import images from '../../themes/images'
+import images from '../../themes/images';
 import Search from 'react-native-search-box';
 import { NavigationActions } from 'react-navigation'
 import ListingAbout from '../../components/ListingAbout/index';
-import ContactProperties from '../../components/ContactProperties'
-import ContactActivity from '../../components/ContactActivity'
-import ContactTask from '../../components/ContactTask'
-import ListingInspections from '../../components/ListingInspections'
-import ListingDocuments from '../../components/ListingDocuments'
+import ContactProperties from '../../components/ContactProperties';
+import ContactActivity from '../../components/ContactActivity';
+import ContactTask from '../../components/ContactTask';
+import ListingInspections from '../../components/ListingInspections';
+import ListingDocuments from '../../components/ListingDocuments';
 
 class listingsShow extends Component<{}>{
     static navigationOptions = {

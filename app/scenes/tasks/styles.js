@@ -19,6 +19,33 @@ export default {
     title: {
         color: 'white',
         fontSize: 18
-    }
+    },
+    inactiveTxt: {
+        fontSize: 13, 
+        color: 'rgba(255, 255, 255, 0.72)',
+        fontFamily: 'open-sans-regular'
+    },
+    activeTxt: {
+        fontSize: 13, 
+        color: 'white',
+        fontFamily: 'open-sans-regular'
+    },
+    addBtn: {
+        position: 'absolute',
+        right: 20,
+        bottom: 20,
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        backgroundColor: '#364150',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    addTxt: {
+        color: 'white',
+        fontSize: 42,
+        fontWeight: '300',
+        marginTop: -5
+    },
 
 }

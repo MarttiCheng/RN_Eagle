@@ -12,21 +12,9 @@ import Search from 'react-native-search-box';
 import { NavigationActions, Header } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
+import { getAllContacts } from '../../actions'
+import { BallIndicator } from 'react-native-indicators'
 
-var contactsList = [
-    {name:'Luke PaverdLuke', avatar: images.avatar_john, job: 'Director at Eagle Software'},
-    {name:'Sally Smith', avatar: images.avatar_female, job: 'Buyer, Vendor'},
-    {name:'John Sample', avatar: images.avatar_male, job: 'Freelancer, Vendor'},
-    {name:'Alex Saburo', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'James Max', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'Viktoriya Moroz', avatar: images.avatar_female, job: 'Looking to rent, Vendor'},
-    {name:'Bozhena Zvarych', avatar: images.avatar_female, job: 'Looking to rent, Vendor'},
-    {name:'Zhenshu Ding', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'Olga Kryvolap', avatar: images.avatar_female, job: 'Looking to rent, Vendor'},
-    {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'Tom Chedd', avatar: images.avatar_male, job: 'Looking to rent, Vendor'},
-    {name:'Anna Potekhina', avatar: images.avatar_female, job: 'Looking to rent, Vendor'},
-]
 class contacts extends Component<{}>{
     static navigationOptions = {
         header: null,
@@ -41,10 +29,25 @@ class contacts extends Component<{}>{
         this.state = {
             email: '',
             password: '',
-            isLoading: false,
-            dataSource: ds.cloneWithRowsAndSections(contactsList),
+            isLoading: true,
             searchText: '',
+            contactsList: [],
         }   
+    }
+
+    componentWillMount() {
+        
+        this.getAllContacts()
+    }
+
+    getAllContacts(){
+         getAllContacts(this.props.token).then(data => {
+            this.setState({
+                contactsList: data.data,
+                isLoading: false,
+            })
+            
+        })
     }
 
     clickContact(item, index) {
@@ -54,17 +57,14 @@ class contacts extends Component<{}>{
 
     renderRow(item, index) {
         return(
-            <TouchableOpacity key = {index} onPress = {() => this.clickContact(item, index)}>
+            <TouchableOpacity key = {index} onPress = {() => this.clickContact(item.attributes, index)}>
                 <View style = {styles.rowView}>
-                    <Thumbnail square source = {item.avatar} style = {styles.avatarImg}/>
+                    <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                     <View style = {styles.rowSubView}>
-                        <Label style = {styles.label1}>{item.name}</Label>
+                        <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
                         <View style = {styles.tagView}>
-                            <View style = {styles.eachtag}>
-                                <Label style = {styles.tagTxt}>Buyer</Label>
-                            </View>
-                            <View style = {styles.eachtag}>
-                                <Label style = {styles.tagTxt}>Property Alerts</Label>
+                            <View style = {item.attributes.suburb? styles.eachtag : null}>
+                                <Label style = {styles.tagTxt}>{item.attributes.suburb}</Label>
                             </View>
                         </View>
                         
@@ -108,7 +108,8 @@ class contacts extends Component<{}>{
                     </View>
                     
                     {
-                        contactsList.map((item, index) => {
+                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> :
+                        this.state.contactsList.map((item, index) => {
                             return(this.renderRow(item, index))
                         })
                     }
@@ -121,5 +122,11 @@ class contacts extends Component<{}>{
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        token: state.user.token
+    }
+}
+
 //make this component available to the app
-export default connect()(contacts);
+export default connect(mapStateToProps)(contacts);

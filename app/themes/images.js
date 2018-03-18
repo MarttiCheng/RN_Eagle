@@ -16,6 +16,7 @@ const images = {
     ic_bath: require('../assets/img/ic_bath.png'),
     ic_car: require('../assets/img/ic_car.png'),
     ic_expand: require('../assets/img/ic_expand.png'),
+    ic_placeholder_image: require('../assets/img/profileImagePlaceholder.png'),
 
 
     //Dummy images

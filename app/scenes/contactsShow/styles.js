@@ -21,6 +21,7 @@ export default {
         height: 60,
         resizeMode: 'cover',
         borderRadius: 30,
+        tintColor: 'white'
     },
     nameTxt: {
         marginTop: 10,

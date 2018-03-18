@@ -5,12 +5,15 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, Image
+    Keyboard, AsyncStorage, Image, 
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images'
 import contacts from '../contacts/index';
 import { NavigationActions } from 'react-navigation'
+import { getToken } from '../../actions'
+import { BallIndicator } from 'react-native-indicators'
+var validator = require("email-validator");
 
 // create a component
 class login extends Component<{}>{
@@ -21,8 +24,8 @@ class login extends Component<{}>{
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            password: '',
+            email: 'testing@crmmobileapp.com',
+            password: 'example123',
             isLoading: false
         }
     }
@@ -37,8 +40,28 @@ class login extends Component<{}>{
             alert('Please enter password');
             return
         }
-        var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'contacts'}))
+        if(validator.validate(this.state.email)){
+            this.setState({ isLoading: true });
+            getToken(this.state.email, this.state.password).then(data => {
+                if(data.data){
+                    this.setState({ isLoading: false });
+                    var { dispatch } = this.props;
+                    dispatch ({ type: 'GET_TOKEN', data: data.data.id})
+                    dispatch(NavigationActions.navigate({routeName: 'contacts'}))
+                }
+                else {
+                    alert("Invalid username and/or password");
+                    this.setState({ isLoading: false });
+                }
+            })
+        }
+        else{
+            alert('Email is not correct')
+        }
+        
+
+        // var { dispatch } = this.props;
+        // dispatch(NavigationActions.navigate({routeName: 'contacts'}))
     }
 
     render() {
@@ -75,12 +98,15 @@ class login extends Component<{}>{
                             autoCorrect = {false}
                         />
                     </Item>
-                    <Button style = {styles.loginBtn} transparent onPress = {() => this.onLogin()}>
+                    <Button style = {styles.loginBtn} disabled = {this.state.isLoading? true : false} transparent onPress = {() => this.onLogin()}>
                         <Label style = {styles.loginBtnTxt}>Login</Label>
                     </Button>
                     <Button style = {styles.forgotBtn} transparent>
                         <Label style = {styles.forgortTxt}>Forgot password?</Label>
                     </Button>
+                    {
+                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 50}}/> : null
+                    }
                 </View>
                 
             </Container>

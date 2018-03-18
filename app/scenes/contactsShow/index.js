@@ -71,7 +71,7 @@ class contactsShow extends Component<{}>{
     showTabView(){
         if(this.state.isAbout){
             return(
-                <ContactAbout navigation = {this.props.navigation}/>
+                <ContactAbout navigation = {this.props.navigation} info = {this.props.navigation.state.params.info}/>
             )
         }
         if(this.state.isProperties){
@@ -92,6 +92,7 @@ class contactsShow extends Component<{}>{
     }
 
     render() {
+        var params = this.props.navigation.state.params
         return(
             <Container style = {styles.container}>
                 <StatusBar
@@ -101,15 +102,15 @@ class contactsShow extends Component<{}>{
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
                                 onPress={ () => { this.props.navigation.goBack() }} />
-                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{this.props.navigation.state.params.info.name}</Label>
+                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{params.info.first_name} {params.info.last_name}</Label>
                     <TouchableOpacity onPress = {this._onSearch}>
                         <Label style = {styles.editTxt}>Edit</Label>
                     </TouchableOpacity>
                 </View>
                 <View style = {styles.headerView}>
-                    <Thumbnail square source = {this.props.navigation.state.params.info.avatar} style = {styles.avatarImg}/>
-                    <Label style = {styles.nameTxt}>{this.props.navigation.state.params.info.name}</Label>
-                    <Label style = {styles.jobTxt}>{this.props.navigation.state.params.info.job}</Label>
+                    <Thumbnail square source = {params.info.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                    <Label style = {styles.nameTxt}>{params.info.first_name} {params.info.last_name}</Label>
+                    <Label style = {styles.jobTxt}>{params.info.company}</Label>
                 </View>
                 
                 <View style = {styles.tabTitleView}>

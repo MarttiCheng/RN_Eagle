@@ -31,24 +31,28 @@ class ContactAbout extends Component {
     }
     
     render() {
+        var params = this.props.navigation.state.params
         return (
             <Content style = {styles.container}>
                 <View style = {styles.categoryView}>
-                    {
+                    {/*{
                         categoryList.map((item, index) => {
                             return(this.renderRow(item, index))
                         })
-                    }
+                    }*/}
+                    <View style = {styles.categoryItem}>
+                        <Label style = {styles.categoryItemTxt}>{params.info.suburb}</Label>
+                    </View>
                 </View>
                 <View style = {{backgroundColor: 'white'}}>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Mobile</Label>
-                        <Label style = {styles.label2}>0412 345 678</Label>
+                        <Label style = {styles.label2}>{params.info.mobile_phone}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Business Hours</Label>
-                        <Label style = {styles.label2}>03 9025 5825</Label>
+                        <Label style = {styles.label2}>{params.info.business_hours_phone}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
@@ -58,17 +62,17 @@ class ContactAbout extends Component {
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Email</Label>
-                        <Label style = {styles.label2}>lukevdp@gmail.com</Label>
+                        <Label style = {styles.label2}>{params.info.email}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Address</Label>
-                        <Label style = {styles.label2}>123 Fake St{'\n'}Shepparton, VIC 3630</Label>
+                        <Label style = {styles.label2}>{params.info.address_line_1}{params.info.address_line_2}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Background info</Label>
-                        <Label style = {styles.label2}>Is an active investor looking for investment properties that yield over 5%</Label>
+                        <Label style = {styles.label2}>{params.info.background_info}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>

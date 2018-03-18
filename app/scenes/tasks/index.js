@@ -8,6 +8,8 @@ import {
 } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import styles from './styles'
+import images from '../../themes/images'
+import ContactTask from '../../components/ContactTask'
 
 // create a component
 class tasks extends Component {
@@ -19,14 +21,24 @@ class tasks extends Component {
                     barStyle="light-content"
                 />
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white' style = {{marginLeft: 10}}
-                                onPress={ () => { this.props.navigation.goBack() }} />
+                    <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
+                                onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
                     <Label style = {[styles.title, {fontFamily: 'open-sans-bold'}]}>Tasks</Label>
                     <TouchableOpacity style = {styles.searchButton} onPress = {this._onSearch}>
-                        <Label style = {{color: 'white', marginRight: 10, fontSize: 17, fontFamily: 'open-sans-bold'}}>Edit</Label>
+                        <Thumbnail square source = {null} style = {{width: 18, height: 18, marginRight: 15}} />
                     </TouchableOpacity>
                 </View>
-                <Text>tasks</Text>
+                <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47', height: 3}} >
+                    <Tab heading="DUE TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
+                        <ContactTask/>
+                    </Tab>
+                    <Tab heading="FUTURE TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
+                        <ContactTask/>
+                    </Tab>
+                </Tabs>
+                <TouchableOpacity style = {styles.addBtn}>
+                    <Label style = {styles.addTxt}>+</Label>
+                </TouchableOpacity>
             </View>
         );
     }

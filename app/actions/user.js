@@ -1,6 +1,6 @@
 import { API } from '../constants'
 
-function getToken(){
+function getToken(email, password){
     return new Promise((resolve, reject) => {
         fetch(API.BASE_URL + API.SESSION, {
             method: 'POST',
@@ -11,8 +11,8 @@ function getToken(){
                 "data": {
                     "type": "sessions",
                     "attributes": {
-                        "email": "testing@crmmobileapp.com",
-                        "password": "example123"
+                        "email": email,
+                        "password": password
                     }
                 }
             })
