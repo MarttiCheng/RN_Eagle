@@ -7,6 +7,7 @@ import {
 import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
+import Moment from 'react-moment';
 
 var categoryList = [
     {job: 'Buyer'},
@@ -40,39 +41,39 @@ class ContactAbout extends Component {
                             return(this.renderRow(item, index))
                         })
                     }*/}
-                    <View style = {styles.categoryItem}>
-                        <Label style = {styles.categoryItemTxt}>{params.info.suburb}</Label>
+                    <View style = {params.info.attributes.suburb? styles.categoryItem : null}>
+                        <Label style = {styles.categoryItemTxt}>{params.info.attributes.suburb}</Label>
                     </View>
                 </View>
                 <View style = {{backgroundColor: 'white'}}>
-                    <View style = {styles.view1}>
+                    <View style = {(!params.info.attributes.mobile_phone || params.info.attributes.mobile_phone == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Mobile</Label>
-                        <Label style = {styles.label2}>{params.info.mobile_phone}</Label>
+                        <Label style = {styles.label2}>{params.info.attributes.mobile_phone}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {styles.view1}>
+                    <View style = {(!params.info.attributes.business_hours_phone || params.info.attributes.business_hours_phone == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Business Hours</Label>
-                        <Label style = {styles.label2}>{params.info.business_hours_phone}</Label>
+                        <Label style = {styles.label2}>{params.info.attributes.business_hours_phone}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {styles.view1}>
+                    <View style = {(!params.info.attributes.after_hours_phone || params.info.attributes.after_hours_phone == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>After Hours</Label>
-                        <Label style = {styles.label2}>03 5254 6565</Label>
+                        <Label style = {styles.label2}>{params.info.attributes.after_hours_phone}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {styles.view1}>
+                    <View style = {(!params.info.attributes.email || params.info.attributes.email == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Email</Label>
-                        <Label style = {styles.label2}>{params.info.email}</Label>
+                        <Label style = {styles.label2}>{params.info.attributes.email}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {styles.view1}>
+                    <View style = {(!params.info.attributes.address_line_1 || params.info.attributes.address_line_1 == '') ?styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Address</Label>
-                        <Label style = {styles.label2}>{params.info.address_line_1}{params.info.address_line_2}</Label>
+                        <Label style = {styles.label2}>{params.info.attributes.address_line_1}{'\n'}{params.info.address_line_2}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {styles.view1}>
+                    <View style = {(!params.info.attributes.background_info || params.info.attributes.background_info == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Background info</Label>
-                        <Label style = {styles.label2}>{params.info.background_info}</Label>
+                        <Label style = {styles.label2}>{params.info.attributes.background_info}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
@@ -101,12 +102,16 @@ class ContactAbout extends Component {
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Created at</Label>
-                        <Label style = {styles.label2}>Jan 25th 2017 9:17am</Label>
+                        <Label style = {styles.label2}>
+                            {/*<Moment parse="MMM DDD YYYY HH:mm">    */}
+                                {params.info.attributes.showed_at}
+                            {/*</Moment>*/}
+                        </Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Updated at</Label>
-                        <Label style = {styles.label2}>Jan 25th 2017 9:17am</Label>
+                        <Label style = {styles.label2}>{params.info.attributes.showed_at}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
@@ -114,16 +119,15 @@ class ContactAbout extends Component {
                 <View style = {styles.subView1}>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Subscribed to bulk communications</Label>
-                        <Label style = {styles.label2}>Yes</Label>
+                        <Label style = {styles.label2}>{params.info.attributes.subscribed? "Yes" : "No"}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Subscribed to SMS</Label>
-                        <Label style = {styles.label2}>Yes</Label>
+                        <Label style = {styles.label2}>{params.info.attributes.sms_subscribed?"Yes" : "No"}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
-
             </Content>
         );
     }

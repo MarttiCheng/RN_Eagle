@@ -31,7 +31,7 @@ class home extends Component<{}>{
     clickListing(item, index) {
         var { dispatch } = this.props;
         dispatch(NavigationActions.navigate({routeName: 'listingsShow', params: {info: item}}))
-    }
+    }  
 
     render() {
         return(

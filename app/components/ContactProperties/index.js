@@ -7,6 +7,8 @@ import {
 import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
+import { BallIndicator } from 'react-native-indicators'
+import { getContactProperty } from '../../actions'
 
 var categoryList = [
     {job: 'Buyer'},
@@ -18,8 +20,14 @@ class ContactProperties extends Component {
     constructor(props){
         super(props)
         this.state = {
-            
+            propertyList: []
         }
+    }
+
+    componentWillMount() {
+        var params = this.props.navigation.state.params;
+        // getContactProperty(this.props.token, params.info.)
+        
     }
 
     renderRow(item, index) {
@@ -31,6 +39,7 @@ class ContactProperties extends Component {
     }
     
     render() {
+        var params = this.props.navigation.state.params
         return (
             <View style = {styles.container}>
                 <View style = {styles.propertyItemView}>
@@ -132,7 +141,7 @@ class ContactProperties extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        
+        token: state.user.token
     }
 }
 

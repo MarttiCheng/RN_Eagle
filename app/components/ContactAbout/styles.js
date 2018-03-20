@@ -110,5 +110,9 @@ export default {
         color: 'white',
         fontFamily: 'open-sans-regular',
     },
+    blankView: {
+        width: 0,
+        height: 0
+    },
 }
 

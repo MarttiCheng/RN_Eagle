@@ -106,5 +106,5 @@ export default {
         width: 45,
         textAlign: 'right',
         // marginRight: 20,
-    }
+    },
 }

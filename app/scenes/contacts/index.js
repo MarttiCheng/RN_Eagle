@@ -12,8 +12,10 @@ import Search from 'react-native-search-box';
 import { NavigationActions, Header } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
-import { getAllContacts } from '../../actions'
+import { getAllContacts, getContactGroups } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
+
+
 
 class contacts extends Component<{}>{
     static navigationOptions = {
@@ -22,16 +24,14 @@ class contacts extends Component<{}>{
 
     constructor(props) {
         super(props);
-        const ds = new ListView.DataSource({
-            rowHasChanged:(r1, r2) => r1 !== r2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-        })
+        
         this.state = {
             email: '',
             password: '',
             isLoading: true,
             searchText: '',
             contactsList: [],
+            contactGroups: [],
         }   
     }
 
@@ -41,33 +41,60 @@ class contacts extends Component<{}>{
     }
 
     getAllContacts(){
-         getAllContacts(this.props.token).then(data => {
-            this.setState({
-                contactsList: data.data,
-                isLoading: false,
-            })
+        var idList = []
+
+        getAllContacts(this.props.token).then(data => {
+            console.log('Get Contact Groups ** ->', data)
             
+            for(var i = 0; i < data.data.length; i++){
+                idList.push(data.data[i].id)
+            }
+            getContactGroups(this.props.token, idList).then(data1 => {
+                console.log('***==>')
+                console.log(data1)
+                this.setState({
+                    contactsList: data.data,
+                    contactGroups: data1,
+                    isLoading: false,
+                })
+            })
+
         })
+
     }
 
-    clickContact(item, index) {
+    clickItemContact(item, index) {
         var { dispatch } = this.props;
         dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {info: item}}))
+    }
+    
+    showContactGroups(index){
+        if(this.state.contactGroups[index].included){
+            return(
+                this.state.contactGroups[index].included.map((item1, index1) => {
+                    return(
+                        <View style = { styles.eachtag } key = {index1}>
+                            <Label style = {styles.tagTxt}>{item1.attributes.name}</Label>
+                        </View>
+                    )
+                })
+            )
+        }
     }
 
     renderRow(item, index) {
         return(
-            <TouchableOpacity key = {index} onPress = {() => this.clickContact(item.attributes, index)}>
+            <TouchableOpacity key = {index} onPress = {() => this.clickItemContact(item, index)}>
                 <View style = {styles.rowView}>
                     <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
                         <View style = {styles.tagView}>
-                            <View style = {item.attributes.suburb? styles.eachtag : null}>
-                                <Label style = {styles.tagTxt}>{item.attributes.suburb}</Label>
-                            </View>
+                            {
+                                this.showContactGroups(index) 
+                            }
+                            
                         </View>
-                        
                         <View style = {styles.line}/>
                     </View>
                 </View>
