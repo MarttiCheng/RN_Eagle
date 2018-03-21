@@ -15,7 +15,12 @@ function Contacts(state = initialTokenState, action) {
             return {
                 ...state,
                 contact_groups: action.data
-            }
+            };
+        case 'GET_CONTACTS_RELATIONSHIP' :
+            return {
+                ...state,
+                contact_relationships: action.data
+            };
         case 'INIT_CONTACTS' : 
             return {
                 ...state,

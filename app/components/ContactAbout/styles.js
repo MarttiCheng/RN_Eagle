@@ -67,7 +67,7 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        marginTop: 30,
+        // marginTop: 30,
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor:'lightgray'
@@ -113,6 +113,10 @@ export default {
     blankView: {
         width: 0,
         height: 0
+    },
+    groupView1: {
+        backgroundColor: 'white', 
+        marginBottom: 30
     },
 }
 

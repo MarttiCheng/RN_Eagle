@@ -71,12 +71,12 @@ class contactsShow extends Component<{}>{
     showTabView(){
         if(this.state.isAbout){
             return(
-                <ContactAbout navigation = {this.props.navigation} info = {this.props.navigation.state.params.info}/>
+                <ContactAbout navigation = {this.props.navigation}/>
             )
         }
         if(this.state.isProperties){
             return(
-                <ContactProperties navigation = {this.props.navigation} info = {this.props.navigation.state.params.info}/>
+                <ContactProperties navigation = {this.props.navigation}/>
             )
         }
         if(this.state.isActivity){
@@ -92,26 +92,28 @@ class contactsShow extends Component<{}>{
     }
 
     showCompany(){
-        var params = this.props.navigation.state.params
-        if(params.info.attributes.title && params.info.attributes.company) {
+        var params = this.props.contact_group
+        if(params.data.attributes.title && params.data.attributes.company) {
             return(
-                <Label style = {styles.jobTxt}>{params.info.attributes.title} at {params.info.attributes.company}</Label>
+                <Label style = {styles.jobTxt}>{params.data.attributes.title} at {params.data.attributes.company}</Label>
             )
         }
-        else if((params.info.attributes.title && params.info.attributes.company == "" )|| (params.info.attributes.title && !params.info.attributes.company)){
+        else if((params.data.attributes.title && params.data.attributes.company == "" )|| (params.data.attributes.title && !params.data.attributes.company)){
             return(
-                <Label style = {styles.jobTxt}>{params.info.attributes.title}</Label>
+                <Label style = {styles.jobTxt}>{params.data.attributes.title}</Label>
             )
         }
-        else if((params.info.attributes.title == '' && params.info.attributes.company ) || (!params.info.attributes.title && params.info.attributes.company )){
+        else if((params.data.attributes.title == '' && params.data.attributes.company ) || (!params.data.attributes.title && params.data.attributes.company )){
             return(
-                <Label style = {styles.jobTxt}>{params.info.attributes.company}</Label>
+                <Label style = {styles.jobTxt}>{params.data.attributes.company}</Label>
             )
         }
     }
 
     render() {
-        var params = this.props.navigation.state.params
+        var params = this.props.contact_group
+        console.log('->')
+        console.log(this.props.contact_group.data)
         return(
             <Container style = {styles.container}>
                 <StatusBar
@@ -121,14 +123,14 @@ class contactsShow extends Component<{}>{
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
                                 onPress={ () => { this.props.navigation.goBack() }} />
-                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{params.info.attributes.first_name} {params.info.attributes.last_name}</Label>
+                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{params.data.attributes.first_name} {params.data.attributes.last_name}</Label>
                     <TouchableOpacity onPress = {this._onSearch}>
                         <Label style = {styles.editTxt}>Edit</Label>
                     </TouchableOpacity>
                 </View>
                 <View style = {styles.headerView}>
-                    <Thumbnail square source = {params.info.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
-                    <Label style = {styles.nameTxt}>{params.info.attributes.first_name} {params.info.attributes.last_name}</Label>
+                    <Thumbnail square source = {params.data.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                    <Label style = {styles.nameTxt}>{params.data.attributes.first_name} {params.data.attributes.last_name}</Label>
                     {this.showCompany()}
                 </View>
                 
@@ -155,7 +157,7 @@ class contactsShow extends Component<{}>{
                 <Content showsVerticalScrollIndicator = {false}>
                     {this.showTabView()}
                 </Content>
-                
+
                 <TouchableOpacity style = {styles.addBtn}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
@@ -164,6 +166,13 @@ class contactsShow extends Component<{}>{
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        token: state.user.token, 
+        contact_group: state.contacts.contact_groups
+    }
+}
+
 //make this component available to the app
-export default connect()(contactsShow);
+export default connect(mapStateToProps)(contactsShow);
 

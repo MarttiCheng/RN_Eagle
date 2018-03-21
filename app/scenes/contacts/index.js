@@ -12,7 +12,7 @@ import Search from 'react-native-search-box';
 import { NavigationActions, Header } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
-import { getAllContacts, getContactGroups } from '../../actions'
+import { getAllContacts, getContactGroups, getContactRelationships } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
 
@@ -32,6 +32,7 @@ class contacts extends Component<{}>{
             searchText: '',
             contactsList: [],
             contactGroups: [],
+            contactRelationships: [],
         }   
     }
 
@@ -52,20 +53,25 @@ class contacts extends Component<{}>{
             getContactGroups(this.props.token, idList).then(data1 => {
                 console.log('***==>')
                 console.log(data1)
-                this.setState({
-                    contactsList: data.data,
-                    contactGroups: data1,
-                    isLoading: false,
+                getContactRelationships(this.props.token, idList).then(data2 => {
+                    console.log('****==>')
+                    console.log(data2)
+                    this.setState({
+                        contactsList: data.data,
+                        contactGroups: data1,
+                        contactRelationships: data2,
+                        isLoading: false,
+                    })
                 })
             })
-
         })
-
     }
 
     clickItemContact(item, index) {
         var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {info: item}}))
+        dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
+        dispatch ({ type: 'GET_CONTACTS_RELATIONSHIP', data: this.state.contactRelationships[index]})
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow'}))
     }
     
     showContactGroups(index){
@@ -84,7 +90,7 @@ class contacts extends Component<{}>{
 
     renderRow(item, index) {
         return(
-            <TouchableOpacity key = {index} onPress = {() => this.clickItemContact(item, index)}>
+            <TouchableOpacity key = {index} onPress = {() => this.clickItemContact( this.state.contactGroups[index], index)}>
                 <View style = {styles.rowView}>
                     <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                     <View style = {styles.rowSubView}>
