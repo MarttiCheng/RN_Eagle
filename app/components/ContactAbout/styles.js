@@ -67,7 +67,7 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        // marginTop: 30,
+        marginBottom: 30,
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor:'lightgray'
@@ -84,6 +84,13 @@ export default {
         marginLeft: 5
     },
     subView1: {
+        borderTopWidth: 1,
+        borderColor: 'lightgray',
+        backgroundColor: 'white',
+        // marginTop: 30,
+        flex: 1,
+    },
+    subView2: {
         borderTopWidth: 1,
         borderColor: 'lightgray',
         backgroundColor: 'white',

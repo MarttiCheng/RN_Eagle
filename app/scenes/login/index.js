@@ -108,7 +108,6 @@ class login extends Component<{}>{
                         this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 50}}/> : null
                     }
                 </View>
-                
             </Container>
         );
     }

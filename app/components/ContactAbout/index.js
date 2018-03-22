@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
 import Moment from 'react-moment';
+import { getContact } from '../../actions'
 
 var categoryList = [
     {job: 'Buyer'},
@@ -47,14 +48,17 @@ class ContactAbout extends Component {
     
     showContactRelationships(relationList){
         if(relationList.data.length > 0){
-            // relationList.data.map((item, index) => {
-                console.log('**')
-                console.log(relationList.data[0].attributes.relationship_type)
+
+            var user_name = this.props.contact_groups.data.attributes.first_name + ' ' + this.props.contact_groups.data.attributes.last_name
+            var contact1_name = relationList.data[0].attributes.contact1_first_name + ' ' + relationList.data[0].attributes.contact1_last_name
+            var contact2_name = relationList.data[0].attributes.contact2_first_name + ' ' + relationList.data[0].attributes.contact2_last_name
+            
+            if(user_name == contact1_name){
                 return(
                     <View style = {styles.view2} >
-                        <Thumbnail square source = {images.avatar_female} style = {styles.avatarImg}/>
+                        <Thumbnail square source = {relationList.data[0].attributes.contact2_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                         <View style = {styles.rowSubView}>
-                            <Label style = {styles.label3}>Sally Sample</Label>
+                            <Label style = {styles.label3}>{contact2_name}</Label>
                             <View style = {styles.tagView}>
                                 <View style = {styles.eachtag}>
                                     <Label style = {styles.tagTxt}>{relationList.data[0].attributes.relationship_type}</Label>
@@ -63,7 +67,24 @@ class ContactAbout extends Component {
                         </View>
                     </View>
                 )
-            // })
+            }
+            else {
+                return(
+                    <View style = {styles.view2} >
+                        <Thumbnail square source = {relationList.data[0].attributes.contact1_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                        <View style = {styles.rowSubView}>
+                            <Label style = {styles.label3}>{contact1_name}</Label>
+                            <View style = {styles.tagView}>
+                                <View style = {styles.eachtag}>
+                                    <Label style = {styles.tagTxt}>{relationList.data[0].attributes.relationship_type}</Label>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                )
+            }
+            
+            
         }
     }
     
@@ -115,17 +136,15 @@ class ContactAbout extends Component {
                     this.showContactRelationships(this.props.contact_relationships)
                 }
 
-                
-
                 <View style = {styles.subView1}>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Assigned to</Label>
-                        <Label style = {styles.label2}>Luke Paverd</Label>
+                        <Label style = {styles.label2}>{params.data.attributes.first_name + ' ' + params.data.attributes.last_name}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {styles.view1}>
+                    <View style = {(!params.data.attributes.referred_by || params.data.attributes.referred_by == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Source</Label>
-                        <Label style = {styles.label2}>RealEstate.com.au</Label>
+                        <Label style = {styles.label2}>{params.data.attributes.referred_by}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
@@ -144,7 +163,7 @@ class ContactAbout extends Component {
                     </View>
                 </View>
 
-                <View style = {styles.subView1}>
+                <View style = {styles.subView2}>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Subscribed to bulk communications</Label>
                         <Label style = {styles.label2}>{params.data.attributes.subscribed? "Yes" : "No"}</Label>
