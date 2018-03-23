@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
 import Moment from 'react-moment';
+import moment from 'moment'
 import { getContact } from '../../actions'
 
 var categoryList = [
@@ -150,15 +151,15 @@ class ContactAbout extends Component {
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Created at</Label>
                         <Label style = {styles.label2}>
-                            {/*<Moment parse="MMM DDD YYYY HH:mm">    */}
-                                {params.data.attributes.showed_at}
-                            {/*</Moment>*/}
+                            {moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma')}
                         </Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Updated at</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.showed_at}</Label>
+                        <Label style = {styles.label2}>
+                            {moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma')}
+                        </Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>

@@ -59,7 +59,6 @@ class login extends Component<{}>{
             alert('Email is not correct')
         }
         
-
         // var { dispatch } = this.props;
         // dispatch(NavigationActions.navigate({routeName: 'contacts'}))
     }

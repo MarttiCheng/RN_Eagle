@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
 import { BallIndicator } from 'react-native-indicators'
-import { getContactProperty } from '../../actions'
+import { getContactProperty_Vendor, getContractProperty_Enquired } from '../../actions'
 
 var categoryList = [
     {job: 'Buyer'},
@@ -20,120 +20,138 @@ class ContactProperties extends Component {
     constructor(props){
         super(props)
         this.state = {
-            propertyList: []
+            propertyList: [],
+            isLoading: true,
+            vendorList: [],
+            enquiredList: [],
+            inspectedList: [],
+            offerList: [],
         }
     }
 
     componentWillMount() {
-        var params = this.props.navigation.state.params;
-        // getContactProperty(this.props.token, params.info.)
+        console.log('propety id ->',this.props.contact_groups.data.id)
+        getContactProperty_Vendor(this.props.token, this.props.contact_groups.data.id).then(data => {
+            getContractProperty_Enquired(this.props.token, this.props.contact_groups.data.id).then(data1 => {
+                console.log('*')
+                console.log(data)
+                this.setState({
+                    vendorList: data.included,
+                    enquiredList: data1.included,
+                    inspectedList: data1.included,
+                    offerList: data1.included,
+                    isLoading: false
+                })
+            })
+        })
         
     }
 
-    renderRow(item, index) {
+    showProperty(){
         return(
-            <View style = {styles.categoryItem} key = {index}>
-                <Label style = {styles.categoryItemTxt}>{item.job}</Label>
+            <View style = {styles.propertyItemView}>
+                <Label style = {styles.propertyItemTitle}>Vendor</Label>
+                {
+                    this.state.vendorList.map((item, index) => {
+                        return(
+                            <View style = {styles.view1} key = {index}>
+                                <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
+                                <View style = {styles.rowSubView}>
+                                    <Label style = {styles.label1}>{item.attributes.full_address}</Label>
+                                    <View style = {styles.tagView}>
+                                        <View style = { styles.eachtag } >
+                                            <Label style = {styles.tagTxt}>{item.attributes.listing_type}</Label>
+                                        </View>
+                                        <View style = { styles.eachtag } >
+                                            <Label style = {styles.tagTxt}>{item.attributes.property_type}</Label>
+                                        </View>
+                                    </View>
+                                    <View style = {styles.line1}/>
+                                </View>
+                            </View>
+                        )
+                    })
+                }
+ 
+                <Label style = {styles.propertyItemTitle}>Enquired on</Label>
+                {
+                    this.state.enquiredList.map((item, index) => {
+                        return(
+                            <View style = {styles.view1} key = {index}>
+                                <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
+                                <View style = {styles.rowSubView}>
+                                    <Label style = {styles.label1}>{item.attributes.full_address}</Label>
+                                    <View style = {styles.tagView}>
+                                        <View style = { styles.eachtag } >
+                                            <Label style = {styles.tagTxt}>{item.attributes.listing_type}</Label>
+                                        </View>
+                                        <View style = { styles.eachtag } >
+                                            <Label style = {styles.tagTxt}>{item.attributes.property_type}</Label>
+                                        </View>
+                                    </View>
+                                    <View style = {styles.line1}/>
+                                </View>
+                            </View>
+                        )
+                    })
+                }
+
+                <Label style = {styles.propertyItemTitle}>Inspected</Label>
+                {
+                    this.state.inspectedList.map((item, index) => {
+                        return(
+                            <View style = {styles.view1} key = {index}>
+                                <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
+                                <View style = {styles.rowSubView}>
+                                    <Label style = {styles.label1}>{item.attributes.full_address}</Label>
+                                    <View style = {styles.tagView}>
+                                        <View style = { styles.eachtag } >
+                                            <Label style = {styles.tagTxt}>{item.attributes.listing_type}</Label>
+                                        </View>
+                                        <View style = { styles.eachtag } >
+                                            <Label style = {styles.tagTxt}>{item.attributes.property_type}</Label>
+                                        </View>
+                                    </View>
+                                    <View style = {styles.line1}/>
+                                </View>
+                            </View>
+                        )
+                    })
+                }
+
+                <Label style = {styles.propertyItemTitle}>Made Offer</Label>
+                {
+                    this.state.offerList.map((item, index) => {
+                        return(
+                            <View style = {styles.view1} key = {index}>
+                                <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
+                                <View style = {styles.rowSubView}>
+                                    <Label style = {styles.label1}>{item.attributes.full_address}</Label>
+                                    <View style = {styles.tagView}>
+                                        <View style = { styles.eachtag } >
+                                            <Label style = {styles.tagTxt}>{item.attributes.listing_type}</Label>
+                                        </View>
+                                        <View style = { styles.eachtag } >
+                                            <Label style = {styles.tagTxt}>{item.attributes.property_type}</Label>
+                                        </View>
+                                    </View>
+                                    <View style = {styles.line1}/>
+                                </View>
+                            </View>
+                        )
+                    })
+                }
             </View>
         )
     }
-    
+
     render() {
         var params = this.props.navigation.state.params
         return (
             <View style = {styles.container}>
-                <View style = {styles.propertyItemView}>
-                    <Label style = {styles.propertyItemTitle}>Vendor</Label>
-                    <View style = {styles.view1}>
-                        <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label1}>50 Bay St, Double Bay</Label>
-                            <Label style = {styles.label2}>Residential sale, House</Label>
-                        </View>
-                    </View>
-                    <View style = {styles.line1}/>
-                    <View style = {styles.view1}>
-                        <Thumbnail square source = {images.france_small} style = {styles.avatarImg}/>
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label1}>137 - 139 Silverwater Road, Silverwater</Label>
-                            <Label style = {styles.label2}>Residential rental, Unit</Label>
-                        </View>
-                    </View>
-                </View>
-
-                <View style = {styles.propertyItemView}>
-                    <Label style = {styles.propertyItemTitle}>Vendor</Label>
-                    <View style = {styles.view1}>
-                        <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label1}>50 Bay St, Double Bay</Label>
-                            <Label style = {styles.label2}>Residential sale, House</Label>
-                        </View>
-                        <View style = {styles.favoriteView}>
-                            <Label style = {styles.favoriteDate}>21 Feb</Label>
-                            <Thumbnail square source = {images.favorite_up} style = {styles.favoriteImg}/>
-                        </View>
-                    </View>
-                    <View style = {styles.line1}/>
-                    <View style = {styles.view1}>
-                        <Thumbnail square source = {images.france_small} style = {styles.avatarImg}/>
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label1}>137 - 139 Silverwater Road, Silverwater</Label>
-                            <Label style = {styles.label2}>Residential rental, Unit</Label>
-                        </View>
-                        <View style = {styles.favoriteView}>
-                            <Label style = {styles.favoriteDate}>20 Feb</Label>
-                            <Thumbnail square source = {images.favorite_down} style = {styles.favoriteImg}/>
-                        </View>
-                    </View>
-                </View>
-
-                <View style = {styles.propertyItemView}>
-                    <Label style = {styles.propertyItemTitle}>Inspected</Label>
-                    <View style = {styles.view1}>
-                        <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label1}>50 Bay St, Double Bay</Label>
-                            <Label style = {styles.label2}>Residential sale, House</Label>
-                        </View>
-                        <View style = {styles.favoriteView}>
-                            <Label style = {styles.favoriteDate}>26 Feb</Label>
-                            <Thumbnail square source = {images.favorite_up} style = {styles.favoriteImg}/>
-                        </View>
-                    </View>
-                    <View style = {styles.line1}/>
-                    <View style = {styles.view1}>
-                        <Thumbnail square source = {images.france_small} style = {styles.avatarImg}/>
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label1}>137 - 139 Silverwater Road, Silverwater</Label>
-                            <Label style = {styles.label2}>Residential rental, Unit</Label>
-                        </View>
-                        <View style = {styles.favoriteView}>
-                            <Label style = {styles.favoriteDate}>26 Feb</Label>
-                            <Thumbnail square source = {images.favorite_medium} style = {styles.favoriteImg}/>
-                        </View>
-                    </View>
-                </View>
-
-                <View style = {styles.propertyItemView}>
-                    <Label style = {styles.propertyItemTitle}>Made Offer</Label>
-                    <View style = {styles.view1}>
-                        <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label1}>50 Bay St, Double Bay</Label>
-                            <Label style = {styles.label2}>$650,000</Label>
-                        </View>
-                    </View>
-                    <View style = {styles.line1}/>
-                    <View style = {styles.view1}>
-                        <Thumbnail square source = {images.france_small} style = {styles.avatarImg}/>
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label1}>137 - 139 Silverwater Road, Silverwater</Label>
-                            <Label style = {styles.label2}>$630,000</Label>
-                        </View>
-                    </View>
-                </View>
-
+                {
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showProperty()
+                }
             </View>
         );
     }
@@ -141,9 +159,12 @@ class ContactProperties extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        token: state.user.token
+        token: state.user.token, 
+        contact_groups: state.contacts.contact_groups,
+        contact_relationships: state.contacts.contact_relationships,
+
     }
 }
 
-export default connect()(ContactProperties)
+export default connect(mapStateToProps)(ContactProperties)
 

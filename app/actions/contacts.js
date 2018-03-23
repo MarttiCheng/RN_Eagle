@@ -42,9 +42,9 @@ function getContact(token, id) {
     })
 }
 
-function getContactProperty(token, url){
+function getContactProperty_Vendor(token, id){
     return new Promise((resolve, reject) => {
-        fetch(url, {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '?include=vendor_of', {
             method: 'GET',
             headers: {
                 'Authorization': token
@@ -52,11 +52,31 @@ function getContactProperty(token, url){
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Contact Property Success', data);
+            console.log('Get Contact Property Vendor Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Contact Property Failed', err);
+            console.log('Get Contact Property Vendor Failed', err);
+            reject(err);
+        })
+    })
+}
+
+function getContractProperty_Enquired(token, id){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/notes?filter[note_type]=enquiry,Enquiry,Inspection,Offer&include=property', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            console.log('Get Contact Property Enquired Success', data);
+            resolve(data);
+        })
+        .catch(err => {
+            console.log('Get Contact Property Enquired Failed', err);
             reject(err);
         })
     })
@@ -116,10 +136,32 @@ function getContactRelationships(token, idList) {
     })
 }
 
+function getContactActivity(token, id) {
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/notes?filter[note_type]=enquiry,Enquiry,Inspection,Offer', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            console.log('Get Contact Activity Success', data);
+            resolve(data);
+        })
+        .catch(err => {
+            console.log('Get Contact Activity Failed', err);
+            reject(err);
+        })
+    })
+}
+
 module.exports = {
     getAllContacts,
     getContact,
-    getContactProperty,
+    getContactProperty_Vendor,
+    getContractProperty_Enquired,
     getContactGroups,
-    getContactRelationships
+    getContactRelationships,
+    getContactActivity,
 }
