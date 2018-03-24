@@ -156,6 +156,26 @@ function getContactActivity(token, id) {
     })
 }
 
+function getContactTasks(token, id){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/tasks?filter[completed]=0', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            console.log('Get Contact Tasks Success', data);
+            resolve(data);
+        })
+        .catch(err => {
+            console.log('Get Contact Tasks Failed', err);
+            reject(err);
+        })
+    })
+}
+
 module.exports = {
     getAllContacts,
     getContact,
@@ -164,4 +184,5 @@ module.exports = {
     getContactGroups,
     getContactRelationships,
     getContactActivity,
+    getContactTasks,
 }

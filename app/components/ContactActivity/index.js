@@ -11,6 +11,7 @@ import { getContactActivity } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import { FontAwesome} from '@expo/vector-icons'
 import moment from 'moment'
+import HTML from 'react-native-render-html'
 
 // create a component
 class ContactActivity extends Component {
@@ -79,8 +80,7 @@ class ContactActivity extends Component {
                     </Label>
                 </View>
                 <View style = {styles.view2}>
-                    <Label style = {styles.titleTxt}>{item.attributes.text}</Label>
-                    <Label style = {styles.contactTxt}>{item.attributes.description}</Label>
+                    <HTML html = {item.attributes.description}/>
                 </View>
             </View>
         )
@@ -110,7 +110,6 @@ const mapStateToProps = (state, ownProps) => {
         token: state.user.token, 
         contact_groups: state.contacts.contact_groups,
         contact_relationships: state.contacts.contact_relationships,
-
     }
 }
 
