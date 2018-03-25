@@ -32,41 +32,68 @@ class ListingAbout extends Component {
     }
     
     render() {
+        console.log('-->', this.props.listings_about)
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 <View>
                     <Thumbnail square source = {images.listing_home} style = {styles.homeImg}/>
                     <View style = {styles.detailView}>
-                        <Label style = {styles.streetTxt}>{this.props.navigation.state.params.info.address_street}</Label>
-                        <Label style = {styles.streetNameTxt}>{this.props.navigation.state.params.info.address_name}</Label>
+                        <Label style = {styles.streetTxt}>{this.props.listings_about.attributes.full_address}</Label>
+                        <Label style = {styles.streetNameTxt}>{this.props.listings_about.attributes.street}</Label>
                         <View style = {styles.roomdetailView}>
                             <View style = {{flexDirection: 'row', alignItems: 'center'}}>
                                 <Thumbnail square source = {images.ic_bed} style = {styles.iconImg}/>
-                                <Label style = {styles.streetTxt}>3</Label>
+                                {
+                                    (this.props.listings_about.attributes.bedrooms == 0 || !this.props.listings_about.attributes.bedrooms) ?
+                                    <Label style = {styles.streetTxt}>0</Label> : 
+                                    <Label style = {styles.streetTxt}>{this.props.listings_about.attributes.bedrooms}</Label>
+                                }
                             </View>
                             <View style = {{flexDirection: 'row', alignItems: 'center'}}>
                                 <Thumbnail square source = {images.ic_bath} style = {styles.iconImg}/>
-                                <Label style = {styles.streetTxt}>2</Label>
+                                {
+                                    (this.props.listings_about.attributes.bathrooms == 0 || !this.props.listings_about.attributes.bathrooms) ?
+                                    <Label style = {styles.streetTxt}>0</Label> :
+                                    <Label style = {styles.streetTxt}>{this.props.listings_about.attributes.bathrooms}</Label>
+                                }
                             </View>
                             <View style = {{flexDirection: 'row', alignItems: 'center'}}>
                                 <Thumbnail square source = {images.ic_car} style = {styles.iconImg}/>
-                                <Label style = {styles.streetTxt}>3</Label>
+                                {
+                                    (this.props.listings_about.attributes.carport_spaces == 0 || !this.props.listings_about.attributes.carport_spaces) ?
+                                    <Label style = {styles.streetTxt}>0</Label> : 
+                                    <Label style = {styles.streetTxt}>{this.props.listings_about.attributes.carport_spaces}</Label>
+
+                                }
                             </View>
                             <View style = {{flexDirection: 'row', alignItems: 'center'}}>
                                 <Thumbnail square source = {images.ic_expand} style = {styles.iconImg}/>
-                                <Label style = {styles.streetTxt}>700m2</Label>
+                                {
+                                    (this.props.listings_about.attributes.land_size == 0 || !this.props.listings_about.attributes.land_size) ?
+                                    <Label style = {styles.streetTxt}>0m2</Label> :
+                                    <Label style = {styles.streetTxt}>{this.props.listings_about.attributes.land_size}m2</Label>
+                                }
                             </View>
                         </View>
                     </View>
                     
                 </View>
 
-                <View style = {styles.categoryView}>
+                {/*<View style = {styles.categoryView}>
                     {
                         categoryList.map((item, index) => {
                             return(this.renderRow(item, index))
                         })
                     }
+                </View>*/}
+
+                <View style = {styles.categoryView}>
+                    <View style = {styles.categoryItem}>
+                        <Label style = {styles.categoryItemTxt}>{this.props.listings_about.attributes.listing_type}</Label>
+                    </View>
+                    <View style = {styles.categoryItem}>
+                        <Label style = {styles.categoryItemTxt}>{this.props.listings_about.attributes.property_type}</Label>
+                    </View>
                 </View>
                 
                 <View style = {{backgroundColor: 'white'}}>
@@ -136,9 +163,10 @@ class ListingAbout extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        
+        token: state.user.token, 
+        listings_about: state.listings.listings
     }
 }
 
-export default connect()(ListingAbout)
+export default connect(mapStateToProps)(ListingAbout)
 

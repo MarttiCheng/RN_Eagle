@@ -12,6 +12,8 @@ import Search from 'react-native-search-box';
 import { NavigationActions, Header } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
+import { getProperties } from '../../actions'
+import { BallIndicator } from 'react-native-indicators'
 
 var listingsList = [
     {address_street:'50 Bay St', address_name: 'Double Bay',  avatar: images.france_small, job: 'Residential sale, House'},
@@ -28,13 +30,24 @@ class listings extends Component<{}>{
         this.state = {
             email: '',
             password: '',
-            isLoading: false,
+            isLoading: true,
             searchText: '',
+            listingsList: [],
         }   
+    }
+
+    componentWillMount() {
+        getProperties(this.props.token).then(data => {
+            this.setState({
+                isLoading: false,
+                listingsList: data.data,
+            })
+        })
     }
 
     clickListing(item, index) {
         var { dispatch } = this.props;
+        dispatch ({ type: 'GET_LISTINGS', data: item})
         dispatch(NavigationActions.navigate({routeName: 'listingsShow', params: {info: item}}))
     }
 
@@ -42,18 +55,17 @@ class listings extends Component<{}>{
         return(
             <TouchableOpacity key = {index} onPress = {() => this.clickListing(item, index)}>
                 <View style = {styles.rowView}>
-                    <Thumbnail square source = {item.avatar} style = {styles.avatarImg}/>
+                    <Thumbnail square source = {item.relationships.images.links.self} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                     <View style = {styles.rowSubView}>
-                        <Label style = {styles.label1}>{item.address_street}, {item.address_name}</Label>
+                        <Label style = {styles.label1}>{item.attributes.full_address}</Label>
                         <View style = {styles.tagView}>
                             <View style = {styles.eachtag}>
-                                 <Label style = {styles.label2}>Active</Label>
+                                <Label style = {styles.labeltag}>{item.attributes.listing_type}</Label>
                             </View>
                             <View style = {styles.eachtag}>
-                                 <Label style = {styles.label2}>House</Label>
+                                <Label style = {styles.labeltag}>{item.attributes.property_type}</Label>
                             </View>
                         </View>
-                        
                     </View>
                     <Label style = {styles.saleTxt}>For Sale</Label>
                     <View style = {styles.line}/>
@@ -95,7 +107,8 @@ class listings extends Component<{}>{
                     </View>
                     
                     {
-                        listingsList.map((item, index) => {
+                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> :
+                        this.state.listingsList.map((item, index) => {
                             return(this.renderRow(item, index))
                         })
                     }
@@ -108,5 +121,11 @@ class listings extends Component<{}>{
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        token: state.user.token, 
+    }
+}
+
 //make this component available to the app
-export default connect()(listings);
+export default connect(mapStateToProps)(listings);

@@ -22,7 +22,7 @@ export default {
         fontFamily: 'open-sans-regular'
     },
     categoryItem: {
-        marginLeft: 13,
+        marginRight: 13,
         backgroundColor: 'white',
         borderRadius: 5,
         paddingTop: 5,
@@ -116,11 +116,13 @@ export default {
         color: 'white',
         fontFamily: 'open-sans-bold',
         fontSize: 22,
+        textAlign: 'center'
     },
     streetNameTxt: {
         color: 'white',
         fontFamily: 'open-sans-regular',
         fontSize: 16,
+        textAlign: 'center'
     },
     roomdetailView: {
         width: width - 40,
@@ -148,11 +150,27 @@ export default {
         borderRadius: 8,
         height: 16,
         width: 56,
-        // paddingLeft: 8,
-        // paddingRight: 8,
         marginTop: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        
-    }
+    },
+    // tagView: {
+    //     flexDirection:'row',
+    //     flex: 1,
+    // },
+    // eachtag: {
+    //     backgroundColor: '#B4BCC8',
+    //     paddingLeft: 8,
+    //     paddingRight: 8,
+    //     height: 16,
+    //     borderRadius: 8,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    //     marginRight: 10
+    // },
+    // labeltag: {
+    //     fontSize: 10,
+    //     color: 'white',
+    //     fontFamily: 'open-sans-regular',
+    // },
 }

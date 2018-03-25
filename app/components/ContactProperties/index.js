@@ -30,7 +30,6 @@ class ContactProperties extends Component {
     }
 
     componentWillMount() {
-        console.log('propety id ->',this.props.contact_groups.data.id)
         getContactProperty_Vendor(this.props.token, this.props.contact_groups.data.id).then(data => {
             getContractProperty_Enquired(this.props.token, this.props.contact_groups.data.id).then(data1 => {
                 console.log('*')

@@ -52,7 +52,7 @@ export default {
         alignItems: 'center',
         marginRight: 10
     },
-    label2: {
+    labeltag: {
         fontSize: 10,
         color: 'white',
         fontFamily: 'open-sans-regular',
@@ -109,5 +109,4 @@ export default {
         fontWeight: '300',
         marginTop: -5
     },
-
 }

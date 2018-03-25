@@ -17,6 +17,7 @@ import ContactActivity from '../../components/ContactActivity';
 import ContactTask from '../../components/ContactTask';
 import ListingInspections from '../../components/ListingInspections';
 import ListingDocuments from '../../components/ListingDocuments';
+import ListingActivity from '../../components/ListingActivity';
 
 class listingsShow extends Component<{}>{
     static navigationOptions = {
@@ -80,7 +81,7 @@ class listingsShow extends Component<{}>{
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
                                 onPress={ () => { this.props.navigation.goBack() }} />
-                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{this.props.navigation.state.params.info.address_street}, {this.props.navigation.state.params.info.address_name}</Label>
+                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{this.props.navigation.state.params.info.attributes.full_address}</Label>
                     <TouchableOpacity onPress = {this._onSearch}>
                         <Label style = {styles.editTxt}>Edit</Label>
                     </TouchableOpacity>
@@ -91,7 +92,7 @@ class listingsShow extends Component<{}>{
                         <ListingAbout info = {this.props.navigation.state.params.info} navigation = {this.props.navigation}/>
                     </Tab>
                     <Tab heading="ACTIVITY" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <ContactActivity/>
+                        <ListingActivity/>
                     </Tab>
                     <Tab heading="INSPECTIONS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}>
                         <ListingInspections />

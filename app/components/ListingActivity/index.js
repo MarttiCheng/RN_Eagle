@@ -14,7 +14,7 @@ import moment from 'moment'
 import HTML from 'react-native-render-html'
 
 // create a component
-class ContactActivity extends Component {
+class ListingActivity extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -24,7 +24,7 @@ class ContactActivity extends Component {
     }
     
     componentWillMount() {
-       getContactActivity(this.props.token, this.props.contact_groups.data.id).then(data => {  
+       getContactActivity(this.props.token, 25).then(data => {  
            this.setState({
                isLoading: false,
                activityList: data.data
@@ -80,7 +80,6 @@ class ContactActivity extends Component {
                     </Label>
                 </View>
                 <View style = {styles.view2}>
-                    <Label style = {styles.text}>{item.attributes.text}</Label>
                     <HTML html = {item.attributes.description}/>
                 </View>
             </View>
@@ -109,10 +108,9 @@ class ContactActivity extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
-        contact_groups: state.contacts.contact_groups,
-        contact_relationships: state.contacts.contact_relationships,
+        listings_about: state.listings.listings
     }
 }
 
-export default connect(mapStateToProps)(ContactActivity)
+export default connect(mapStateToProps)(ListingActivity)
 

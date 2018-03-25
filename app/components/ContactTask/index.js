@@ -31,14 +31,14 @@ class ContactTask extends Component {
            this.setState({
                isLoading: false,
                tasksList: data.data
-           })                
+           })
         })
     }
 
     renderRow(item, index) {
         return(
             <View style = {styles.taskItemView} key = {index}>
-                <View style = {styles.view1}>
+                <View style = {styles.view1}> 
                     <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.attributes.body}</Label>
@@ -57,7 +57,6 @@ class ContactTask extends Component {
             this.state.tasksList.map((item, index) => {
                 return( this.renderRow(item, index ));
             })
-            
         )
     }
     
