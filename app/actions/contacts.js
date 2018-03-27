@@ -138,7 +138,7 @@ function getContactRelationships(token, idList) {
 
 function getContactActivity(token, id) {
     return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/notes?filter[note_type]=enquiry,Enquiry,Inspection,Offer', {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/notes', {
             method: 'GET',
             headers: {
                 'Authorization': token

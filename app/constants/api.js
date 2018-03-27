@@ -4,4 +4,5 @@ export const API = {
     ALL_ACCOUNTS: '/api/v2/accounts',
     ALL_CONTACTS: '/api/v2/contacts',
     ALL_LISTINGS: '/api/v2/properties',
+    ALL_TASKS: '/api/v2/tasks',
 }

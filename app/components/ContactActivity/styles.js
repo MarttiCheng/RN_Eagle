@@ -1,13 +1,14 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform, StatusBar } from 'react-native';
+import { Header } from 'react-navigation'
 const { width, height } = Dimensions.get('window')
 
 export default {
     container: {
         flex: 1,
         backgroundColor: '#ddd',
-        
         paddingLeft: 15,
-        paddingRight: 15
+        paddingRight: 15,
+        paddingBottom: 15
     },
     activityItem: {
         marginTop: 20
@@ -51,7 +52,37 @@ export default {
     text: {
         fontSize: 14,
         color: '#2B3643',
-        marginBottom: 5
+        marginBottom: 10
+    },
+    detailNoteView: {
+        flex: 1,
+        width: width,
+        height: height,
+        backgroundColor: '#ddd',
+    },
+    menuView: {
+        width: width,
+        height: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT+20,
+        paddingTop: (Platform.OS == 'ios')? 20 : StatusBar.currentHeight,
+        flexDirection:'row',
+        alignItems:'center',
+        backgroundColor: '#2B3643',
+        justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    blankView: {
+        width: 25,
+        height: 25,
+        backgroundColor: 'transparent'
+    },
+    title: {
+        color: 'white',
+        fontSize: 18,
+        // fontFamily: 'open-sans-bold'
+    },
+    contentView: {
+        flex: 1,
+        backgroundColor: '#ddd',
     }
-    
 }

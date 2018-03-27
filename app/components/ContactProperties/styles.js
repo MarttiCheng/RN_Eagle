@@ -86,9 +86,4 @@ export default {
         alignItems: 'center',
         marginRight: 10
     },
-    tagTxt: {
-        fontSize: 10,
-        color: 'white',
-        fontFamily: 'open-sans-regular',
-    },
 }

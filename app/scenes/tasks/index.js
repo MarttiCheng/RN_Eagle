@@ -9,10 +9,38 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import styles from './styles'
 import images from '../../themes/images'
-import ContactTask from '../../components/ContactTask'
+import TaskShow from '../../components/TaskShow'
+import { getCompletedTasks, getUnCompletedTasks } from '../../actions'
+import {connect} from 'react-redux';
+
 
 // create a component
 class tasks extends Component {
+    static navigationOptions = {
+        header: null,
+    }
+
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            isLoading: true,
+            completedTaskList: [],
+            uncompletedTaskList: []
+        }   
+    }
+
+    componentWillMount() {
+        getCompletedTasks(this.props.token).then(data => {
+            getUnCompletedTasks(this.props.token).then(data1 => {
+                this.setState({
+                    isLoading: false,
+                    completedTaskList: data.data,
+                    uncompletedTaskList: data1.data
+                })
+            })
+        })
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -30,10 +58,10 @@ class tasks extends Component {
                 </View>
                 <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47', height: 3}} >
                     <Tab heading="DUE TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <ContactTask/>
+                        <TaskShow tasksList = {this.state.completedTaskList} isLoading = {this.state.isLoading}/>
                     </Tab>
                     <Tab heading="FUTURE TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <ContactTask/>
+                        <TaskShow tasksList = {this.state.uncompletedTaskList} isLoading = {this.state.isLoading}/>
                     </Tab>
                 </Tabs>
                 <TouchableOpacity style = {styles.addBtn}>
@@ -44,6 +72,11 @@ class tasks extends Component {
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        token: state.user.token, 
+    }
+}
 
 //make this component available to the app
-export default tasks;
+export default connect(mapStateToProps)(tasks);

@@ -13,6 +13,7 @@ import Sidebar from '../components/Sidebar/index';
 import listingsShow from '../scenes/listingsShow/index';
 import homeShow from '../scenes/homeShow/index';
 import homeEdit from '../scenes/homeEdit/index';
+import tasksShow from '../scenes/tasksShow/index';
 
 const Drawer = DrawerNavigator(
     {
@@ -36,6 +37,7 @@ export const AppNavigator = StackNavigator({
     listingsShow: { screen: listingsShow },
     homeShow: { screen: homeShow },
     homeEdit: { screen: homeEdit },
+    tasksShow: { screen: tasksShow },
     },{
         headerMode: 'none',
     }

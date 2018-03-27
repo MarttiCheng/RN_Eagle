@@ -91,6 +91,7 @@ export default {
     tagView: {
         flexDirection:'row',
         flex: 1,
+        marginTop: 5,
     },
     addBtn: {
         position: 'absolute',

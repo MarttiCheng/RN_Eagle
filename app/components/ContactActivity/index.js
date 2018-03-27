@@ -1,6 +1,6 @@
 //import libraries
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView} from 'react-native';
+import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView, Modal} from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
@@ -12,6 +12,7 @@ import { BallIndicator } from 'react-native-indicators'
 import { FontAwesome} from '@expo/vector-icons'
 import moment from 'moment'
 import HTML from 'react-native-render-html'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 // create a component
 class ContactActivity extends Component {
@@ -20,6 +21,8 @@ class ContactActivity extends Component {
         this.state = {
             isLoading: true,
             activityList: [],
+            modalVisible: false,
+            selected_note: []
         }
     }
     
@@ -70,20 +73,29 @@ class ContactActivity extends Component {
         }
     }
 
+    onClickedNote(item) {
+        this.setState({
+            modalVisible: true,
+            selected_note: item.attributes,
+        })
+    }
+
     renderRow(item, index) {
         return(
-            <View style = {styles.activityItem} key = {index}>
-                <View style = {styles.view1}>
-                    { this.showNoteIcon(item.attributes.note_type) }
-                    <Label style = {styles.dateTxt}>
-                        {moment(item.attributes.created_at).format('DD MMM YYYY, h:mma')}
-                    </Label>
+            <TouchableOpacity key = {index} onPress = {() => this.onClickedNote(item)}>
+                <View style = {styles.activityItem} >
+                    <View style = {styles.view1}>
+                        { this.showNoteIcon(item.attributes.note_type) }
+                        <Label style = {styles.dateTxt}>
+                            {moment(item.attributes.created_at).format('DD MMM YYYY, h:mma')}
+                        </Label>
+                    </View>
+                    <View style = {styles.view2}>
+                        <Label style = {styles.text}>{item.attributes.text}</Label>
+                        <HTML html = {item.attributes.description}/>
+                    </View>
                 </View>
-                <View style = {styles.view2}>
-                    <Label style = {styles.text}>{item.attributes.text}</Label>
-                    <HTML html = {item.attributes.description}/>
-                </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -101,6 +113,29 @@ class ContactActivity extends Component {
                 {
                     this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showContactActivity()
                 }
+                <Modal
+                    animationType = 'slide'
+                    transparent = {false}
+                    visible = {this.state.modalVisible}
+                    onRequestClose = {() => [
+                        alert('Modal has been closed')
+                    ]}>
+                    <Container style = {styles.detailNoteView}>
+                        <View style = {styles.menuView}>
+                            <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
+                                onPress={ () => this.setState({ modalVisible:false } )} />
+                            <Label style = {styles.title}>{this.state.selected_note.note_type}</Label>
+                            <View style = {styles.blankView}></View>
+                        </View>
+                        <Content style = {styles.contentView}>
+                            <View style = {{padding: 15}}>
+                                <Label>{this.state.selected_note.text}</Label>
+                                <HTML html = {this.state.selected_note.description}/>
+                            </View>
+                            
+                        </Content>
+                    </Container>
+                </Modal>
             </View>
         );
     }

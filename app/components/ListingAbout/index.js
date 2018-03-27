@@ -38,7 +38,7 @@ class ListingAbout extends Component {
                 <View>
                     <Thumbnail square source = {images.listing_home} style = {styles.homeImg}/>
                     <View style = {styles.detailView}>
-                        <Label style = {styles.streetTxt}>{this.props.listings_about.attributes.full_address}</Label>
+                        <Label style = {styles.streetTxt}>{this.props.listings_about.attributes.street}</Label>
                         <Label style = {styles.streetNameTxt}>{this.props.listings_about.attributes.street}</Label>
                         <View style = {styles.roomdetailView}>
                             <View style = {{flexDirection: 'row', alignItems: 'center'}}>
@@ -123,7 +123,6 @@ class ListingAbout extends Component {
                             <View style = {styles.venderCategoryView}>
                                 <Label style = {styles.venderSubtitle}>Vendor</Label>
                             </View>
-                            
                         </View>
                     </View>
                     <View style = {styles.line1}/>

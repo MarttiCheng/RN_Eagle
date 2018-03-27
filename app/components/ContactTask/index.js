@@ -11,11 +11,6 @@ import { getContactTasks } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import moment from 'moment'
 
-var categoryList = [
-    {job: 'Buyer'},
-    {job: 'Property alerts'},
-]
-
 // create a component
 class ContactTask extends Component {
     constructor(props){

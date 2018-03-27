@@ -153,24 +153,5 @@ export default {
         marginTop: 5,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    // tagView: {
-    //     flexDirection:'row',
-    //     flex: 1,
-    // },
-    // eachtag: {
-    //     backgroundColor: '#B4BCC8',
-    //     paddingLeft: 8,
-    //     paddingRight: 8,
-    //     height: 16,
-    //     borderRadius: 8,
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    //     marginRight: 10
-    // },
-    // labeltag: {
-    //     fontSize: 10,
-    //     color: 'white',
-    //     fontFamily: 'open-sans-regular',
-    // },
+    }
 }
