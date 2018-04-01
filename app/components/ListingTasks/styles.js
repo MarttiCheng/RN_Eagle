@@ -4,10 +4,11 @@ const { width, height } = Dimensions.get('window')
 export default {
     container: {
         flex: 1,
-        backgroundColor: '#ddd'
+        backgroundColor: '#ddd',
+        // marginTop: 20,
     },
     taskItemView: {
-        marginTop: 20
+        marginTop: 0
     },
     view1: {
         paddingLeft: 15,
@@ -17,28 +18,20 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        borderBottomWidth: 1,
-        borderColor:'lightgray',
     },
     rowSubView: {
         marginLeft: 15,
         flex: 1
     },
-    avatarImg: {
-        width: 30,
-        height: 30,
+    checkImg: {
+        width: 25,
+        height: 25,
         resizeMode: 'cover',
     },
     label1: {
         color:'black',
         fontSize: 16, 
         fontFamily: 'open-sans-regular',
-        marginLeft: 15,
-        flex: 1
-    },
-    line1: {
-        height: 1,
-        width: 200,
     },
     favoriteDate: {
         fontSize: 11,
@@ -46,15 +39,9 @@ export default {
         marginLeft: 10,
         fontFamily: 'open-sans-regular',
     },
-    favoriteImg: {
-        width: 20,
-        height : 20,
-        resizeMode: 'contain',
-        marginTop: 5
-    },
-    favoriteView: {
-        alignItems: 'center',
-        marginLeft: 10
+    line1: {
+        height: 1,
+        width: 200,
     },
     nomoretxt: {
         marginTop: 25,
@@ -63,5 +50,5 @@ export default {
         fontSize: 16, 
         color: '#364150',
         fontFamily: 'open-sans-bold',
-    }
+    },
 }

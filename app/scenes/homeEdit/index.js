@@ -27,6 +27,11 @@ var enquiredList = [
 
 // create a component
 class homeEdit extends Component {
+    static navigationOptions = {
+        header: null,
+        gesturesEnabled: false
+    }
+    
     constructor(props){
         super(props)
         this.state = {

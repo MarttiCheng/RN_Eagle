@@ -8,44 +8,64 @@ import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
 import {FontAwesome} from '@expo/vector-icons'
+import { getListingsInspections } from '../../actions'
+import { BallIndicator } from 'react-native-indicators'
 
-var inspectionsList = [
-    {date: '10th March', duration: '10am - 10:30am'},
-    {date: '12th March', duration: '1pm - 1:30pm'},
-    {date: '14th March', duration: '11am - 11:30am'},
-]
 
 // create a component
 class ListingInspections extends Component {
     constructor(props){
         super(props)
         this.state = {
-            
+            isLoading: true,
+            inspectionsList:[]
         }
     }
 
+    componentWillMount() {
+        getListingsInspections(this.props.token, this.props.listings_about.id).then(data => {  
+           this.setState({
+               isLoading: false,
+               inspectionsList: data.data
+           })
+        })
+    }
+
+
     renderRow(item, index) {
         return(
-            <Content style = {styles.activityItem} key = {index} >
+            <View style = {styles.activityItem} key = {index} >
                 <View style = {styles.view1}>
-                    <Label style = {styles.dateTxt}>{item.date}</Label>
+                    <Label style = {styles.dateTxt}>item.date</Label>
                 </View>
                 <View style = {styles.view2}>
                     <FontAwesome name = 'calendar' size = {20} color = '#757575' style = {{marginLeft: 5}} />
-                    <Label style = {styles.duractionTxt}>{item.duration}</Label> 
+                    <Label style = {styles.duractionTxt}>item.duration</Label> 
                 </View>
-            </Content>
+            </View>
         )
     }
     
+    showContactInspections(){
+        if(this.state.inspectionsList.length > 0){
+            return(
+                this.state.inspectionsList.map((item, index) => {
+                    return(this.renderRow(item, index))
+                })
+            )
+        }
+        else{
+            return(
+                <Label style = {styles.nomoretxt}>No more data</Label>
+            )
+        }        
+    }
     render() {
         return (
             <Content style = {styles.container}>
                 {
-                    inspectionsList.map((item, index) => {
-                        return(this.renderRow(item, index))
-                    })
-                }
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showContactInspections()
+                }                
             </Content>
         );
     }
@@ -53,9 +73,10 @@ class ListingInspections extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        
+        token: state.user.token, 
+        listings_about: state.listings.listings
     }
 }
 
-export default connect()(ListingInspections)
+export default connect(mapStateToProps)(ListingInspections)
 

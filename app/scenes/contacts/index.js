@@ -20,6 +20,7 @@ import { BallIndicator } from 'react-native-indicators'
 class contacts extends Component<{}>{
     static navigationOptions = {
         header: null,
+        gesturesEnabled: false
     }
 
     constructor(props) {
@@ -45,17 +46,11 @@ class contacts extends Component<{}>{
         var idList = []
 
         getAllContacts(this.props.token).then(data => {
-            console.log('Get Contact Groups ** ->', data)
-            
             for(var i = 0; i < data.data.length; i++){
                 idList.push(data.data[i].id)
             }
             getContactGroups(this.props.token, idList).then(data1 => {
-                console.log('***==>')
-                console.log(data1)
                 getContactRelationships(this.props.token, idList).then(data2 => {
-                    console.log('****==>')
-                    console.log(data2)
                     this.setState({
                         contactsList: data.data,
                         contactGroups: data1,

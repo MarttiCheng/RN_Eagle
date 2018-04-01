@@ -7,20 +7,31 @@ import {
 import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
-
-var categoryList = [
-    {job: 'Residential sale'},
-    {job: 'House'},
-    {job: 'Active'},
-]
+import { getListingsVendors } from '../../actions'
 
 // create a component
 class ListingAbout extends Component {
     constructor(props){
         super(props)
         this.state = {
-            
+            vendors: [],
+            postCode: 0,
+            region: '',
         }
+    }
+
+    componentWillMount() {
+        getListingsVendors(this.props.token, this.props.listings_about.id).then(data => {
+            this.setState({ vendors: data.data })
+        })
+
+        this.fetchPostCode()
+    }
+
+    async fetchPostCode(){
+        let response = await fetch('https://api.postcodes.io/random/postcodes');
+        let responseJson = await response.json();
+        console.log(responseJson['result']['postcode'])
     }
 
     renderRow(item, index) {
@@ -32,13 +43,15 @@ class ListingAbout extends Component {
     }
     
     render() {
-        console.log('-->', this.props.listings_about)
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 <View>
-                    <Thumbnail square source = {images.listing_home} style = {styles.homeImg}/>
+                    {
+                        this.props.listings_about.attributes.thumbnail?<Thumbnail square source = {{uri:this.props.listings_about.attributes.thumbnail }} style = {styles.homeImg} defaultSource = {images.placeholderImage}/> :
+                        <Thumbnail square style = {styles.homeImg} source = {images.placeholderImage}/>
+                    }
                     <View style = {styles.detailView}>
-                        <Label style = {styles.streetTxt}>{this.props.listings_about.attributes.street}</Label>
+                        <Label style = {styles.streetTxt}>{this.props.listings_about.attributes.formatted_address_line_1}</Label>
                         <Label style = {styles.streetNameTxt}>{this.props.listings_about.attributes.street}</Label>
                         <View style = {styles.roomdetailView}>
                             <View style = {{flexDirection: 'row', alignItems: 'center'}}>
@@ -79,14 +92,6 @@ class ListingAbout extends Component {
                     
                 </View>
 
-                {/*<View style = {styles.categoryView}>
-                    {
-                        categoryList.map((item, index) => {
-                            return(this.renderRow(item, index))
-                        })
-                    }
-                </View>*/}
-
                 <View style = {styles.categoryView}>
                     <View style = {styles.categoryItem}>
                         <Label style = {styles.categoryItemTxt}>{this.props.listings_about.attributes.listing_type}</Label>
@@ -99,58 +104,41 @@ class ListingAbout extends Component {
                 <View style = {{backgroundColor: 'white'}}>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Advertised Price</Label>
-                        <Label style = {styles.label2}>$600,000 - $660,000</Label>
+                        <Label style = {styles.label2}>{this.props.listings_about.attributes.advertised_price}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Internal Price</Label>
-                        <Label style = {styles.label2}>$600,000</Label>
-                        <View style = {styles.seperateLine}/>
-                    </View>
-                    <View style = {styles.view1}>
-                        <Label style = {styles.label1}>After Hours</Label>
-                        <Label style = {styles.label2}>03 5254 6565</Label>
+                        <Label style = {styles.label2}>${this.props.listings_about.attributes.price}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
-
-                <View >
-                    <Label style = {styles.propertyItemTitle}>Vendor/s</Label>
-                    <View style = {styles.view2}>
-                        <Thumbnail square source = {images.avatar_female} style = {styles.avatarImg}/>
-                        <View style = {styles.rowSubView}>
-                            <Label style = {{color:'black', fontSize: 16, fontFamily: 'open-sans-regular'}}>Sally Sample</Label>
-                            <View style = {styles.venderCategoryView}>
-                                <Label style = {styles.venderSubtitle}>Vendor</Label>
-                            </View>
-                        </View>
+                
+                {
+                    this.state.vendors.length == 0? null :
+                    <View >
+                        <Label style = {styles.propertyItemTitle}>Vendor/s</Label>
+                        {
+                            this.state.vendors.map((item, index) => [
+                                <View style = {styles.view2}>
+                                    <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                                    <View style = {styles.rowSubView}>
+                                        <Label style = {{color:'black', fontSize: 16, fontFamily: 'open-sans-regular'}}>{item.attributes.first_name} {item.attributes.last_name}</Label>
+                                        <View style = {styles.venderCategoryView}>
+                                            <Label style = {styles.venderSubtitle}>Vendor</Label>
+                                        </View>
+                                    </View>
+                                </View>
+                            ])
+                        }
                     </View>
-                    <View style = {styles.line1}/>
-                    <View style = {styles.view2}>
-                        <Thumbnail square source = {images.france_small} style = {styles.avatarImg}/>
-                        <View style = {styles.rowSubView}>
-                            <Label style = {{color:'black', fontSize: 16, fontFamily: 'open-sans-regular'}}>John Sample</Label>
-                            <View style = {styles.venderCategoryView}>
-                                <Label style = {styles.venderSubtitle}>Vendor</Label>
-                            </View>
-                        </View>
-                    </View>
-                </View>
+                }
+                
 
                 <View style = {styles.subView1}>
                     <View style = {styles.view1}>
-                        <Label style = {styles.label1}>Email</Label>
-                        <Label style = {styles.label2}>lukevdp@gmail.com</Label>
-                        <View style = {styles.seperateLine}/>
-                    </View>
-                    <View style = {styles.view1}>
                         <Label style = {styles.label1}>Address</Label>
-                        <Label style = {styles.label2}>123 Fake St{'\n'}Shepparton, VIC 3630</Label>
-                        <View style = {styles.seperateLine}/>
-                    </View>
-                    <View style = {styles.view1}>
-                        <Label style = {styles.label1}>Background info</Label>
-                        <Label style = {styles.label2}>Is an active investor looking for investment properties that yield over 5%</Label>
+                        <Label style = {styles.label2}>{this.props.listings_about.attributes.full_address}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>

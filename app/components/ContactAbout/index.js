@@ -91,9 +91,6 @@ class ContactAbout extends Component {
     
     render() {
         var params = this.props.contact_groups
-        console.log('1-->')
-        console.log(this.props.contact_groups)
-        console.log(this.props.contact_relationships)
         return (
             <Content style = {styles.container}>
                 <View style = {styles.categoryView}>

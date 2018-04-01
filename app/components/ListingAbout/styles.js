@@ -67,7 +67,9 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        flex:1
+        flex:1,
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
     },
     propertyItemTitle: {
         paddingTop: 20,
@@ -129,6 +131,7 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        marginTop: 5
     },
     iconImg: {
         width: 25,

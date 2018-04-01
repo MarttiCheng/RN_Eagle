@@ -6,6 +6,7 @@ import {
 import {
     Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
 } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import styles from './styles'
 import images from '../../themes/images'
@@ -18,6 +19,7 @@ import {connect} from 'react-redux';
 class tasks extends Component {
     static navigationOptions = {
         header: null,
+        gesturesEnabled: false
     }
 
     constructor(props) {

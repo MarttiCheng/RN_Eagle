@@ -34,4 +34,79 @@ export default {
         width: 45,
         textAlign: 'right',
     },
+    titleView: {
+        padding: 15,
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        backgroundColor: 'white'
+    },
+    assignView: {
+        padding: 15,
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        backgroundColor: 'white'
+    },
+    assignTxt: {
+        color: '#999',
+        fontSize: 13.5,
+        fontFamily: 'open-sans-regular'
+    },
+    assignNameTxt: {
+        marginTop: 5,
+        color:'black',
+        fontSize: 22,
+        fontFamily: 'open-sans-regular'
+    },
+    contactTxt: {
+        paddingTop: 20,
+        paddingBottom: 5,
+        paddingLeft: 15,
+        backgroundColor: 'transparent',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+    },
+    contacvView: {
+        flexDirection: 'row',
+        padding: 15,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
+        borderColor: 'lightgray'
+    },
+    label1: {
+        color: 'black',
+        fontSize: 14,
+        flexDirection: 'row'
+    },
+    subcontactView: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    contactItemView: {
+        backgroundColor: '#2B3643',
+        borderRadius: 6,
+        alignItems: 'center',
+        justifyContent :'center',
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 8,
+        paddingRight: 8,
+        marginRight: 10,
+    },
+    attachBtn: {
+        width: width/2,
+        height: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        marginLeft: width/4,
+        marginTop: 5
+
+    },
+    attachTxt: {
+        color: '#999',
+        fontSize: 14
+    }
 }

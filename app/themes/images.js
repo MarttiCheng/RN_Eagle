@@ -25,6 +25,7 @@ const images = {
     avatar_male: require('../assets/img/assets/avatar_male.png'),
     avatar_john: require('../assets/img/ic_avatar1.png'),
     listing_home: require('../assets/img/img_listing_default.png'),
+    placeholderImage: require('../assets/img/placeholder.png'),
 
     
 }

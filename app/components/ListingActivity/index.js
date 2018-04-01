@@ -7,7 +7,7 @@ import {
 import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
-import { getContactActivity } from '../../actions'
+import { getListingsActivity } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import { FontAwesome} from '@expo/vector-icons'
 import moment from 'moment'
@@ -24,7 +24,7 @@ class ListingActivity extends Component {
     }
     
     componentWillMount() {
-       getContactActivity(this.props.token, 25).then(data => {  
+       getListingsActivity(this.props.token, this.props.listings_about.id).then(data => {  
            this.setState({
                isLoading: false,
                activityList: data.data
@@ -80,6 +80,7 @@ class ListingActivity extends Component {
                     </Label>
                 </View>
                 <View style = {styles.view2}>
+                    <Label style = {styles.text}>{item.attributes.text}</Label>
                     <HTML html = {item.attributes.description}/>
                 </View>
             </View>
@@ -96,11 +97,11 @@ class ListingActivity extends Component {
     
     render() {
         return (
-            <View style = {styles.container}>
+            <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 {
                     this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showContactActivity()
                 }
-            </View>
+            </Content>
         );
     }
 }

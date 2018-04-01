@@ -12,7 +12,7 @@ import Search from 'react-native-search-box';
 import { NavigationActions, Header } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
-import { getProperties } from '../../actions'
+import { getProperties, getThumbnailUrl } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
 var listingsList = [
@@ -22,6 +22,7 @@ var listingsList = [
 class listings extends Component<{}>{
     static navigationOptions = {
         header: null,
+        gesturesEnabled: false
     }
 
     constructor(props) {
@@ -33,10 +34,12 @@ class listings extends Component<{}>{
             isLoading: true,
             searchText: '',
             listingsList: [],
+            listings_photoList: [],
         }   
     }
 
     componentWillMount() {
+        var list = []
         getProperties(this.props.token).then(data => {
             this.setState({
                 isLoading: false,
@@ -51,11 +54,38 @@ class listings extends Component<{}>{
         dispatch(NavigationActions.navigate({routeName: 'listingsShow', params: {info: item}}))
     }
 
+    showForSale(item){
+        if(item.attributes.listing_type == "residential_rental"){
+            return(
+                <Label style = {styles.saleTxt}>For Rent</Label>
+            )
+        }
+        else if(item.listing_type == 'commercial' && item.commercial_listing_type == "commercial_lease"){
+            return(
+                <Label style = {styles.saleTxt}>For Rent</Label>
+            )
+        }
+        else if(item.commercial_listing_type == "commercial_sale_and_lease"){
+            return(
+                <Label style = {styles.saleTxt}>For Sale And Rent</Label>
+            )
+        }
+        else {
+            return(
+                <Label style = {styles.saleTxt}>For Sale</Label>
+            )
+        }
+    }
+
     renderRow(item, index) {
         return(
             <TouchableOpacity key = {index} onPress = {() => this.clickListing(item, index)}>
                 <View style = {styles.rowView}>
-                    <Thumbnail square source = {item.relationships.images.links.self} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                    {
+                        item.attributes.thumbnail?<Thumbnail square source = {{uri:item.attributes.thumbnail }} style = {styles.avatarImg} defaultSource = {images.placeholderImage}/> :
+                        <Thumbnail square style = {styles.avatarImg} source = {images.placeholderImage}/>
+                    }
+                    
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.attributes.full_address}</Label>
                         <View style = {styles.tagView}>
@@ -67,7 +97,9 @@ class listings extends Component<{}>{
                             </View>
                         </View>
                     </View>
-                    <Label style = {styles.saleTxt}>For Sale</Label>
+                    {
+                        this.showForSale(item)
+                    }
                     <View style = {styles.line}/>
                 </View>
             </TouchableOpacity>

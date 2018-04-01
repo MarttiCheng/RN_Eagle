@@ -5,6 +5,7 @@ import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
 import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 import styles from './styles'
 import images from '../../themes/images'
 import { BallIndicator } from 'react-native-indicators'
@@ -21,20 +22,28 @@ class TaskShow extends Component {
         }
     }
 
+    onClickedTask(item) {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_TASK_ITEM', data: item})
+        dispatch(NavigationActions.navigate({routeName: 'tasksShow'}))
+    }
+
     renderRow(item, index) {
         return(
-            <View style = {styles.taskItemView} key = {index}>
-                <View style = {styles.view1}> 
-                    <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
-                    <View style = {styles.rowSubView}>
-                        <Label style = {styles.label1}>{item.attributes.body}</Label>
+            <TouchableOpacity key = {index} onPress = {() => this.onClickedTask(item)}>
+                <View style = {styles.taskItemView} >
+                    <View style = {styles.view1}> 
+                        <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
+                        <View style = {styles.rowSubView}>
+                            <Label style = {styles.label1}>{item.attributes.body}</Label>
+                        </View>
+                        <Label style = {styles.dueDate}>
+                            {moment(item.attributes.due_date).format('DD MMM')}
+                        </Label>
                     </View>
-                    <Label style = {styles.dueDate}>
-                        {moment(item.attributes.due_date).format('DD MMM')}
-                    </Label>
+                    <View style = {styles.line1}/>
                 </View>
-                <View style = {styles.line1}/>
-            </View>
+            </TouchableOpacity>
         )
     }
 

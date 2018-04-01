@@ -7,28 +7,30 @@ import {
 import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
-import { getContactTasks } from '../../actions'
+import {FontAwesome} from '@expo/vector-icons'
+import { getListingsInspections } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
-import moment from 'moment'
+
 
 // create a component
-class ContactTask extends Component {
+class ListingTasks extends Component {
     constructor(props){
         super(props)
         this.state = {
             isLoading: true,
-            tasksList: []
+            tasksList:[]
         }
     }
 
     componentWillMount() {
-       getContactTasks(this.props.token, this.props.contact_groups.data.id).then(data => {  
+        getListingsInspections(this.props.token, this.props.listings_about.id).then(data => {  
            this.setState({
                isLoading: false,
                tasksList: data.data
            })
         })
     }
+
 
     renderRow(item, index) {
         return(
@@ -46,22 +48,28 @@ class ContactTask extends Component {
             </View>
         )
     }
-
-    showContactTasks(){
-        return(
-            this.state.tasksList.map((item, index) => {
-                return( this.renderRow(item, index ));
-            })
-        )
-    }
     
+    showContactTasks(){
+        if(this.state.tasksList.length > 0){
+            return(
+                this.state.tasksList.map((item, index) => {
+                    return(this.renderRow(item, index))
+                })
+            )
+        }
+        else{
+            return(
+                <Label style = {styles.nomoretxt}>No more data</Label>
+            )
+        }        
+    }
     render() {
         return (
-            <View style = {styles.container}>
+            <Content style = {styles.container}>
                 {
                     this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showContactTasks()
-                }
-            </View>
+                }                
+            </Content>
         );
     }
 }
@@ -69,10 +77,9 @@ class ContactTask extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
-        contact_groups: state.contacts.contact_groups,
-        contact_relationships: state.contacts.contact_relationships,
+        listings_about: state.listings.listings
     }
 }
 
-export default connect(mapStateToProps)(ContactTask)
+export default connect(mapStateToProps)(ListingTasks)
 

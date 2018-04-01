@@ -1,5 +1,6 @@
 
 import { API } from '../constants'
+import images from '../themes/images';
 var Promiss = require('bluebird')
 
 function getAllContacts(token){
@@ -176,6 +177,26 @@ function getContactTasks(token, id){
     })
 }
 
+function getThumbnailUrl(token, URL){
+    return new Promise((resolve, reject) => {
+        fetch(URL, {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            console.log('Get Thumbnail Image Success', data);
+            resolve(data);
+        })
+        .catch(err => {
+            console.log('Get Thumbnail Image Failed', err);
+            reject(err);
+        })
+    })
+}
+
 module.exports = {
     getAllContacts,
     getContact,
@@ -185,4 +206,5 @@ module.exports = {
     getContactRelationships,
     getContactActivity,
     getContactTasks,
+    getThumbnailUrl,
 }

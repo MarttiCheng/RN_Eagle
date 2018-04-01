@@ -21,6 +21,7 @@ import ContactTask from '../../components/ContactTask'
 class contactsShow extends Component<{}>{
     static navigationOptions = {
         header: null,
+        gesturesEnabled: false
     }
 
     constructor(props) {
@@ -78,7 +79,7 @@ class contactsShow extends Component<{}>{
         }
         if(this.state.isProperties){
             return(
-                <ContactProperties navigation = {this.props.navigation}/>
+                <ContactProperties />
             )
         }
         if(this.state.isActivity){
@@ -114,8 +115,6 @@ class contactsShow extends Component<{}>{
 
     render() {
         var params = this.props.contact_group
-        console.log('->')
-        console.log(this.props.contact_group.data)
         return(
             <Container style = {styles.container}>
                 <StatusBar

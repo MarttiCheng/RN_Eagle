@@ -15,6 +15,7 @@ import HomeMine from '../../components/HomeMine/index'
 class home extends Component<{}>{
     static navigationOptions = {
         header: null,
+        gesturesEnabled: false
     }
 
     constructor(props) {
@@ -28,7 +29,7 @@ class home extends Component<{}>{
         }   
     }
 
-    clickListing(item, index) {
+    clickListing(item, index) { 
         var { dispatch } = this.props;
         dispatch(NavigationActions.navigate({routeName: 'listingsShow', params: {info: item}}))
     }  

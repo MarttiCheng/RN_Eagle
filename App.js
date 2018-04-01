@@ -8,7 +8,7 @@ import AppReducer from './app/reducers/index';
 
 
 export default class App extends Component<{}>{
-   e
+   
     store = createStore(AppReducer);
 
     componentDidMount() {

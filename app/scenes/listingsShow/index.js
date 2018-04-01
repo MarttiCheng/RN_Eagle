@@ -18,10 +18,12 @@ import ContactTask from '../../components/ContactTask';
 import ListingInspections from '../../components/ListingInspections';
 import ListingDocuments from '../../components/ListingDocuments';
 import ListingActivity from '../../components/ListingActivity';
+import ListingTasks from '../../components/ListingTasks';
 
 class listingsShow extends Component<{}>{
     static navigationOptions = {
         header: null,
+        gesturesEnabled: false
     }
 
     constructor(props) {
@@ -33,42 +35,6 @@ class listingsShow extends Component<{}>{
             isActivity: false,
             isTasks: false
         }  
-    }
-
-    _onAbout = () => {
-        this.setState({
-            isAbout: true,
-            isProperties: false,
-            isActivity: false,
-            isTasks: false
-        })
-    }
-
-    _onProperties = () => {
-        this.setState({
-            isAbout: false,
-            isProperties: true,
-            isActivity: false,
-            isTasks: false
-        })
-    }
-
-    _onActivity = () => {
-        this.setState({
-            isAbout: false,
-            isProperties: false,
-            isActivity: true,
-            isTasks: false
-        })
-    }
-
-    _onTasks = () => {
-        this.setState({
-            isAbout: false,
-            isProperties: false,
-            isActivity: false,
-            isTasks: true,
-        })
     }
 
     render() {
@@ -91,6 +57,7 @@ class listingsShow extends Component<{}>{
                     <Tab heading="ABOUT" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <ListingAbout info = {this.props.navigation.state.params.info} navigation = {this.props.navigation}/>
                     </Tab>
+                    
                     <Tab heading="ACTIVITY" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <ListingActivity/>
                     </Tab>
@@ -101,7 +68,7 @@ class listingsShow extends Component<{}>{
                         <ListingDocuments/>
                     </Tab>
                     <Tab heading="TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <ContactTask/>
+                        <ListingTasks/>
                     </Tab>
                 </Tabs>
                 

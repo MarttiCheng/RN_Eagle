@@ -47,5 +47,10 @@ export default {
         fontSize: 12,
         marginTop: 3,
         fontFamily: 'open-sans-regular',
-    }   
+    },
+    text: {
+        fontSize: 14,
+        color: '#2B3643',
+        marginBottom: 10
+    },
 }

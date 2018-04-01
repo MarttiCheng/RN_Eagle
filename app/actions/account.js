@@ -11,8 +11,6 @@ function getAllAccounts(token){
         .then((res) => res.json())
         .then(data => {
             console.log('Get All Accounts Success', data);
-            console.log('->', token)
-            console.log(API.BASE_URL + API.ALL_ACCOUNTS)
             resolve(data);
         })
         .catch(err => {

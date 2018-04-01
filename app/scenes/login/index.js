@@ -18,7 +18,8 @@ var validator = require("email-validator");
 // create a component
 class login extends Component<{}>{
     static navigationOptions = {
-        header: null
+        header: null,
+        gesturesEnabled: false
     }
 
     constructor(props) {

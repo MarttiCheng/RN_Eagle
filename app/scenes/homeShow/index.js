@@ -17,6 +17,7 @@ import ContactProperties from '../../components/ContactProperties'
 class homeShow extends Component<{}>{
     static navigationOptions = {
         header: null,
+        gesturesEnabled: false
     }
 
     constructor(props) {
