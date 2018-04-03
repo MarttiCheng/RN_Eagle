@@ -84,6 +84,8 @@ function getContractProperty_Enquired(token, id){
 }
 
 function getContactGroups(token, idList) {
+    console.log('=====>>>')
+    console.log(idList)
     promises = []
     for (var i = 0 ; i < idList.length ; i++ ) {
         var new_promise = new Promise((resolve, reject) => {

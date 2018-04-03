@@ -84,8 +84,6 @@ class ContactAbout extends Component {
                     </View>
                 )
             }
-            
-            
         }
     }
     

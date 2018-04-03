@@ -15,8 +15,6 @@ import { Font } from 'expo'
 import { getAllContacts, getContactGroups, getContactRelationships } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
-
-
 class contacts extends Component<{}>{
     static navigationOptions = {
         header: null,
@@ -38,7 +36,6 @@ class contacts extends Component<{}>{
     }
 
     componentWillMount() {
-        
         this.getAllContacts()
     }
 
@@ -94,7 +91,6 @@ class contacts extends Component<{}>{
                             {
                                 this.showContactGroups(index) 
                             }
-                            
                         </View>
                         <View style = {styles.line}/>
                     </View>

@@ -116,7 +116,7 @@ class listings extends Component<{}>{
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{}}
                                 onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
-                    <Label style = {[styles.title, {fontFamily: 'open-sans-bold'}]}>Listings</Label>
+                    <Label style = {styles.title}>Listings</Label>
                     <TouchableOpacity>
                         <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginLeft: 3}} />
                     </TouchableOpacity>

@@ -19,7 +19,6 @@ class tasksShow extends Component<{}>{
 
     constructor(props) {
         super(props);
-        
         this.state = {
             isAbout: true,
             isProperties: false,
@@ -27,10 +26,13 @@ class tasksShow extends Component<{}>{
             isTasks: false
         }  
     }
-   
+
+    onClickedMail(){
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'sendEmail'}))
+    }   
+
     render() {
-        console.log('==========>>>>>')
-        console.log(this.props.tasks)
         return(
             <Container style = {styles.container}>
                 <StatusBar
@@ -65,7 +67,7 @@ class tasksShow extends Component<{}>{
                         <View style = {styles.contacvView}>
                             <Label style = {styles.label1}>Sally Sample</Label>
                             <View style = {styles.subcontactView}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress = {() => this.onClickedMail()}>
                                     <View style = {styles.contactItemView}>
                                         <FontAwesome name = 'envelope' size = {18} color = 'white' />
                                     </View>
@@ -89,6 +91,34 @@ class tasksShow extends Component<{}>{
                         <Button transparent style = {styles.attachBtn}>
                             <Label style = {styles.attachTxt}>+ ATTACH CONTACT</Label>
                         </Button>
+
+                        <Label style = {styles.listingtxt}>Listing</Label>
+                        <View style = {styles.sublistingView}>
+                            <Thumbnail square source = {images.barbados_small} style = {styles.listingIcon}/>
+                            <Label style = {styles.listingLable}>50 Bay St, Double Bay</Label>
+                            <TouchableOpacity style = {{marginLeft: 10}}>
+                                <MaterialCommunityIcons name = 'close' size = {18} color = '#717171' />
+                            </TouchableOpacity>
+                        </View>
+
+                        <Button transparent style = {styles.attachBtn}>
+                            <Label style = {styles.attachTxt}>+ ATTACH CONTACT</Label>
+                        </Button>
+
+                        <View style = {styles.buttonView}>
+                            <TouchableOpacity>
+                                <View style = {styles.deleteView}>
+                                    <FontAwesome name = 'trash' size = {20} color = 'white' />
+                                    <Label style = {styles.deleteTxt}>DELETE</Label>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <View style = {styles.completeView}>
+                                    <MaterialIcons name = 'check' size = {20} color = 'white' />
+                                    <Label style = {styles.deleteTxt}>MARK AS COMPLETE</Label>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
 
                     </View>  
                 </Content>              

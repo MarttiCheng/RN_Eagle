@@ -79,10 +79,7 @@ class Sidebar extends Component<{}>{
                             </View>
                         </TouchableOpacity>
                     </View>
-                    
-                    
-                </View>
-                
+                </View>                
             </View>
         );
     }

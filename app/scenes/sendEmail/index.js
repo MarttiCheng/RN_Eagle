@@ -1,22 +1,22 @@
 //import liraries
 import React, { Component } from 'react';
 import {
-    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs
+    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, 
+  ScrollableTab
 } from 'native-base'
 import {
     Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
 } from 'react-native'
 import { NavigationActions } from 'react-navigation'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 import styles from './styles'
 import images from '../../themes/images'
 import TaskShow from '../../components/TaskShow'
 import { getCompletedTasks, getUnCompletedTasks } from '../../actions'
 import {connect} from 'react-redux';
-
+import { MaterialCommunityIcons, MaterialIcons, FontAwesome} from '@expo/vector-icons'
 
 // create a component
-class tasks extends Component {
+class sendEmail extends Component {
     static navigationOptions = {
         header: null,
         gesturesEnabled: false
@@ -43,6 +43,11 @@ class tasks extends Component {
             })
         })
     }
+
+    onSendMail(){
+        alert('send')
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -51,24 +56,19 @@ class tasks extends Component {
                     barStyle="light-content"
                 />
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
+                    <View style = {styles.titleView}>
+                        <MaterialCommunityIcons name = 'menu' size = {25} color = 'white'
                                 onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
-                    <Label style = {styles.title}>Tasks</Label>
-                    <TouchableOpacity onPress = {this._onSearch}>
-                        <Thumbnail square source = {null} style = {{width: 18, height: 18, marginRight: 15}} />
-                    </TouchableOpacity>
+                        <Label style = {styles.title}>Send Email</Label>
+                    </View>
+                    <View style = {styles.titleView}>
+                        <Label style = {styles.sendTxt}>send</Label>
+                        <MaterialIcons name = 'send' size = {25} color = 'white' style = {{marginLeft: 10}}
+                                onPress={ () => this.onSendMail() } />
+                    </View>
+                    
                 </View>
-                <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47', height: 3}} >
-                    <Tab heading="DUE TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <TaskShow tasksList = {this.state.completedTaskList} isLoading = {this.state.isLoading}/>
-                    </Tab>
-                    <Tab heading="FUTURE TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <TaskShow tasksList = {this.state.uncompletedTaskList} isLoading = {this.state.isLoading}/>
-                    </Tab>
-                </Tabs>
-                <TouchableOpacity style = {styles.addBtn}>
-                    <Label style = {styles.addTxt}>+</Label>
-                </TouchableOpacity>
+
             </View>
         );
     }
@@ -81,4 +81,4 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 //make this component available to the app
-export default connect(mapStateToProps)(tasks);
+export default connect(mapStateToProps)(sendEmail);

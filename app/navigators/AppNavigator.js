@@ -14,6 +14,7 @@ import listingsShow from '../scenes/listingsShow/index';
 import homeShow from '../scenes/homeShow/index';
 import homeEdit from '../scenes/homeEdit/index';
 import tasksShow from '../scenes/tasksShow/index';
+import sendEmail from '../scenes/sendEmail/index';
 
 const Drawer = DrawerNavigator(
     {
@@ -21,6 +22,7 @@ const Drawer = DrawerNavigator(
         listings: { screen: listings},
         home: { screen: home },
         tasks: { screen: tasks },
+        sendEmail:{ screen: sendEmail },
     },
     {
         initialRouteName: 'contacts',
@@ -28,7 +30,6 @@ const Drawer = DrawerNavigator(
         contentComponent: props => <Sidebar {...props}/>
     }
 );
-
 
 export const AppNavigator = StackNavigator({
     login: { screen: login },

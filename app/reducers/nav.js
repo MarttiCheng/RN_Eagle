@@ -4,7 +4,6 @@ import { AppNavigator } from '../navigators/AppNavigator';
 const firstAction = AppNavigator.router.getActionForPathAndParams('login');
 const initialNavState = AppNavigator.router.getStateForAction(firstAction);
 
-
 function nav(state = initialNavState, action){
     let nextState;
 

@@ -77,8 +77,8 @@ export default {
     },
     label1: {
         color: 'black',
-        fontSize: 14,
-        flexDirection: 'row'
+        fontSize: 15,
+        fontFamily: 'open-sans-regular',
     },
     subcontactView: {
         flexDirection: 'row',
@@ -102,11 +102,70 @@ export default {
         justifyContent: 'center',
         backgroundColor: 'white',
         marginLeft: width/4,
-        marginTop: 5
+        marginTop: 3
 
     },
     attachTxt: {
         color: '#999',
-        fontSize: 14
+        fontSize: 14,
+        fontFamily: 'open-sans-regular',
+    },
+    listingtxt: {
+        paddingTop: 20,
+        paddingBottom: 5,
+        paddingLeft: 15,
+        backgroundColor: 'transparent',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+    },
+    sublistingView: {
+        flex: 1,
+        flexDirection: 'row',
+        padding: 15,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: 'white'
+    },
+    listingIcon: {
+        width: 40,
+        height: 40,
+        resizeMode: 'cover',
+        borderRadius: 20,
+    },
+    listingLable: {
+        flex: 1,
+        fontSize: 15,
+        marginLeft: 15,
+        fontFamily: 'open-sans-regular',
+    },
+    buttonView: {
+        flexDirection: 'row',
+        padding: 15,
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    deleteView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#B4BCC8',
+        width: (width-45)/3,
+        height: 40,
+        borderRadius: 4,
+    },
+    deleteTxt: {
+        fontSize: 13,
+        color: 'white',
+        marginLeft: 7,
+        fontFamily: 'open-sans-regular',
+    },
+    completeView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#35AA47',
+        width: (width-45)*2/3,
+        height: 40,
+        borderRadius: 4,
     }
 }

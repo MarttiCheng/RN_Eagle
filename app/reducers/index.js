@@ -7,7 +7,6 @@ import contacts from './contacts';
 import listings from './listings';
 import task from './task';
 
-
 const AppReducer  = combineReducers({
     nav,
     user,

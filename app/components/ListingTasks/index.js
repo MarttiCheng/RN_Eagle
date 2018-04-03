@@ -31,7 +31,6 @@ class ListingTasks extends Component {
         })
     }
 
-
     renderRow(item, index) {
         return(
             <View style = {styles.taskItemView} key = {index}>

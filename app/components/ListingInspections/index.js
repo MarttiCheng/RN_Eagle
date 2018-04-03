@@ -31,7 +31,6 @@ class ListingInspections extends Component {
         })
     }
 
-
     renderRow(item, index) {
         return(
             <View style = {styles.activityItem} key = {index} >

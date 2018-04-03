@@ -79,7 +79,7 @@ export default {
     title: {
         color: 'white',
         fontSize: 18,
-        fontFamily: 'open-sans-regular'
+        fontFamily: 'open-sans-bold'
     },
     saleTxt: {
         color: 'white',

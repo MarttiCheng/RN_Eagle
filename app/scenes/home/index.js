@@ -44,7 +44,7 @@ class home extends Component<{}>{
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
                                 onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
-                    <Label style = {[styles.title, {fontFamily: 'open-sans-bold'}]}>Open Homes</Label>
+                    <Label style = {styles.title}>Open Homes</Label>
                     <TouchableOpacity style = {{width: 18, height: 18, marginRight: 15}}/>
                 </View>
                  <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} >

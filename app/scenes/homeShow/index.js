@@ -13,6 +13,7 @@ import HomeMine from '../../components/HomeMine/index'
 import NewAttendee from '../../components/NewAttendee/index'
 import Attendees from '../../components/Attendees/index'
 import ContactProperties from '../../components/ContactProperties'
+import Owner from '../../components/Owner'
 
 class homeShow extends Component<{}>{
     static navigationOptions = {
@@ -58,6 +59,9 @@ class homeShow extends Component<{}>{
                     </Tab>
                     <Tab heading="ATTENDEES(5)" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <Attendees/>
+                    </Tab>
+                    <Tab heading="OWNER/S" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
+                        <Owner/>
                     </Tab>
                 </Tabs>
             </Container>

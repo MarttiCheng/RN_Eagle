@@ -194,7 +194,6 @@ const mapStateToProps = (state, ownProps) => {
         token: state.user.token, 
         contact_groups: state.contacts.contact_groups,
         contact_relationships: state.contacts.contact_relationships,
-
     }
 }
 

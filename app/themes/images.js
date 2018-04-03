@@ -18,7 +18,6 @@ const images = {
     ic_expand: require('../assets/img/ic_expand.png'),
     ic_placeholder_image: require('../assets/img/profileImagePlaceholder.png'),
 
-
     //Dummy images
     barbados_small : require('../assets/img/assets/barbados_small.png'),
     france_small: require('../assets/img/assets/france_small.png'),
@@ -27,7 +26,6 @@ const images = {
     listing_home: require('../assets/img/img_listing_default.png'),
     placeholderImage: require('../assets/img/placeholder.png'),
 
-    
 }
 
 export default images;

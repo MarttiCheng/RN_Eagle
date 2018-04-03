@@ -89,7 +89,6 @@ class ListingAbout extends Component {
                             </View>
                         </View>
                     </View>
-                    
                 </View>
 
                 <View style = {styles.categoryView}>
@@ -133,7 +132,6 @@ class ListingAbout extends Component {
                         }
                     </View>
                 }
-                
 
                 <View style = {styles.subView1}>
                     <View style = {styles.view1}>
@@ -142,7 +140,6 @@ class ListingAbout extends Component {
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
-
             </Content>
         );
     }

@@ -2,11 +2,10 @@ import { Dimensions, Platform, StatusBar } from 'react-native';
 import { Header } from 'react-navigation'
 import {Label} from 'native-base';
 const { width, height } = Dimensions.get('window')
-
 export default {
     container: {
         flex: 1,
-        backgroundColor: 'white'
+        backgroundColor: '#ddd'
     },
     menuView: {
         width: width,
@@ -16,37 +15,22 @@ export default {
         alignItems:'center',
         backgroundColor: '#2B3643',
         justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     title: {
         color: 'white',
         fontSize: 18,
-        fontFamily: 'open-sans-bold'
+        fontFamily: 'open-sans-bold',
+        marginLeft: 15
     },
-    addBtn: {
-        position: 'absolute',
-        right: 20,
-        bottom: 20,
-        width: 70,
-        height: 70,
-        borderRadius: 35,
-        backgroundColor: '#364150',
-        justifyContent: 'center',
-        alignItems: 'center'
+    titleView: {
+        alignItems: 'center',
+        flexDirection: 'row',
     },
-    addTxt: {
+    sendTxt: {
         color: 'white',
-        fontSize: 42,
-        fontWeight: '300',
-        marginTop: -5
-    },
-    inactiveTxt: {
-        fontSize: 13, 
-        color: 'rgba(255, 255, 255, 0.72)',
+        fontSize: 17,
         fontFamily: 'open-sans-regular'
-    },
-    activeTxt: {
-        fontSize: 13, 
-        color: 'white',
-        fontFamily: 'open-sans-regular'
-    },
+    }
 }
