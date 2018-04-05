@@ -5,6 +5,7 @@ import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import styles from './styles'
 import images from '../../themes/images'
 import {FontAwesome} from '@expo/vector-icons'
@@ -23,11 +24,11 @@ class ListingInspections extends Component {
     }
 
     componentWillMount() {
-        getListingsInspections(this.props.token, this.props.listings_about.id).then(data => {  
-           this.setState({
-               isLoading: false,
-               inspectionsList: data.data
-           })
+        getListingsInspections(this.props.token, this.props.listings_about.id).then(data => {
+            this.setState({
+                isLoading: false,
+                inspectionsList: data.data
+            })
         })
     }
 
@@ -35,11 +36,13 @@ class ListingInspections extends Component {
         return(
             <View style = {styles.activityItem} key = {index} >
                 <View style = {styles.view1}>
-                    <Label style = {styles.dateTxt}>item.date</Label>
+                    <Label style = {styles.dateTxt}>{moment(item.attributes.start_datetime).format('Do MMMM')}</Label>
                 </View>
                 <View style = {styles.view2}>
                     <FontAwesome name = 'calendar' size = {20} color = '#757575' style = {{marginLeft: 5}} />
-                    <Label style = {styles.duractionTxt}>item.duration</Label> 
+                    <Label style = {styles.duractionTxt}>
+                        {moment(item.attributes.start_datetime).format('h:mma')} - {moment(item.attributes.end_datetime).format('h:mma')}
+                    </Label> 
                 </View>
             </View>
         )
@@ -59,6 +62,7 @@ class ListingInspections extends Component {
             )
         }        
     }
+    
     render() {
         return (
             <Content style = {styles.container}>

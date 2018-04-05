@@ -44,7 +44,7 @@ export default {
         color: '#2B3643',
         fontSize: 16,
         fontFamily: 'open-sans-regular',
-        marginLeft: 10
+        marginLeft: 15
     },
     nomoretxt: {
         marginTop: 25,

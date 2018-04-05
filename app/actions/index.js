@@ -3,6 +3,7 @@ import account from './account'
 import contacts from './contacts'
 import listings from './listings'
 import tasks from './tasks'
+import inspections from './inspections'
 
 module.exports = {
     ...user,
@@ -10,4 +11,5 @@ module.exports = {
     ...contacts,
     ...listings,
     ...tasks,
+    ...inspections,
 }

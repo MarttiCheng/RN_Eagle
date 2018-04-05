@@ -11,7 +11,6 @@ import images from '../../themes/images'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import HomeMine from '../../components/HomeMine/index'
 
-
 class home extends Component<{}>{
     static navigationOptions = {
         header: null,
@@ -20,20 +19,12 @@ class home extends Component<{}>{
 
     constructor(props) {
         super(props);
-        
         this.state = {
-            email: '',
-            password: '',
-            isLoading: false,
-            searchText: '',
+            
         }   
     }
 
-    clickListing(item, index) { 
-        var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'listingsShow', params: {info: item}}))
-    }  
-
+    
     render() {
         return(
             <Container style = {styles.container}>
@@ -41,6 +32,7 @@ class home extends Component<{}>{
                     backgroundColor="blue"
                     barStyle="light-content"
                 />
+                
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
                                 onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
@@ -66,5 +58,11 @@ class home extends Component<{}>{
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        token: state.user.token
+    }
+}
+
 //make this component available to the app
-export default connect()(home);
+export default connect(mapStateToProps)(home);

@@ -82,7 +82,7 @@ function getListingsInspections(token, id) {
 
 function getListingsDocuments(token, id) {
     return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.ALL_LISTINGS + '/' + id + '/inspections', {
+        fetch(API.BASE_URL + API.ALL_LISTINGS + '/' + id + '/documents', {
             method: 'GET',
             headers: {
                 'Authorization': token

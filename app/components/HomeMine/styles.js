@@ -78,4 +78,24 @@ export default {
         fontSize: 13,
         fontFamily: 'open-sans-regular'
     },
+    nomoretxt: {
+        marginTop: 25,
+        width: width,
+        textAlign: 'center',
+        fontSize: 16, 
+        color: '#364150',
+        fontFamily: 'open-sans-bold',
+    },
+    dateView: {
+        paddingLeft: 5,
+        paddingTop: 20,
+        paddingBottom: 7,
+        flexDirection: 'row'
+    },
+    dateTxt: {
+        color: '#717171',
+        fontSize: 14,
+        marginLeft: 5,
+        fontFamily: 'open-sans-regular',
+    },
 }

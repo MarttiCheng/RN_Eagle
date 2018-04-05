@@ -7,7 +7,6 @@ import {
     Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
 } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-
 import styles from './styles'
 import images from '../../themes/images'
 import Search from 'react-native-search-box';
@@ -79,7 +78,7 @@ class contactsShow extends Component<{}>{
         }
         if(this.state.isProperties){
             return(
-                <ContactProperties />
+                <ContactProperties navigation = {this.props.navigation}/>
             )
         }
         if(this.state.isActivity){

@@ -27,11 +27,11 @@ class ListingDocuments extends Component {
     }
 
     componentWillMount() {
-        getListingsDocuments(this.props.token, this.props.listings_about.id).then(data => {  
-           this.setState({
-               isLoading: false,
-               documentList: data.data
-           })
+        getListingsDocuments(this.props.token, this.props.listings_about.id).then(data => { 
+            this.setState({
+                isLoading: false,
+                documentList: data.data
+            })
         })
     }
 

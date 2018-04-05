@@ -9,7 +9,7 @@ export default {
     },
     menuView: {
         width: width,
-        height: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT+20,
+        height: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT + 20,
         paddingTop: (Platform.OS == 'ios')? 20 : StatusBar.currentHeight,
         flexDirection:'row',
         alignItems:'center',
@@ -42,6 +42,8 @@ export default {
     },
     assignView: {
         padding: 15,
+        paddingTop: 5,
+        paddingBottom: 5,
         borderBottomWidth: 1,
         borderColor: 'lightgray',
         backgroundColor: 'white'
@@ -96,18 +98,18 @@ export default {
         marginRight: 10,
     },
     attachBtn: {
-        width: width/2,
+        width: width/2 - 40,
         height: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
-        marginLeft: width/4,
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        marginLeft: width/4 + 20,
         marginTop: 3
 
     },
     attachTxt: {
         color: '#999',
-        fontSize: 14,
+        fontSize: 12,
         fontFamily: 'open-sans-regular',
     },
     listingtxt: {
@@ -148,7 +150,7 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#B4BCC8',
+        backgroundColor: 'darkgray',
         width: (width-45)/3,
         height: 40,
         borderRadius: 4,

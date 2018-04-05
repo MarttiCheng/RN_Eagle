@@ -22,9 +22,6 @@ import {
 import styles from './styles'
 import images from '../../themes/images'
 import { MaterialIcons, FontAwesome, Entypo } from '@expo/vector-icons'
-import listings from '../../scenes/listings/index';
-import contacts from '../../scenes/contacts/index';
-import login from '../../scenes/login/index';
 import { connect } from 'react-redux'
 
 // create a component

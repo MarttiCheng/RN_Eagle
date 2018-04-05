@@ -102,7 +102,11 @@ export default {
         borderRadius: 35,
         backgroundColor: '#364150',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: '#364150',
+        shadowOpacity: 0.8,
+        shadowRadius: 5,
+        shadowOffset: {height: 0, width: 0},
     },
     addTxt: {
         color: 'white',

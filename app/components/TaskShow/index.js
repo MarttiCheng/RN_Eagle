@@ -32,7 +32,7 @@ class TaskShow extends Component {
         return(
             <TouchableOpacity key = {index} onPress = {() => this.onClickedTask(item)}>
                 <View style = {styles.taskItemView} >
-                    <View style = {styles.view1}> 
+                    <View style = {styles.view1}>
                         <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label1}>{item.attributes.body}</Label>
@@ -48,11 +48,18 @@ class TaskShow extends Component {
     }
 
     showTasks(){
-        return(
-            this.props.tasksList.map((item, index) => {
-                return( this.renderRow(item, index ));
-            })
-        )
+        if(this.props.tasksList.length > 0){
+            return(
+                this.props.tasksList.map((item, index) => {
+                    return( this.renderRow(item, index ));
+                })
+            )
+        }
+        else{
+            return(
+                <Label style = {styles.nomoretxt}>No more data</Label>
+            )
+        } 
     }
     
     render() {

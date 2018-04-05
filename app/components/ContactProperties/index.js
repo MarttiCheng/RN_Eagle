@@ -40,26 +40,26 @@ class ContactProperties extends Component {
             // getContractProperty_Enquired(this.props.token, this.props.contact_groups.data.id).then(data1 => {
                 console.log('*')
                 console.log(data)
-                // this.setState({
-                //     vendorList: data.included,
-                //     enquiredList: data.included,
-                //     inspectedList: data.included,
-                //     offerList: data.included,
-                //     isLoading: false
-                // })
-                for(var i = 0 ; i < data.included.length ; i++) {
-                    console.log(data.included[i].relationships.thumbnails.links.related)
-                    getThumbnailUrl(this.props.token, data.included[i].relationships.thumbnails.links.related).then((photoData) => {
-                        this.setState({
-                            vendorList: data.included,
-                            enquiredList: data.included,
-                            inspectedList: data.included,
-                            offerList: data.included,
-                            isLoading: false,
-                            vendor_photoList: photoData.data
-                        })
-                    })
-                }
+                this.setState({
+                    vendorList: data.included,
+                    enquiredList: data.included,
+                    inspectedList: data.included,
+                    offerList: data.included,
+                    isLoading: false
+                })
+                // for(var i = 0 ; i < data.included.length ; i++) {
+                //     console.log(data.included[i].relationships.thumbnails.links.related)
+                //     getThumbnailUrl(this.props.token, data.included[i].relationships.thumbnails.links.related).then((photoData) => {
+                //         this.setState({
+                //             vendorList: data.included,
+                //             enquiredList: data.included,
+                //             inspectedList: data.included,
+                //             offerList: data.included,
+                //             isLoading: false,
+                //             vendor_photoList: photoData.data
+                //         })
+                //     })
+                // }
             // })
         })
         
@@ -81,7 +81,8 @@ class ContactProperties extends Component {
                         return(
                             <TouchableOpacity key = {index} onPress = {() => this.onClickVendor(item)}>
                                 <View style = {styles.view1} >
-                                    <Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                                    {/*<Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>*/}
+                                    <Thumbnail square source = {{uri:item.attributes.thumbnail}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                                     <View style = {styles.rowSubView}>
                                         <Label style = {styles.label1}>{item.attributes.full_address}</Label>
                                         <View style = {styles.tagView}>
@@ -106,7 +107,8 @@ class ContactProperties extends Component {
                         return(
                             <TouchableOpacity key = {index} onPress = {() => this.onClickVendor(item)}>
                                 <View style = {styles.view1} >
-                                    <Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                                    {/*<Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>*/}
+                                    <Thumbnail square source = {{uri:item.attributes.thumbnail}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                                     <View style = {styles.rowSubView}>
                                         <Label style = {styles.label1}>{item.attributes.full_address}</Label>
                                         <View style = {styles.tagView}>
@@ -131,7 +133,8 @@ class ContactProperties extends Component {
                         return(
                             <TouchableOpacity key = {index} onPress = {() => this.onClickVendor(item)}>
                                 <View style = {styles.view1}>
-                                    <Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                                    {/*<Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>*/}
+                                    <Thumbnail square source = {{uri:item.attributes.thumbnail}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                                     <View style = {styles.rowSubView}>
                                         <Label style = {styles.label1}>{item.attributes.full_address}</Label>
                                         <View style = {styles.tagView}>
@@ -156,7 +159,8 @@ class ContactProperties extends Component {
                         return(
                             <TouchableOpacity key = {index} onPress = {() => this.onClickVendor(item)}>
                                 <View style = {styles.view1}>
-                                    <Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                                    {/*<Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>*/}
+                                    <Thumbnail square source = {{uri:item.attributes.thumbnail}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                                     <View style = {styles.rowSubView}>
                                         <Label style = {styles.label1}>{item.attributes.full_address}</Label>
                                         <View style = {styles.tagView}>

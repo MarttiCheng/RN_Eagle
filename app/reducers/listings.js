@@ -1,6 +1,5 @@
 const initialTokenState = {
     listings: [],
-    listings_about: []
 }
 
 function Listings(state = initialTokenState, action) {
