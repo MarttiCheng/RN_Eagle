@@ -61,7 +61,7 @@ class ListingTasks extends Component {
             return(
                 <Label style = {styles.nomoretxt}>No more data</Label>
             )
-        }        
+        }
     }
     render() {
         return (

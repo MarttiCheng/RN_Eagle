@@ -8,44 +8,38 @@ import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
 import { NavigationActions } from 'react-navigation'
-import { getAllInspections } from '../../actions'
+import { getAllInspections, getInspectionsRelationship } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import moment from 'moment'
 
 // create a component
-class HomeMine extends Component {
+class HomeSale extends Component {
     constructor(props){
         super(props)
         this.state = {
             isLoading: true,
-            inspections_mineList: [],
-            inspections_forRentList: [],
-            inspections_forSaleList: []
+            inspections_forSaleList: [],
+            inspectionsRelationShips: [],
         }
     }
 
     componentWillMount() {
-        var mineList = []
-        var forRentList = []
+        var idList = []
         var forSaleList = []
 
         getAllInspections(this.props.token).then(data => {
             for(var i = 0 ; i < data.data.length ; i ++){
-                if(data.data[i].attributes.for_rent){
-                    forRentList.push(data.data[i])
-                }
-                else if (data.data[i].attributes.for_sale) {
-                    forSaleList.push(data.data[i])
-                }
-                else {
-                    mineList.push(data.data[i])
+                if (data.data[i].attributes.for_sale) {
+                    forSaleList.push(data.data[i]);
+                    idList.push(data.data[i].attributes.property_id);
                 }
             }
-            this.setState({
-                isLoading: false,
-                inspections_mineList: mineList,
-                inspections_forRentList: forRentList,
-                inspections_forSaleList: forSaleList,
+            getInspectionsRelationship(this.props.token, idList).then(data1 => {
+                this.setState({
+                    isLoading: false,
+                    inspections_forSaleList: forSaleList,
+                    inspectionsRelationShips: data1
+                })
             })
         })
     }
@@ -66,12 +60,12 @@ class HomeMine extends Component {
                     <Label style = {styles.dateTxt}>{moment(item.attributes.start_datetime).format('Do MMMM')}</Label>
                 </View>
                 <TouchableOpacity style = {styles.view1} onPress = {() =>  this.onClickHome(this.state.inspectionsRelationShips[index], item)} key = {index}>
-                <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
+                    <Thumbnail square source = {{uri: this.state.inspectionsRelationShips[index].data.attributes.thumbnail}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{moment(item.attributes.start_datetime).format('h:mma')} - {moment(item.attributes.end_datetime).format('h:mma')}</Label>
-                        <Label style = {styles.label2}>50 Bay St, Double Bay</Label>
+                        <Label style = {styles.label2}>{this.state.inspectionsRelationShips[index].data.attributes.full_address}</Label>
                     </View>
-                    <Label style = {styles.saleTxt}>Mine</Label>
+                    <Label style = {styles.saleTxt}>For Sale</Label>
                 </TouchableOpacity>
             </View>
             
@@ -79,9 +73,9 @@ class HomeMine extends Component {
     }
 
     showHomeInspections(){
-        if(this.state.inspections_mineList.length > 0){
+        if(this.state.inspections_forSaleList.length > 0){
             return(
-                this.state.inspections_mineList.map((item, index) => {
+                this.state.inspections_forSaleList.map((item, index) => {
                     return(this.renderRow(item, index))
                 })
             )
@@ -111,5 +105,5 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps)(HomeMine)
+export default connect(mapStateToProps)(HomeSale)
 

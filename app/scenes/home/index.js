@@ -10,6 +10,9 @@ import styles from './styles'
 import images from '../../themes/images'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import HomeMine from '../../components/HomeMine/index'
+import HomeRent from '../../components/HomeRent/index';
+import HomeSale from '../../components/HomeSale/index';
+
 
 class home extends Component<{}>{
     static navigationOptions = {
@@ -24,12 +27,11 @@ class home extends Component<{}>{
         }   
     }
 
-    
     render() {
         return(
             <Container style = {styles.container}>
                 <StatusBar
-                    backgroundColor="blue"
+                    backgroundColor="black"
                     barStyle="light-content"
                 />
                 
@@ -44,10 +46,10 @@ class home extends Component<{}>{
                         <HomeMine navigation = {this.props.navigation}/>
                     </Tab>
                     <Tab heading="FOR SALE" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <HomeMine navigation = {this.props.navigation}/>
+                        <HomeSale navigation = {this.props.navigation}/>
                     </Tab>
                     <Tab heading="FOR RENT" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <HomeMine navigation = {this.props.navigation}/>
+                        <HomeRent navigation = {this.props.navigation}/>
                     </Tab>
                 </Tabs>
                 <TouchableOpacity style = {styles.addBtn}>

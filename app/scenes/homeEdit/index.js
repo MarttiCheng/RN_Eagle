@@ -162,7 +162,7 @@ class homeEdit extends Component {
                         />
                     </View>
                     <View style = {styles.editPropertyView}>
-                        <Label style = {styles.editTxt1}>Edit Inspection</Label>
+                        <Label style = {styles.editTxt1}>Edit Property Preferences</Label>
                     </View>
                     <View style = {styles.editSegementView}>
                         <TouchableOpacity onPress = {() => this.onNotInterested()}>

@@ -5,9 +5,6 @@ export default {
     container: {
         flex: 1,
         backgroundColor: 'white',
-        paddingLeft: 15,
-        paddingRight: 15,
-        // paddingTop: 10,
     },
     rowView: {
         flex:1,
@@ -179,5 +176,13 @@ export default {
         fontSize: 10,
         color: 'white',
         fontFamily: 'open-sans-regular',
+    },
+    nomoretxt: {
+        marginTop: 25,
+        width: width,
+        textAlign: 'center',
+        fontSize: 16, 
+        color: '#364150',
+        fontFamily: 'open-sans-bold',
     },
 }

@@ -9,6 +9,8 @@ import styles from './styles'
 import images from '../../themes/images'
 import { NavigationActions } from 'react-navigation'
 import { Sae, Hoshi } from 'react-native-textinput-effects'
+import { getInspectionPreregistered, getInspectionEnquired } from '../../actions'
+import { BallIndicator } from 'react-native-indicators'
 
 var registerList = [
     {avatar: images.avatar_female, name: 'Sally Smith', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
@@ -32,7 +34,22 @@ class NewAttendee extends Component {
             isNotInterested: false,
             isMaybeInterested: true,
             isInterestd: false,
+            isLoading: true,
+            registerList: [],
+            enquiredList: [],
         }
+    }
+
+    componentWillMount() {
+        getInspectionPreregistered(this.props.token, this.props.inspectionInfo.id).then(data => {
+            getInspectionEnquired(this.props.token, this.props.inspectionInfo.attributes.property_id).then(data1 => {
+                this.setState({
+                    isLoading: false,
+                    registerList: data.data,
+                    enquiredList: data1.included,
+                })
+            })
+        })
     }
 
     onNotInterested() {
@@ -82,110 +99,144 @@ class NewAttendee extends Component {
             </TouchableOpacity>
         )
     }
+
+    renderRow1(item, index) {
+        return(
+           <TouchableOpacity key = {index} onPress = {() => this.clickAttendee(item, index)}>
+                <View style = {styles.rowRenderView}>
+                    <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                    <View style = {styles.rowSubView}>
+                        <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
+                        <Label style = {styles.label2}>{item.attributes.mobile_phone}</Label>
+                        <Label style = {styles.label2}>{item.attributes.email}</Label>                        
+                    </View>
+                    <View style = {styles.checkView}>
+                        <Label style = {styles.checkTxt}>CHECK IN</Label>
+                    </View>
+                    <View style = {styles.line}/>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
+    showRegisteredList(){
+        return(
+            <View>
+                 <View >
+                     {
+                         this.state.registerList.length == 0 ? null :  <Label style = {styles.preregisteredTitle}>Pre-registered</Label>
+                     }
+                    {
+                        this.state.registerList.map((item, index) => {
+                            return(this.renderRow(item, index));
+                        })
+                    }
+                </View>
+                <View >
+                    {
+                        this.state.enquiredList.length == 0 ? null :  <Label style = {styles.preregisteredTitle}>Enquired</Label>
+                    }
+                    {
+                        this.state.enquiredList.map((item, index) => {
+                            return(this.renderRow1(item, index));
+                        })
+                    }
+                </View>
+            </View>
+        )
+    }
     
     render() {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
-                <View style = {styles.rowView}>
-                    <Hoshi
-                        label = {'First Name'}
-                        borderColor = {'#0099CC'}
-                        style = {styles.txtinput1}
-                        autoCapitalize = {'none'}
-                        autoCorrect = {false}
-                    />
-                    <Hoshi
-                        label = {'Last Name'}
-                        borderColor = {'#0099CC'}
-                        style = {styles.txtinput1}
-                        autoCapitalize = {'none'}
-                        autoCorrect = {false}
-                    />
-                </View>
-                <View style = {styles.rowView}>
-                    <Hoshi
-                        label = {'Mobile'}
-                        borderColor = {'#0099CC'}
-                        style = {styles.txtinput1}
-                        autoCapitalize = {'none'}
-                        autoCorrect = {false}
-                    />
-                    <Hoshi
-                        label = {'Phone'}
-                        borderColor = {'#0099CC'}
-                        style = {styles.txtinput1}
-                        autoCapitalize = {'none'}
-                        autoCorrect = {false}
-                    />
-                </View>
-                <View style = {styles.rowView}>
-                    <Hoshi
-                        label = {'Email'}
-                        borderColor = {'#0099CC'}
-                        style = {styles.txtinput2}
-                        autoCapitalize = {'none'}
-                        autoCorrect = {false}
-                    />
-                </View>
-                <View style = {styles.rowView}>
-                    <Hoshi
-                        label = {'Notes'}
-                        borderColor = {'#0099CC'}
-                        style = {styles.txtinput2}
-                        autoCapitalize = {'none'}
-                        autoCorrect = {false}
-                    />
-                </View>
-                <View style = {styles.editPropertyView}>
-                    <Label style = {styles.editTxt}>Edit Property Preferences</Label>
-                </View>
-                <View style = {styles.editSegementView}>
-                    <TouchableOpacity onPress = {() => this.onNotInterested()}>
-                        <View style = {[styles.nonInterestedView, this.state.isNotInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
-                            <Label style = {[styles.interestedTxt, this.state.isNotInterested?{color: 'white'} : {color: '#364150'}]}>Not Interested</Label>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress = {() => this.onMaybeInterested()}>
-                        <View style = {[styles.maybeInterestedView, this.state.isMaybeInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
-                            <Label style = {[styles.interestedTxt, this.state.isMaybeInterested?{color: 'white'} : {color: '#364150'}]}>Maybe</Label>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress = {() => this.onInterested()}>
-                        <View style = {[styles.InterestedView, this.state.isInterestd?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
-                            <Label style = {[styles.interestedTxt, this.state.isInterestd?{color: 'white'} : {color: '#364150'}]}>Interested</Label>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style = {styles.buttonView}>
-                    <TouchableOpacity>
-                        <View style = {styles.clearBtnView}>
-                            <Label style = {styles.clearTxt}>Clear</Label>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <View style = {styles.saveBtnView}>
-                            <Label style = {styles.clearTxt}>SAVE</Label>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                    
-                <View >
-                    <Label style = {styles.preregisteredTitle}>Pre-registered</Label>
-                    {
-                        registerList.map((item, index) => {
-                            return(this.renderRow(item, index));
-                        })
-                    }
-                </View>
-                <View >
-                    <Label style = {styles.preregisteredTitle}>Enquired</Label>
-                    {
-                        enquiredList.map((item, index) => {
-                            return(this.renderRow(item, index));
-                        })
-                    }
-                </View>
+                <View>
+                    <View style = {styles.rowView}>
+                        <Hoshi
+                            label = {'First Name'}
+                            borderColor = {'#0099CC'}
+                            style = {styles.txtinput1}
+                            autoCapitalize = {'none'}
+                            autoCorrect = {false}
+                        />
+                        <Hoshi
+                            label = {'Last Name'}
+                            borderColor = {'#0099CC'}
+                            style = {styles.txtinput1}
+                            autoCapitalize = {'none'}
+                            autoCorrect = {false}
+                        />
+                    </View>
+                    <View style = {styles.rowView}>
+                        <Hoshi
+                            label = {'Mobile'}
+                            borderColor = {'#0099CC'}
+                            style = {styles.txtinput1}
+                            autoCapitalize = {'none'}
+                            autoCorrect = {false}
+                        />
+                        <Hoshi
+                            label = {'Phone'}
+                            borderColor = {'#0099CC'}
+                            style = {styles.txtinput1}
+                            autoCapitalize = {'none'}
+                            autoCorrect = {false}
+                        />
+                    </View>
+                    <View style = {styles.rowView}>
+                        <Hoshi
+                            label = {'Email'}
+                            borderColor = {'#0099CC'}
+                            style = {styles.txtinput2}
+                            autoCapitalize = {'none'}
+                            autoCorrect = {false}
+                        />
+                    </View>
+                    <View style = {styles.rowView}>
+                        <Hoshi
+                            label = {'Notes'}
+                            borderColor = {'#0099CC'}
+                            style = {styles.txtinput2}
+                            autoCapitalize = {'none'}
+                            autoCorrect = {false}
+                        />
+                    </View>
+                    <View style = {styles.editPropertyView}>
+                        <Label style = {styles.editTxt}>Edit Property Preferences</Label>
+                    </View>
+                    <View style = {styles.editSegementView}>
+                        <TouchableOpacity onPress = {() => this.onNotInterested()}>
+                            <View style = {[styles.nonInterestedView, this.state.isNotInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
+                                <Label style = {[styles.interestedTxt, this.state.isNotInterested?{color: 'white'} : {color: '#364150'}]}>Not Interested</Label>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress = {() => this.onMaybeInterested()}>
+                            <View style = {[styles.maybeInterestedView, this.state.isMaybeInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
+                                <Label style = {[styles.interestedTxt, this.state.isMaybeInterested?{color: 'white'} : {color: '#364150'}]}>Maybe</Label>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress = {() => this.onInterested()}>
+                            <View style = {[styles.InterestedView, this.state.isInterestd?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
+                                <Label style = {[styles.interestedTxt, this.state.isInterestd?{color: 'white'} : {color: '#364150'}]}>Interested</Label>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View style = {styles.buttonView}>
+                        <TouchableOpacity>
+                            <View style = {styles.clearBtnView}>
+                                <Label style = {styles.clearTxt}>Clear</Label>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style = {styles.saveBtnView}>
+                                <Label style = {styles.clearTxt}>SAVE</Label>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
 
+                    {
+                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 20}}/> : this.showRegisteredList()
+                    } 
+                </View>
             </Content>
         );
     }
@@ -193,9 +244,12 @@ class NewAttendee extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        
+        token: state.user.token,
+        relationship_inspection: state.home.selected_inspection,
+        inspectionId: state.home.inspectionID,
+        inspectionInfo: state.home.inspectionInfo
     }
 }
 
-export default connect()(NewAttendee)
+export default connect(mapStateToProps)(NewAttendee)
 

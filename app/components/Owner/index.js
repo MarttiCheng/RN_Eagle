@@ -26,6 +26,21 @@ class Owner extends Component {
         return(
             <View style = {styles.mainView}>
                 <Label style = {styles.inspectionTxt}>Inspection Details</Label>
+                <View style = {styles.assignView}>
+                    <Label style = {styles.assignTxt}>Attendees</Label>
+                    <Label style = {styles.assignNameTxt}>5</Label>
+                </View>
+                <View style = {styles.assignView}>
+                    <Label style = {styles.assignTxt}>Interested</Label>
+                    <Label style = {styles.assignNameTxt}>3</Label>
+                </View>
+                <View style = {styles.assignView}>
+                    <Label style = {styles.assignTxt}>Documents Sent</Label>
+                    <Label style = {styles.assignNameTxt}>1</Label>
+                </View>
+                <View style = {styles.sendPropertyView}>
+                    <Label style = {styles.sendTxt}>Send Vendor Report</Label>
+                </View>
             </View>
         )
     }

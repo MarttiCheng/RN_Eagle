@@ -1,6 +1,5 @@
 
 import { API } from '../constants'
-import images from '../themes/images';
 var Promiss = require('bluebird')
 
 function getAllContacts(token){

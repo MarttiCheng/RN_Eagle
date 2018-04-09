@@ -6,6 +6,7 @@ import user from './user';
 import contacts from './contacts';
 import listings from './listings';
 import task from './task';
+import home from './home';
 
 const AppReducer  = combineReducers({
     nav,
@@ -13,6 +14,7 @@ const AppReducer  = combineReducers({
     contacts,
     listings,
     task,
+    home
 });
 
 export default AppReducer;

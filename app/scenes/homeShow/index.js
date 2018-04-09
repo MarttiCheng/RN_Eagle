@@ -69,5 +69,11 @@ class homeShow extends Component<{}>{
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        token: state.user.token,
+    }
+}
+
 //make this component available to the app
-export default connect()(homeShow);
+export default connect(mapStateToProps)(homeShow);

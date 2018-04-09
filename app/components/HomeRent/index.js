@@ -13,7 +13,7 @@ import { BallIndicator } from 'react-native-indicators'
 import moment from 'moment'
 
 // create a component
-class HomeMine extends Component {
+class HomeRent extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -71,7 +71,7 @@ class HomeMine extends Component {
                         <Label style = {styles.label1}>{moment(item.attributes.start_datetime).format('h:mma')} - {moment(item.attributes.end_datetime).format('h:mma')}</Label>
                         <Label style = {styles.label2}>50 Bay St, Double Bay</Label>
                     </View>
-                    <Label style = {styles.saleTxt}>Mine</Label>
+                    <Label style = {styles.saleTxt}>For Rent</Label>
                 </TouchableOpacity>
             </View>
             
@@ -79,9 +79,9 @@ class HomeMine extends Component {
     }
 
     showHomeInspections(){
-        if(this.state.inspections_mineList.length > 0){
+        if(this.state.inspections_forRentList.length > 0){
             return(
-                this.state.inspections_mineList.map((item, index) => {
+                this.state.inspections_forRentList.map((item, index) => {
                     return(this.renderRow(item, index))
                 })
             )
@@ -111,5 +111,5 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps)(HomeMine)
+export default connect(mapStateToProps)(HomeRent)
 
