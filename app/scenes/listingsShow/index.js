@@ -53,7 +53,7 @@ class listingsShow extends Component<{}>{
                     </TouchableOpacity>
                 </View>
                 
-                <Tabs renderTabBar={()=> <ScrollableTab />} initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} >
+                <Tabs renderTabBar={()=> <ScrollableTab />} initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} locked = {true}>
                     <Tab heading="ABOUT" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <ListingAbout info = {this.props.navigation.state.params.info} navigation = {this.props.navigation}/>
                     </Tab>

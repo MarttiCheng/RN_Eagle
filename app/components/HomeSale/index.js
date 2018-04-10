@@ -44,7 +44,6 @@ class HomeSale extends Component {
         })
     }
 
-
     onClickHome(item, data) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_INSPECTIONS_RELATIONSHIP', data: item})
@@ -68,7 +67,6 @@ class HomeSale extends Component {
                     <Label style = {styles.saleTxt}>For Sale</Label>
                 </TouchableOpacity>
             </View>
-            
         )
     }
 

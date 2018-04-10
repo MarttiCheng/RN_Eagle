@@ -41,7 +41,7 @@ class home extends Component<{}>{
                     <Label style = {styles.title}>Open Homes</Label>
                     <TouchableOpacity style = {{width: 18, height: 18, marginRight: 15}}/>
                 </View>
-                 <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} >
+                 <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} locked = {true}>
                     <Tab heading="MINE" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <HomeMine navigation = {this.props.navigation}/>
                     </Tab>

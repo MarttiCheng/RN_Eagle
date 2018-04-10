@@ -7,7 +7,7 @@ export default {
         backgroundColor: 'white',
         paddingLeft: 15,
         paddingRight: 15,
-        paddingTop: 10,
+        // paddingTop: 10,
     },
     rowView: {
         flex:1,

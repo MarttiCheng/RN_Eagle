@@ -43,6 +43,7 @@ class tasks extends Component {
             })
         })
     }
+    
     render() {
         return (
             <View style={styles.container}>
@@ -58,7 +59,7 @@ class tasks extends Component {
                         <Thumbnail square source = {null} style = {{width: 18, height: 18, marginRight: 15}} />
                     </TouchableOpacity>
                 </View>
-                <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47', height: 3}} >
+                <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47', height: 3}} locked = {true}>
                     <Tab heading="DUE TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <TaskShow tasksList = {this.state.completedTaskList} isLoading = {this.state.isLoading}/>
                     </Tab>

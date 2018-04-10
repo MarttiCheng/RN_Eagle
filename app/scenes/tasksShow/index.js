@@ -84,7 +84,7 @@ class tasksShow extends Component<{}>{
         else if(item.type == 'properties'){
             return(
                 <View style = {styles.sublistingView}>
-                    <Thumbnail square source = {{uri: item.attributes.thumbnail}} style = {styles.listingIcon}/>
+                    <Thumbnail square source = {{uri: item.attributes.thumbnail}} style = {styles.listingIcon} defaultSource = {images.ic_placeholder_image}/>
                     <Label style = {styles.listingLable}>{item.attributes.full_address}</Label>
                     <TouchableOpacity style = {{marginLeft: 10}}>
                         <MaterialCommunityIcons name = 'close' size = {18} color = '#717171' />

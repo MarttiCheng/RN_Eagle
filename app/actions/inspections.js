@@ -50,8 +50,8 @@ function getInspectionsRelationship(token, idList){
 
 function getInspectionPreregistered(token, id){
     return new Promise((resolve, reject) => {
-        // fetch(API.BASE_URL + API.ALL_INSPECTIONS + '/' + id + '/notes?filter[note_type]=Inspection&include=contact', {
-        fetch(API.BASE_URL + API.ALL_INSPECTIONS + '/' + id + '/notes?filter[note_type]=InspectionRegistration', {
+        fetch(API.BASE_URL + API.ALL_INSPECTIONS + '/' + id + '/notes?filter[note_type]=Inspection&include=contact', {
+        // fetch(API.BASE_URL + API.ALL_INSPECTIONS + '/' + id + '/notes?filter[note_type]=InspectionRegistration', {
             method: 'GET',
             headers: {
                 'Authorization': token
@@ -109,10 +109,31 @@ function getInspectionAttendees(token, id){
     })
 }
 
+function getOwnerVendors(token, id){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_LISTINGS + '/' + id + '/vendors', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            console.log('Owner Vendors Success', data);
+            resolve(data);
+        })
+        .catch(err => {
+            console.log('Owner Vendors Failed', err);
+            reject(err);
+        })
+    })
+}
+
 module.exports = {
     getAllInspections,
     getInspectionsRelationship,
     getInspectionPreregistered,
     getInspectionEnquired,
     getInspectionAttendees,
+    getOwnerVendors,
 }

@@ -1,7 +1,10 @@
 const initialTokenState = {
     selected_inspection: [],
     inspectionID: '',
-    inspectionInfo: []
+    inspectionInfo: [],
+    attendee_mayinterested_List: [],
+    attendee_interested_List: [],
+    attendee_notinterested_List: [],
 }
 
 function Home(state = initialTokenState, action) {
@@ -20,6 +23,21 @@ function Home(state = initialTokenState, action) {
             return {
                 ...state,
                 inspectionInfo: action.data
+            };
+        case 'ATTENDEES_MAYINTERESTED' :
+            return {
+                ...state,
+                attendee_mayinterested_List: action.data
+            };
+        case 'ATTENDEES_INTERESTED' :
+            return {
+                ...state,
+                attendee_interested_List: action.data
+            };
+        case 'ATTENDEES_NOTINTERESTED' :
+            return {
+                ...state,
+                attendee_notinterested_List: action.data
             };
         default :
             return state
