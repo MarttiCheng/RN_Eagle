@@ -102,7 +102,7 @@ class login extends Component<{}>{
                         <Label style = {styles.forgortTxt}>Forgot password?</Label>
                     </Button>
                     {
-                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 50}}/> : null
+                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 50, marginBottom: 10}}/> : null
                     }
                 </View>
             </Container>

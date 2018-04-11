@@ -9,9 +9,10 @@ import { NavigationActions } from 'react-navigation'
 import styles from './styles'
 import images from '../../themes/images'
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome} from '@expo/vector-icons'
-import { getOwnerVendors } from '../../actions'
+import { getOwnerVendors, getContactRelationships, getContactGroups } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import moment from 'moment'
+import sendEmail from '../../scenes/sendEmail/index';
 
 ownersList = [
     {name: 'Sally Sample'},
@@ -24,22 +25,46 @@ class Owner extends Component {
         super(props)
         this.state = {
             isLoading: true,
-            ownersList: []
+            ownersList: [],
+            contactGroups: [],
+            contactRelationships:[]
         }
     }
 
     componentWillMount() {
+        var idList = [];
         getOwnerVendors(this.props.token, this.props.inspectionInfo.attributes.property_id).then(data => {
-            this.setState({
-                isLoading: false,
-                ownersList: data.data
+            for(var i = 0; i < data.data.length; i++){
+                idList.push(data.data[i].id)
+            }
+            getContactGroups(this.props.token, idList).then(data1 => {
+                getContactRelationships(this.props.token, idList).then(data2 => {
+                    this.setState({
+                        ownersList: data.data,
+                        contactGroups: data1,
+                        contactRelationships: data2,
+                        isLoading: false,
+                    })
+                })
             })
         })
     }
 
+    onClickedMail(){
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'sendEmail'}))
+    }
+
+    clickEachVendor(item, index){
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
+        dispatch ({ type: 'GET_CONTACTS_RELATIONSHIP', data: this.state.contactRelationships[index]})
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow'})) 
+    }
+
     renderRow(item, index){
         return(
-           <TouchableOpacity key = {index} onPress = {() => this.clickAttendee(item, index)}>
+            <TouchableOpacity key = {index} onPress = {() => this.clickEachVendor(this.state.contactGroups[index], index)}>
                 <View style = {styles.rowRenderView}>
                     {
                         item.attributes.photo_url ? 
@@ -107,7 +132,7 @@ class Owner extends Component {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 {
-                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showOwners()
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showOwners()
                 }
             </Content>
         );

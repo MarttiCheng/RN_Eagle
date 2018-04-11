@@ -37,9 +37,9 @@ class ContactProperties extends Component {
 
     componentWillMount() {
         getContactProperty_Vendor(this.props.token, this.props.contact_groups.data.id).then(data => {
-            // getContractProperty_Enquired(this.props.token, this.props.contact_groups.data.id).then(data1 => {
-                console.log('*')
-                console.log(data)
+            console.log('*')
+            console.log(data)
+            if(data.included){
                 this.setState({
                     vendorList: data.included,
                     enquiredList: data.included,
@@ -47,22 +47,17 @@ class ContactProperties extends Component {
                     offerList: data.included,
                     isLoading: false
                 })
-                // for(var i = 0 ; i < data.included.length ; i++) {
-                //     console.log(data.included[i].relationships.thumbnails.links.related)
-                //     getThumbnailUrl(this.props.token, data.included[i].relationships.thumbnails.links.related).then((photoData) => {
-                //         this.setState({
-                //             vendorList: data.included,
-                //             enquiredList: data.included,
-                //             inspectedList: data.included,
-                //             offerList: data.included,
-                //             isLoading: false,
-                //             vendor_photoList: photoData.data
-                //         })
-                //     })
-                // }
-            // })
+            }
+            else{
+                this.setState({
+                    vendorList: [],
+                    enquiredList: [],
+                    inspectedList: [],
+                    offerList: [],
+                    isLoading: false
+                })
+            }  
         })
-        
     }
 
     onClickVendor(item) {
@@ -74,14 +69,15 @@ class ContactProperties extends Component {
     showProperty(){
         return(
             <View style = {styles.propertyItemView}>
-                <Label style = {styles.propertyItemTitle}>Vendor</Label>
+                {
+                    this.state.vendorList.length == 0 ? null :  <Label style = {styles.propertyItemTitle}>Vendor</Label>
+                }
                 {
                     this.state.vendorList.map((item, index) => {
                         var thumbniail_url = item.relationships.thumbnails.links.related
                         return(
                             <TouchableOpacity key = {index} onPress = {() => this.onClickVendor(item)}>
                                 <View style = {styles.view1} >
-                                    {/*<Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>*/}
                                     <Thumbnail square source = {{uri:item.attributes.thumbnail}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                                     <View style = {styles.rowSubView}>
                                         <Label style = {styles.label1}>{item.attributes.full_address}</Label>
@@ -101,13 +97,14 @@ class ContactProperties extends Component {
                     })
                 }
  
-                <Label style = {styles.propertyItemTitle}>Enquired on</Label>
+                {
+                    this.state.enquiredList.length == 0? null : <Label style = {styles.propertyItemTitle}>Enquired on</Label>
+                }                
                 {
                     this.state.enquiredList.map((item, index) => {
                         return(
                             <TouchableOpacity key = {index} onPress = {() => this.onClickVendor(item)}>
                                 <View style = {styles.view1} >
-                                    {/*<Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>*/}
                                     <Thumbnail square source = {{uri:item.attributes.thumbnail}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                                     <View style = {styles.rowSubView}>
                                         <Label style = {styles.label1}>{item.attributes.full_address}</Label>
@@ -127,13 +124,14 @@ class ContactProperties extends Component {
                     })
                 }
 
-                <Label style = {styles.propertyItemTitle}>Inspected</Label>
+                {
+                    this.state.inspectedList.length == 0? null : <Label style = {styles.propertyItemTitle}>Inspected</Label>
+                }
                 {
                     this.state.inspectedList.map((item, index) => {
                         return(
                             <TouchableOpacity key = {index} onPress = {() => this.onClickVendor(item)}>
                                 <View style = {styles.view1}>
-                                    {/*<Thumbnail square source = {{uri:this.state.vendor_photoList[index].attributes.url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>*/}
                                     <Thumbnail square source = {{uri:item.attributes.thumbnail}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                                     <View style = {styles.rowSubView}>
                                         <Label style = {styles.label1}>{item.attributes.full_address}</Label>
@@ -153,7 +151,9 @@ class ContactProperties extends Component {
                     })
                 }
 
-                <Label style = {styles.propertyItemTitle}>Made Offer</Label>
+                {
+                    this.state.offerList.length == 0?  null : <Label style = {styles.propertyItemTitle}>Made Offer</Label>
+                }                
                 {
                     this.state.offerList.map((item, index) => {
                         return(
@@ -186,7 +186,7 @@ class ContactProperties extends Component {
         return (
             <View style = {styles.container}>
                 {
-                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showProperty()
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showProperty()
                 }
             </View>
         );
@@ -197,7 +197,6 @@ const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
         contact_groups: state.contacts.contact_groups,
-        contact_relationships: state.contacts.contact_relationships,
     }
 }
 

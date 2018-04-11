@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
 import { NavigationActions } from 'react-navigation'
-import { getAllInspections } from '../../actions'
+import { getAllInspections, getInspectionsRelationship } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import moment from 'moment'
 
@@ -19,12 +19,12 @@ class HomeMine extends Component {
         this.state = {
             isLoading: true,
             inspections_mineList: [],
-            inspections_forRentList: [],
-            inspections_forSaleList: []
+            inspectionsRelationShips: [],
         }
     }
 
     componentWillMount() {
+        var idList = []
         var mineList = []
         var forRentList = []
         var forSaleList = []
@@ -38,18 +38,19 @@ class HomeMine extends Component {
                     forSaleList.push(data.data[i])
                 }
                 else {
-                    mineList.push(data.data[i])
+                    mineList.push(data.data[i]);
+                    idList.push(data.data[i].attributes.property_id);
                 }
             }
-            this.setState({
-                isLoading: false,
-                inspections_mineList: mineList,
-                inspections_forRentList: forRentList,
-                inspections_forSaleList: forSaleList,
+            getInspectionsRelationship(this.props.token, idList).then(data1 => {
+                this.setState({
+                    isLoading: false,
+                    inspections_mineList: mineList,
+                    inspectionsRelationShips: data1
+                })
             })
         })
     }
-
 
     onClickHome(item, data) {
         var { dispatch } = this.props;
@@ -97,7 +98,7 @@ class HomeMine extends Component {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 {
-                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showHomeInspections()
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showHomeInspections()
                 } 
 
             </Content>

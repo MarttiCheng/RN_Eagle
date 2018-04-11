@@ -43,11 +43,20 @@ class NewAttendee extends Component {
     componentWillMount() {
         getInspectionPreregistered(this.props.token, this.props.inspectionInfo.id).then(data => {
             getInspectionEnquired(this.props.token, this.props.inspectionInfo.attributes.property_id).then(data1 => {
-                this.setState({
-                    isLoading: false,
-                    registerList: data.data,
-                    enquiredList: data1.included,
-                })
+                if(data1.data.length > 0){
+                    this.setState({
+                        isLoading: false,
+                        registerList: data.included,
+                        enquiredList: data1.included,
+                    })
+                }
+                else {
+                    this.setState({
+                        isLoading: false,
+                        registerList: [],
+                        enquiredList: [],
+                    })
+                }
             })
         })
     }
@@ -85,11 +94,11 @@ class NewAttendee extends Component {
         return(
            <TouchableOpacity key = {index} onPress = {() => this.clickAttendee(item, index)}>
                 <View style = {styles.rowRenderView}>
-                    <Thumbnail square source = {item.avatar} style = {styles.avatarImg}/>
+                    <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                     <View style = {styles.rowSubView}>
-                        <Label style = {styles.label1}>{item.name}</Label>
-                        <Label style = {styles.label2}>{item.phone}</Label>
-                        <Label style = {styles.label2}>{item.email}</Label>                        
+                        <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
+                        <Label style = {styles.label2}>{item.attributes.mobile_phone}</Label>
+                        <Label style = {styles.label2}>{item.attributes.email}</Label>                         
                     </View>
                     <View style = {styles.checkView}>
                         <Label style = {styles.checkTxt}>CHECK IN</Label>
@@ -150,92 +159,99 @@ class NewAttendee extends Component {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 <View>
-                    <View style = {styles.rowView}>
-                        <Hoshi
-                            label = {'First Name'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput1}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                        <Hoshi
-                            label = {'Last Name'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput1}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
+                    <View style = {{paddingLeft: 15, paddingRight: 15,}}>
+                        <View style = {styles.rowView}>
+                            <Hoshi
+                                label = {'First Name'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput1}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                            <Hoshi
+                                label = {'Last Name'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput1}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                        </View>
+                        <View style = {styles.rowView}>
+                            <Hoshi
+                                label = {'Mobile'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput1}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                            <Hoshi
+                                label = {'Phone'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput1}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                        </View>
+                        <View style = {styles.rowView}>
+                            <Hoshi
+                                label = {'Email'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput2}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                        </View>
+                        <View style = {styles.rowView}>
+                            <Hoshi
+                                label = {'Notes'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput2}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                        </View>
+                        <View style = {styles.editPropertyView}>
+                            <Label style = {styles.editTxt}>Edit Property Preferences</Label>
+                        </View>
+                        <View style = {styles.editSegementView}>
+                            <TouchableOpacity onPress = {() => this.onNotInterested()}>
+                                <View style = {[styles.nonInterestedView, this.state.isNotInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
+                                    <Label style = {[styles.interestedTxt, this.state.isNotInterested?{color: 'white'} : {color: '#364150'}]}>Not Interested</Label>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => this.onMaybeInterested()}>
+                                <View style = {[styles.maybeInterestedView, this.state.isMaybeInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
+                                    <Label style = {[styles.interestedTxt, this.state.isMaybeInterested?{color: 'white'} : {color: '#364150'}]}>Maybe</Label>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => this.onInterested()}>
+                                <View style = {[styles.InterestedView, this.state.isInterestd?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
+                                    <Label style = {[styles.interestedTxt, this.state.isInterestd?{color: 'white'} : {color: '#364150'}]}>Interested</Label>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <View style = {styles.buttonView}>
+                            <TouchableOpacity>
+                                <View style = {styles.clearBtnView}>
+                                    <Label style = {styles.clearTxt}>Clear</Label>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <View style = {styles.saveBtnView}>
+                                    <Label style = {styles.clearTxt}>SAVE</Label>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style = {styles.rowView}>
-                        <Hoshi
-                            label = {'Mobile'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput1}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                        <Hoshi
-                            label = {'Phone'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput1}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                    </View>
-                    <View style = {styles.rowView}>
-                        <Hoshi
-                            label = {'Email'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput2}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                    </View>
-                    <View style = {styles.rowView}>
-                        <Hoshi
-                            label = {'Notes'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput2}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                    </View>
-                    <View style = {styles.editPropertyView}>
-                        <Label style = {styles.editTxt}>Edit Property Preferences</Label>
-                    </View>
-                    <View style = {styles.editSegementView}>
-                        <TouchableOpacity onPress = {() => this.onNotInterested()}>
-                            <View style = {[styles.nonInterestedView, this.state.isNotInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
-                                <Label style = {[styles.interestedTxt, this.state.isNotInterested?{color: 'white'} : {color: '#364150'}]}>Not Interested</Label>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress = {() => this.onMaybeInterested()}>
-                            <View style = {[styles.maybeInterestedView, this.state.isMaybeInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
-                                <Label style = {[styles.interestedTxt, this.state.isMaybeInterested?{color: 'white'} : {color: '#364150'}]}>Maybe</Label>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress = {() => this.onInterested()}>
-                            <View style = {[styles.InterestedView, this.state.isInterestd?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
-                                <Label style = {[styles.interestedTxt, this.state.isInterestd?{color: 'white'} : {color: '#364150'}]}>Interested</Label>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    <View style = {styles.buttonView}>
-                        <TouchableOpacity>
-                            <View style = {styles.clearBtnView}>
-                                <Label style = {styles.clearTxt}>Clear</Label>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style = {styles.saveBtnView}>
-                                <Label style = {styles.clearTxt}>SAVE</Label>
-                            </View>
-                        </TouchableOpacity>
+                    
+                    
+                    <View >
+                        {
+                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 20, marginBottom: 10}}/> : this.showRegisteredList()
+                    } 
                     </View>
 
-                    {
-                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 20}}/> : this.showRegisteredList()
-                    } 
+                    
                 </View>
             </Content>
         );

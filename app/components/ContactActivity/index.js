@@ -111,7 +111,7 @@ class ContactActivity extends Component {
         return (
             <View style = {styles.container}>
                 {
-                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showContactActivity()
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showContactActivity()
                 }
                 <Modal
                     animationType = 'slide'
@@ -145,7 +145,6 @@ const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
         contact_groups: state.contacts.contact_groups,
-        contact_relationships: state.contacts.contact_relationships,
     }
 }
 

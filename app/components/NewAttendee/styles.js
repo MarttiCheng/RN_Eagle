@@ -5,8 +5,7 @@ export default {
     container: {
         flex: 1,
         backgroundColor: 'white',
-        paddingLeft: 15,
-        paddingRight: 15,
+        
         // paddingTop: 10,
     },
     rowView: {
@@ -116,7 +115,7 @@ export default {
     },
     preregisteredTitle: {
         width: width,
-        marginLeft: -15,
+        marginLeft: 0,
         marginTop: -1,
         paddingTop: 20,
         paddingLeft: 15,
@@ -128,6 +127,8 @@ export default {
     rowRenderView: {
         paddingTop: 10,
         paddingBottom: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
         flexDirection: 'row',
         alignItems: 'center',
     },

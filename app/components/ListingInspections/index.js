@@ -67,7 +67,7 @@ class ListingInspections extends Component {
         return (
             <Content style = {styles.container}>
                 {
-                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showContactInspections()
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showContactInspections()
                 }                
             </Content>
         );

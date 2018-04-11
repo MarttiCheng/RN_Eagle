@@ -49,7 +49,6 @@ class ContactAbout extends Component {
     
     showContactRelationships(relationList){
         if(relationList.data.length > 0){
-
             var user_name = this.props.contact_groups.data.attributes.first_name + ' ' + this.props.contact_groups.data.attributes.last_name
             var contact1_name = relationList.data[0].attributes.contact1_first_name + ' ' + relationList.data[0].attributes.contact1_last_name
             var contact2_name = relationList.data[0].attributes.contact2_first_name + ' ' + relationList.data[0].attributes.contact2_last_name

@@ -178,7 +178,7 @@ class tasksShow extends Component<{}>{
                 </View>
                 <Content>
                     {
-                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showTasksDetail()
+                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showTasksDetail()
                     }
                 </Content>              
             </Container>

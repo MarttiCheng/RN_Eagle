@@ -63,7 +63,7 @@ class ListingDocuments extends Component {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 {
-                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> : this.showContactDocuments()
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showContactDocuments()
                 } 
             </Content>
         );

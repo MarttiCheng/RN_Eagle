@@ -139,7 +139,7 @@ class listings extends Component<{}>{
                     </View>
                     
                     {
-                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100}}/> :
+                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> :
                         this.state.listingsList.map((item, index) => {
                             return(this.renderRow(item, index))
                         })

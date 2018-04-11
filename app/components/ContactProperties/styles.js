@@ -4,7 +4,7 @@ const { width, height } = Dimensions.get('window')
 export default {
     container: {
         flex: 1,
-        backgroundColor: '#ddd'
+        backgroundColor: '#ddd',
     },
     propertyItemTitle: {
         paddingTop: 15,
