@@ -63,7 +63,7 @@ export default {
         fontFamily: 'open-sans-regular'
     },
     editPropertyView: {
-        width: width - 30,
+        // width: width - 30,
         height: 36,
         backgroundColor: '#2B3643',
         justifyContent: 'center',

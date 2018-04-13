@@ -56,7 +56,11 @@ class ContactAbout extends Component {
             if(user_name == contact1_name){
                 return(
                     <View style = {styles.view2} >
-                        <Thumbnail square source = {relationList.data[0].attributes.contact2_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                        {
+                            relationList.data[0].attributes.contact2_photo_url? <Thumbnail square source = {relationList.data[0].attributes.contact2_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                            <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                        }
+                        
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label3}>{contact2_name}</Label>
                             <View style = {styles.tagView}>
@@ -71,7 +75,11 @@ class ContactAbout extends Component {
             else {
                 return(
                     <View style = {styles.view2} >
-                        <Thumbnail square source = {relationList.data[0].attributes.contact1_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                        {
+                            relationList.data[0].attributes.contact1_photo_url? <Thumbnail square source = {relationList.data[0].attributes.contact1_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                            <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                        }
+                        
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label3}>{contact1_name}</Label>
                             <View style = {styles.tagView}>

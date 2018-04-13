@@ -120,7 +120,11 @@ class ListingAbout extends Component {
                         {
                             this.state.vendors.map((item, index) => [
                                 <View style = {styles.view2}>
-                                    <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                                    {
+                                        item.attributes.photo_url? <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                                        <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg} />
+                                    }
+                                    
                                     <View style = {styles.rowSubView}>
                                         <Label style = {{color:'black', fontSize: 16, fontFamily: 'open-sans-regular'}}>{item.attributes.first_name} {item.attributes.last_name}</Label>
                                         <View style = {styles.venderCategoryView}>

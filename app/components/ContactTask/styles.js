@@ -52,5 +52,13 @@ export default {
     favoriteView: {
         alignItems: 'center',
         marginLeft: 10
-    }
+    },
+    nomoretxt: {
+        marginTop: 25,
+        width: width,
+        textAlign: 'center',
+        fontSize: 16, 
+        color: '#364150',
+        fontFamily: 'open-sans-bold',
+    },
 }

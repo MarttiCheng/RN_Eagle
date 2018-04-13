@@ -112,8 +112,6 @@ export default {
     },
     preregisteredTitle: {
         width: width,
-        marginLeft: -15,
-        marginTop: -1,
         paddingTop: 20,
         paddingLeft: 15,
         paddingBottom: 7,
@@ -122,8 +120,7 @@ export default {
         fontFamily: 'open-sans-regular'
     },
     rowRenderView: {
-        paddingTop: 10,
-        paddingBottom: 10,
+        padding: 15,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -152,10 +149,9 @@ export default {
         height: 1,
         width: width,
         backgroundColor: 'lightgray',
-        // marginTop: 12,
         position: 'absolute',
         bottom: 0,
-        left: 60
+        left: 70
     },
     tagView: {
         flexDirection:'row',
@@ -184,5 +180,5 @@ export default {
         fontSize: 16, 
         color: '#364150',
         fontFamily: 'open-sans-bold',
-    },
+    },    
 }

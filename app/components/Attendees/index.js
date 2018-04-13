@@ -9,7 +9,7 @@ import styles from './styles'
 import images from '../../themes/images'
 import { NavigationActions } from 'react-navigation'
 import homeEdit from '../../scenes/homeEdit/index'
-import { getInspectionAttendees } from '../../actions'
+import { getInspectionAttendees, getContactGroups, getContactRelationships } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
 var rateInterestList = [
@@ -34,7 +34,15 @@ class Attendees extends Component {
             mayInterestedList: [],
             interestedList: [],
             notInterestedList: [],
-            isLoading: true
+            isLoading: true,
+            
+            maycontactGroups: [],
+            intcontactGroups: [],
+            notcontactGroups: [],
+
+            maycontactRelationships: [],
+            intcontactRelationships: [],
+            notcontactRelationships: [],
         }
     }
 
@@ -42,23 +50,50 @@ class Attendees extends Component {
         var mayinterested = []
         var interested = []
         var notinterested = []
+        var maygroups = []
+        var intgroups = []
+        var notgroups = []
+        var mayrelationships = []
+        var notrelationships = []
+        var intrelationships = []
+        var idList = []
+
         getInspectionAttendees(this.props.token, this.props.inspectionId).then(data => {
-            for(var i = 0 ; i < data.data.length ; i++){
-                if(data.data[i].attributes.interested == 'No'){
-                    notinterested.push(data.data[i])
-                }
-                else if(data.data[i].attributes.interested == 'Yes') {
-                    interested.push(data.data[i])
-                }
-                else {
-                    mayinterested.push(data.data[i])
-                }
+            for(var i = 0; i < data.data.length; i++){
+                idList.push(data.data[i].attributes.contact_id)
             }
-            this.setState({
-                isLoading: false,
-                mayInterestedList: mayinterested,
-                interestedList: interested,
-                notInterestedList: notinterested
+            getContactGroups(this.props.token, idList).then(data1 => {
+                getContactRelationships(this.props.token, idList).then(data2 => {
+                    for(var i = 0 ; i < data.data.length ; i++){
+                        if(data.data[i].attributes.interested == 'No'){
+                            notinterested.push(data.included[i])
+                            notgroups.push(data1[i])
+                            notrelationships.push(data2[i])
+                        }
+                        else if(data.data[i].attributes.interested == 'Yes') {
+                            interested.push(data.included[i])
+                            intgroups.push(data1[i])
+                            intrelationships.push(data2[i])
+                        }
+                        else {
+                            mayinterested.push(data.included[i])
+                            maygroups.push(data1[i])
+                            mayrelationships.push(data2[i])
+                        }
+                    }
+                    this.setState({
+                        mayInterestedList: mayinterested,
+                        interestedList: interested,
+                        notInterestedList: notinterested,
+                        maycontactGroups: maygroups,
+                        intcontactGroups: intgroups,
+                        notcontactGroups: notgroups,
+                        maycontactRelationships: mayrelationships,
+                        intcontactRelationships: intrelationships,
+                        notcontactRelationships: notrelationships,
+                        isLoading: false,
+                    })
+                })
             })
         })
     }
@@ -68,26 +103,45 @@ class Attendees extends Component {
         dispatch(NavigationActions.navigate({routeName: 'homeEdit'}))
     }
 
-    renderRow(item, index) {
+    showContactGroups(index, category){
+        if(category == 0){
+            if(this.state.maycontactGroups[index].included){
+                return(
+                    this.state.maycontactGroups[index].included.map((item1, index1) => {
+                        return(
+                            <View style = { styles.eachtag } key = {index1}>
+                                <Label style = {styles.tagTxt}>{item1.attributes.name}</Label>
+                            </View>
+                        )
+                    })
+                )
+            }
+        }
+    }
+
+    renderRow(item, index, category) {
         return(
             <TouchableOpacity key = {index} onPress = {() => this.clickAttend(item, index)}>
                 <View style = {styles.rowRenderView}>
-                    <Thumbnail square source = {item.avatar} style = {styles.avatarImg}/>
+                    {
+                        item.attributes.photo_url?  <Thumbnail square source = {{uri: item.attributes.photo_url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                        <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}  />
+                    }
+                    
                     <View style = {styles.rowSubView}>
-                        <Label style = {styles.label1}>{item.name}</Label>
+                        <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
                         <View style = {styles.tagView}>
-                            <View style = {item.tag? styles.eachtag : null}>
-                                <Label style = {styles.tagTxt}>{item.tag}</Label>
-                            </View>
-                        </View>                      
+                            {
+                                this.showContactGroups(index, category) 
+                            }
+                        </View>
+                        
                     </View>
-                    <View style = {styles.line}/>
+                    <View style = {styles.line}/>   
                 </View>
             </TouchableOpacity>
         )
     }
-
-    
 
     showAttendeesList(){
         if((this.state.mayInterestedList.length + this.state.interestedList.length + this.state.notInterestedList.length) > 0){
@@ -99,7 +153,7 @@ class Attendees extends Component {
                         }
                         {
                             this.state.mayInterestedList.map((item, index) => {
-                                return(this.renderRow(item, index));
+                                return(this.renderRow(item, index, 0));
                             })
                         }
                     </View>
@@ -109,7 +163,7 @@ class Attendees extends Component {
                         }
                         {
                             this.state.interestedList.map((item, index) => {
-                                return(this.renderRow(item, index));
+                                return(this.renderRow(item, index, 1));
                             })
                         }
                     </View> 
@@ -119,7 +173,7 @@ class Attendees extends Component {
                         }
                         {
                             this.state.notInterestedList.map((item, index) => {
-                                return(this.renderRow(item, index));
+                                return(this.renderRow(item, index, 2));
                             })
                         }
                     </View>

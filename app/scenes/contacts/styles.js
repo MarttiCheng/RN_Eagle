@@ -27,7 +27,7 @@ export default {
         height: 40,
         resizeMode: 'cover',
         borderRadius: 20,
-        marginLeft: 5
+        marginLeft: 5,
     }, 
     rowSubView: {
         marginLeft: 15,

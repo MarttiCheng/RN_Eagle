@@ -94,7 +94,11 @@ class NewAttendee extends Component {
         return(
            <TouchableOpacity key = {index} onPress = {() => this.clickAttendee(item, index)}>
                 <View style = {styles.rowRenderView}>
-                    <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                    {
+                        item.attributes.photo_url? <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                        <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg} />
+                    }
+                    
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
                         <Label style = {styles.label2}>{item.attributes.mobile_phone}</Label>
@@ -113,7 +117,11 @@ class NewAttendee extends Component {
         return(
            <TouchableOpacity key = {index} onPress = {() => this.clickAttendee(item, index)}>
                 <View style = {styles.rowRenderView}>
-                    <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                    {
+                        item.attributes.photo_url? <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                        <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                    }
+                    
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
                         <Label style = {styles.label2}>{item.attributes.mobile_phone}</Label>

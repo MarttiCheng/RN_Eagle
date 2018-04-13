@@ -9,7 +9,7 @@ import styles from './styles'
 import images from '../../themes/images'
 import moment from 'moment'
 import {FontAwesome} from '@expo/vector-icons'
-import { getListingsInspections } from '../../actions'
+import { getListingsTasks } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
 
@@ -24,7 +24,7 @@ class ListingTasks extends Component {
     }
 
     componentWillMount() {
-        getListingsInspections(this.props.token, this.props.listings_about.id).then(data => { 
+        getListingsTasks(this.props.token, this.props.listings_about.id).then(data => { 
            this.setState({
                isLoading: false,
                tasksList: data.data

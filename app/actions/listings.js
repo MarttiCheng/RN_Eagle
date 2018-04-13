@@ -110,11 +110,11 @@ function getListingsTasks(token, id) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Listings Tasks Success', data);
+            console.log('Listings Tasks Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Listings Tasks Failed', err);
+            console.log('Listings Tasks Failed', err);
             reject(err);
         })
     })

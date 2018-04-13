@@ -129,7 +129,10 @@ class contactsShow extends Component<{}>{
                     </TouchableOpacity>
                 </View>
                 <View style = {styles.headerView}>
-                    <Thumbnail square source = {params.data.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                    {
+                        params.data.attributes.photo_url? <Thumbnail square source = {params.data.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                        <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                    }
                     <Label style = {styles.nameTxt}>{params.data.attributes.first_name} {params.data.attributes.last_name}</Label>
                     {this.showCompany()}
                 </View>

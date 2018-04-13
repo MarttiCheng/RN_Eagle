@@ -48,11 +48,23 @@ class ContactTask extends Component {
     }
 
     showContactTasks(){
-        return(
-            this.state.tasksList.map((item, index) => {
-                return( this.renderRow(item, index ));
-            })
-        )
+
+
+        if(this.state.tasksList.length > 0){
+            return(
+                 this.state.tasksList.map((item, index) => {
+                    return( this.renderRow(item, index ));
+                })
+            )
+        }
+        else{
+            return(
+                <Label style = {styles.nomoretxt}>No more data</Label>
+            )
+        }
+
+
+
     }
     
     render() {
