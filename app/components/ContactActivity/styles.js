@@ -62,7 +62,7 @@ export default {
     },
     menuView: {
         width: width,
-        height: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT+20,
+        height: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT,
         paddingTop: (Platform.OS == 'ios')? 20 : StatusBar.currentHeight,
         flexDirection:'row',
         alignItems:'center',

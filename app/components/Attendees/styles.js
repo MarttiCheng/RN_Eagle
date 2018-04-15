@@ -26,20 +26,6 @@ export default {
         fontSize: 14,
         fontFamily: 'open-sans-regular'
     },
-    editPropertyView: {
-        width: width - 30,
-        height: 36,
-        backgroundColor: '#2B3643',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5,
-        marginTop: 15 
-    },
-    editTxt: {
-        color: 'white',
-        fontSize: 13,
-        fontFamily: 'open-sans-regular'
-    },
     editSegementView: {
         flexDirection: 'row',
         width: width - 30,

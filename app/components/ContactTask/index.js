@@ -30,26 +30,32 @@ class ContactTask extends Component {
         })
     }
 
+    onClickedTask(item) {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_TASK_ITEM', data: item})
+        dispatch(NavigationActions.navigate({routeName: 'tasksShow'}))
+    }
+
     renderRow(item, index) {
         return(
-            <View style = {styles.taskItemView} key = {index}>
-                <View style = {styles.view1}> 
-                    <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
-                    <View style = {styles.rowSubView}>
-                        <Label style = {styles.label1}>{item.attributes.body}</Label>
+            <TouchableOpacity key = {index} >
+                <View style = {styles.taskItemView}>
+                    <View style = {styles.view1}> 
+                        <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
+                        <View style = {styles.rowSubView}>
+                            <Label style = {styles.label1}>{item.attributes.body}</Label>
+                        </View>
+                        <Label style = {styles.favoriteDate}>
+                            {moment(item.attributes.due_date).format('DD MMM')}
+                        </Label>
                     </View>
-                    <Label style = {styles.favoriteDate}>
-                        {moment(item.attributes.due_date).format('DD MMM')}
-                    </Label>
+                    <View style = {styles.line1}/>
                 </View>
-                <View style = {styles.line1}/>
-            </View>
+            </TouchableOpacity>
         )
     }
 
     showContactTasks(){
-
-
         if(this.state.tasksList.length > 0){
             return(
                  this.state.tasksList.map((item, index) => {
@@ -62,9 +68,6 @@ class ContactTask extends Component {
                 <Label style = {styles.nomoretxt}>No more data</Label>
             )
         }
-
-
-
     }
     
     render() {

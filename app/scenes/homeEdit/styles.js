@@ -39,8 +39,8 @@ export default {
     mainView: {
         flex: 1,
         backgroundColor: 'white',
-        paddingLeft: 15,
-        paddingRight: 15,
+        // paddingLeft: 15,
+        // paddingRight: 15,
     },
     rowView: {
         flex:1,
@@ -141,9 +141,7 @@ export default {
     },  
     editInspectionTxt: {
         width: width,
-        marginLeft: -15,
-        marginTop: -1,
-        paddingTop: 15,
+        paddingTop: 20,
         paddingLeft: 15,
         paddingBottom: 7,
         backgroundColor: '#CFCFCF',
@@ -216,7 +214,6 @@ export default {
     followRowView: {
         flexDirection: 'row',
         width: width,
-        marginLeft: -15,
         height: 60,
         alignItems: 'center',
         paddingLeft: 25,
@@ -229,6 +226,6 @@ export default {
     follwRowTxt: {
         color: 'black',
         fontSize: 16,
-        marginLeft: 15,
+        marginLeft: 20,
     },
 }

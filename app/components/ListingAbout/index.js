@@ -24,7 +24,6 @@ class ListingAbout extends Component {
         getListingsVendors(this.props.token, this.props.listings_about.id).then(data => {
             this.setState({ vendors: data.data })
         })
-
         this.fetchPostCode()
     }
 

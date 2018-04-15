@@ -9,7 +9,7 @@ import styles from './styles'
 import images from '../../themes/images'
 import { NavigationActions } from 'react-navigation'
 import { Sae, Hoshi } from 'react-native-textinput-effects'
-import { getInspectionPreregistered, getInspectionEnquired } from '../../actions'
+import { getInspectionPreregistered, getInspectionEnquired, getContactGroups, getContactRelationships } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
 var registerList = [
@@ -37,17 +37,35 @@ class NewAttendee extends Component {
             isLoading: true,
             registerList: [],
             enquiredList: [],
+            contactGroups: [],
+            contactRelationships: [],
         }
     }
 
     componentWillMount() {
+        var idList1 = []
+        var idList2 = []
+        var allList = []
         getInspectionPreregistered(this.props.token, this.props.inspectionInfo.id).then(data => {
             getInspectionEnquired(this.props.token, this.props.inspectionInfo.attributes.property_id).then(data1 => {
                 if(data1.data.length > 0){
-                    this.setState({
-                        isLoading: false,
-                        registerList: data.included,
-                        enquiredList: data1.included,
+                    for(var i = 0; i < data.included.length; i++){
+                        idList1.push(data.included[i].id)
+                    }
+                    for(var i = 0; i < data1.included.length; i++){
+                        idList2.push(data.included[i].id)
+                    }
+                    allList = idList1.concat(idList2)
+                    getContactGroups(this.props.token, allList).then(groupData => {
+                        getContactRelationships(this.props.token, allList).then(relationshipData => {
+                            this.setState({
+                                contactGroups: groupData,
+                                contactRelationships: relationshipData,
+                                isLoading: false,
+                                registerList: data.included,
+                                enquiredList: data1.included,
+                            })
+                        })
                     })
                 }
                 else {
@@ -87,12 +105,14 @@ class NewAttendee extends Component {
 
     clickAttendee(item, index) {
         var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {info: item}}))
+        dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
+        dispatch ({ type: 'GET_CONTACTS_RELATIONSHIP', data: this.state.contactRelationships[index]})
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow'}))
     }
 
     renderRow(item, index) {
         return(
-           <TouchableOpacity key = {index} onPress = {() => this.clickAttendee(item, index)}>
+           <TouchableOpacity key = {index} onPress = {() => this.clickAttendee( this.state.contactGroups[index], index)}>
                 <View style = {styles.rowRenderView}>
                     {
                         item.attributes.photo_url? <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
@@ -115,7 +135,7 @@ class NewAttendee extends Component {
 
     renderRow1(item, index) {
         return(
-           <TouchableOpacity key = {index} onPress = {() => this.clickAttendee(item, index)}>
+           <TouchableOpacity key = {index} onPress = {() => this.clickAttendee( this.state.contactGroups[index+this.state.registerList.length], index+this.state.registerList.length)}>
                 <View style = {styles.rowRenderView}>
                     {
                         item.attributes.photo_url? <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :

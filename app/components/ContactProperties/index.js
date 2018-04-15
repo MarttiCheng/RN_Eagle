@@ -37,8 +37,6 @@ class ContactProperties extends Component {
 
     componentWillMount() {
         getContactProperty_Vendor(this.props.token, this.props.contact_groups.data.id).then(data => {
-            console.log('*')
-            console.log(data)
             if(data.included){
                 this.setState({
                     vendorList: data.included,

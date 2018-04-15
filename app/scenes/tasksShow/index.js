@@ -92,7 +92,6 @@ class tasksShow extends Component<{}>{
                 </View>
             )
         }
-        
     }
 
     showTasksDetail(){
@@ -109,8 +108,6 @@ class tasksShow extends Component<{}>{
                     <Label style = {styles.assignTxt}>Due Date</Label>
                     <Label style = {styles.assignNameTxt}>{this.props.tasks.attributes.due_date}</Label>
                 </View>
-                
-
 
                 {
                     this.state.task_contactList.length > 0 ? 

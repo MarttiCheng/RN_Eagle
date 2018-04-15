@@ -111,86 +111,87 @@ class homeEdit extends Component {
                 </View>
                 <Content style = {styles.mainView} showsVerticalScrollIndicator = {false}>
                     <Label style = {styles.editInspectionTxt}>Edit Inspection</Label>
-                    <View style = {styles.rowView}>
-                        <Hoshi
-                            label = {'First Name'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput1}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                        <Hoshi
-                            label = {'Last Name'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput1}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                    </View>
-                    <View style = {styles.rowView}>
-                        <Hoshi
-                            label = {'Mobile'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput1}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                        <Hoshi
-                            label = {'Phone'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput1}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                    </View>
-                    <View style = {styles.rowView}>
-                        <Hoshi
-                            label = {'Email'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput2}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                    </View>
-                    <View style = {styles.rowView}>
-                        <Hoshi
-                            label = {'Notes'}
-                            borderColor = {'#0099CC'}
-                            style = {styles.txtinput2}
-                            autoCapitalize = {'none'}
-                            autoCorrect = {false}
-                        />
-                    </View>
-                    <View style = {styles.editPropertyView}>
-                        <Label style = {styles.editTxt1}>Edit Property Preferences</Label>
-                    </View>
-                    <View style = {styles.editSegementView}>
-                        <TouchableOpacity onPress = {() => this.onNotInterested()}>
-                            <View style = {[styles.nonInterestedView, this.state.isNotInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
-                                <Label style = {[styles.interestedTxt, this.state.isNotInterested?{color: 'white'} : {color: '#364150'}]}>Not Interested</Label>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress = {() => this.onMaybeInterested()}>
-                            <View style = {[styles.maybeInterestedView, this.state.isMaybeInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
-                                <Label style = {[styles.interestedTxt, this.state.isMaybeInterested?{color: 'white'} : {color: '#364150'}]}>Maybe</Label>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress = {() => this.onInterested()}>
-                            <View style = {[styles.InterestedView, this.state.isInterestd?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
-                                <Label style = {[styles.interestedTxt, this.state.isInterestd?{color: 'white'} : {color: '#364150'}]}>Interested</Label>
-                            </View>
-                        </TouchableOpacity>
+                    <View style = {{padding: 15}}>
+                        <View style = {styles.rowView}>
+                            <Hoshi
+                                label = {'First Name'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput1}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                            <Hoshi
+                                label = {'Last Name'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput1}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                        </View>
+                        <View style = {styles.rowView}>
+                            <Hoshi
+                                label = {'Mobile'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput1}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                            <Hoshi
+                                label = {'Phone'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput1}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                        </View>
+                        <View style = {styles.rowView}>
+                            <Hoshi
+                                label = {'Email'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput2}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                        </View>
+                        <View style = {styles.rowView}>
+                            <Hoshi
+                                label = {'Notes'}
+                                borderColor = {'#0099CC'}
+                                style = {styles.txtinput2}
+                                autoCapitalize = {'none'}
+                                autoCorrect = {false}
+                            />
+                        </View>
+                        <View style = {styles.editPropertyView}>
+                            <Label style = {styles.editTxt1}>Edit Property Preferences</Label>
+                        </View>
+                        <View style = {styles.editSegementView}>
+                            <TouchableOpacity onPress = {() => this.onNotInterested()}>
+                                <View style = {[styles.nonInterestedView, this.state.isNotInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
+                                    <Label style = {[styles.interestedTxt, this.state.isNotInterested?{color: 'white'} : {color: '#364150'}]}>Not Interested</Label>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => this.onMaybeInterested()}>
+                                <View style = {[styles.maybeInterestedView, this.state.isMaybeInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
+                                    <Label style = {[styles.interestedTxt, this.state.isMaybeInterested?{color: 'white'} : {color: '#364150'}]}>Maybe</Label>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => this.onInterested()}>
+                                <View style = {[styles.InterestedView, this.state.isInterestd?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
+                                    <Label style = {[styles.interestedTxt, this.state.isInterestd?{color: 'white'} : {color: '#364150'}]}>Interested</Label>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        
+                        <View style = {styles.buttonView}>
+                            <TouchableOpacity>
+                                <View style = {styles.saveBtnView}>
+                                    <Label style = {styles.saveTxt}>SAVE</Label>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     
-                    <View style = {styles.buttonView}>
-                        <TouchableOpacity>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style = {styles.saveBtnView}>
-                                <Label style = {styles.saveTxt}>SAVE</Label>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
 
                     <View>
                         <Label style = {styles.editInspectionTxt}>Follow up</Label>

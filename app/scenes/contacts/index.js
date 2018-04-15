@@ -102,6 +102,35 @@ class contacts extends Component<{}>{
         )
     }
 
+    beforeFocus = () => {
+        return new Promise((resolve, reject) => {
+            console.log('beforeFocus');
+            resolve();
+        });
+    }
+
+    onFocus = (text) => {
+        return new Promise((resolve, reject) => {
+            console.log('onFocus', text);
+            resolve();
+        });
+    }
+
+    afterFocus = () => {
+        return new Promise((resolve, reject) => {
+            console.log('afterFocus');
+            resolve();
+        });
+    }
+
+    _onPressSearch(){
+        srestaurants = [];
+        restaurantsList = [];
+    }
+
+    onSearch = (text) => {
+    };
+
     render() {
         return(
             <Container style = {styles.container}>
@@ -131,6 +160,8 @@ class contacts extends Component<{}>{
                             placeholderExpandedMargin = {25}
                             onChangeText = {(text) => this.setState({searchText : text})}
                             onSearch = {() => this._onPressSearch()}
+                            onFocus={this.onFocus}
+                            onSubmitEditing={this.onSearch}
                         />
                     </View>
                     
