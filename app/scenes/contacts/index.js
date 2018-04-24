@@ -30,9 +30,8 @@ class contacts extends Component<{}>{
             isLoading: true,
             searchText: '',
             contactsList: [],
-            contactGroups: [],
-            contactRelationships: [],
-        }   
+            search_contactsList: [],
+        }
     }
 
     componentWillMount() {
@@ -41,17 +40,18 @@ class contacts extends Component<{}>{
 
     getAllContacts(){
         var idList = []
-
         getAllContacts(this.props.token).then(data => {
             for(var i = 0; i < data.data.length; i++){
                 idList.push(data.data[i].id)
             }
             getContactGroups(this.props.token, idList).then(data1 => {
                 getContactRelationships(this.props.token, idList).then(data2 => {
+                    for(var i = 0; i < idList.length; i++){
+                        data1[i]['Relationships'] = data2[i]
+                    }
                     this.setState({
-                        contactsList: data.data,
-                        contactGroups: data1,
-                        contactRelationships: data2,
+                        contactsList: data1,
+                        search_contactsList: data1,
                         isLoading: false,
                     })
                 })
@@ -59,17 +59,30 @@ class contacts extends Component<{}>{
         })
     }
 
+    filterStates = (value) => {
+        if(value){
+            this.setState({
+                search_contactsList: this.state.contactsList.filter(item => (item.data.attributes.first_name + item.data.attributes.last_name).toLowerCase().includes(value.toLowerCase())),
+            })
+        }
+        else {
+            this.setState({
+                search_contactsList: this.state.contactsList,
+            })
+        }
+    }
+
     clickItemContact(item, index) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
-        dispatch ({ type: 'GET_CONTACTS_RELATIONSHIP', data: this.state.contactRelationships[index]})
+        dispatch ({ type: 'GET_CONTACTS_RELATIONSHIP', data: this.state.contactsList[index].Relationships})
         dispatch(NavigationActions.navigate({routeName: 'contactsShow'}))
     }
     
     showContactGroups(index){
-        if(this.state.contactGroups[index].included){
+        if(this.state.search_contactsList[index].included){
             return(
-                this.state.contactGroups[index].included.map((item1, index1) => {
+                this.state.search_contactsList[index].included.map((item1, index1) => {
                     return(
                         <View style = { styles.eachtag } key = {index1}>
                             <Label style = {styles.tagTxt}>{item1.attributes.name}</Label>
@@ -82,54 +95,31 @@ class contacts extends Component<{}>{
 
     renderRow(item, index) {
         return(
-            <TouchableOpacity key = {index} onPress = {() => this.clickItemContact( this.state.contactGroups[index], index)}>
+            <TouchableOpacity key = {index} onPress = {() => this.clickItemContact( this.state.search_contactsList[index], index)}>
                 <View style = {styles.rowView}>
                     {
-                        item.attributes.photo_url?<Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                        item.data.attributes.photo_url?<Thumbnail square source = {item.data.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
                         <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
                     }
                     <View style = {styles.rowSubView}>
-                        <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
+                        <Label style = {styles.label1}>{item.data.attributes.first_name} {item.data.attributes.last_name}</Label>
                         <View style = {styles.tagView}>
                             {
                                 this.showContactGroups(index) 
                             }
                         </View>
-                        <View style = {styles.line}/>
                     </View>
+                    <View style = {styles.line}/>
                 </View>
             </TouchableOpacity>
         )
     }
 
-    beforeFocus = () => {
-        return new Promise((resolve, reject) => {
-            console.log('beforeFocus');
-            resolve();
-        });
+    onCancel = () => {
+        this.setState({
+            search_contactsList: this.state.contactsList
+        })
     }
-
-    onFocus = (text) => {
-        return new Promise((resolve, reject) => {
-            console.log('onFocus', text);
-            resolve();
-        });
-    }
-
-    afterFocus = () => {
-        return new Promise((resolve, reject) => {
-            console.log('afterFocus');
-            resolve();
-        });
-    }
-
-    _onPressSearch(){
-        srestaurants = [];
-        restaurantsList = [];
-    }
-
-    onSearch = (text) => {
-    };
 
     render() {
         return(
@@ -158,16 +148,14 @@ class contacts extends Component<{}>{
                             searchIconExpandedMargin = {10}
                             placeholderCollapsedMargin = {15}
                             placeholderExpandedMargin = {25}
-                            onChangeText = {(text) => this.setState({searchText : text})}
-                            onSearch = {() => this._onPressSearch()}
-                            onFocus={this.onFocus}
-                            onSubmitEditing={this.onSearch}
+                            onChangeText={this.filterStates}
+                            onCancel = {this.onCancel}
                         />
                     </View>
                     
                     {
                         this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> :
-                        this.state.contactsList.map((item, index) => {
+                        this.state.search_contactsList.map((item, index) => {
                             return(this.renderRow(item, index))
                         })
                     }

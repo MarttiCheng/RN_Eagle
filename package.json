@@ -29,6 +29,7 @@
     "react-native": "0.52.0",
     "react-native-floating-label-text-input": "^0.1.5",
     "react-native-indicators": "^0.12.0",
+    "react-native-parallax-scroll-view": "^0.21.0",
     "react-native-render-html": "^3.9.1",
     "react-native-router-flux": "^4.0.0-beta.28",
     "react-native-search-box": "0.0.13",

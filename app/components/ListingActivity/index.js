@@ -31,7 +31,7 @@ class ListingActivity extends Component {
            this.setState({
                isLoading: false,
                activityList: data.data
-           })                
+           }) 
         })
     }
 
@@ -86,13 +86,14 @@ class ListingActivity extends Component {
                 <View style = {styles.activityItem} >
                     <View style = {styles.view1}>
                         { this.showNoteIcon(item.attributes.note_type) }
+                        <Label style = {styles.dateTxt}>{item.attributes.note_type}</Label>
                         <Label style = {styles.dateTxt}>
                             {moment(item.attributes.created_at).format('DD MMM YYYY, h:mma')}
                         </Label>
                     </View>
                     <View style = {styles.view2}>
-                        <Label style = {styles.text}>{item.attributes.text}</Label>
                         <HTML html = {item.attributes.description}/>
+                        <Label style = {styles.text}>{item.attributes.text}</Label>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -130,8 +131,8 @@ class ListingActivity extends Component {
                         </View>
                         <Content style = {styles.contentView}>
                             <View style = {{padding: 15}}>
-                                <Label>{this.state.selected_note.text}</Label>
                                 <HTML html = {this.state.selected_note.description}/>
+                                <Label style = {styles.text}>{this.state.selected_note.text}</Label>
                             </View>
                             
                         </Content>

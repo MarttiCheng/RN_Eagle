@@ -51,8 +51,8 @@ export default {
     },
     text: {
         fontSize: 14,
-        color: '#2B3643',
-        marginBottom: 10
+        color: '#717171',
+        marginTop: 10
     },
     detailNoteView: {
         flex: 1,
@@ -84,5 +84,13 @@ export default {
     contentView: {
         flex: 1,
         backgroundColor: '#ddd',
-    }
+    },
+    nomoretxt: {
+        marginTop: 25,
+        width: width,
+        textAlign: 'center',
+        fontSize: 16, 
+        color: '#364150',
+        fontFamily: 'open-sans-bold',
+    }, 
 }

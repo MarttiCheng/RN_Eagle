@@ -34,7 +34,7 @@ class listings extends Component<{}>{
             isLoading: true,
             searchText: '',
             listingsList: [],
-            listings_photoList: [],
+            search_listingsList: [],
         }   
     }
 
@@ -44,6 +44,7 @@ class listings extends Component<{}>{
             this.setState({
                 isLoading: false,
                 listingsList: data.data,
+                search_listingsList: data.data,
             })
         })
     }
@@ -77,6 +78,15 @@ class listings extends Component<{}>{
         }
     }
 
+    capitalizeListingTypeTag(text){
+        var res = text.split('_')
+        var newRes = []
+        for(var i = 0 ; i < res.length ; i++){
+            newRes.push(res[i].charAt(0).toUpperCase() + res[i].slice(1))
+        }
+        return newRes.join(' ')
+    }
+
     renderRow(item, index) {
         return(
             <TouchableOpacity key = {index} onPress = {() => this.clickListing(item, index)}>
@@ -90,10 +100,10 @@ class listings extends Component<{}>{
                         <Label style = {styles.label1}>{item.attributes.full_address}</Label>
                         <View style = {styles.tagView}>
                             <View style = {styles.eachtag}>
-                                <Label style = {styles.labeltag}>{item.attributes.listing_type}</Label>
+                                <Label style = {styles.labeltag}>{this.capitalizeListingTypeTag(item.attributes.listing_type)}</Label>
                             </View>
                             <View style = {styles.eachtag}>
-                                <Label style = {styles.labeltag}>{item.attributes.property_type}</Label>
+                                <Label style = {styles.labeltag}>{this.capitalizeListingTypeTag(item.attributes.property_type)}</Label>
                             </View>
                         </View>
                     </View>
@@ -104,6 +114,19 @@ class listings extends Component<{}>{
                 </View>
             </TouchableOpacity>
         )
+    }
+
+    filterStates = (value) => {
+        if(value){
+            this.setState({
+                search_listingsList: this.state.listingsList.filter(item => item.attributes.full_address.toLowerCase().includes(value.toLowerCase())),
+            })
+        }
+        else {
+            this.setState({
+                search_listingsList: this.state.listingsList,
+            })
+        }
     }
 
     render() {
@@ -133,14 +156,14 @@ class listings extends Component<{}>{
                             searchIconExpandedMargin = {10}
                             placeholderCollapsedMargin = {15}
                             placeholderExpandedMargin = {25}
-                            onChangeText = {(text) => this.setState({searchText : text})}
-                            onSearch = {() => this._onPressSearch()}
+                            onChangeText={this.filterStates}
+                            onCancel = {this.onCancel}
                         />
                     </View>
                     
                     {
                         this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> :
-                        this.state.listingsList.map((item, index) => {
+                        this.state.search_listingsList.map((item, index) => {
                             return(this.renderRow(item, index))
                         })
                     }

@@ -9,7 +9,7 @@ export default {
     },
     headerView: {
         width: width,
-        // height: 140,
+        height: 150,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor : '#364150',
@@ -37,13 +37,16 @@ export default {
         fontFamily: 'open-sans-regular'
     },
     tabTitleView: {
-        width: width, 
-        height: 35, 
+        // width: width, 
+        height: 40, 
         backgroundColor:'#364150',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        // height: 70,
+        width: width, 
+        justifyContent: 'flex-end',
     },
     tabItem: {
-        height: 35, 
+        height: 40, 
         width: width/4, 
         justifyContent:'center', 
         alignItems:'center'
@@ -109,6 +112,29 @@ export default {
         fontFamily: 'open-sans-regular',
         width: 45,
         textAlign: 'right',
-        // marginRight: 20,
+    },
+
+    parallaxView: {
+        marginTop: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT+20,
+        backgroundColor: 'red'
+    },
+    stickySection: {
+        height: 70,
+        width: width, 
+        justifyContent: 'flex-end',
+    },
+    titleView: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        width: width,
+        paddingLeft: 20,
+        paddingRight: 20,
+        marginBottom: 20,
+        marginRight: 10,
+    },
+    stickySectionText: {
+        color: 'black',
+        fontSize: 15,
     },
 }

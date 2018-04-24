@@ -18,9 +18,8 @@ export default {
     },
     rowView: {
         flexDirection: 'row',
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingTop: 15
+        padding: 15,
+        alignItems: 'center'
     },
     avatarImg: {
         width: 40,
@@ -36,7 +35,7 @@ export default {
     label1: {
         fontSize: 18,
         color: '#000',
-        fontFamily: 'open-sans-regular'
+        fontFamily: 'open-sans-regular',
     },
     label2: {
         fontSize: 15,
@@ -46,8 +45,10 @@ export default {
     line: {
         height: 1,
         width: width,
-        backgroundColor: 'lightgray',
-        marginTop: 13
+        backgroundColor: '#e3e3e3',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
     },
     menuView: {
         width: width,

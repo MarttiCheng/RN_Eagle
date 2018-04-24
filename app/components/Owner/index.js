@@ -66,10 +66,6 @@ class Owner extends Component {
                 })
             })
         })
-            
-
-
-        
     }
 
     onClickedMail(){

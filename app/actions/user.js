@@ -19,11 +19,9 @@ function getToken(email, password){
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Token Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Token Failed', err);
             reject(err);
         })
     })

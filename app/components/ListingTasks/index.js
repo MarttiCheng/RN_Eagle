@@ -4,6 +4,7 @@ import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncSt
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
+import { NavigationActions, Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import styles from './styles'
 import images from '../../themes/images'
@@ -32,20 +33,28 @@ class ListingTasks extends Component {
         })
     }
 
+    onClickedTask(item) {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_TASK_ITEM', data: item})
+        dispatch(NavigationActions.navigate({routeName: 'tasksShow'}))
+    }
+
     renderRow(item, index) {
         return(
-            <View style = {styles.taskItemView} key = {index}>
-                <View style = {styles.view1}> 
-                    <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
-                    <View style = {styles.rowSubView}>
-                        <Label style = {styles.label1}>{item.attributes.body}</Label>
+            <TouchableOpacity key = {index} onPress = {() => this.onClickedTask(item)}>
+                <View style = {styles.taskItemView}>
+                    <View style = {styles.view1}> 
+                        <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
+                        <View style = {styles.rowSubView}>
+                            <Label style = {styles.label1}>{item.attributes.body}</Label>
+                        </View>
+                        <Label style = {styles.favoriteDate}>
+                            {moment(item.attributes.due_date).format('DD MMM')}
+                        </Label>
                     </View>
-                    <Label style = {styles.favoriteDate}>
-                        {moment(item.attributes.due_date).format('DD MMM')}
-                    </Label>
+                    <View style = {styles.line1}/>
                 </View>
-                <View style = {styles.line1}/>
-            </View>
+            </TouchableOpacity>
         )
     }
     
@@ -59,10 +68,11 @@ class ListingTasks extends Component {
         }
         else{
             return(
-                <Label style = {styles.nomoretxt}>No more data</Label>
+                <Label style = {styles.nomoretxt}>There's nothing here.</Label>
             )
         }
     }
+    
     render() {
         return (
             <Content style = {styles.container}>

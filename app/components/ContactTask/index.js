@@ -5,6 +5,7 @@ import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
 import { connect } from 'react-redux'
+import { NavigationActions, Header } from 'react-navigation'
 import styles from './styles'
 import images from '../../themes/images'
 import { getContactTasks } from '../../actions'
@@ -38,7 +39,7 @@ class ContactTask extends Component {
 
     renderRow(item, index) {
         return(
-            <TouchableOpacity key = {index} >
+            <TouchableOpacity key = {index} onPress = {() => this.onClickedTask(item)}>
                 <View style = {styles.taskItemView}>
                     <View style = {styles.view1}> 
                         <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
@@ -58,14 +59,14 @@ class ContactTask extends Component {
     showContactTasks(){
         if(this.state.tasksList.length > 0){
             return(
-                 this.state.tasksList.map((item, index) => {
+                this.state.tasksList.map((item, index) => {
                     return( this.renderRow(item, index ));
                 })
             )
         }
         else{
             return(
-                <Label style = {styles.nomoretxt}>No more data</Label>
+                <Label style = {styles.nomoretxt}>There's nothing here.</Label>
             )
         }
     }

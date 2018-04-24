@@ -91,4 +91,12 @@ export default {
         color: 'white',
         fontFamily: 'open-sans-regular',
     },
+    nomoretxt: {
+        marginTop: 25,
+        width: width,
+        textAlign: 'center',
+        fontSize: 16, 
+        color: '#364150',
+        fontFamily: 'open-sans-bold',
+    },  
 }

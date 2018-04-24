@@ -10,11 +10,9 @@ function getCompletedTasks(token) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Completed Tasks Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Uncompleted Failed', err);
             reject(err);
         })
     })
@@ -30,11 +28,9 @@ function getUnCompletedTasks(token) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Completed Tasks Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Uncompleted Failed', err);
             reject(err);
         })
     })
@@ -50,11 +46,9 @@ function getTaskContacts(token, id) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Tasks Contacts Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Tasks Contacts Failed', err);
             reject(err);
         })
     })

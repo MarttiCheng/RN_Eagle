@@ -10,11 +10,9 @@ function getAllAccounts(token){
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get All Accounts Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get All Accounts Failed', err);
             reject(err);
         })
     })
@@ -30,11 +28,9 @@ function getAccount(token, id) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Account Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Account Failed', err);
             reject(err);
         })
     })

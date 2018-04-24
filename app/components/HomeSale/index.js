@@ -80,7 +80,7 @@ class HomeSale extends Component {
         }
         else {
             return(
-                <Label style = {styles.nomoretxt}>No more data</Label>
+                <Label style = {styles.nomoretxt}>There's nothing here.</Label>
             )
         }
     }

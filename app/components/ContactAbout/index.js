@@ -103,7 +103,7 @@ class ContactAbout extends Component {
                         this.showContactGroups(this.props.contact_groups.included) 
                     }
                 </View>
-                <View style = {this.props.contact_relationships.data.length > 0 ? styles.groupView1 : [styles.groupView1, {marginBottom: 0}]}>
+                <View style = {this.props.contact_groups.Relationships.data.length > 0 ? styles.groupView1 : [styles.groupView1, {marginBottom: 0}]}>
                     <View style = {(!params.data.attributes.mobile_phone || params.data.attributes.mobile_phone == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Mobile</Label>
                         <Label style = {styles.label2}>{params.data.attributes.mobile_phone}</Label>
@@ -136,7 +136,7 @@ class ContactAbout extends Component {
                     </View>
                 </View>
                 {
-                    this.showContactRelationships(this.props.contact_relationships)
+                    this.showContactRelationships(this.props.contact_groups.Relationships)
                 }
 
                 <View style = {styles.subView1}>
@@ -187,7 +187,6 @@ const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
         contact_groups: state.contacts.contact_groups,
-        contact_relationships: state.contacts.contact_relationships,
     }
 }
 

@@ -5,6 +5,7 @@ import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
 import { connect } from 'react-redux'
+import { NavigationActions, Header } from 'react-navigation'
 import styles from './styles'
 import images from '../../themes/images'
 import { getContactActivity } from '../../actions'
@@ -86,13 +87,14 @@ class ContactActivity extends Component {
                 <View style = {styles.activityItem} >
                     <View style = {styles.view1}>
                         { this.showNoteIcon(item.attributes.note_type) }
+                        <Label style = {styles.dateTxt}>{item.attributes.note_type}</Label>
                         <Label style = {styles.dateTxt}>
                             {moment(item.attributes.created_at).format('DD MMM YYYY, h:mma')}
                         </Label>
                     </View>
                     <View style = {styles.view2}>
-                        <Label style = {styles.text}>{item.attributes.text}</Label>
                         <HTML html = {item.attributes.description}/>
+                        <Label style = {styles.text}>{item.attributes.text}</Label>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -100,11 +102,18 @@ class ContactActivity extends Component {
     }
 
     showContactActivity() {
-        return(
-            this.state.activityList.map((item, index) => {
-                return( this.renderRow(item, index ));
-            })
-        )
+        if(this.state.activityList.length > 0){
+            return(
+                this.state.activityList.map((item, index) => {
+                    return( this.renderRow(item, index ));
+                })
+            )
+        }
+        else {
+            return(
+                <Label style = {styles.nomoretxt}>There's nothing here.</Label>
+            )
+        }
     }
     
     render() {
@@ -129,8 +138,8 @@ class ContactActivity extends Component {
                         </View>
                         <Content style = {styles.contentView}>
                             <View style = {{padding: 15}}>
-                                <Label>{this.state.selected_note.text}</Label>
                                 <HTML html = {this.state.selected_note.description}/>
+                                <Label style = {styles.text}>{this.state.selected_note.text}</Label>
                             </View>
                             
                         </Content>

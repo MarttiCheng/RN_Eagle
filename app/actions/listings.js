@@ -10,11 +10,9 @@ function getProperties(token) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Listings Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Listings Failed', err);
             reject(err);
         })
     })
@@ -30,11 +28,9 @@ function getListingsVendors(token, id){
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Listings Vendors Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Listings Vendors Failed', err);
             reject(err);
         })
     })
@@ -50,11 +46,9 @@ function getListingsActivity(token, id) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Listings Activity Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Listings Activity Failed', err);
             reject(err);
         })
     })
@@ -70,11 +64,9 @@ function getListingsInspections(token, id) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Listings Inspections Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Listings Inspections Failed', err);
             reject(err);
         })
     })
@@ -90,11 +82,9 @@ function getListingsDocuments(token, id) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Listings Documents Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Listings Documents Failed', err);
             reject(err);
         })
     })
@@ -110,11 +100,9 @@ function getListingsTasks(token, id) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Listings Tasks Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Listings Tasks Failed', err);
             reject(err);
         })
     })

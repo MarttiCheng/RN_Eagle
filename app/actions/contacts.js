@@ -12,11 +12,9 @@ function getAllContacts(token){
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get All Contacts Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get All Contacts Failed', err);
             reject(err);
         })
     })
@@ -32,11 +30,9 @@ function getContact(token, id) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Contact Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Contact Failed', err);
             reject(err);
         })
     })
@@ -52,11 +48,9 @@ function getContactProperty_Vendor(token, id){
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Contact Property Vendor Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Contact Property Vendor Failed', err);
             reject(err);
         })
     })
@@ -72,11 +66,9 @@ function getContractProperty_Enquired(token, id){
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Contact Property Enquired Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Contact Property Enquired Failed', err);
             reject(err);
         })
     })
@@ -94,11 +86,9 @@ function getContactGroups(token, idList) {
             })
             .then((res) => res.json())
             .then(data => {
-                console.log('Get Contact_Groups Success', data);
                 resolve(data);
             })
             .catch(err => {
-                console.log('Get Contact_Groups Failed', err);
                 reject(err);
             })
         })
@@ -121,11 +111,9 @@ function getContactRelationships(token, idList) {
             })
             .then((res) => res.json())
             .then(data => {
-                console.log('Get Contact_Relationships Success', data);
                 resolve(data);
             })
             .catch(err => {
-                console.log('Get Contact_Relationships Failed', err);
                 reject(err);
             })
         })
@@ -146,11 +134,9 @@ function getContactActivity(token, id) {
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Contact Activity Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Contact Activity Failed', err);
             reject(err);
         })
     })
@@ -166,11 +152,9 @@ function getContactTasks(token, id){
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Contact Tasks Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Contact Tasks Failed', err);
             reject(err);
         })
     })
@@ -186,11 +170,9 @@ function getThumbnailUrl(token, URL){
         })
         .then((res) => res.json())
         .then(data => {
-            console.log('Get Thumbnail Image Success', data);
             resolve(data);
         })
         .catch(err => {
-            console.log('Get Thumbnail Image Failed', err);
             reject(err);
         })
     })
