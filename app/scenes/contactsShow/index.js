@@ -17,6 +17,10 @@ import ContactActivity from '../../components/ContactActivity'
 import ContactTask from '../../components/ContactTask'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 
+
+const PARALLAX_HEADER_HEIGHT = 150;
+const STICKY_HEADER_HEIGHT = 50; 
+
 class contactsShow extends Component<{}>{
     static navigationOptions = {
         header: null,
@@ -25,14 +29,16 @@ class contactsShow extends Component<{}>{
 
     constructor(props) {
         super(props);
-        
         this.state = {
             isAbout: true,
             isProperties: false,
             isActivity: false,
             isTasks: false,
             scrollEnabled: true,
-        }  
+            currentPosition: 0,
+            isHeader: false,
+        }
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     _onAbout = () => {
@@ -113,7 +119,23 @@ class contactsShow extends Component<{}>{
         }
     }
 
+    handleScroll(event){
+        if(event.nativeEvent.contentOffset.y > 150){
+            console.log(event.nativeEvent.contentOffset.y)
+            this.setState({
+                isHeader: true
+            })
+            
+        }
+        else{
+            this.setState({
+                isHeader: false
+            })
+        }
+    }
+
     render() {
+        // const { onScroll = () => {}} = this.props
         var params = this.props.contact_group
         return(
             <Container style = {styles.container}>
@@ -121,6 +143,83 @@ class contactsShow extends Component<{}>{
                     backgroundColor="blue"
                     barStyle="light-content"
                 />
+                
+                <View style = {styles.parallaxView}>
+                    <ParallaxScrollView
+                        //onScroll={onScroll}
+                        onScroll={this.handleScroll}
+                        stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
+                        parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
+                        backgroundSpeed={30}
+                        backgroundColor = '#364150'
+                        contentBackgroundColor = '#ddd'
+                        showsVerticalScrollIndicator = {false}
+                        fadeOutForeground = {false}
+                        renderBackground={() => (
+                            <View style = {styles.headerView} key="background">
+                                {
+                                    params.data.attributes.photo_url? <Thumbnail square source = {params.data.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                                    <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                                }
+                                <Label style = {styles.nameTxt}>{params.data.attributes.first_name} {params.data.attributes.last_name}</Label>
+                                {this.showCompany()}
+                            </View>
+                        )}
+
+                        renderFixedHeader={() => (
+                            this.state.isHeader?
+                                <View key="sticky-header" style={styles.stickySection} >
+                                    <View style = {styles.tabTitleView} >
+                                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
+                                            <Text style = {styles.tabTxt}>ABOUT</Text>
+                                            <View style = {this.state.isAbout? styles.tabline : null}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
+                                            <Text style = {styles.tabTxt}>PROPERTIES</Text>
+                                            <View style = {this.state.isProperties? styles.tabline : null}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onActivity}>
+                                            <Text style = {styles.tabTxt}>ACTIVITY</Text>
+                                            <View style = {this.state.isActivity? styles.tabline : null}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onTasks}>
+                                            <Text style = {styles.tabTxt}>TASKS</Text>
+                                            <View style = {this.state.isTasks? styles.tabline : null}/>
+                                        </TouchableOpacity>
+                                        
+                                    </View>
+                                </View> :
+                                null
+                        )}
+                    >
+                        <View style = {styles.tabTitleView} >
+                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
+                                <Text style = {styles.tabTxt}>ABOUT</Text>
+                                <View style = {this.state.isAbout? styles.tabline : null}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
+                                <Text style = {styles.tabTxt}>PROPERTIES</Text>
+                                <View style = {this.state.isProperties? styles.tabline : null}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onActivity}>
+                                <Text style = {styles.tabTxt}>ACTIVITY</Text>
+                                <View style = {this.state.isActivity? styles.tabline : null}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onTasks}>
+                                <Text style = {styles.tabTxt}>TASKS</Text>
+                                <View style = {this.state.isTasks? styles.tabline : null}/>
+                            </TouchableOpacity>
+                            
+                        </View>
+                        
+                                
+                        <View style = {{flex: 1, backgroundColor: '#ddd'}}>
+                            {this.showTabView()}
+                        </View>
+
+                    </ParallaxScrollView>
+                </View>
+
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
                                 onPress={ () => { this.props.navigation.goBack() }} />
@@ -129,43 +228,6 @@ class contactsShow extends Component<{}>{
                         <Label style = {styles.editTxt}>Edit</Label>
                     </TouchableOpacity>
                 </View>
-                
-                <Content
-                     scrollEnabled={this.state.scrollEnabled}>
-                    <View style = {styles.headerView}>
-                        {
-                            params.data.attributes.photo_url? <Thumbnail square source = {params.data.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
-                            <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                        }
-                        <Label style = {styles.nameTxt}>{params.data.attributes.first_name} {params.data.attributes.last_name}</Label>
-                        {this.showCompany()}
-                    </View>
-                    
-                    <View style = {styles.tabTitleView}>
-                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
-                            <Text style = {styles.tabTxt}>ABOUT</Text>
-                            <View style = {this.state.isAbout? styles.tabline : null}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
-                            <Text style = {styles.tabTxt}>PROPERTIES</Text>
-                            <View style = {this.state.isProperties? styles.tabline : null}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onActivity}>
-                            <Text style = {styles.tabTxt}>ACTIVITY</Text>
-                            <View style = {this.state.isActivity? styles.tabline : null}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onTasks}>
-                            <Text style = {styles.tabTxt}>TASKS</Text>
-                            <View style = {this.state.isTasks? styles.tabline : null}/>
-                        </TouchableOpacity>
-                        
-                    </View>
-                            
-                    {/*<Content showsVerticalScrollIndicator = {false}>*/}
-                        {this.showTabView()}
-                    {/*</Content>*/}
-
-                </Content>
 
                 <TouchableOpacity style = {styles.addBtn}>
                     <Label style = {styles.addTxt}>+</Label>

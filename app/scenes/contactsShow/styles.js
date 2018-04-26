@@ -14,7 +14,6 @@ export default {
         alignItems: 'center',
         backgroundColor : '#364150',
         paddingTop: 15,
-        paddingBottom: 15,
     },
     avatarImg: {
         width: 60,
@@ -37,16 +36,14 @@ export default {
         fontFamily: 'open-sans-regular'
     },
     tabTitleView: {
-        // width: width, 
-        height: 40, 
         backgroundColor:'#364150',
         flexDirection: 'row',
-        // height: 70,
+        height: 50,
         width: width, 
         justifyContent: 'flex-end',
     },
     tabItem: {
-        height: 40, 
+        height: 50, 
         width: width/4, 
         justifyContent:'center', 
         alignItems:'center'
@@ -62,7 +59,7 @@ export default {
     tabTxt: {
         color: 'white', 
         fontSize: 14,
-        marginBottom: 6,
+        marginBottom: 0,
         fontFamily: 'open-sans-regular'
     },
     addBtn: {
@@ -96,6 +93,8 @@ export default {
         justifyContent: 'space-between',
         paddingLeft: 10,
         paddingRight: 10,
+        position: 'absolute',
+        top: 0,
     },
     title: {
         color: 'white',
@@ -115,11 +114,12 @@ export default {
     },
 
     parallaxView: {
-        marginTop: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT+20,
-        backgroundColor: 'red'
+        marginTop: (Platform.OS == 'ios')? Header.HEIGHT : Header.HEIGHT+20,
+        flex: 1, 
+        backgroundColor: '#364150'
     },
     stickySection: {
-        height: 70,
+        height: 50,
         width: width, 
         justifyContent: 'flex-end',
     },

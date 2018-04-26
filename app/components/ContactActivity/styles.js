@@ -5,7 +5,7 @@ const { width, height } = Dimensions.get('window')
 export default {
     container: {
         flex: 1,
-        backgroundColor: '#ddd',
+        backgroundColor: 'transparent',
         paddingLeft: 15,
         paddingRight: 15,
         paddingBottom: 15
