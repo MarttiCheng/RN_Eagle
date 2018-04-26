@@ -87,7 +87,6 @@ export default {
         borderTopWidth: 1,
         borderColor: 'lightgray',
         backgroundColor: 'white',
-        // marginTop: 30,
         flex: 1,
     },
     subView2: {

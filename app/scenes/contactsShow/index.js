@@ -17,7 +17,6 @@ import ContactActivity from '../../components/ContactActivity'
 import ContactTask from '../../components/ContactTask'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 
-
 const PARALLAX_HEADER_HEIGHT = 150;
 const STICKY_HEADER_HEIGHT = 50; 
 
@@ -121,7 +120,6 @@ class contactsShow extends Component<{}>{
 
     handleScroll(event){
         if(event.nativeEvent.contentOffset.y > 150){
-            console.log(event.nativeEvent.contentOffset.y)
             this.setState({
                 isHeader: true
             })
@@ -135,7 +133,6 @@ class contactsShow extends Component<{}>{
     }
 
     render() {
-        // const { onScroll = () => {}} = this.props
         var params = this.props.contact_group
         return(
             <Container style = {styles.container}>
@@ -146,7 +143,6 @@ class contactsShow extends Component<{}>{
                 
                 <View style = {styles.parallaxView}>
                     <ParallaxScrollView
-                        //onScroll={onScroll}
                         onScroll={this.handleScroll}
                         stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
                         parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }

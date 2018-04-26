@@ -34,13 +34,10 @@ export default {
         fontFamily: 'open-sans-regular',
         width: 45,
         textAlign: 'right',
-        // marginRight: 20,
     },
     mainView: {
         flex: 1,
         backgroundColor: 'white',
-        // paddingLeft: 15,
-        // paddingRight: 15,
     },
     rowView: {
         flex:1,
@@ -63,7 +60,6 @@ export default {
         fontFamily: 'open-sans-regular'
     },
     editPropertyView: {
-        // width: width - 30,
         height: 36,
         backgroundColor: '#2B3643',
         justifyContent: 'center',
@@ -126,7 +122,6 @@ export default {
         marginTop: 15,
         marginBottom: 15,
     },
-
     saveBtnView: {
         width: width - 30,
         height: 36,
@@ -179,7 +174,6 @@ export default {
         height: 1,
         width: width,
         backgroundColor: 'lightgray',
-        // marginTop: 12,
         position: 'absolute',
         bottom: 0,
         left: 60

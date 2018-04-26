@@ -14,7 +14,6 @@ import TaskShow from '../../components/TaskShow'
 import { getCompletedTasks, getUnCompletedTasks } from '../../actions'
 import {connect} from 'react-redux';
 
-
 // create a component
 class tasks extends Component {
     static navigationOptions = {

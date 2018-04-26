@@ -52,5 +52,4 @@ export default {
         fontWeight: '300',
         marginTop: -5
     },
-
 }

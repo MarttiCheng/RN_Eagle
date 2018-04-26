@@ -207,9 +207,6 @@ class ContactProperties extends Component {
                 <Label style = {styles.nomoretxt}>There's nothing here.</Label>
             )
         }
-
-
-        
     }
 
     render() {

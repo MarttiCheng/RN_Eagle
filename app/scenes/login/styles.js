@@ -6,9 +6,7 @@ export default {
         backgroundColor: 'white'
     },
     mainContainer: {
-        // flex: 1,
         alignItems: 'center',
-        // justifyContent: 'center',
     },
     backgroundImg: {
         position: 'absolute',

@@ -61,7 +61,6 @@ export default {
         height: 1,
         width: width,
         backgroundColor: 'lightgray',
-        // marginTop: 12,
         position: 'absolute',
         bottom: 0
     },

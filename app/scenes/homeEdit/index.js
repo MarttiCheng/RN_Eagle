@@ -192,7 +192,6 @@ class homeEdit extends Component {
                         </View>
                     </View>
                     
-
                     <View>
                         <Label style = {styles.editInspectionTxt}>Follow up</Label>
                         <TouchableOpacity >

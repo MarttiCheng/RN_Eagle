@@ -27,7 +27,6 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        // flex:1
     },
     rowSubView: {
         marginLeft: 15,

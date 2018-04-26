@@ -112,7 +112,6 @@ export default {
         width: 45,
         textAlign: 'right',
     },
-
     parallaxView: {
         marginTop: (Platform.OS == 'ios')? Header.HEIGHT : Header.HEIGHT+20,
         flex: 1, 

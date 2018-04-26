@@ -75,7 +75,6 @@ class HomeMine extends Component {
                     <Label style = {styles.saleTxt}>Mine</Label>
                 </TouchableOpacity>
             </View>
-            
         )
     }
 
