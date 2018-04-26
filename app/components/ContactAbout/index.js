@@ -1,8 +1,8 @@
 //import libraries
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView} from 'react-native';
+import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView, TextInput} from 'react-native';
 import {
-    Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
+    Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item, Input
 } from 'native-base'
 import { connect } from 'react-redux'
 import styles from './styles'
@@ -21,7 +21,18 @@ class ContactAbout extends Component {
     constructor(props){
         super(props)
         this.state = {
-            
+            mobile: '',
+            businessHours: '',
+            afterHours: '',
+            email: '',
+            address: '',
+            backgroundInfo: '',
+            assignedTo: '',
+            source: '',
+            createdAt: '',
+            updatedAt: '',
+            communications: '',
+            sms: '',
         }
     }
 
@@ -93,11 +104,11 @@ class ContactAbout extends Component {
             }
         }
     }
-    
-    render() {
+
+    showContactAbout(){
         var params = this.props.contact_groups
-        return (
-            <Content style = {styles.container}>
+        return(
+            <View>
                 <View style = {styles.categoryView}>
                     {
                         this.showContactGroups(this.props.contact_groups.included) 
@@ -178,6 +189,171 @@ class ContactAbout extends Component {
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
+            </View>
+        )
+    }
+
+    showEidtContactAbout(){
+        var params = this.props.contact_groups
+        return(
+            <View>
+                <View style = {styles.categoryView}>
+                    {
+                        this.showContactGroups(this.props.contact_groups.included) 
+                    }
+                </View>
+                <View style = {this.props.contact_groups.Relationships.data.length > 0 ? styles.groupView1 : [styles.groupView1, {marginBottom: 0}]}>
+                    <View style = {(!params.data.attributes.mobile_phone || params.data.attributes.mobile_phone == '')? styles.blankView : styles.view1}>
+                        <Label style = {styles.label1}>Mobile</Label>
+                        <TextInput
+                            style = {styles.inputTxt}
+                            onChangeText = { text => this.setState({ mobile: text })}
+                            value = {this.state.mobile}
+                            placeholder = "Mobile"
+                            placeholderTextColor = "#999"
+                            keyboardType = 'numeric'
+                            returnKeyType = "next"
+                        />
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {(!params.data.attributes.business_hours_phone || params.data.attributes.business_hours_phone == '')? styles.blankView : styles.view1}>
+                        <Label style = {styles.label1}>Business Hours</Label>
+                        <TextInput
+                            style = {styles.inputTxt}
+                            onChangeText = { text => this.setState({ businessHours: text })}
+                            value = {this.state.businessHours}
+                            placeholder = "Business Hours"
+                            placeholderTextColor = "#999"
+                            autoCapitalize = 'none'
+                            autoCorrect = {false}
+                            returnKeyType = "next"
+                        />
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {(!params.data.attributes.after_hours_phone || params.data.attributes.after_hours_phone == '')? styles.blankView : styles.view1}>
+                        <Label style = {styles.label1}>After Hours</Label>
+                        <TextInput
+                            style = {styles.inputTxt}
+                            onChangeText = { text => this.setState({ afterHours: text })}
+                            value = {this.state.afterHours}
+                            placeholder = "After Hours"
+                            placeholderTextColor = "#999"
+                            keyboardType = 'numeric'
+                            returnKeyType = "next"
+                        />
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {(!params.data.attributes.email || params.data.attributes.email == '')? styles.blankView : styles.view1}>
+                        <Label style = {styles.label1}>Email</Label>
+                        <TextInput
+                            style = {styles.inputTxt}
+                            onChangeText = { text => this.setState({ email: text })}
+                            value = {this.state.email}
+                            placeholder = "Email"
+                            placeholderTextColor = "#999"
+                            keyboardType = 'email-address'
+                            returnKeyType = "next"
+                        />
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {(!params.data.attributes.address_line_1 || params.data.attributes.address_line_1 == '') ?styles.blankView : styles.view1}>
+                        <Label style = {styles.label1}>Address</Label>
+                        <TextInput
+                            style = {styles.inputTxt}
+                            onChangeText = { text => this.setState({ address: text })}
+                            value = {this.state.address}
+                            placeholder = "Address"
+                            placeholderTextColor = "#999"
+                            returnKeyType = "next"
+                        />
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {(!params.data.attributes.background_info || params.data.attributes.background_info == '')? styles.blankView : styles.view1}>
+                        <Label style = {styles.label1}>Background info</Label>
+                        <TextInput
+                            style = {styles.inputTxt}
+                            onChangeText = { text => this.setState({ backgroundInfo: text })}
+                            value = {this.state.backgroundInfo}
+                            placeholder = "Background info"
+                            placeholderTextColor = "#999"
+                            returnKeyType = "next"
+                        />
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                </View>
+                {
+                    this.showContactRelationships(this.props.contact_groups.Relationships)
+                }
+
+                <View style = {styles.subView1}>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Assigned to</Label>
+                        <TextInput
+                            style = {styles.inputTxt}
+                            onChangeText = { text => this.setState({ assignedTo: text })}
+                            value = {this.state.assignedTo}
+                            placeholder = "Assigned to"
+                            placeholderTextColor = "#999"
+                            returnKeyType = "next"
+                        />
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {(!params.data.attributes.referred_by || params.data.attributes.referred_by == '')? styles.blankView : styles.view1}>
+                        <Label style = {styles.label1}>Source</Label>
+                        <TextInput
+                            style = {styles.inputTxt}
+                            onChangeText = { text => this.setState({ source: text })}
+                            value = {this.state.source}
+                            placeholder = "Source"
+                            placeholderTextColor = "#999"
+                            returnKeyType = "next"
+                        />
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Created at</Label>
+                        <TouchableOpacity>
+                            <Label style = {styles.label2}>
+                                {moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma')}
+                            </Label>
+                        </TouchableOpacity>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Updated at</Label>
+                        <TouchableOpacity>
+                            <Label style = {styles.label2}>
+                                {moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma')}
+                            </Label>
+                        </TouchableOpacity>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                </View>
+
+                <View style = {styles.subView2}>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Subscribed to bulk communications</Label>
+                        <Label style = {styles.label2}>{params.data.attributes.subscribed? "Yes" : "No"}</Label>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Subscribed to SMS</Label>
+                        <Label style = {styles.label2}>{params.data.attributes.sms_subscribed?"Yes" : "No"}</Label>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                </View>
+            </View>
+        )
+    }
+    
+    render() {
+        return (
+            <Content style = {styles.container}>
+                {
+                    this.props.isEdit?
+                        this.showEidtContactAbout() :
+                        this.showContactAbout()
+                }
             </Content>
         );
     }

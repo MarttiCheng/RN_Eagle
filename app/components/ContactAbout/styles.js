@@ -124,5 +124,15 @@ export default {
         backgroundColor: 'white', 
         marginBottom: 30
     },
+    inputTxt: {
+        backgroundColor:'transparent',
+        color:'black',
+        fontSize: 22,
+        fontFamily: 'open-sans-regular',
+        paddingLeft: 0,
+        paddingRight: 0,
+        paddingTop: 5,
+        paddingBottom: 5
+    },
 }
 

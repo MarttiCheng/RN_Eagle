@@ -20,6 +20,8 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 const PARALLAX_HEADER_HEIGHT = 150;
 const STICKY_HEADER_HEIGHT = 50; 
 
+var isEdit = false
+
 class contactsShow extends Component<{}>{
     static navigationOptions = {
         header: null,
@@ -36,8 +38,15 @@ class contactsShow extends Component<{}>{
             scrollEnabled: true,
             currentPosition: 0,
             isHeader: false,
+            isEdit: false,
         }
         this.handleScroll = this.handleScroll.bind(this);
+    }
+
+    componentWillMount() {
+        this.setState({
+            isEdit: false
+        })
     }
 
     _onAbout = () => {
@@ -79,7 +88,7 @@ class contactsShow extends Component<{}>{
     showTabView(){
         if(this.state.isAbout){
             return(
-                <ContactAbout navigation = {this.props.navigation}/>
+                <ContactAbout navigation = {this.props.navigation} isEdit = {this.state.isEdit}/>
             )
         }
         if(this.state.isProperties){
@@ -130,6 +139,13 @@ class contactsShow extends Component<{}>{
                 isHeader: false
             })
         }
+    }
+
+    _onEdit() {
+        isEdit =! isEdit
+        this.setState({
+            isEdit: isEdit
+        })
     }
 
     render() {
@@ -218,10 +234,15 @@ class contactsShow extends Component<{}>{
 
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
-                                onPress={ () => { this.props.navigation.goBack() }} />
+                                onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack() }} />
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{params.data.attributes.first_name} {params.data.attributes.last_name}</Label>
-                    <TouchableOpacity onPress = {this._onSearch}>
-                        <Label style = {styles.editTxt}>Edit</Label>
+                    
+                    <TouchableOpacity onPress = {() => this._onEdit()}>
+                        {
+                            this.state.isAbout? 
+                            <Label style = {styles.editTxt}>{this.state.isEdit? "Save" : "Edit" }</Label> : <Label style = {styles.editTxt}></Label>
+                        }
+                        
                     </TouchableOpacity>
                 </View>
 
