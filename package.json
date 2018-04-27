@@ -27,6 +27,7 @@
     "react": "16.2.0",
     "react-moment": "^0.7.0",
     "react-native": "0.52.0",
+    "react-native-datepicker": "^1.7.2",
     "react-native-floating-label-text-input": "^0.1.5",
     "react-native-indicators": "^0.12.0",
     "react-native-parallax-scroll-view": "^0.21.0",

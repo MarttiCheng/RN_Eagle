@@ -1,6 +1,6 @@
 //import libraries
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView, TextInput} from 'react-native';
+import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView, TextInput, Dimensions} from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item, Input
 } from 'native-base'
@@ -10,6 +10,9 @@ import images from '../../themes/images'
 import Moment from 'react-moment';
 import moment from 'moment'
 import { getContact } from '../../actions'
+import DatePicker from 'react-native-datepicker'
+
+const { width, height } = Dimensions.get('window')
 
 var categoryList = [
     {job: 'Buyer'},
@@ -34,6 +37,39 @@ class ContactAbout extends Component {
             communications: '',
             sms: '',
         }
+    }
+
+    componentWillMount() {
+        var fullAddress = ''
+        var params = this.props.contact_groups
+        
+        if(!params.data.attributes.address_line_1 || params.data.attributes.address_line_1 == '' || params.data.attributes.address_line_1 == 'null'){
+            fullAddress = '';
+        }
+        else{
+            fullAddress = params.data.attributes.address_line_1;
+            if(!params.data.attributes.address_line_2 || params.data.attributes.address_line_2 == '' || params.data.attributes.address_line_2 == 'null'){
+                fullAddress = params.data.attributes.address_line_1;
+            }
+            else{
+                fullAddress = params.data.attributes.address_line_1 +'\n' + params.data.attributes.address_line_2;
+            }
+        }
+        
+        this.setState({
+            mobile: params.data.attributes.mobile_phone,
+            businessHours: params.data.attributes.business_hours_phone,
+            afterHours: params.data.attributes.after_hours_phone,
+            email: params.data.attributes.email,
+            address: fullAddress,
+            backgroundInfo: params.data.attributes.background_info,
+            assignedTo: params.data.attributes.first_name + ' ' + params.data.attributes.last_name,
+            source: params.data.attributes.referred_by,
+            createdAt: moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma'),
+            updatedAt: moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma'),
+            communications: params.data.attributes.subscribed? "Yes" : "No",
+            sms: params.data.attributes.sms_subscribed?"Yes" : "No",
+        })
     }
 
     renderRow(item, index) {
@@ -115,34 +151,34 @@ class ContactAbout extends Component {
                     }
                 </View>
                 <View style = {this.props.contact_groups.Relationships.data.length > 0 ? styles.groupView1 : [styles.groupView1, {marginBottom: 0}]}>
-                    <View style = {(!params.data.attributes.mobile_phone || params.data.attributes.mobile_phone == '')? styles.blankView : styles.view1}>
+                    <View style = {(!this.state.mobile || this.state.mobile == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Mobile</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.mobile_phone}</Label>
+                        <Label style = {styles.label2}>{this.state.mobile}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.business_hours_phone || params.data.attributes.business_hours_phone == '')? styles.blankView : styles.view1}>
+                    <View style = {(!this.state.businessHours || this.state.businessHours == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Business Hours</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.business_hours_phone}</Label>
+                        <Label style = {styles.label2}>{this.state.businessHours}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.after_hours_phone || params.data.attributes.after_hours_phone == '')? styles.blankView : styles.view1}>
+                    <View style = {(!this.state.afterHours || this.state.afterHours == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>After Hours</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.after_hours_phone}</Label>
+                        <Label style = {styles.label2}>{this.state.afterHours}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.email || params.data.attributes.email == '')? styles.blankView : styles.view1}>
+                    <View style = {(!this.state.email || this.state.email == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Email</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.email}</Label>
+                        <Label style = {styles.label2}>{this.state.email}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.address_line_1 || params.data.attributes.address_line_1 == '') ?styles.blankView : styles.view1}>
+                    <View style = {(!this.state.address || this.state.address == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Address</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.address_line_1}{'\n'}{params.data.address_line_2}</Label>
+                        <Label style = {styles.label2}>{this.state.address}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.background_info || params.data.attributes.background_info == '')? styles.blankView : styles.view1}>
+                    <View style = {(!this.state.backgroundInfo || this.state.backgroundInfo == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Background info</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.background_info}</Label>
+                        <Label style = {styles.label2}>{this.state.backgroundInfo}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
@@ -153,26 +189,22 @@ class ContactAbout extends Component {
                 <View style = {styles.subView1}>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Assigned to</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.first_name + ' ' + params.data.attributes.last_name}</Label>
+                        <Label style = {styles.label2}>{this.state.assignedTo}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.referred_by || params.data.attributes.referred_by == '')? styles.blankView : styles.view1}>
+                    <View style = {(!this.state.referred_by || this.state.referred_by == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Source</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.referred_by}</Label>
+                        <Label style = {styles.label2}>{this.state.referred_by}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Created at</Label>
-                        <Label style = {styles.label2}>
-                            {moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma')}
-                        </Label>
+                        <Label style = {styles.label2}>{this.state.createdAt}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Updated at</Label>
-                        <Label style = {styles.label2}>
-                            {moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma')}
-                        </Label>
+                        <Label style = {styles.label2}>{this.state.updatedAt}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
@@ -180,12 +212,12 @@ class ContactAbout extends Component {
                 <View style = {styles.subView2}>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Subscribed to bulk communications</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.subscribed? "Yes" : "No"}</Label>
+                        <Label style = {styles.label2}>{this.state.communications}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Subscribed to SMS</Label>
-                        <Label style = {styles.label2}>{params.data.attributes.sms_subscribed?"Yes" : "No"}</Label>
+                        <Label style = {styles.label2}>{this.state.sms}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
@@ -202,8 +234,8 @@ class ContactAbout extends Component {
                         this.showContactGroups(this.props.contact_groups.included) 
                     }
                 </View>
-                <View style = {this.props.contact_groups.Relationships.data.length > 0 ? styles.groupView1 : [styles.groupView1, {marginBottom: 0}]}>
-                    <View style = {(!params.data.attributes.mobile_phone || params.data.attributes.mobile_phone == '')? styles.blankView : styles.view1}>
+                <View style = { styles.groupView1 }>
+                    <View style = {styles.view1}>
                         <Label style = {styles.label1}>Mobile</Label>
                         <TextInput
                             style = {styles.inputTxt}
@@ -213,10 +245,11 @@ class ContactAbout extends Component {
                             placeholderTextColor = "#999"
                             keyboardType = 'numeric'
                             returnKeyType = "next"
+                            underlineColorAndroid='rgba(0,0,0,0)'
                         />
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.business_hours_phone || params.data.attributes.business_hours_phone == '')? styles.blankView : styles.view1}>
+                    <View style = {styles.view1}>
                         <Label style = {styles.label1}>Business Hours</Label>
                         <TextInput
                             style = {styles.inputTxt}
@@ -227,10 +260,11 @@ class ContactAbout extends Component {
                             autoCapitalize = 'none'
                             autoCorrect = {false}
                             returnKeyType = "next"
+                            underlineColorAndroid='rgba(0,0,0,0)'
                         />
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.after_hours_phone || params.data.attributes.after_hours_phone == '')? styles.blankView : styles.view1}>
+                    <View style = {styles.view1}>
                         <Label style = {styles.label1}>After Hours</Label>
                         <TextInput
                             style = {styles.inputTxt}
@@ -240,10 +274,11 @@ class ContactAbout extends Component {
                             placeholderTextColor = "#999"
                             keyboardType = 'numeric'
                             returnKeyType = "next"
+                            underlineColorAndroid='rgba(0,0,0,0)'
                         />
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.email || params.data.attributes.email == '')? styles.blankView : styles.view1}>
+                    <View style = {styles.view1}>
                         <Label style = {styles.label1}>Email</Label>
                         <TextInput
                             style = {styles.inputTxt}
@@ -253,10 +288,11 @@ class ContactAbout extends Component {
                             placeholderTextColor = "#999"
                             keyboardType = 'email-address'
                             returnKeyType = "next"
+                            underlineColorAndroid='rgba(0,0,0,0)'
                         />
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.address_line_1 || params.data.attributes.address_line_1 == '') ?styles.blankView : styles.view1}>
+                    <View style = {styles.view1}>
                         <Label style = {styles.label1}>Address</Label>
                         <TextInput
                             style = {styles.inputTxt}
@@ -265,10 +301,11 @@ class ContactAbout extends Component {
                             placeholder = "Address"
                             placeholderTextColor = "#999"
                             returnKeyType = "next"
+                            underlineColorAndroid='rgba(0,0,0,0)'
                         />
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.background_info || params.data.attributes.background_info == '')? styles.blankView : styles.view1}>
+                    <View style = {styles.view1}>
                         <Label style = {styles.label1}>Background info</Label>
                         <TextInput
                             style = {styles.inputTxt}
@@ -277,6 +314,7 @@ class ContactAbout extends Component {
                             placeholder = "Background info"
                             placeholderTextColor = "#999"
                             returnKeyType = "next"
+                            underlineColorAndroid='rgba(0,0,0,0)'
                         />
                         <View style = {styles.seperateLine}/>
                     </View>
@@ -295,10 +333,11 @@ class ContactAbout extends Component {
                             placeholder = "Assigned to"
                             placeholderTextColor = "#999"
                             returnKeyType = "next"
+                            underlineColorAndroid='rgba(0,0,0,0)'
                         />
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!params.data.attributes.referred_by || params.data.attributes.referred_by == '')? styles.blankView : styles.view1}>
+                    <View style = {styles.view1}>
                         <Label style = {styles.label1}>Source</Label>
                         <TextInput
                             style = {styles.inputTxt}
@@ -307,25 +346,76 @@ class ContactAbout extends Component {
                             placeholder = "Source"
                             placeholderTextColor = "#999"
                             returnKeyType = "next"
+                            underlineColorAndroid='rgba(0,0,0,0)'
                         />
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Created at</Label>
-                        <TouchableOpacity>
-                            <Label style = {styles.label2}>
-                                {moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma')}
-                            </Label>
-                        </TouchableOpacity>
+                        <DatePicker
+                            style={{width: width - 30}}
+                            date={this.state.createdAt}
+                            mode="datetime"
+                            placeholder="Created Date"
+                            format="MMM Do YYYY h:mma"
+                            minDate="1970-05-01"
+                            maxDate="2020-06-01"
+                            confirmBtnText="Confirm"
+                            cancelBtnText="Cancel"
+                            showIcon={false}
+                            customStyles={{
+                                dateInput: {
+                                    borderWidth: 0,
+                                },
+                                dateText: {
+                                    backgroundColor:'transparent',
+                                    color:'black',
+                                    fontSize: 22,
+                                    paddingLeft: 0,
+                                    paddingRight: 0,
+                                    paddingTop: 5,
+                                    paddingBottom: 5,
+                                    textAlign: 'left',
+                                    borderWidth: 0,
+                                    width: width - 30
+                                }
+                            }}
+                            onDateChange={(date) => {this.setState({createdAt: date});}}
+                        />
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Updated at</Label>
-                        <TouchableOpacity>
-                            <Label style = {styles.label2}>
-                                {moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma')}
-                            </Label>
-                        </TouchableOpacity>
+                        <DatePicker
+                            style={{width: width - 30}}
+                            date={this.state.updatedAt}
+                            mode="datetime"
+                            placeholder="Updated Date"
+                            format="MMM Do YYYY h:mma"
+                            minDate="1970-05-01"
+                            maxDate="2020-06-01"
+                            confirmBtnText="Confirm"
+                            cancelBtnText="Cancel"
+                            showIcon={false}
+                            customStyles={{
+                                dateInput: {
+                                    borderWidth: 0,
+                                },
+                                dateText: {
+                                    backgroundColor:'transparent',
+                                    color:'black',
+                                    fontSize: 22,
+                                    paddingLeft: 0,
+                                    paddingRight: 0,
+                                    paddingTop: 5,
+                                    paddingBottom: 5,
+                                    textAlign: 'left',
+                                    borderWidth: 0,
+                                    width: width - 30
+                                }
+                            }}
+                            onDateChange={(date) => {this.setState({updatedAt: date});}}
+                        />
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>

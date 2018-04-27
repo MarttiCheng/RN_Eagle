@@ -44,6 +44,7 @@ class contactsShow extends Component<{}>{
     }
 
     componentWillMount() {
+        var isEdit = false
         this.setState({
             isEdit: false
         })
