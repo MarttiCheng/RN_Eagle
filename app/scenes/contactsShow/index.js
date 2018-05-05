@@ -161,14 +161,15 @@ class contactsShow extends Component<{}>{
                 <View style = {styles.parallaxView}>
                     <ParallaxScrollView
                         onScroll={this.handleScroll}
-                        stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
-                        parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
+                        stickyHeaderHeight={ this.state.isEdit? 0: STICKY_HEADER_HEIGHT }
+                        parallaxHeaderHeight={ this.state.isEdit? 0 : PARALLAX_HEADER_HEIGHT }
                         backgroundSpeed={30}
                         backgroundColor = '#364150'
                         contentBackgroundColor = '#ddd'
                         showsVerticalScrollIndicator = {false}
                         fadeOutForeground = {false}
                         renderBackground={() => (
+                            this.state.isEdit? null:
                             <View style = {styles.headerView} key="background">
                                 {
                                     params.data.attributes.photo_url? <Thumbnail square source = {params.data.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
@@ -180,7 +181,7 @@ class contactsShow extends Component<{}>{
                         )}
 
                         renderFixedHeader={() => (
-                            this.state.isHeader?
+                            (this.state.isHeader && !this.state.isEdit)?
                                 <View key="sticky-header" style={styles.stickySection} >
                                     <View style = {styles.tabTitleView} >
                                         <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
@@ -205,25 +206,29 @@ class contactsShow extends Component<{}>{
                                 null
                         )}
                     >
-                        <View style = {styles.tabTitleView} >
-                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
-                                <Text style = {styles.tabTxt}>ABOUT</Text>
-                                <View style = {this.state.isAbout? styles.tabline : null}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
-                                <Text style = {styles.tabTxt}>PROPERTIES</Text>
-                                <View style = {this.state.isProperties? styles.tabline : null}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onActivity}>
-                                <Text style = {styles.tabTxt}>ACTIVITY</Text>
-                                <View style = {this.state.isActivity? styles.tabline : null}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style = {styles.tabItem} onPress = {this._onTasks}>
-                                <Text style = {styles.tabTxt}>TASKS</Text>
-                                <View style = {this.state.isTasks? styles.tabline : null}/>
-                            </TouchableOpacity>
-                            
-                        </View>
+                        {
+                            this.state.isEdit? null:
+                                <View style = {styles.tabTitleView} >
+                                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
+                                        <Text style = {styles.tabTxt}>ABOUT</Text>
+                                        <View style = {this.state.isAbout? styles.tabline : null}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
+                                        <Text style = {styles.tabTxt}>PROPERTIES</Text>
+                                        <View style = {this.state.isProperties? styles.tabline : null}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onActivity}>
+                                        <Text style = {styles.tabTxt}>ACTIVITY</Text>
+                                        <View style = {this.state.isActivity? styles.tabline : null}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onTasks}>
+                                        <Text style = {styles.tabTxt}>TASKS</Text>
+                                        <View style = {this.state.isTasks? styles.tabline : null}/>
+                                    </TouchableOpacity>
+                                    
+                                </View>
+                        }
+                        
                         
                                 
                         <View style = {{flex: 1, backgroundColor: '#ddd'}}>
