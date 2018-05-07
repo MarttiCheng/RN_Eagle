@@ -28,7 +28,8 @@ class ContactAbout extends Component {
             businessHours: '',
             afterHours: '',
             email: '',
-            address: '',
+            address1: '',
+            address2: '',
             backgroundInfo: '',
             assignedTo: '',
             source: '',
@@ -41,18 +42,20 @@ class ContactAbout extends Component {
 
     componentWillMount() {
         var fullAddress = ''
+        var address1 = ''
+        var address2 = ''
         var params = this.props.contact_groups
         
         if(!params.data.attributes.address_line_1 || params.data.attributes.address_line_1 == '' || params.data.attributes.address_line_1 == 'null'){
-            fullAddress = '';
+            address1 = '';
         }
         else{
-            fullAddress = params.data.attributes.address_line_1;
+            address1 = params.data.attributes.address_line_1;
             if(!params.data.attributes.address_line_2 || params.data.attributes.address_line_2 == '' || params.data.attributes.address_line_2 == 'null'){
-                fullAddress = params.data.attributes.address_line_1;
+                address2 = '';
             }
             else{
-                fullAddress = params.data.attributes.address_line_1 +'\n' + params.data.attributes.address_line_2;
+                address2 =  params.data.attributes.address_line_2;
             }
         }
         
@@ -61,7 +64,8 @@ class ContactAbout extends Component {
             businessHours: params.data.attributes.business_hours_phone,
             afterHours: params.data.attributes.after_hours_phone,
             email: params.data.attributes.email,
-            address: fullAddress,
+            address1: address1,
+            address2: address2,
             backgroundInfo: params.data.attributes.background_info,
             assignedTo: params.data.attributes.first_name + ' ' + params.data.attributes.last_name,
             source: params.data.attributes.referred_by,
@@ -171,9 +175,10 @@ class ContactAbout extends Component {
                         <Label style = {styles.label2}>{this.state.email}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!this.state.address || this.state.address == '')? styles.blankView : styles.view1}>
+                    <View style = {(!this.state.address1 || this.state.address1 == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Address</Label>
-                        <Label style = {styles.label2}>{this.state.address}</Label>
+                        <Label style = {styles.label2}>{this.state.address1}</Label>
+                        <Label style = {styles.label2}>{this.state.address2}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {(!this.state.backgroundInfo || this.state.backgroundInfo == '')? styles.blankView : styles.view1}>
@@ -296,9 +301,18 @@ class ContactAbout extends Component {
                         <Label style = {styles.label1}>Address</Label>
                         <TextInput
                             style = {styles.inputTxt}
-                            onChangeText = { text => this.setState({ address: text })}
-                            value = {this.state.address}
-                            placeholder = "Address"
+                            onChangeText = { text => this.setState({ address1: text })}
+                            value = {this.state.address1}
+                            placeholder = "Address1"
+                            placeholderTextColor = "#999"
+                            returnKeyType = "next"
+                            underlineColorAndroid='rgba(0,0,0,0)'
+                        />
+                        <TextInput
+                            style = {styles.inputTxt}
+                            onChangeText = { text => this.setState({ address2: text })}
+                            value = {this.state.address2}
+                            placeholder = "Address2"
                             placeholderTextColor = "#999"
                             returnKeyType = "next"
                             underlineColorAndroid='rgba(0,0,0,0)'

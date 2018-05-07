@@ -16,6 +16,7 @@ import ContactProperties from '../../components/ContactProperties'
 import ContactActivity from '../../components/ContactActivity'
 import ContactTask from '../../components/ContactTask'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import { updateContact } from '../../actions'
 
 const PARALLAX_HEADER_HEIGHT = 150;
 const STICKY_HEADER_HEIGHT = 50; 
@@ -142,11 +143,100 @@ class contactsShow extends Component<{}>{
         }
     }
 
-    _onEdit() {
+    _onEdit(params) {
+        var arr = {
+            "first_name" : params.data.attributes.first_name,
+            "last_name" : params.data.attributes.last_name,
+            "title": null,
+            "company": null,
+            "business_hours_phone": null,
+            "after_hours_phone": null,
+            "mobile_phone": null,
+            "email": "jerod@nitzsche.biz",
+            "address_line_1": null,
+            "address_line_2": null,
+            "suburb": null,
+            "state": null,
+            "postcode": null,
+            "gender": null,
+            "solicitor_id": null,
+            "spouse_id": null,
+            "country": "Australia",
+            "background_info": null,
+            "subscribed": true,
+            "referred_by": null,
+            "sms_subscribed": true,
+            "fax": null,
+            "dob": null,
+            "property_alerts_subscribed": true,
+            "permission_type": "everyone",
+            "facebook_username": null,
+            "linkedin_username": null,
+            "twitter_username": null,
+            "photo_url": null,
+            "jobs": null,
+            "education": null,
+            "found_phones": null,
+            "found_addresses": null,
+            "found_name": null,
+            "uid": "f97bb29d-6b9a-4a0d-b6c3-69bd33834aa5",
+            "unsubscribe_reason": null,
+            "showed_at": "2000-01-01T00:00:00.000+11:00"
+        }
         isEdit =! isEdit
+
+        if(!isEdit){
+            console.log(params)
+            // "first_name": "Grandpa11",
+            // "last_name": null,
+            // "title": null,
+            // "company": null,
+            // "business_hours_phone": null,
+            // "after_hours_phone": null,
+            // "mobile_phone": null,
+            // "email": "jerod@nitzsche.biz",
+            // "address_line_1": null,
+            // "address_line_2": null,
+            // "suburb": null,
+            // "state": null,
+            // "postcode": null,
+            // "gender": null,
+            // "solicitor_id": null,
+            // "spouse_id": null,
+            // "country": "Australia",
+            // "background_info": null,
+            // "subscribed": true,
+            // "referred_by": null,
+            // "sms_subscribed": true,
+            // "fax": null,
+            // "dob": null,
+            // "property_alerts_subscribed": true,
+            // "permission_type": "everyone",
+            // "facebook_username": null,
+            // "linkedin_username": null,
+            // "twitter_username": null,
+            // "photo_url": null,
+            // "jobs": null,
+            // "education": null,
+            // "found_phones": null,
+            // "found_addresses": null,
+            // "found_name": null,
+            // "uid": "f97bb29d-6b9a-4a0d-b6c3-69bd33834aa5",
+            // "unsubscribe_reason": null,
+            // "showed_at": "2000-01-01T00:00:00.000+11:00"
+
+
+
+
+            // updateContact(this.props.token, params.data.id, params.data.attributes).then(data => {
+
+            // })
+            // alert('save')
+        }
         this.setState({
             isEdit: isEdit
         })
+        
     }
 
     render() {
@@ -230,7 +320,6 @@ class contactsShow extends Component<{}>{
                         }
                         
                         
-                                
                         <View style = {{flex: 1, backgroundColor: '#ddd'}}>
                             {this.showTabView()}
                         </View>
@@ -243,7 +332,7 @@ class contactsShow extends Component<{}>{
                                 onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack() }} />
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{params.data.attributes.first_name} {params.data.attributes.last_name}</Label>
                     
-                    <TouchableOpacity onPress = {() => this._onEdit()}>
+                    <TouchableOpacity onPress = {() => this._onEdit(params)}>
                         {
                             this.state.isAbout? 
                             <Label style = {styles.editTxt}>{this.state.isEdit? "Save" : "Edit" }</Label> : <Label style = {styles.editTxt}></Label>

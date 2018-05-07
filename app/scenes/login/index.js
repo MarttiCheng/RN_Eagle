@@ -47,6 +47,7 @@ class login extends Component<{}>{
                 if(data.data){
                     this.setState({ isLoading: false });
                     var { dispatch } = this.props;
+                    console.log('TOKEN -> ', data)
                     dispatch ({ type: 'GET_TOKEN', data: data.data.id})
                     dispatch(NavigationActions.navigate({routeName: 'contacts'}))
                 }
