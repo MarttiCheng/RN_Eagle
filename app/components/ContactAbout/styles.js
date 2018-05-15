@@ -34,16 +34,24 @@ export default {
         paddingLeft: 15,
         paddingRight: 15,
         paddingTop: 7,
-        paddingBottom: 7
+        paddingBottom: 7,
+    },
+    view3: {
+        width: width/2,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingTop: 7,
+        paddingBottom: 7,
     },
     label1: {
         color: '#999',
         fontSize: 13.5,
-        fontFamily: 'open-sans-regular'
+        fontFamily: 'open-sans-regular',
+        marginTop: 3,
     },
     label2: {
         color:'black',
-        fontSize: 22,
+        fontSize: 20,
         fontFamily: 'open-sans-regular'
     },
     label3: {
@@ -57,7 +65,7 @@ export default {
         bottom: 0,
         width: width,
         height: 1,
-        backgroundColor: 'lightgray'
+        backgroundColor: '#e3e3e3'
     },
     view2: {
         paddingLeft: 15,
@@ -127,12 +135,70 @@ export default {
     inputTxt: {
         backgroundColor:'transparent',
         color:'black',
+        fontSize: 20,
+        fontFamily: 'open-sans-regular',
+        paddingLeft: 5,
+        paddingRight: 5,
+        paddingTop: 3,
+        paddingBottom: 3,
+        borderWidth: 1,
+        marginTop: 5,
+        marginBottom: 5,
+        borderColor: '#e3e3e3'
+    },
+    selectedTxt: {
+        backgroundColor:'transparent',
+        color:'black',
         fontSize: 22,
         fontFamily: 'open-sans-regular',
-        paddingLeft: 0,
-        paddingRight: 0,
-        paddingTop: 5,
-        paddingBottom: 5
+        marginTop: -5,
+        marginLeft: -10,
+        paddingLeft: 5,
+        paddingRight: 5,
     },
+    optionList: {
+        width: width, 
+        height: 200, 
+        backgroundColor: 'white',
+        position: 'absolute',
+        bottom: 0,
+    },
+    optionList_country: {
+        width: width, 
+        height: 140, 
+        backgroundColor: 'white',
+        position: 'absolute',
+        bottom: 0,
+    },
+    optionList_belong: {
+        width: width, 
+        height: 95, 
+        backgroundColor: 'white',
+        position: 'absolute',
+        bottom: 0,
+    },
+    selectoptionView: {
+        borderWidth : 1, 
+        borderColor : "#e3e3e3", 
+        height: 40, 
+        width: width - 30,
+        marginBottom: 5,
+        marginTop: 5,
+    },
+    subscribedView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5
+    },
+    checkimg: {
+        width: 14,
+        height: 14,
+    },
+    subscribedtxt: {
+        fontSize: 14
+    },
+    optiontxt: {
+        fontSize: 18
+    }
 }
 

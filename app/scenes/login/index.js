@@ -13,6 +13,7 @@ import contacts from '../contacts/index';
 import { NavigationActions } from 'react-navigation'
 import { getToken } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
+import { getAllContacts, getContactGroups, getContactRelationships } from '../../actions'
 var validator = require("email-validator");
 
 // create a component

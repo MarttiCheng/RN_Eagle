@@ -12,6 +12,8 @@ const images = {
     is_shadow_box: require('../assets/img/is_shadow_box.png'),
     ic_checkbox: require('../assets/img/ic_checkbox.png'),
     ic_uncheckbox: require('../assets/img/ic_uncheckbox.png'),
+    ic_checkbox1: require('../assets/img/ic_checkbox1.png'),
+    ic_uncheckbox1: require('../assets/img/ic_uncheckbox1.png'),
     ic_bed: require('../assets/img/ic_bed.png'),
     ic_bath: require('../assets/img/ic_bath.png'),
     ic_car: require('../assets/img/ic_car.png'),

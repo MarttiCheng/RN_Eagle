@@ -101,7 +101,7 @@ class tasksShow extends Component<{}>{
                     <Label>{this.props.tasks.attributes.body}</Label>
                 </View>
                 <View style = {styles.assignView}>
-                    <Label style = {styles.assignTxt}>Assigned To</Label>
+                    <Label style = {styles.assignTxt}>Belongs to</Label>
                     <Label style = {styles.assignNameTxt}>Luke Paverd</Label>
                 </View>
                 <View style = {styles.assignView}>

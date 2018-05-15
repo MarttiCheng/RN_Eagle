@@ -27,10 +27,10 @@ class contacts extends Component<{}>{
         this.state = {
             email: '',
             password: '',
-            isLoading: true,
+            isLoading: false,
             searchText: '',
-            contactsList: [],
-            search_contactsList: [],
+            contactsList: this.props.contacts,
+            search_contactsList: this.props.contacts,
         }
     }
 
@@ -40,6 +40,7 @@ class contacts extends Component<{}>{
 
     getAllContacts(){
         var idList = []
+        this.setState({ isLoading: true })
         getAllContacts(this.props.token).then(data => {
             for(var i = 0; i < data.data.length; i++){
                 idList.push(data.data[i].id)
@@ -170,7 +171,8 @@ class contacts extends Component<{}>{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        token: state.user.token
+        token: state.user.token,
+        contacts: state.contacts.contacts
     }
 }
 

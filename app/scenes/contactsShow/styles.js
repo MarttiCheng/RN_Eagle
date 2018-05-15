@@ -136,4 +136,12 @@ export default {
         color: 'black',
         fontSize: 15,
     },
+    indicator: {
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        top: 150,
+        left: (width - 100)/2,
+        backgroundColor: 'transparent'
+    }
 }
