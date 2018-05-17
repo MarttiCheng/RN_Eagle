@@ -104,5 +104,99 @@ export default {
         fontSize: 10,
         color: 'white',
         fontFamily: 'open-sans-regular',
-    }
+    },
+    filterView: {
+        width: width,
+        height: 205,
+        backgroundColor: '#2B3643',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        padding: 15,
+        paddingTop: 25,
+        // justifyContent: 'space-between'
+    },
+    displayTxt: {
+        color: 'white',
+        fontSize: 12,
+        fontFamily: 'open-sans-regular',
+    },
+    groupTxt: {
+        color: 'white',
+        fontSize: 12,
+        fontFamily: 'open-sans-regular',
+        marginTop: 15,
+    },
+    dropView1: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderBottomWidth: 1,
+        borderColor: 'white',
+        paddingBottom: 5,
+        marginTop: 5,
+    },
+    contactTxt: {
+        color: 'white',
+        fontSize: 14,
+        fontFamily: 'open-sans-regular',
+    },
+    arrowImg: {
+        width: 12,
+        height: 12,
+        resizeMode: 'contain',
+        marginRight: 5,
+        tintColor: 'white'
+    },
+    filterButtonsView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 15
+    },
+    clearBtn: {
+        width: (width - 40)/3+20,
+        height: 35,
+        backgroundColor: '#cfcfcf',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    saveBtn: {
+        width: (width - 40)*2/3-20,
+        height: 35,
+        backgroundColor: '#b3bcc8',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    clearTxt: {
+        color: 'white',
+        fontSize: 13,
+        textAlign: 'center',
+        fontFamily: 'open-sans-regular',
+    },
+    allContactsView: {
+        position: 'absolute',
+        top: 30,
+        left: 5,
+        width: 100,
+        height: 70,
+        justifyContent: 'center',
+        backgroundColor: 'white'
+    },
+    contactoptionTxt: {
+        color: '#b3bcc8',
+        fontSize: 13,
+        textAlign: 'center',
+        fontFamily: 'open-sans-regular',
+        paddingVertical: 5
+    },
+    myContactsView: {
+        position: 'absolute',
+        top: 100,
+        left: 5,
+        width: 100,
+        height: 70,
+        justifyContent: 'center',
+        backgroundColor: 'white'
+    },
 }

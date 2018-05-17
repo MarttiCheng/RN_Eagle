@@ -247,9 +247,9 @@ class contactsShow extends Component<{}>{
                         }
                         
                         
-                        <View style = {{flex: 1, backgroundColor: '#ddd'}}>
+                        {/*<View style = {{flex: 1, backgroundColor: '#ddd'}}>*/}
                             {this.showTabView()}
-                        </View>
+                        {/*</View>*/}
 
                     </ParallaxScrollView>
                 </View>

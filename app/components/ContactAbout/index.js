@@ -1,6 +1,6 @@
 //import libraries
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView, TextInput, Dimensions} from 'react-native';
+import { StyleSheet, StatusBar, Image, TouchableOpacity, ActivityIndicator, ScrollView, TextInput, Dimensions, Keyboard, KeyboardAvoidingView } from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item, Input
 } from 'native-base'
@@ -71,8 +71,6 @@ class ContactAbout extends Component {
             }
         }
 
-        
-
         property_alerts_subscribed = params.data.attributes.property_alerts_subscribed;
         sms_subscribed = params.data.attributes.sms_subscribed;
         subscribed = params.data.attributes.subscribed;
@@ -104,7 +102,15 @@ class ContactAbout extends Component {
             sms_subscribed: params.data.attributes.sms_subscribed,
             subscribed: params.data.attributes.subscribed,
         })
+
+        // this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+        // this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
     }
+
+    // componentWillUnmount() {
+    //     this.keyboardWillShowSub.remove();
+    //     this.keyboardWillHideSub.remove();
+    // }
 
     renderRow(item, index) {
         return(
@@ -279,7 +285,7 @@ class ContactAbout extends Component {
     showEidtContactAbout(){
         var params = this.props.contact_groups
         return(
-            <View>
+            <KeyboardAvoidingView behavior="padding" style = {{flex: 1}}>
                 <View style = {styles.categoryView}>
                     {
                         this.showContactGroups(this.props.contact_groups.included) 
@@ -287,7 +293,7 @@ class ContactAbout extends Component {
                 </View>
                 <View style = { styles.groupView1 }>
                     <View style = {styles.view1}>
-                        <Label style = {styles.label1}>First Name</Label>
+                        <Label style = {styles.label1}>Name</Label>
                         <TextInput
                             style = {styles.inputTxt}
                             onChangeText = { text => this.setState({ firstname: text })}
@@ -465,7 +471,6 @@ class ContactAbout extends Component {
                             style = {styles.selectoptionView}
                             textStyle = {styles.selectedTxt}
                             backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
-                            optionListStyle = {{backgroundColor : "white"}}
                             transparent = {true}
                             optionListStyle = {styles.optionList_country}
                         >
@@ -495,7 +500,6 @@ class ContactAbout extends Component {
                             style = {styles.selectoptionView}
                             textStyle = {styles.selectedTxt}
                             backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
-                            optionListStyle = {{backgroundColor : "white"}}
                             transparent = {true}
                             optionListStyle = {styles.optionList}
                         >
@@ -561,7 +565,6 @@ class ContactAbout extends Component {
                             style = {styles.selectoptionView}
                             textStyle = {styles.selectedTxt}
                             backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
-                            optionListStyle = {{backgroundColor : "white"}}
                             transparent = {true}
                             optionListStyle = {styles.optionList_belong}
                         >
@@ -571,7 +574,7 @@ class ContactAbout extends Component {
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 

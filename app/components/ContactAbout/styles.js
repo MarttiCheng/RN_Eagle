@@ -129,8 +129,9 @@ export default {
         height: 0
     },
     groupView1: {
+        flex: 1,
         backgroundColor: 'white', 
-        marginBottom: 30
+        // marginBottom: 30
     },
     inputTxt: {
         backgroundColor:'transparent',
@@ -160,22 +161,22 @@ export default {
         width: width, 
         height: 200, 
         backgroundColor: 'white',
-        position: 'absolute',
-        bottom: 0,
+        // position: 'absolute',
+        // bottom: 0,
     },
     optionList_country: {
         width: width, 
         height: 140, 
         backgroundColor: 'white',
-        position: 'absolute',
-        bottom: 0,
+        // position: 'absolute',
+        // bottom: 0,
     },
     optionList_belong: {
         width: width, 
         height: 95, 
         backgroundColor: 'white',
-        position: 'absolute',
-        bottom: 0,
+        // position: 'absolute',
+        // bottom: 0,
     },
     selectoptionView: {
         borderWidth : 1, 

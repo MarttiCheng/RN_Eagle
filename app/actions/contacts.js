@@ -14,6 +14,25 @@ function getAllContacts(token){
         .then((res) => res.json())
         .then(data => {
             resolve(data);
+            console.log(data)
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
+function getMyContacts(token){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS, {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
         })
         .catch(err => {
             reject(err);
@@ -245,6 +264,7 @@ function updateContact(token, id, arr){
 
 module.exports = {
     getAllContacts,
+    getMyContacts,
     getContact,
     getContactProperty_Vendor,
     getContractProperty_Enquired,

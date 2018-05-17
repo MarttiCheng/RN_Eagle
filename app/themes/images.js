@@ -19,6 +19,7 @@ const images = {
     ic_car: require('../assets/img/ic_car.png'),
     ic_expand: require('../assets/img/ic_expand.png'),
     ic_placeholder_image: require('../assets/img/profileImagePlaceholder.png'),
+    ic_arrowdown: require('../assets/img/ic_arrowdown.png'),
 
     //Dummy images
     barbados_small : require('../assets/img/assets/barbados_small.png'),

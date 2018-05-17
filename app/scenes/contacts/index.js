@@ -4,7 +4,7 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Drawer
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Animated
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images'
@@ -12,8 +12,11 @@ import Search from 'react-native-search-box';
 import { NavigationActions, Header } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
-import { getAllContacts, getContactGroups, getContactRelationships } from '../../actions'
+import { getAllContacts, getMyContacts, getContactGroups, getContactRelationships } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
+
+var isAllContacts = false;
+var isMyContacts = false;
 
 class contacts extends Component<{}>{
     static navigationOptions = {
@@ -31,6 +34,12 @@ class contacts extends Component<{}>{
             searchText: '',
             contactsList: this.props.contacts,
             search_contactsList: this.props.contacts,
+            y1: new Animated.Value((Platform.OS == 'ios')? -40: -28),
+            scale1: new Animated.Value(0.001),
+            isAllContacts: false,
+            isMyContacts: false,
+            display: 'All contacts',
+            group: 'All groups',
         }
     }
 
@@ -42,6 +51,28 @@ class contacts extends Component<{}>{
         var idList = []
         this.setState({ isLoading: true })
         getAllContacts(this.props.token).then(data => {
+            for(var i = 0; i < data.data.length; i++){
+                idList.push(data.data[i].id)
+            }
+            getContactGroups(this.props.token, idList).then(data1 => {
+                getContactRelationships(this.props.token, idList).then(data2 => {
+                    for(var i = 0; i < idList.length; i++){
+                        data1[i]['Relationships'] = data2[i]
+                    }
+                    this.setState({
+                        contactsList: data1,
+                        search_contactsList: data1,
+                        isLoading: false,
+                    })
+                })
+            })
+        })
+    }
+
+    getMyContacts(){
+        var idList = []
+        this.setState({ isLoading: true })
+        getMyContacts(this.props.token, current_user_id).then(data => {
             for(var i = 0; i < data.data.length; i++){
                 idList.push(data.data[i].id)
             }
@@ -122,18 +153,133 @@ class contacts extends Component<{}>{
         })
     }
 
+    onFilter() {
+        Animated.parallel([
+            Animated.timing(                  
+                this.state.y1,            
+                {
+                    toValue: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT + 20,                    
+                    duration: 500,              
+                },
+                
+            ),
+            Animated.timing( 
+                this.state.scale1,
+                {
+                    toValue: 1,
+                    duration: 500
+                }
+            )
+        ]).start()
+        
+    }
+
+    onClearFilter() {
+        Animated.parallel([
+            Animated.timing(                  
+                this.state.y1,            
+                {
+                    toValue: (Platform.OS == 'ios')? -40: -28,       
+                    duration: 500,              
+                },
+                
+            ),
+            Animated.timing( 
+                this.state.scale1,
+                {
+                    toValue: 0.001,
+                    duration: 500
+                }
+            )
+        ]).start();
+
+        this.setState({ 
+            isAllContacts: false,
+            isMyContacts: false,
+            display: 'All contacts',
+            group: 'All groups'
+        })
+    }
+
+    onSaveFilter() {
+        Animated.parallel([
+            Animated.timing(                  
+                this.state.y1,            
+                {
+                    toValue: (Platform.OS == 'ios')? -40: -28,       
+                    duration: 500,              
+                },
+                
+            ),
+            Animated.timing( 
+                this.state.scale1,
+                {
+                    toValue: 0.001,
+                    duration: 500
+                }
+            )
+        ]).start();
+
+        this.setState({ 
+            isAllContacts: false,
+            isMyContacts: false,
+        })
+
+        this.getAllContacts();
+    }
+
+    onAllContacts() {
+        this.setState({ 
+            isAllContacts: true,
+            isMyContacts: false
+        })
+    }
+    
+    onMyContacts() {
+        this.setState({
+            isAllContacts: false,
+            isMyContacts: true
+        })
+    }
+
+    onallcontactsItem() {
+        this.setState({ 
+            isAllContacts: false,
+            isMyContacts: false,
+            display: 'All contacts'
+        })
+    }
+
+    onmycontactsItem() {
+        this.setState({ 
+            isAllContacts: false,
+            isMyContacts: false,
+            display: 'My contacts'
+        })
+    }
+
+    onallgroupsItem() {
+        this.setState({ 
+            isAllContacts: false,
+            isMyContacts: false,
+            group: 'All groups'
+        })
+    }
+
     render() {
+        console.log(this.state.isAllContacts)
         return(
             <Container style = {styles.container}>
                 <StatusBar
                     backgroundColor="blue"
                     barStyle="light-content"
                 />
+                
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
                                 onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
                     <Label style = {styles.title}>Contacts</Label>
-                    <TouchableOpacity style = {styles.searchButton} onPress = {this._onSearch}>
+                    <TouchableOpacity style = {styles.searchButton} onPress = {() => this.onFilter()}>
                         <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginRight: 15}} />
                     </TouchableOpacity>
                 </View>
@@ -161,9 +307,63 @@ class contacts extends Component<{}>{
                         })
                     }
                 </Content>
+
                 <TouchableOpacity style = {styles.addBtn}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
+
+                <Animated.View style={[styles.filterView, {transform: [ {translateY: this.state.y1},{scaleY: this.state.scale1}]}]}>
+                    <Text style = {styles.displayTxt}>Display</Text>
+                    <TouchableOpacity onPress = {() => this.onAllContacts()}>
+                        <View transparent style = {styles.dropView1}>
+                            <Text style = {styles.contactTxt}>{this.state.display}</Text>
+                            <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
+                        </View>
+                    </TouchableOpacity>
+                    
+                    <Text style = {styles.groupTxt}>Group</Text>
+                    <TouchableOpacity onPress = {() => this.onMyContacts()}>
+                        <View style = {styles.dropView1}>
+                            <Text style = {styles.contactTxt}>{this.state.group}</Text>
+                            <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
+                        </View>
+                    </TouchableOpacity>
+
+                    <View style = {styles.filterButtonsView}>
+                        <Button transparent style = {styles.clearBtn} onPress = {() => this.onClearFilter()}>
+                            <Text style = {styles.clearTxt}>CLEAR FILTER</Text>
+                        </Button>
+                        <Button transparent style = {styles.saveBtn} onPress = {() => this.onSaveFilter()}>
+                            <Text style = {styles.clearTxt}>SAVE FILTER</Text>
+                        </Button>
+                    </View>
+
+                    {
+                        this.state.isAllContacts ?
+                            <View style = {styles.allContactsView}>
+                                <TouchableOpacity onPress = {() => this.onallcontactsItem()}>
+                                    <Text style = {styles.contactoptionTxt}>All contacts</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress = {() => this.onmycontactsItem()}>
+                                    <Text style = {styles.contactoptionTxt}>My contacts</Text>
+                                </TouchableOpacity>
+                            </View> : null
+                    }
+                    {
+                        this.state.isMyContacts ?
+                            <View style = {styles.myContactsView}>
+                                <TouchableOpacity onPress = {() => this.onallgroupsItem()}>
+                                    <Text style = {styles.contactoptionTxt}>All Groups</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style = {styles.contactoptionTxt}>(Select group)</Text>
+                                </TouchableOpacity>
+                            </View> : null
+                    }
+                    
+                    
+                </Animated.View> 
+                
             </Container>
         )
     }
