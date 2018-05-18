@@ -37,19 +37,17 @@ export default {
     },
     tabTitleView: {
         backgroundColor:'#364150',
-        flexDirection: 'row',
         height: 50,
         width: width, 
-        justifyContent: 'flex-end',
     },
     tabItem: {
         height: 50, 
-        width: width/4, 
+        width: (width+120)/5, 
         justifyContent:'center', 
         alignItems:'center'
     },
     tabline: {
-        width: width/4,
+        width: (width+120)/5,
         height: 3.5,
         backgroundColor: '#35AA47',
         position:'absolute',
@@ -119,8 +117,8 @@ export default {
     },
     stickySection: {
         height: 50,
-        width: width, 
-        justifyContent: 'flex-end',
+        width: (width+120), 
+        // justifyContent: 'flex-end',
     },
     titleView: {
         flexDirection: 'row', 
@@ -143,5 +141,15 @@ export default {
         top: 150,
         left: (width - 100)/2,
         backgroundColor: 'transparent'
-    }
+    },
+    inactiveTxt: {
+        fontSize: 13, 
+        color: 'rgba(255, 255, 255, 0.72)',
+        fontFamily: 'open-sans-regular'
+    },
+    activeTxt: {
+        fontSize: 13, 
+        color: 'white',
+        fontFamily: 'open-sans-regular'
+    },
 }

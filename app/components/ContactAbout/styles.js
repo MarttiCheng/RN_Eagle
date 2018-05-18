@@ -6,15 +6,20 @@ export default {
         flex: 1,
         backgroundColor: '#ddd'
     },
+    container1: {
+        flex: 1,
+        // padding: 10,
+        backgroundColor: '#fff',
+    },
     categoryView: {
-        width: width,
-        height: 60,
-        backgroundColor:'#ddd',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: width-60,
+        padding: 5,
         alignItems: 'center',
-        borderBottomWidth: 1,
-        borderColor: '#999',
-        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        backgroundColor: 'transparent',
+        minHeight: 45,
     },
     categoryItemTxt: {
         fontSize: 16,
@@ -22,13 +27,14 @@ export default {
         fontFamily: 'open-sans-regular'
     },
     categoryItem: {
-        marginLeft: 13,
+        marginVertical: 3,
+        marginHorizontal: 5,
         backgroundColor: 'white',
-        borderRadius: 5,
-        paddingTop: 5,
-        paddingBottom: 5,
-        paddingLeft: 10,
-        paddingRight: 10, 
+        borderRadius: 4,
+        paddingVertical: 2,
+        paddingHorizontal: 8,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     view1: {
         paddingLeft: 15,
@@ -196,10 +202,47 @@ export default {
         height: 14,
     },
     subscribedtxt: {
-        fontSize: 14
+        fontSize: 14,
+        fontFamily: 'open-sans-regular',
     },
     optiontxt: {
-        fontSize: 18
+        fontSize: 18,
+        fontFamily: 'open-sans-regular',
+    },
+    groupAddView: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        backgroundColor: '#ddd'
+    },
+    addgroupImg: {
+        position: 'absolute',
+        right: 5,
+        width: 55,
+        height: 55,
+        resizeMode: 'contain'
+    },
+    groupAddDialogBox: {
+        width: width*0.7,
+        height: 220,
+        borderWidth: 1,
+        borderColor: '#2B3643',
+        borderRadius: 3,
+        backgroundColor: '#eee',
+        position: 'absolute',
+        top: 44,
+        right: 7,
+        paddingVertical: 5,
+    },
+    eachValue: {
+        width: width*0.7,
+        height: 25,
+        paddingHorizontal: 10,
+        justifyContent: 'flex-start',
+    },
+    eachAddtxt: {
+        fontSize: 13,
+        textAlign: 'left'
     }
 }
 

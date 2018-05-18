@@ -14,7 +14,6 @@ function getAllContacts(token){
         .then((res) => res.json())
         .then(data => {
             resolve(data);
-            console.log(data)
         })
         .catch(err => {
             reject(err);
@@ -32,6 +31,7 @@ function getMyContacts(token){
         })
         .then((res) => res.json())
         .then(data => {
+            console.log(data)
             resolve(data);
         })
         .catch(err => {

@@ -20,6 +20,7 @@ const images = {
     ic_expand: require('../assets/img/ic_expand.png'),
     ic_placeholder_image: require('../assets/img/profileImagePlaceholder.png'),
     ic_arrowdown: require('../assets/img/ic_arrowdown.png'),
+    ic_add_group: require('../assets/img/ic_add_group.png'),
 
     //Dummy images
     barbados_small : require('../assets/img/assets/barbados_small.png'),

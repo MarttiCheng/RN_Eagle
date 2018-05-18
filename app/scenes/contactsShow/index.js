@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import {
-    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs
+    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, ScrollableTab
 } from 'native-base'
 import {
     Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
@@ -15,6 +15,7 @@ import ContactAbout from '../../components/ContactAbout'
 import ContactProperties from '../../components/ContactProperties'
 import ContactActivity from '../../components/ContactActivity'
 import ContactTask from '../../components/ContactTask'
+import ContactRelated from '../../components/ContactRelated'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { updateContact } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
@@ -34,6 +35,7 @@ class contactsShow extends Component<{}>{
         super(props);
         this.state = {
             isAbout: true,
+            isRelated: false,
             isProperties: false,
             isActivity: false,
             isTasks: false,
@@ -47,10 +49,11 @@ class contactsShow extends Component<{}>{
     }
 
     componentWillMount() {
-        var isEdit = false
+        var isEdit = this.state.isEdit
         this.setState({
             isEdit: false
         })
+        
     }
 
     _onAbout = () => {
@@ -58,7 +61,8 @@ class contactsShow extends Component<{}>{
             isAbout: true,
             isProperties: false,
             isActivity: false,
-            isTasks: false
+            isTasks: false,
+            isRelated: false,
         })
     }
 
@@ -67,7 +71,8 @@ class contactsShow extends Component<{}>{
             isAbout: false,
             isProperties: true,
             isActivity: false,
-            isTasks: false
+            isTasks: false,
+            isRelated: false,
         })
     }
 
@@ -76,7 +81,8 @@ class contactsShow extends Component<{}>{
             isAbout: false,
             isProperties: false,
             isActivity: true,
-            isTasks: false
+            isTasks: false,
+            isRelated: false,
         })
     }
 
@@ -85,7 +91,18 @@ class contactsShow extends Component<{}>{
             isAbout: false,
             isProperties: false,
             isActivity: false,
-            isTasks: true
+            isTasks: true,
+            isRelated: false,
+        })
+    }
+
+    _onRelated = () => {
+        this.setState({
+            isAbout: false,
+            isProperties: false,
+            isActivity: false,
+            isTasks: false,
+            isRelated: true,
         })
     }
 
@@ -93,6 +110,11 @@ class contactsShow extends Component<{}>{
         if(this.state.isAbout){
             return(
                 <ContactAbout navigation = {this.props.navigation} isEdit = {this.state.isEdit}/>
+            )
+        }
+        if(this.state.isRelated){
+            return(
+                <ContactRelated navigation = {this.props.navigation}/>
             )
         }
         if(this.state.isProperties){
@@ -147,21 +169,20 @@ class contactsShow extends Component<{}>{
 
     _onEdit() {
         var arr = []
-        isEdit =! isEdit
-        if(!isEdit){
+        if(this.state.isEdit){
             arr = this.props.edit_contact_item
             this.setState({ isLoading: true})
             updateContact(this.props.token, this.props.contact_group.data.id, arr).then(data => {
                 this.setState({ 
                     isLoading: false,
-                    isEdit: isEdit
+                    isEdit: false
                 })
                 this.props.contact_group.data = data.data
             })
         }
         else {
             this.setState({
-                isEdit: isEdit
+                isEdit: true
             })
         }
     }
@@ -199,11 +220,15 @@ class contactsShow extends Component<{}>{
 
                         renderFixedHeader={() => (
                             (this.state.isHeader && !this.state.isEdit)?
-                                <View key="sticky-header" style={styles.stickySection} >
-                                    <View style = {styles.tabTitleView} >
+                                
+                                    <ScrollView style = {styles.tabTitleView} horizontal = {true}  key="sticky-header" showsHorizontalScrollIndicator = {false}>
                                         <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
                                             <Text style = {styles.tabTxt}>ABOUT</Text>
                                             <View style = {this.state.isAbout? styles.tabline : null}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onRelated}>
+                                            <Text style = {styles.tabTxt}>Related</Text>
+                                            <View style = {this.state.isRelated? styles.tabline : null}/>
                                         </TouchableOpacity>
                                         <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
                                             <Text style = {styles.tabTxt}>PROPERTIES</Text>
@@ -218,17 +243,21 @@ class contactsShow extends Component<{}>{
                                             <View style = {this.state.isTasks? styles.tabline : null}/>
                                         </TouchableOpacity>
                                         
-                                    </View>
-                                </View> :
+                                    </ScrollView>
+                                :
                                 null
                         )}
                     >
                         {
                             this.state.isEdit? null:
-                                <View style = {styles.tabTitleView} >
+                                <ScrollView style = {styles.tabTitleView} horizontal = {true}  key="sticky-header" showsHorizontalScrollIndicator = {false}>
                                     <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
                                         <Text style = {styles.tabTxt}>ABOUT</Text>
                                         <View style = {this.state.isAbout? styles.tabline : null}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onRelated}>
+                                        <Text style = {styles.tabTxt}>RELATED</Text>
+                                        <View style = {this.state.isRelated? styles.tabline : null}/>
                                     </TouchableOpacity>
                                     <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
                                         <Text style = {styles.tabTxt}>PROPERTIES</Text>
@@ -238,25 +267,23 @@ class contactsShow extends Component<{}>{
                                         <Text style = {styles.tabTxt}>ACTIVITY</Text>
                                         <View style = {this.state.isActivity? styles.tabline : null}/>
                                     </TouchableOpacity>
+                                    
                                     <TouchableOpacity style = {styles.tabItem} onPress = {this._onTasks}>
                                         <Text style = {styles.tabTxt}>TASKS</Text>
                                         <View style = {this.state.isTasks? styles.tabline : null}/>
                                     </TouchableOpacity>
                                     
-                                </View>
+                                </ScrollView>
                         }
-                        
-                        
-                        {/*<View style = {{flex: 1, backgroundColor: '#ddd'}}>*/}
-                            {this.showTabView()}
-                        {/*</View>*/}
+
+                        {this.showTabView()}
 
                     </ParallaxScrollView>
                 </View>
 
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
-                                onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack() }} />
+                                onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack(); this.setState({ isEdit: false }) }} />
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{params.data.attributes.first_name} {params.data.attributes.last_name}</Label>
                     
                     <TouchableOpacity onPress = {() => this._onEdit()}>
@@ -264,7 +291,6 @@ class contactsShow extends Component<{}>{
                             this.state.isAbout? 
                             <Label style = {styles.editTxt}>{this.state.isEdit? "Save" : "Edit" }</Label> : <Label style = {styles.editTxt}></Label>
                         }
-                        
                     </TouchableOpacity>
                 </View>
 

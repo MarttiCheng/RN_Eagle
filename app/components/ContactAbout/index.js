@@ -1,6 +1,6 @@
 //import libraries
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, Image, TouchableOpacity, ActivityIndicator, ScrollView, TextInput, Dimensions, Keyboard, KeyboardAvoidingView } from 'react-native';
+import ReactNative,{ StyleSheet, StatusBar, Image, TouchableOpacity, Animated, ScrollView, TextInput, Dimensions, Keyboard, KeyboardAvoidingView } from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item, Input
 } from 'native-base'
@@ -12,12 +12,20 @@ import moment from 'moment'
 import { getContact } from '../../actions'
 import DatePicker from 'react-native-datepicker'
 import {Select, Option} from "react-native-chooser";
+import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-keyboard-aware-scroll-view'
+import Icon1 from 'react-native-vector-icons/Ionicons';
 
 const { width, height } = Dimensions.get('window')
 
 var property_alerts_subscribed = true;
 var sms_subscribed = true;
 var subscribed = true;
+var addGroupsList = [
+    'buyer', 'landlord', 'tenant', 'vendor', 'vendor-past', 'investor', 'looking to rent', 'out of market', 
+    'automatic emails', 'automatic emails - buyer', 'automatic emails - looking to rent', 'automatic emails - prospective landlord', 
+    'hot', 'cold', 'simpsons', 'appraisal', 'appraisal lost'
+]
+var isAddGroup = false
 
 // create a component
 class ContactAbout extends Component {
@@ -48,15 +56,26 @@ class ContactAbout extends Component {
             property_alerts_subscribed: true,
             sms_subscribed: true,
             subscribed: true,
+            keyboardHeight: new Animated.Value(0),
+            contactGroups: [],
+            isAddGroup: false,
         }
     }
+
+    animateKeyboardHeight = (toValue, duration) => {
+        Animated.timing(
+            this.state.keyboardHeight,
+            {toValue, duration},
+        ).start();
+    };
+
 
     componentWillMount() {
         var address1 = ''
         var address2 = ''
         var params = this.props.contact_groups
 
-        console.log(params.data.attributes)
+        // console.log(params.data.attributes)
         
         if(!params.data.attributes.address_line_1 || params.data.attributes.address_line_1 == '' || params.data.attributes.address_line_1 == 'null'){
             address1 = '';
@@ -74,6 +93,13 @@ class ContactAbout extends Component {
         property_alerts_subscribed = params.data.attributes.property_alerts_subscribed;
         sms_subscribed = params.data.attributes.sms_subscribed;
         subscribed = params.data.attributes.subscribed;
+
+        var arr = []
+        if(params.included){
+            for(var i = 0 ; i < params.included.length; i++) {
+                arr.push(params.included[i].attributes.name)
+            }
+        }
         
         this.setState({
             firstname: params.data.attributes.first_name,
@@ -92,8 +118,6 @@ class ContactAbout extends Component {
             source: params.data.attributes.referred_by,
             createdAt: moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma'),
             updatedAt: moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma'),
-            // communications: params.data.attributes.subscribed? "Yes" : "No",
-            // sms: params.data.attributes.sms_subscribed?"Yes" : "No",
             suburb: params.data.attributes.suburb,
             state: params.data.attributes.state,
             postcode: params.data.attributes.postcode,
@@ -101,32 +125,48 @@ class ContactAbout extends Component {
             property_alerts_subscribed: params.data.attributes.property_alerts_subscribed,
             sms_subscribed: params.data.attributes.sms_subscribed,
             subscribed: params.data.attributes.subscribed,
+            contactGroups: arr
         })
 
-        // this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
-        // this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
+        if (Platform.OS === "android") {
+            this.keyboardShowListener = Keyboard.addListener("keyboardDidShow", ({endCoordinates}) => {
+                this.animateKeyboardHeight(endCoordinates.height, 0)
+            });
+            this.keyboardHideListener = Keyboard.addListener("keyboardDidHide", () => {
+                this.animateKeyboardHeight(0, 300)
+            })
+        }
     }
 
-    // componentWillUnmount() {
-    //     this.keyboardWillShowSub.remove();
-    //     this.keyboardWillHideSub.remove();
-    // }
+    scrollToInput = (reactNode) => {
+        this.view.scrollToFocusedInput(reactNode)
+    };
 
-    renderRow(item, index) {
-        return(
-            <View style = {styles.categoryItem} key = {index}>
-                <Label style = {styles.categoryItemTxt}>{item.job}</Label>
-            </View>
-        )
+    handleOnFocus = (e) => {
+        if (Platform.OS === "android") {
+            this.scrollToInput(ReactNative.findNodeHandle(e.target))
+        }
+    };
+
+    onGroupItem(index) {
+        var a = this.state.contactGroups
+        var b = this.state.contactGroups.splice(index, 1)
+        this.setState({
+            contactGroups: a
+        })
     }
 
-    showContactGroups(groupList){
+    showContactGroups(){
+        var groupList = this.state.contactGroups;
         if(groupList){
             return(
                 groupList.map((item, index) => {
                     return(
                         <View style = { styles.categoryItem } key = {index}>
-                            <Label style = {styles.categoryItemTxt}>{item.attributes.name}</Label>
+                            <TouchableOpacity onPress = {() => this.onGroupItem(index)}>
+                                <Icon1 name="ios-close" size={24} color="#2B3643" style = {{marginTop: 5}}/>
+                            </TouchableOpacity>
+                            <Label style = {styles.categoryItemTxt}>  {item}</Label>
                         </View>
                     )
                 })
@@ -134,61 +174,38 @@ class ContactAbout extends Component {
         }
     }
     
-    showContactRelationships(relationList){
-        if(relationList.data.length > 0){
-            var user_name = this.props.contact_groups.data.attributes.first_name + ' ' + this.props.contact_groups.data.attributes.last_name
-            var contact1_name = relationList.data[0].attributes.contact1_first_name + ' ' + relationList.data[0].attributes.contact1_last_name
-            var contact2_name = relationList.data[0].attributes.contact2_first_name + ' ' + relationList.data[0].attributes.contact2_last_name
-            
-            if(user_name == contact1_name){
-                return(
-                    <View style = {styles.view2} >
-                        {
-                            relationList.data[0].attributes.contact2_photo_url? <Thumbnail square source = {relationList.data[0].attributes.contact2_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
-                            <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                        }
-                        
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label3}>{contact2_name}</Label>
-                            <View style = {styles.tagView}>
-                                <View style = {styles.eachtag}>
-                                    <Label style = {styles.tagTxt}>{relationList.data[0].attributes.relationship_type}</Label>
-                                </View>
-                            </View>
+    showContactGroups1(){
+        var groupList = this.state.contactGroups;
+        if(groupList){
+            return(
+                groupList.map((item, index) => {
+                    return(
+                        <View style = { styles.categoryItem } key = {index}>
+                            <Label style = {styles.categoryItemTxt}>{item}</Label>
                         </View>
-                    </View>
-                )
-            }
-            else {
-                return(
-                    <View style = {styles.view2} >
-                        {
-                            relationList.data[0].attributes.contact1_photo_url? <Thumbnail square source = {relationList.data[0].attributes.contact1_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
-                            <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                        }
-                        
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label3}>{contact1_name}</Label>
-                            <View style = {styles.tagView}>
-                                <View style = {styles.eachtag}>
-                                    <Label style = {styles.tagTxt}>{relationList.data[0].attributes.relationship_type}</Label>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                )
-            }
+                    )
+                })
+            )
         }
     }
 
+    showAddgroupView() {
+        isAddGroup =! isAddGroup
+        this.setState({
+            isAddGroup: isAddGroup
+        })
+    }
+    
+    
     showContactAbout(){
         var params = this.props.contact_groups
         return(
             <View>
                 <View style = {styles.categoryView}>
                     {
-                        this.showContactGroups(this.props.contact_groups.included) 
+                        this.showContactGroups1() 
                     }
+                    
                 </View>
                 <View style = {this.props.contact_groups.Relationships.data.length > 0 ? styles.groupView1 : [styles.groupView1, {marginBottom: 0}]}>
                     <View style = {(!this.state.mobile || this.state.mobile == '')? styles.blankView : styles.view1}>
@@ -223,9 +240,6 @@ class ContactAbout extends Component {
                         <View style = {styles.seperateLine}/>
                     </View>
                 </View>
-                {
-                    this.showContactRelationships(this.props.contact_groups.Relationships)
-                }
 
                 <View style = {styles.subView1}>
                     <View style = {styles.view1}>
@@ -285,11 +299,21 @@ class ContactAbout extends Component {
     showEidtContactAbout(){
         var params = this.props.contact_groups
         return(
-            <KeyboardAvoidingView behavior="padding" style = {{flex: 1}}>
-                <View style = {styles.categoryView}>
-                    {
-                        this.showContactGroups(this.props.contact_groups.included) 
-                    }
+            <KeyboardAwareScrollView
+                ref={ref => this.view = ref}
+                style={styles.container1}
+                enableOnAndroid
+                extraHeight={Platform.OS === "android" ? -500 : undefined}
+            >
+                <View style = {styles.groupAddView}>
+                    <View style = {styles.categoryView}>
+                        {
+                            this.showContactGroups() 
+                        }
+                    </View>
+                    <TouchableOpacity onPress = {() => this.showAddgroupView()}>
+                        <Thumbnail square source = {images.ic_add_group} style = {styles.addgroupImg}/>
+                    </TouchableOpacity>
                 </View>
                 <View style = { styles.groupView1 }>
                     <View style = {styles.view1}>
@@ -547,6 +571,7 @@ class ContactAbout extends Component {
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Background info</Label>
                         <TextInput
+                            onFocus={this.handleOnFocus}
                             style = {styles.inputTxt}
                             onChangeText = { text => this.setState({ backgroundInfo: text })}
                             value = {this.state.backgroundInfo}
@@ -573,9 +598,39 @@ class ContactAbout extends Component {
                         </Select>
                         <View style = {styles.seperateLine}/>
                     </View>
+                    <Animated.View style={{height: this.state.keyboardHeight}}/>
                 </View>
-            </KeyboardAvoidingView>
+
+                {
+                    this.state.isAddGroup?
+                        <View style = {styles.groupAddDialogBox}>
+                            <ScrollView style = {{flex: 1}}>
+                                {
+                                    addGroupsList.map((item, indexe) => {
+                                        return(
+                                            <TouchableOpacity style = {styles.eachValue} onPress = {() => this.onEachGroup(item)}>
+                                                <Text style = {styles.eachAddtxt}>{item}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                }
+                            </ScrollView>
+                        </View> : null
+                }
+                
+            </KeyboardAwareScrollView>
         )
+    }
+
+    onEachGroup(value) {
+        var arr = this.state.contactGroups
+        arr.push(value)
+        isAddGroup = this.state.isAddGroup
+        isAddGroup =! isAddGroup
+        this.setState({
+            contactGroups: arr,
+            isAddGroup: isAddGroup
+        })
     }
 
     onSelectSource(value, label) {

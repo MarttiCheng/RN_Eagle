@@ -72,7 +72,7 @@ class contacts extends Component<{}>{
     getMyContacts(){
         var idList = []
         this.setState({ isLoading: true })
-        getMyContacts(this.props.token, current_user_id).then(data => {
+        getMyContacts(this.props.token, this.props.userID).then(data => {
             for(var i = 0; i < data.data.length; i++){
                 idList.push(data.data[i].id)
             }
@@ -225,7 +225,7 @@ class contacts extends Component<{}>{
             isMyContacts: false,
         })
 
-        this.getAllContacts();
+        this.getMyContacts();
     }
 
     onAllContacts() {
@@ -267,7 +267,6 @@ class contacts extends Component<{}>{
     }
 
     render() {
-        console.log(this.state.isAllContacts)
         return(
             <Container style = {styles.container}>
                 <StatusBar
@@ -372,7 +371,8 @@ class contacts extends Component<{}>{
 const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token,
-        contacts: state.contacts.contacts
+        contacts: state.contacts.contacts,
+        userID: state.user.user_id,
     }
 }
 
