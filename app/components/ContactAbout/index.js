@@ -288,7 +288,6 @@ class ContactAbout extends Component {
                                 <Label style = {styles.label2}>Yes</Label>
                                 <View style = {styles.seperateLine}/>
                             </View> : null
-
                     }
                     
                 </View>
@@ -304,6 +303,7 @@ class ContactAbout extends Component {
                 style={styles.container1}
                 enableOnAndroid
                 extraHeight={Platform.OS === "android" ? -500 : undefined}
+                scrollEnabled = {false}
             >
                 <View style = {styles.groupAddView}>
                     <View style = {styles.categoryView}>
@@ -311,7 +311,7 @@ class ContactAbout extends Component {
                             this.showContactGroups() 
                         }
                     </View>
-                    <TouchableOpacity onPress = {() => this.showAddgroupView()}>
+                    <TouchableOpacity style = {styles.addgroupImgView} onPress = {() => this.showAddgroupView()}>
                         <Thumbnail square source = {images.ic_add_group} style = {styles.addgroupImg}/>
                     </TouchableOpacity>
                 </View>
@@ -578,6 +578,8 @@ class ContactAbout extends Component {
                             placeholder = "Background info"
                             placeholderTextColor = "#999"
                             returnKeyType = "next"
+                            multiline={true}
+                            numberOfLines={4}
                             underlineColorAndroid='rgba(0,0,0,0)'
                         />
                         <View style = {styles.seperateLine}/>
@@ -601,22 +603,7 @@ class ContactAbout extends Component {
                     <Animated.View style={{height: this.state.keyboardHeight}}/>
                 </View>
 
-                {
-                    this.state.isAddGroup?
-                        <View style = {styles.groupAddDialogBox}>
-                            <ScrollView style = {{flex: 1}}>
-                                {
-                                    addGroupsList.map((item, indexe) => {
-                                        return(
-                                            <TouchableOpacity style = {styles.eachValue} onPress = {() => this.onEachGroup(item)}>
-                                                <Text style = {styles.eachAddtxt}>{item}</Text>
-                                            </TouchableOpacity>
-                                        )
-                                    })
-                                }
-                            </ScrollView>
-                        </View> : null
-                }
+                
                 
             </KeyboardAwareScrollView>
         )
@@ -703,13 +690,29 @@ class ContactAbout extends Component {
         dispatch ({ type: 'EDIT_CONTACT_ITEM', data: arr})
 
         return (
-            <Content style = {styles.container}>
+            <View style = {styles.container}>
                 {
                     this.props.isEdit?
                         this.showEidtContactAbout() :
                         this.showContactAbout()
                 }
-            </Content>
+                {
+                    this.state.isAddGroup?
+                        <View style = {styles.groupAddDialogBox}>
+                            <ScrollView >
+                                {
+                                    addGroupsList.map((item, indexe) => {
+                                        return(
+                                            <TouchableOpacity style = {styles.eachValue} onPress = {() => this.onEachGroup(item)}>
+                                                <Text style = {styles.eachAddtxt}>{item}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                }
+                            </ScrollView>
+                        </View>: null
+                }
+            </View>
         );
     }
 }

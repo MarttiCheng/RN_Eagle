@@ -4,7 +4,6 @@ const { width, height } = Dimensions.get('window')
 export default {
     container: {
         flex: 1,
-        backgroundColor: '#ddd'
     },
     container1: {
         flex: 1,
@@ -215,9 +214,13 @@ export default {
         justifyContent: 'space-between',
         backgroundColor: '#ddd'
     },
-    addgroupImg: {
+    addgroupImgView: {
         position: 'absolute',
         right: 5,
+        width: 55,
+        height: 55,
+    },
+    addgroupImg: {
         width: 55,
         height: 55,
         resizeMode: 'contain'
@@ -238,7 +241,6 @@ export default {
         width: width*0.7,
         height: 25,
         paddingHorizontal: 10,
-        justifyContent: 'flex-start',
     },
     eachAddtxt: {
         fontSize: 13,

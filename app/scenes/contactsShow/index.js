@@ -227,7 +227,7 @@ class contactsShow extends Component<{}>{
                                             <View style = {this.state.isAbout? styles.tabline : null}/>
                                         </TouchableOpacity>
                                         <TouchableOpacity style = {styles.tabItem} onPress = {this._onRelated}>
-                                            <Text style = {styles.tabTxt}>Related</Text>
+                                            <Text style = {styles.tabTxt}>RELATED</Text>
                                             <View style = {this.state.isRelated? styles.tabline : null}/>
                                         </TouchableOpacity>
                                         <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
