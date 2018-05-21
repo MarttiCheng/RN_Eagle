@@ -45,13 +45,15 @@ class listingsShow extends Component<{}>{
                     barStyle="light-content"
                 />
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
-                                onPress={ () => { this.props.navigation.goBack() }} />
+                    <TouchableOpacity style = {styles.backBtn} onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack(); }}>
+                        <Thumbnail square source = {images.ic_back_btn} style = {styles.backImg}/>
+                    </TouchableOpacity>
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{this.props.navigation.state.params.info.attributes.full_address}</Label>
                     <TouchableOpacity onPress = {this._onSearch}>
                         <Label style = {styles.editTxt}>Edit</Label>
                     </TouchableOpacity>
                 </View>
+
                 
                 <Tabs renderTabBar={()=> <ScrollableTab />} initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} locked = {true}>
                     <Tab heading="ABOUT" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 

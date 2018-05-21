@@ -15,16 +15,25 @@ export default {
         alignItems:'center',
         backgroundColor: '#2B3643',
         justifyContent: 'space-between',
-        paddingLeft: 10,
-        paddingRight: 10,
+    },
+    backBtn: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    backImg: {
+        width: 16,
+        height: 16,
+        resizeMode: 'contain',
     },
     title: {
         color: 'white',
         width: width - 140,
         fontSize: 18,
         fontFamily: 'open-sans-regular',
-        marginLeft: 30,
-        marginRight: 10,
+        marginLeft: 20,
+        marginRight: 20,
         textAlign: 'center',
     },
     editTxt:{
@@ -32,7 +41,7 @@ export default {
         fontSize: 17, 
         fontFamily: 'open-sans-regular',
         width: 45,
-        textAlign: 'right',
+        textAlign: 'left',
     },
     titleView: {
         padding: 15,

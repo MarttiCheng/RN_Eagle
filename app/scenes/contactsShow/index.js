@@ -282,10 +282,10 @@ class contactsShow extends Component<{}>{
                 </View>
 
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
-                                onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack(); this.setState({ isEdit: false }) }} />
+                    <TouchableOpacity style = {styles.backBtn} onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack(); this.setState({ isEdit: false }) }}>
+                        <Thumbnail square source = {images.ic_back_btn} style = {styles.backImg}/>
+                    </TouchableOpacity>
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{params.data.attributes.first_name} {params.data.attributes.last_name}</Label>
-                    
                     <TouchableOpacity onPress = {() => this._onEdit()}>
                         {
                             this.state.isAbout? 

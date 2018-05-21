@@ -40,13 +40,14 @@ class homeShow extends Component<{}>{
                     barStyle="light-content"
                 />
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white' style = {{marginLeft: 10}}
-                                onPress={ () => { this.props.navigation.goBack() }} />
+                    <TouchableOpacity style = {styles.backBtn} onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack() }}>
+                        <Thumbnail square source = {images.ic_back_btn} style = {styles.backImg}/>
+                    </TouchableOpacity>
                     <View style = {styles.titleView}>
                         <Label style = {styles.title}>50 Bay St, Double Bay</Label>
                         <Label style = {styles.timetitle}>March 10th 10am - 10:30am</Label>
                     </View>
-                    <TouchableOpacity style = {{width: 18, height: 18, marginRight: 15}}/>
+                    <TouchableOpacity style = {{width: 45, height: 45}}/>
                 </View>
                 <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47', height: 3}} locked = {true}>
                     <Tab heading="NEW ATTENDEE" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 

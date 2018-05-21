@@ -55,7 +55,7 @@ class tasks extends Component {
                                 onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
                     <Label style = {styles.title}>Tasks</Label>
                     <TouchableOpacity onPress = {this._onSearch}>
-                        <Thumbnail square source = {null} style = {{width: 18, height: 18, marginRight: 15}} />
+                        <Thumbnail square source = {null} style = {{width: 25, height: 25, marginRight: 10}} />
                     </TouchableOpacity>
                 </View>
                 <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47', height: 3}} locked = {true}>

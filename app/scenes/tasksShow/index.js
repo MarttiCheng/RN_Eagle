@@ -166,8 +166,10 @@ class tasksShow extends Component<{}>{
                 />
                 
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
-                                onPress={ () => { this.props.navigation.goBack() }} />
+                    <TouchableOpacity style = {styles.backBtn} onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack(); this.setState({ isEdit: false }) }}>
+                        <Thumbnail square source = {images.ic_back_btn} style = {styles.backImg}/>
+                    </TouchableOpacity>
+                    
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>Tasks</Label>
                     <TouchableOpacity onPress = {this._onSearch}>
                         <Label style = {styles.editTxt}>Save</Label>

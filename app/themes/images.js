@@ -22,6 +22,8 @@ const images = {
     ic_arrowdown: require('../assets/img/ic_arrowdown.png'),
     ic_add_group: require('../assets/img/ic_add_group.png'),
     ic_delete: require('../assets/img/ic_remove.png'),
+    ic_back_btn: require('../assets/img/ic_backbtn.png'),
+
 
     //Dummy images
     barbados_small : require('../assets/img/assets/barbados_small.png'),

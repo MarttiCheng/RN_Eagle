@@ -19,7 +19,8 @@ export default {
     title: {
         color: 'white',
         fontSize: 18,
-        fontFamily: 'open-sans-bold'
+        fontFamily: 'open-sans-bold',
+        marginLeft: -35
     },
     inactiveTxt: {
         fontSize: 13, 

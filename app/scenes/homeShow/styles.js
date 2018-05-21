@@ -22,6 +22,26 @@ export default {
         fontSize: 18,
         fontFamily: 'open-sans-regular'
     },
+    
+    backBtn: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    backImg: {
+        width: 16,
+        height: 16,
+        resizeMode: 'contain',
+    },
+    
+    editTxt:{
+        color: 'white', 
+        fontSize: 17, 
+        fontFamily: 'open-sans-regular',
+        width: 45,
+        textAlign: 'left',
+    },
     timetitle: {
         fontSize: 12,
         color: 'white',
