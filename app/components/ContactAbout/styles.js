@@ -1,13 +1,17 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform, StatusBar } from 'react-native';
+import { Header } from 'react-navigation'
 const { width, height } = Dimensions.get('window')
 
 export default {
     container: {
         flex: 1,
     },
+    container2: {
+        width: width,
+        height: (Platform.OS == 'ios')? height-Header.HEIGHT: height - Header.HEIGHT-20
+    },
     container1: {
         flex: 1,
-        // padding: 10,
         backgroundColor: '#fff',
     },
     categoryView: {
@@ -17,13 +21,22 @@ export default {
         padding: 5,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        backgroundColor: 'transparent',
+        minHeight: 45,
+    },
+    categoryView1: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: width,
+        padding: 5,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
         minHeight: 45,
     },
     categoryItemTxt: {
-        fontSize: 16,
+        fontSize: 15,
         color: '#2B3643',
-        fontFamily: 'open-sans-regular'
+        fontFamily: 'open-sans-regular',
+        maxWidth: width - 105,
     },
     categoryItem: {
         marginVertical: 3,
@@ -33,7 +46,8 @@ export default {
         paddingVertical: 2,
         paddingHorizontal: 8,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        maxWidth: width - 70,
     },
     view1: {
         paddingLeft: 15,
@@ -163,25 +177,21 @@ export default {
         paddingRight: 5,
     },
     optionList: {
-        width: width, 
-        height: 200, 
+        width: width*0.8, 
+        height: 225, 
         backgroundColor: 'white',
         // position: 'absolute',
         // bottom: 0,
     },
     optionList_country: {
-        width: width, 
-        height: 140, 
+        width: width*0.8, 
+        height: 135, 
         backgroundColor: 'white',
-        // position: 'absolute',
-        // bottom: 0,
     },
     optionList_belong: {
-        width: width, 
-        height: 95, 
+        width: width*0.8, 
+        height: 90, 
         backgroundColor: 'white',
-        // position: 'absolute',
-        // bottom: 0,
     },
     selectoptionView: {
         borderWidth : 1, 
@@ -212,7 +222,8 @@ export default {
         flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
-        backgroundColor: '#ddd'
+        backgroundColor: '#ddd',
+        width: width,
     },
     addgroupImgView: {
         position: 'absolute',
@@ -235,7 +246,7 @@ export default {
         position: 'absolute',
         top: 44,
         right: 7,
-        paddingVertical: 5,
+        overflow: 'hidden'
     },
     eachValue: {
         width: width*0.7,
@@ -245,6 +256,13 @@ export default {
     eachAddtxt: {
         fontSize: 13,
         textAlign: 'left'
+    },
+    deleteBtn: {
+        width: 30,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        // marginLeft: -5
     }
 }
 

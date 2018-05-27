@@ -9,11 +9,12 @@ import styles from './styles'
 import images from '../../themes/images'
 import Moment from 'react-moment';
 import moment from 'moment'
-import { getContact } from '../../actions'
+import { getContact, getUser } from '../../actions'
 import DatePicker from 'react-native-datepicker'
 import {Select, Option} from "react-native-chooser";
 import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-keyboard-aware-scroll-view'
 import Icon1 from 'react-native-vector-icons/Ionicons';
+import { BallIndicator } from 'react-native-indicators'
 
 const { width, height } = Dimensions.get('window')
 
@@ -22,8 +23,8 @@ var sms_subscribed = true;
 var subscribed = true;
 var addGroupsList = [
     'buyer', 'landlord', 'tenant', 'vendor', 'vendor-past', 'investor', 'looking to rent', 'out of market', 
-    'automatic emails', 'automatic emails - buyer', 'automatic emails - looking to rent', 'automatic emails - prospective landlord', 
-    'hot', 'cold', 'simpsons', 'appraisal', 'appraisal lost'
+    'automatic emails', 'automatic emails - buyer', 'automatic emails - prospective vendor','automatic emails - looking to rent', 
+    'automatic emails - prospective landlord', 'hot', 'cold', 'simpsons', 'appraisal', 'appraisal lost'
 ]
 var isAddGroup = false
 
@@ -59,6 +60,7 @@ class ContactAbout extends Component {
             keyboardHeight: new Animated.Value(0),
             contactGroups: [],
             isAddGroup: false,
+            isLoading: true,
         }
     }
 
@@ -69,8 +71,14 @@ class ContactAbout extends Component {
         ).start();
     };
 
-
     componentWillMount() {
+        getUser(this.props.token, this.props.contact_groups.data.attributes.user_id).then(data => {
+            // console.log(data.data.attributes.first_name + ' ' +  data.data.attributes.last_name)
+            this.fetchAbout(data.data.attributes.first_name + ' ' +  data.data.attributes.last_name)
+        })
+    }
+
+    fetchAbout(value) {
         var address1 = ''
         var address2 = ''
         var params = this.props.contact_groups
@@ -100,7 +108,6 @@ class ContactAbout extends Component {
                 arr.push(params.included[i].attributes.name)
             }
         }
-        
         this.setState({
             firstname: params.data.attributes.first_name,
             lastname: params.data.attributes.last_name,
@@ -114,7 +121,7 @@ class ContactAbout extends Component {
             address1: address1,
             address2: address2,
             backgroundInfo: params.data.attributes.background_info,
-            assignedTo: params.data.attributes.user_id,
+            assignedTo: value,
             source: params.data.attributes.referred_by,
             createdAt: moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma'),
             updatedAt: moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma'),
@@ -125,7 +132,8 @@ class ContactAbout extends Component {
             property_alerts_subscribed: params.data.attributes.property_alerts_subscribed,
             sms_subscribed: params.data.attributes.sms_subscribed,
             subscribed: params.data.attributes.subscribed,
-            contactGroups: arr
+            contactGroups: arr,
+            isLoading: false
         })
 
         if (Platform.OS === "android") {
@@ -164,9 +172,9 @@ class ContactAbout extends Component {
                     return(
                         <View style = { styles.categoryItem } key = {index}>
                             <TouchableOpacity onPress = {() => this.onGroupItem(index)}>
-                                <Icon1 name="ios-close" size={24} color="#2B3643" style = {{marginTop: 5}}/>
+                                <Icon1 name="ios-close" size={24} color="#2B3643" style = {{marginTop: 4, width: 24 }}/>
                             </TouchableOpacity>
-                            <Label style = {styles.categoryItemTxt}>  {item}</Label>
+                            <Label style = {[styles.categoryItemTxt, {marginLeft: 0}]}>{item}</Label>
                         </View>
                     )
                 })
@@ -201,13 +209,13 @@ class ContactAbout extends Component {
         var params = this.props.contact_groups
         return(
             <View>
-                <View style = {styles.categoryView}>
+                <View style = {styles.categoryView1}>
                     {
                         this.showContactGroups1() 
                     }
                     
                 </View>
-                <View style = {this.props.contact_groups.Relationships.data.length > 0 ? styles.groupView1 : [styles.groupView1, {marginBottom: 0}]}>
+                <View style = {styles.groupView1}>
                     <View style = {(!this.state.mobile || this.state.mobile == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Mobile</Label>
                         <Label style = {styles.label2}>{this.state.mobile}</Label>
@@ -579,7 +587,7 @@ class ContactAbout extends Component {
                             placeholderTextColor = "#999"
                             returnKeyType = "next"
                             multiline={true}
-                            numberOfLines={4}
+                            numberOfLines={3}
                             underlineColorAndroid='rgba(0,0,0,0)'
                         />
                         <View style = {styles.seperateLine}/>
@@ -603,8 +611,6 @@ class ContactAbout extends Component {
                     <Animated.View style={{height: this.state.keyboardHeight}}/>
                 </View>
 
-                
-                
             </KeyboardAwareScrollView>
         )
     }
@@ -643,6 +649,14 @@ class ContactAbout extends Component {
     onSmsmessages() {
         sms_subscribed =! sms_subscribed
         this.setState({ sms_subscribed: sms_subscribed})
+    }
+
+    showAbout(){
+        return(
+            this.props.isEdit?
+                this.showEidtContactAbout() :
+                this.showContactAbout()
+        )
     }
 
     render() {
@@ -690,27 +704,25 @@ class ContactAbout extends Component {
         dispatch ({ type: 'EDIT_CONTACT_ITEM', data: arr})
 
         return (
-            <View style = {styles.container}>
+            <View style = {this.state.isAddGroup? styles.container2: styles.container}>
                 {
-                    this.props.isEdit?
-                        this.showEidtContactAbout() :
-                        this.showContactAbout()
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showAbout()
                 }
+                
                 {
                     this.state.isAddGroup?
-                        <View style = {styles.groupAddDialogBox}>
-                            <ScrollView >
-                                {
-                                    addGroupsList.map((item, indexe) => {
-                                        return(
-                                            <TouchableOpacity style = {styles.eachValue} onPress = {() => this.onEachGroup(item)}>
-                                                <Text style = {styles.eachAddtxt}>{item}</Text>
-                                            </TouchableOpacity>
-                                        )
-                                    })
-                                }
-                            </ScrollView>
-                        </View>: null
+                        <ScrollView  style = {styles.groupAddDialogBox} >
+                            {
+                                addGroupsList.map((item, indexe) => {
+                                    return(
+                                        <TouchableOpacity style = {styles.eachValue} onPress = {() => this.onEachGroup(item)}>
+                                            <Text style = {styles.eachAddtxt}>{item}</Text>
+                                        </TouchableOpacity>
+                                    )
+                                })
+                            }
+                        </ScrollView>
+                    : null
                 }
             </View>
         );

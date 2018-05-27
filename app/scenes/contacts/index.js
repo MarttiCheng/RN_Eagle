@@ -12,7 +12,7 @@ import Search from 'react-native-search-box';
 import { NavigationActions, Header } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
-import { getAllContacts, getMyContacts, getContactGroups, getContactRelationships } from '../../actions'
+import { getAllContacts, getMyContacts, getContactGroups, getContactRelationships, listContactGroups } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
 var isAllContacts = false;
@@ -32,14 +32,16 @@ class contacts extends Component<{}>{
             password: '',
             isLoading: false,
             searchText: '',
-            contactsList: this.props.contacts,
-            search_contactsList: this.props.contacts,
+            contactsList: [],
+            search_contactsList: [],
             y1: new Animated.Value((Platform.OS == 'ios')? -40: -28),
             scale1: new Animated.Value(0.001),
             isAllContacts: false,
             isMyContacts: false,
             display: 'All contacts',
             group: 'All groups',
+            groupList: [],
+            groupID: ''
         }
     }
 
@@ -55,14 +57,12 @@ class contacts extends Component<{}>{
                 idList.push(data.data[i].id)
             }
             getContactGroups(this.props.token, idList).then(data1 => {
-                getContactRelationships(this.props.token, idList).then(data2 => {
-                    for(var i = 0; i < idList.length; i++){
-                        data1[i]['Relationships'] = data2[i]
-                    }
+                listContactGroups(this.props.token).then(groupList => {
                     this.setState({
                         contactsList: data1,
                         search_contactsList: data1,
                         isLoading: false,
+                        groupList: groupList.data,
                     })
                 })
             })
@@ -72,19 +72,17 @@ class contacts extends Component<{}>{
     getMyContacts(){
         var idList = []
         this.setState({ isLoading: true })
-        getMyContacts(this.props.token, this.props.userID).then(data => {
+        getMyContacts(this.props.token, this.props.userID, this.state.groupID).then(data => {
             for(var i = 0; i < data.data.length; i++){
                 idList.push(data.data[i].id)
             }
             getContactGroups(this.props.token, idList).then(data1 => {
-                getContactRelationships(this.props.token, idList).then(data2 => {
-                    for(var i = 0; i < idList.length; i++){
-                        data1[i]['Relationships'] = data2[i]
-                    }
+                listContactGroups(this.props.token).then(groupList => {
                     this.setState({
                         contactsList: data1,
                         search_contactsList: data1,
                         isLoading: false,
+                        groupList: groupList.data,
                     })
                 })
             })
@@ -106,8 +104,8 @@ class contacts extends Component<{}>{
 
     clickItemContact(item, index) {
         var { dispatch } = this.props;
+        dispatch ({ type: 'GET_CONTACTS_ALL', data: this.state.contactsList})
         dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
-        dispatch ({ type: 'GET_CONTACTS_RELATIONSHIP', data: this.state.contactsList[index].Relationships})
         dispatch(NavigationActions.navigate({routeName: 'contactsShow'}))
     }
     
@@ -258,15 +256,17 @@ class contacts extends Component<{}>{
         })
     }
 
-    onallgroupsItem() {
+    onallgroupsItem(item) {
         this.setState({ 
             isAllContacts: false,
             isMyContacts: false,
-            group: 'All groups'
+            group: item.attributes.name,
+            groupID: item.id
         })
     }
 
     render() {
+        console.log(this.state.groupList)
         return(
             <Container style = {styles.container}>
                 <StatusBar
@@ -350,19 +350,20 @@ class contacts extends Component<{}>{
                     }
                     {
                         this.state.isMyContacts ?
-                            <View style = {styles.myContactsView}>
-                                <TouchableOpacity onPress = {() => this.onallgroupsItem()}>
-                                    <Text style = {styles.contactoptionTxt}>All Groups</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Text style = {styles.contactoptionTxt}>(Select group)</Text>
-                                </TouchableOpacity>
-                            </View> : null
+                            <ScrollView style = {styles.myContactsView}>
+                                {
+                                    this.state.groupList.map((item, indexe) => {
+                                        return(
+                                            <TouchableOpacity onPress = {() => this.onallgroupsItem(item)}>
+                                                <Text style = {styles.contactoptionTxt}>{item.attributes.name}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                        
+                                    })
+                                }
+                            </ScrollView> : null
                     }
-                    
-                    
                 </Animated.View> 
-                
             </Container>
         )
     }

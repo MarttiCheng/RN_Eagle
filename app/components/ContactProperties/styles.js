@@ -8,7 +8,7 @@ export default {
     },
     propertyItemTitle: {
         paddingTop: 15,
-        paddingBottom: 15,
+        paddingBottom: 5,
         paddingLeft: 10,
         width: width,
         backgroundColor: '#ddd',

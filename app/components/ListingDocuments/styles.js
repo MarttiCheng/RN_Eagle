@@ -6,9 +6,6 @@ export default {
         flex: 1,
         backgroundColor: '#ddd'
     },
-    taskItemView: {
-        marginTop: 20
-    },
     view1: {
         paddingLeft: 15,
         paddingRight: 15,

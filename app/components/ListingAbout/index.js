@@ -30,7 +30,7 @@ class ListingAbout extends Component {
     async fetchPostCode(){
         let response = await fetch('https://api.postcodes.io/random/postcodes');
         let responseJson = await response.json();
-        console.log(responseJson['result']['postcode'])
+        // console.log(responseJson['result']['postcode'])
     }
 
     renderRow(item, index) {

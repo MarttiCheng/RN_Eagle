@@ -21,9 +21,9 @@ function getAllContacts(token){
     })
 }
 
-function getMyContacts(token){
+function getMyContacts(token, user_id, group_id){
     return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.ALL_CONTACTS, {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '?filter[user_id]=' + user_id + '?filter[contact_group_ids]=' + group_id, {
             method: 'GET',
             headers: {
                 'Authorization': token
@@ -31,7 +31,6 @@ function getMyContacts(token){
         })
         .then((res) => res.json())
         .then(data => {
-            console.log(data)
             resolve(data);
         })
         .catch(err => {
@@ -144,6 +143,24 @@ function getContactRelationships(token, idList) {
     })
 }
 
+function getEachContactRelationships(token, id) {
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/contact-relationships', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
 function getContactActivity(token, id) {
     return new Promise((resolve, reject) => {
         fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/notes', {
@@ -187,6 +204,31 @@ function getThumbnailUrl(token, URL){
             headers: {
                 'Authorization': token
             }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
+function updateContactGroup(token, id){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/relationships/contact-groups', {
+            method: 'PUT',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/vnd.api+json'
+            },
+            body:JSON.stringify({
+                "data": [
+                    { "type": "contacts", id: "1" },
+                    { "type": "contacts", id: "2" },                
+                ]
+            })
         })
         .then((res) => res.json())
         .then(data => {
@@ -262,6 +304,73 @@ function updateContact(token, id, arr){
     })
 }
 
+function createContactRelationship(token, id1, id2, contactType){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.CONTACT_RELATIONSHIP, {
+            method: 'POST',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/vnd.api+json'
+            },
+            body:JSON.stringify({
+                "data": {
+                    "type": "contact_relationships",
+                    "attributes": {
+                        "contact1_id": id1,
+                        "contact2_id": id2,
+                        "relationship_type": contactType
+                    }
+                }
+            })
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
+function deleteContactRelationship(token, id){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.CONTACT_RELATIONSHIP + '/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/vnd.api+json'
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
+function listContactGroups(token, id){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.CONTACT_GROUPS, {
+            method: 'GET',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/vnd.api+json'
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
 module.exports = {
     getAllContacts,
     getMyContacts,
@@ -274,4 +383,9 @@ module.exports = {
     getContactTasks,
     getThumbnailUrl,
     updateContact,
+    updateContactGroup,
+    createContactRelationship,
+    getEachContactRelationships,
+    deleteContactRelationship,
+    listContactGroups,
 }

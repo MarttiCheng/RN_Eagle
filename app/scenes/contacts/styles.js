@@ -68,9 +68,9 @@ export default {
         position: 'absolute',
         right: 20,
         bottom: 20,
-        width: 70,
-        height: 70,
-        borderRadius: 35,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
         backgroundColor: '#364150',
         justifyContent: 'center',
         alignItems: 'center',
@@ -107,13 +107,13 @@ export default {
     },
     filterView: {
         width: width,
-        height: 205,
+        height: 210,
         backgroundColor: '#2B3643',
         position: 'absolute',
         top: 0,
         left: 0,
         padding: 15,
-        paddingTop: 25,
+        paddingTop: 20,
         // justifyContent: 'space-between'
     },
     displayTxt: {
@@ -176,15 +176,15 @@ export default {
     },
     allContactsView: {
         position: 'absolute',
-        top: 30,
-        left: 5,
-        width: 100,
+        top: 68,
+        left: 15,
+        width: width - 30,
         height: 70,
         justifyContent: 'center',
         backgroundColor: 'white'
     },
     contactoptionTxt: {
-        color: '#b3bcc8',
+        color: 'black',
         fontSize: 13,
         textAlign: 'center',
         fontFamily: 'open-sans-regular',
@@ -192,11 +192,11 @@ export default {
     },
     myContactsView: {
         position: 'absolute',
-        top: 100,
-        left: 5,
-        width: 100,
+        top: 130,
+        left: 15,
+        width: width - 30,
         height: 70,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         backgroundColor: 'white'
     },
 }

@@ -1,9 +1,15 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform, StatusBar } from 'react-native';
+import { Header } from 'react-navigation'
 const { width, height } = Dimensions.get('window')
 
 export default {
     container: {
         flex: 1,
+        backgroundColor: '#ddd',
+    },
+    container1: {
+        width: width,
+        height: (Platform.OS == 'ios')? height-Header.HEIGHT: height - Header.HEIGHT-20,
         backgroundColor: '#ddd',
     },
     rowSubView: {
@@ -97,17 +103,12 @@ export default {
         color:'black',
         fontSize: 15,
         fontFamily: 'open-sans-regular',
-        // marginTop: -5,
-        // marginLeft: -10,
-        // paddingLeft: 5,
         paddingRight: 10,
     },
     optionList: {
-        width: width, 
-        height: 200, 
+        width: width*0.8, 
+        height: 450, 
         backgroundColor: 'white',
-        // position: 'absolute',
-        // bottom: 0,
     },
     optiontxt: {
         fontSize: 18,
@@ -122,6 +123,14 @@ export default {
         fontSize: 15,
         height: 40,
     },
+    inputTxt1: {
+        backgroundColor: 'white',
+        paddingHorizontal: 10,
+        paddingVertical: 3,
+        borderWidth: 1,
+        borderColor: 'lightgray',
+        fontSize: 15,
+    },
     saveBtn: {
         backgroundColor: '#33e098',
         alignItems: 'center',
@@ -129,9 +138,33 @@ export default {
         width: 100,
         height: 40,
         marginTop: 10,
-        marginLeft: (width-100)/2
+        marginLeft: (width-130)/2
     },
     saveTxt: {
         color: 'white'
+    },
+    nameListView: {
+        width: width - 30,
+        paddingVertical: 0,
+        paddingHorizontal: 10,
+        position: 'absolute',
+        top: 57,
+        right: 15,
+        borderWidth: 1,
+        borderColor: 'gray',
+        backgroundColor: '#eee'
+    },
+    nametxt: {
+        fontSize: 13,
+        paddingVertical: 5
+    },
+    loadingView: {
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        top: 100,
+        right: (width-60)/2,
+        padding: 10,
+
+
     }
 }

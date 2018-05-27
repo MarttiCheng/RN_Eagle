@@ -17,7 +17,7 @@ import ContactActivity from '../../components/ContactActivity'
 import ContactTask from '../../components/ContactTask'
 import ContactRelated from '../../components/ContactRelated'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import { updateContact } from '../../actions'
+import { updateContact, updateContactGroup } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
 const PARALLAX_HEADER_HEIGHT = 150;
@@ -220,30 +220,28 @@ class contactsShow extends Component<{}>{
 
                         renderFixedHeader={() => (
                             (this.state.isHeader && !this.state.isEdit)?
-                                
-                                    <ScrollView style = {styles.tabTitleView} horizontal = {true}  key="sticky-header" showsHorizontalScrollIndicator = {false}>
-                                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
-                                            <Text style = {styles.tabTxt}>ABOUT</Text>
-                                            <View style = {this.state.isAbout? styles.tabline : null}/>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onRelated}>
-                                            <Text style = {styles.tabTxt}>RELATED</Text>
-                                            <View style = {this.state.isRelated? styles.tabline : null}/>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
-                                            <Text style = {styles.tabTxt}>PROPERTIES</Text>
-                                            <View style = {this.state.isProperties? styles.tabline : null}/>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onActivity}>
-                                            <Text style = {styles.tabTxt}>ACTIVITY</Text>
-                                            <View style = {this.state.isActivity? styles.tabline : null}/>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style = {styles.tabItem} onPress = {this._onTasks}>
-                                            <Text style = {styles.tabTxt}>TASKS</Text>
-                                            <View style = {this.state.isTasks? styles.tabline : null}/>
-                                        </TouchableOpacity>
-                                        
-                                    </ScrollView>
+                                <ScrollView style = {styles.tabTitleView} horizontal = {true}  key="sticky-header" showsHorizontalScrollIndicator = {false}>
+                                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onAbout}>
+                                        <Text style = {styles.tabTxt}>ABOUT</Text>
+                                        <View style = {this.state.isAbout? styles.tabline : null}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onRelated}>
+                                        <Text style = {styles.tabTxt}>RELATED</Text>
+                                        <View style = {this.state.isRelated? styles.tabline : null}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onProperties}>
+                                        <Text style = {styles.tabTxt}>PROPERTIES</Text>
+                                        <View style = {this.state.isProperties? styles.tabline : null}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onActivity}>
+                                        <Text style = {styles.tabTxt}>ACTIVITY</Text>
+                                        <View style = {this.state.isActivity? styles.tabline : null}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {styles.tabItem} onPress = {this._onTasks}>
+                                        <Text style = {styles.tabTxt}>TASKS</Text>
+                                        <View style = {this.state.isTasks? styles.tabline : null}/>
+                                    </TouchableOpacity>
+                                </ScrollView>
                                 :
                                 null
                         )}

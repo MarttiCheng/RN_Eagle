@@ -6,4 +6,7 @@ export const API = {
     ALL_LISTINGS: '/api/v2/properties',
     ALL_TASKS: '/api/v2/tasks',
     ALL_INSPECTIONS: '/api/v2/inspections',
+    ALL_USER: '/api/v2/users',
+    CONTACT_RELATIONSHIP: '/api/v2/contact-relationships',
+    CONTACT_GROUPS: '/api/v2/contact-groups',
 }

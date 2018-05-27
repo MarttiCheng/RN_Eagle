@@ -8,7 +8,7 @@ export default {
         backgroundColor: '#ddd',
         
         paddingLeft: 15,
-        paddingRight: 15
+        paddingRight: 15,
     },
     activityItem: {
         marginTop: 20

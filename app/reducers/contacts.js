@@ -1,5 +1,5 @@
 const initialTokenState = {
-    contacts: [],
+    contacts_all: [],
     contact_groups: [],
     contact_relationships: [],
     edit_contact_item: []
@@ -7,10 +7,10 @@ const initialTokenState = {
 
 function Contacts(state = initialTokenState, action) {
     switch(action.type) {
-        case 'GET_CONTACTS' :
+        case 'GET_CONTACTS_ALL' :
             return {
                 ...state,
-                contacts: action.data
+                contacts_all: action.data
             };
         case 'GET_CONTACTS_GROUP':
             return {
