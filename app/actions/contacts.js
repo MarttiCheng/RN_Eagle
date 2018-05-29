@@ -23,7 +23,25 @@ function getAllContacts(token){
 
 function getMyContacts(token, user_id, group_id){
     return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.ALL_CONTACTS + '?filter[user_id]=' + user_id + '?filter[contact_group_ids]=' + group_id, {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '?filter[user_id]=' + user_id + '&filter[contact_group_ids]=' + group_id, {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
+function getMyContacts1(token, user_id, group_id){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '?filter[user_id]=' + user_id, {
             method: 'GET',
             headers: {
                 'Authorization': token
@@ -371,9 +389,100 @@ function listContactGroups(token, id){
     })
 }
 
+function createNewContact(token, id, arr){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '?filter%5Bfirst_name%5D=' + arr.first_name + '&filter%5Blast_name%5D=' + arr.last_name + '&filter%5Btitle%5D=' + arr.title + '&filter%5Bcompany%5D=' + arr.company + '&filter%5Breferred_by%5D=' + arr.referred_by + '&filter%5Bsubscribed%5D=' + arr.subscribed + '&filter%5Bsms_subscribed%5D=' + arr.sms_subscribed +'&filter%5Bproperty_alerts_subscribed%5D=' + arr.property_alerts_subscribed + '&filter%5Bquery%5D=query', {
+            method: 'POST',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/vnd.api+json'
+            },
+            body:JSON.stringify({
+                "data": {
+                    "type": "contacts",
+                    "attributes": {
+                        "first_name": arr.first_name,
+                        "last_name": arr.last_name,
+                        "title": arr.title,
+                        "company": arr.company,
+                        "business_hours_phone": arr.business_hours_phone,
+                        "after_hours_phone": arr.after_hours_phone,
+                        "mobile_phone": arr.mobile_phone,
+                        "email": arr.email,
+                        "address_line_1": arr.address_line_1,
+                        "address_line_2": arr.address_line_2,
+                        "suburb": arr.suburb,
+                        "state": arr.state,
+                        "postcode": arr.postcode,
+                        "gender": arr.gender,
+                        "solicitor_id": arr.solicitor_id,
+                        "spouse_id": arr.spouse_id,
+                        "country": arr.country,
+                        "background_info": arr.background_info,
+                        "subscribed": arr.subscribed,
+                        "referred_by": arr.referred_by,
+                        "sms_subscribed": arr.sms_subscribed,
+                        "fax": arr.fax,
+                        "dob": arr.dob,
+                        "property_alerts_subscribed": arr.property_alerts_subscribed,
+                        "permission_type": arr.permission_type,
+                        "facebook_username": arr.facebook_username,
+                        "linkedin_username": arr.linkedin_username,
+                        "twitter_username": arr.twitter_username,
+                        "photo_url": arr.photo_url,
+                        "jobs": arr.jobs,
+                        "education": arr.education,
+                        "found_phones": arr.found_phones,
+                        "found_addresses": arr.found_addresses,
+                        "found_name": arr.found_name,
+                        "uid": arr.uid,
+                        "unsubscribe_reason": arr.unsubscribe_reason,
+                        "showed_at": arr.showed_at
+                    }
+                },
+                "relationships": {
+                    "account": {
+                        "data": {
+                            "type": "accounts",
+                            "id": id
+                        }
+                    }
+                }
+            })
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
+function updateContactGroups(token, id){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.CONTACT_GROUPS, {
+            method: 'GET',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/vnd.api+json'
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
 module.exports = {
     getAllContacts,
     getMyContacts,
+    getMyContacts1,
     getContact,
     getContactProperty_Vendor,
     getContractProperty_Enquired,
@@ -388,4 +497,6 @@ module.exports = {
     getEachContactRelationships,
     deleteContactRelationship,
     listContactGroups,
+    createNewContact,
+    updateContactGroups,
 }

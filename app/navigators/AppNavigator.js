@@ -15,6 +15,7 @@ import homeShow from '../scenes/homeShow/index';
 import homeEdit from '../scenes/homeEdit/index';
 import tasksShow from '../scenes/tasksShow/index';
 import sendEmail from '../scenes/sendEmail/index';
+import addContact from '../scenes/addContact/index';
 
 const Drawer = DrawerNavigator(
     {
@@ -39,6 +40,7 @@ export const AppNavigator = StackNavigator({
     homeShow: { screen: homeShow },
     homeEdit: { screen: homeEdit },
     tasksShow: { screen: tasksShow },
+    addContact: { screen: addContact },
     },{
         headerMode: 'none',
     }

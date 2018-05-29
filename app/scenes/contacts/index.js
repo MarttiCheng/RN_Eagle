@@ -12,7 +12,7 @@ import Search from 'react-native-search-box';
 import { NavigationActions, Header } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
-import { getAllContacts, getMyContacts, getContactGroups, getContactRelationships, listContactGroups } from '../../actions'
+import { getAllContacts, getMyContacts,getMyContacts1, getContactGroups, getContactRelationships, listContactGroups } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
 var isAllContacts = false;
@@ -49,8 +49,38 @@ class contacts extends Component<{}>{
         this.getAllContacts()
     }
 
+    componentWillUnmount() {
+        
+    }
+
     getAllContacts(){
         var idList = []
+        var subAllGroupList = [{
+            "attributes": {
+                "created_at": "2017-11-22T14:58:46.961+11:00",
+                "name": "All group",
+            },
+            "id": "-1",
+            "links": {
+                "self": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12",
+            },
+            "relationships": {
+                "account": {
+                    "links": {
+                        "related": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/account",
+                        "self": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/relationships/account",
+                    },
+                },
+                "contacts": {
+                    "links": {
+                        "related": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/contacts",
+                        "self": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/relationships/contacts",
+                    },
+                },
+            },
+            "type": "contact_groups",
+            }
+        ]
         this.setState({ isLoading: true })
         getAllContacts(this.props.token).then(data => {
             for(var i = 0; i < data.data.length; i++){
@@ -58,11 +88,15 @@ class contacts extends Component<{}>{
             }
             getContactGroups(this.props.token, idList).then(data1 => {
                 listContactGroups(this.props.token).then(groupList => {
+                    subAllGroupList.concat(groupList.data)
+                    for(var i = 0 ; i < groupList.data.length ; i++){
+                        subAllGroupList.push(groupList.data[i])
+                    }
                     this.setState({
                         contactsList: data1,
                         search_contactsList: data1,
                         isLoading: false,
-                        groupList: groupList.data,
+                        groupList: subAllGroupList,
                     })
                 })
             })
@@ -71,22 +105,75 @@ class contacts extends Component<{}>{
 
     getMyContacts(){
         var idList = []
-        this.setState({ isLoading: true })
-        getMyContacts(this.props.token, this.props.userID, this.state.groupID).then(data => {
-            for(var i = 0; i < data.data.length; i++){
-                idList.push(data.data[i].id)
+        var subAllGroupList = [{
+            "attributes": {
+                "created_at": "2017-11-22T14:58:46.961+11:00",
+                "name": "All group",
+            },
+            "id": "-1",
+            "links": {
+                "self": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12",
+            },
+            "relationships": {
+                "account": {
+                    "links": {
+                        "related": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/account",
+                        "self": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/relationships/account",
+                    },
+                },
+                "contacts": {
+                    "links": {
+                        "related": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/contacts",
+                        "self": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/relationships/contacts",
+                    },
+                },
+            },
+            "type": "contact_groups",
             }
-            getContactGroups(this.props.token, idList).then(data1 => {
-                listContactGroups(this.props.token).then(groupList => {
-                    this.setState({
-                        contactsList: data1,
-                        search_contactsList: data1,
-                        isLoading: false,
-                        groupList: groupList.data,
+        ]
+        this.setState({ isLoading: true })
+        {
+            this.state.groupID == -1 ?
+                getMyContacts1(this.props.token, this.props.userID).then(data => {
+                    for(var i = 0; i < data.data.length; i++){
+                        idList.push(data.data[i].id)
+                    }
+                    getContactGroups(this.props.token, idList).then(data1 => {
+                        listContactGroups(this.props.token).then(groupList => {
+                            subAllGroupList.concat(groupList.data)
+                            for(var i = 0 ; i < groupList.data.length ; i++){
+                                subAllGroupList.push(groupList.data[i])
+                            }
+                            this.setState({
+                                contactsList: data1,
+                                search_contactsList: data1,
+                                isLoading: false,
+                                groupList: subAllGroupList,
+                            })
+                        })
+                    })
+                }) :
+                getMyContacts(this.props.token, this.props.userID, this.state.groupID).then(data => {
+                    for(var i = 0; i < data.data.length; i++){
+                        idList.push(data.data[i].id)
+                    }
+                    getContactGroups(this.props.token, idList).then(data1 => {
+                        listContactGroups(this.props.token).then(groupList => {
+                            subAllGroupList.concat(groupList.data)
+                            for(var i = 0 ; i < groupList.data.length ; i++){
+                                subAllGroupList.push(groupList.data[i])
+                            }
+                            this.setState({
+                                contactsList: data1,
+                                search_contactsList: data1,
+                                isLoading: false,
+                                groupList: subAllGroupList,
+                            })
+                        })
                     })
                 })
-            })
-        })
+        }
+        
     }
 
     filterStates = (value) => {
@@ -106,6 +193,30 @@ class contacts extends Component<{}>{
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACTS_ALL', data: this.state.contactsList})
         dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
+        
+        Animated.parallel([
+            Animated.timing(                  
+                this.state.y1,            
+                {
+                    toValue: (Platform.OS == 'ios')? -40: -28,       
+                    duration: 500,              
+                },
+            ),
+            Animated.timing( 
+                this.state.scale1,
+                {
+                    toValue: 0.001,
+                    duration: 500
+                }
+            )
+        ]).start();
+
+        this.setState({ 
+            isAllContacts: false,
+            isMyContacts: false,
+            display: 'All contacts',
+            group: 'All groups'
+        })
         dispatch(NavigationActions.navigate({routeName: 'contactsShow'}))
     }
     
@@ -180,7 +291,6 @@ class contacts extends Component<{}>{
                     toValue: (Platform.OS == 'ios')? -40: -28,       
                     duration: 500,              
                 },
-                
             ),
             Animated.timing( 
                 this.state.scale1,
@@ -265,8 +375,12 @@ class contacts extends Component<{}>{
         })
     }
 
+    addNewContrat(){
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'addContact'}))
+    }
+
     render() {
-        console.log(this.state.groupList)
         return(
             <Container style = {styles.container}>
                 <StatusBar
@@ -307,7 +421,7 @@ class contacts extends Component<{}>{
                     }
                 </Content>
 
-                <TouchableOpacity style = {styles.addBtn}>
+                <TouchableOpacity style = {styles.addBtn} onPress = {() => this.addNewContrat()}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
 

@@ -77,7 +77,7 @@ export default {
     },
     addTxt: {
         color: 'white',
-        fontSize: 42,
+        fontSize: 35,
         fontWeight: '300',
         marginTop: -5
     },

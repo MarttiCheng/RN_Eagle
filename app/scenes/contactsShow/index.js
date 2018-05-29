@@ -4,7 +4,7 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, ScrollableTab
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Modal
 } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import styles from './styles'
@@ -19,6 +19,7 @@ import ContactRelated from '../../components/ContactRelated'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { updateContact, updateContactGroup } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
+import SelectAddModal from '../../components/SelectAddModal'
 
 const PARALLAX_HEADER_HEIGHT = 150;
 const STICKY_HEADER_HEIGHT = 50; 
@@ -43,7 +44,8 @@ class contactsShow extends Component<{}>{
             currentPosition: 0,
             isHeader: false,
             isEdit: false,
-            isLoading: false
+            isLoading: false,
+            addModal: false,
         }
         this.handleScroll = this.handleScroll.bind(this);
     }
@@ -187,6 +189,10 @@ class contactsShow extends Component<{}>{
         }
     }
 
+    onAdd() {
+        this.setState({ addModal: true })
+    }
+
     render() {
         var params = this.props.contact_group
         return(
@@ -292,13 +298,23 @@ class contactsShow extends Component<{}>{
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style = {styles.addBtn}>
+                <TouchableOpacity style = {styles.addBtn} onPress = {() => this.onAdd()}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
 
                 {
                      this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {styles.indicator}/> : null
                 }
+                <Modal
+                    animationType = 'slide'
+                    transparent = {false}
+                    visible = {this.state.addModal}
+                    transparent = {true}
+                    onRequestClose = {() => {
+                        alert('Modal has been closed')
+                    }}>
+                    <SelectAddModal onClickedBack = {() => this.setState({ addModal: false })}/>
+                </Modal>
             </Container>
         )
     }

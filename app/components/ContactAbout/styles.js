@@ -150,7 +150,6 @@ export default {
     groupView1: {
         flex: 1,
         backgroundColor: 'white', 
-        // marginBottom: 30
     },
     inputTxt: {
         backgroundColor:'transparent',
