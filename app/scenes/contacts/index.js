@@ -49,11 +49,8 @@ class contacts extends Component<{}>{
         this.getAllContacts()
     }
 
-    componentWillUnmount() {
-        
-    }
-
     getAllContacts(){
+        var { dispatch } = this.props;
         var idList = []
         var subAllGroupList = [{
             "attributes": {
@@ -88,6 +85,7 @@ class contacts extends Component<{}>{
             }
             getContactGroups(this.props.token, idList).then(data1 => {
                 listContactGroups(this.props.token).then(groupList => {
+                    dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
                     subAllGroupList.concat(groupList.data)
                     for(var i = 0 ; i < groupList.data.length ; i++){
                         subAllGroupList.push(groupList.data[i])
@@ -104,6 +102,7 @@ class contacts extends Component<{}>{
     }
 
     getMyContacts(){
+        var { dispatch } = this.props;
         var idList = []
         var subAllGroupList = [{
             "attributes": {
@@ -140,6 +139,7 @@ class contacts extends Component<{}>{
                     }
                     getContactGroups(this.props.token, idList).then(data1 => {
                         listContactGroups(this.props.token).then(groupList => {
+                            dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
                             subAllGroupList.concat(groupList.data)
                             for(var i = 0 ; i < groupList.data.length ; i++){
                                 subAllGroupList.push(groupList.data[i])
@@ -159,6 +159,7 @@ class contacts extends Component<{}>{
                     }
                     getContactGroups(this.props.token, idList).then(data1 => {
                         listContactGroups(this.props.token).then(groupList => {
+                            dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
                             subAllGroupList.concat(groupList.data)
                             for(var i = 0 ; i < groupList.data.length ; i++){
                                 subAllGroupList.push(groupList.data[i])

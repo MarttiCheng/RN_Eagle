@@ -124,11 +124,6 @@ export default {
         flex: 1, 
         backgroundColor: '#364150'
     },
-    stickySection: {
-        height: 50,
-        width: (width+120), 
-        // justifyContent: 'flex-end',
-    },
     titleView: {
         flexDirection: 'row', 
         alignItems: 'center', 
@@ -138,10 +133,6 @@ export default {
         paddingRight: 20,
         marginBottom: 20,
         marginRight: 10,
-    },
-    stickySectionText: {
-        color: 'black',
-        fontSize: 15,
     },
     indicator: {
         position: 'absolute',

@@ -23,12 +23,6 @@ var property_alerts_subscribed = true;
 var sms_subscribed = true;
 var subscribed = true;
 
-var addGroupsList = [
-    'buyer', 'landlord', 'tenant', 'vendor', 'vendor-past', 'investor', 'looking to rent', 'out of market', 
-    'automatic emails', 'automatic emails - buyer', 'automatic emails - prospective vendor','automatic emails - looking to rent', 
-    'automatic emails - prospective landlord', 'hot', 'cold', 'simpsons', 'appraisal', 'appraisal lost'
-]
-
 class addContact extends Component<{}>{
     static navigationOptions = {
         header: null,
@@ -87,7 +81,7 @@ class addContact extends Component<{}>{
         ).start();
     };
 
-    onGroupItem(index) {
+    onDeleteGroupItem(index) {
         var a = this.state.contactGroups
         var b = this.state.contactGroups.splice(index, 1)
         this.setState({
@@ -102,10 +96,10 @@ class addContact extends Component<{}>{
                 groupList.map((item, index) => {
                     return(
                         <View style = { styles.categoryItem } key = {index}>
-                            <TouchableOpacity onPress = {() => this.onGroupItem(index)}>
+                            <TouchableOpacity onPress = {() => this.onDeleteGroupItem(index)}>
                                 <Icon1 name="ios-close" size={24} color="#2B3643" style = {{marginTop: 4, width: 24 }}/>
                             </TouchableOpacity>
-                            <Label style = {[styles.categoryItemTxt, {marginLeft: 0}]}>{item}</Label>
+                            <Label style = {[styles.categoryItemTxt, {marginLeft: 0}]}>{item.attributes.name}</Label>
                         </View>
                     )
                 })
@@ -158,7 +152,6 @@ class addContact extends Component<{}>{
     }
     
     onSaveContact() {
-        console.log('save')
         var arr = {
             "first_name" : this.state.firstname,
             "last_name" : this.state.lastname,
@@ -198,16 +191,21 @@ class addContact extends Component<{}>{
             "unsubscribe_reason": null,
             "showed_at": null,
         }
-        this.setState({ isLoading: true })
-        createNewContact(this.props.token, this.props.userID, arr).then(data => {
-           console.log('okkkkkkk')
-           console.log(data)
-           this.setState({ 
-                isLoading: false,
-                // isEdit: false
+        
+        if(this.state.firstname == ''){
+            alert('Please insert First name')
+        }
+        else {
+            this.setState({ isLoading: true })
+            createNewContact(this.props.token, this.props.userID, arr).then(data => {
+                console.log(data.data.id)
+                updateContactGroup(this.props.token, data.data.id, this.state.contactGroups)
+                this.setState({ 
+                    isLoading: false,
+                })
             })
-            // this.props.contact_group.data = data.data
-        })
+        }
+        
     }
 
     onCancel(){
@@ -547,10 +545,10 @@ class addContact extends Component<{}>{
                                 this.state.isAddGroup?
                                     <ScrollView  style = {styles.groupAddDialogBox} >
                                         {
-                                            addGroupsList.map((item, indexe) => {
+                                            this.props.addGroupsList.map((item, indexe) => {
                                                 return(
                                                     <TouchableOpacity style = {styles.eachValue} onPress = {() => this.onEachGroup(item)}>
-                                                        <Text style = {styles.eachAddtxt}>{item}</Text>
+                                                        <Text style = {styles.eachAddtxt}>{item.attributes.name}</Text>
                                                     </TouchableOpacity>
                                                 )
                                             })
@@ -573,6 +571,7 @@ const mapStateToProps = (state, ownProps) => {
         contact_group: state.contacts.contact_groups,
         edit_contact_item: state.contacts.edit_contact_item,
         userID: state.user.user_id,
+        addGroupsList: state.contacts.default_contactGroup_list,
     }
 }
 

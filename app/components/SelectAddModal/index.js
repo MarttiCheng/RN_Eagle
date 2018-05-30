@@ -54,7 +54,7 @@ class SelectAddModal extends Component<{}>{
                 
                 <View style = {styles.modalMainView}>
                     <View>
-                        <TouchableOpacity onPress = { this.props.onClickedBack}>
+                        <TouchableOpacity onPress = { this.props.onNewNote}>
                             <Text style = {styles.selecttxt}>New Note</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress = { this.props.onClickedBack}>

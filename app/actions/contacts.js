@@ -233,31 +233,6 @@ function getThumbnailUrl(token, URL){
     })
 }
 
-function updateContactGroup(token, id){
-    return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/relationships/contact-groups', {
-            method: 'PUT',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/vnd.api+json'
-            },
-            body:JSON.stringify({
-                "data": [
-                    { "type": "contacts", id: "1" },
-                    { "type": "contacts", id: "2" },                
-                ]
-            })
-        })
-        .then((res) => res.json())
-        .then(data => {
-            resolve(data);
-        })
-        .catch(err => {
-            reject(err);
-        })
-    })
-}
-
 function updateContact(token, id, arr){
     return new Promise((resolve, reject) => {
         fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id, {
@@ -460,14 +435,26 @@ function createNewContact(token, id, arr){
     })
 }
 
-function updateContactGroups(token, id){
+function updateContactGroup(token, id, arr){
+    var array = []
+    for (var i = 0 ; i < arr.length ; i++ ) {
+        var a = {
+            "type": "contact_groups",
+            "id": arr[i].id
+        }
+        array.push(a)
+    }
+    console.log(array)
     return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.CONTACT_GROUPS, {
-            method: 'GET',
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/relationships/contact-groups', {
+            method: 'PUT',
             headers: {
                 'Authorization': token,
                 'Content-Type': 'application/vnd.api+json'
-            }
+            },
+            body:JSON.stringify({
+                "data": array
+            })
         })
         .then((res) => res.json())
         .then(data => {
@@ -498,5 +485,4 @@ module.exports = {
     deleteContactRelationship,
     listContactGroups,
     createNewContact,
-    updateContactGroups,
 }

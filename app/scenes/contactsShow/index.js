@@ -20,6 +20,9 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { updateContact, updateContactGroup } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import SelectAddModal from '../../components/SelectAddModal'
+import AddNewNoteModal from '../../components/AddNewNoteModal/index';
+import AddNewOfferModal from '../../components/AddNewOfferModal/index';
+
 
 const PARALLAX_HEADER_HEIGHT = 150;
 const STICKY_HEADER_HEIGHT = 50; 
@@ -46,6 +49,8 @@ class contactsShow extends Component<{}>{
             isEdit: false,
             isLoading: false,
             addModal: false,
+            addNewNoteModal: false,
+            addNewOfferModal: false,
         }
         this.handleScroll = this.handleScroll.bind(this);
     }
@@ -54,8 +59,7 @@ class contactsShow extends Component<{}>{
         var isEdit = this.state.isEdit
         this.setState({
             isEdit: false
-        })
-        
+        })   
     }
 
     _onAbout = () => {
@@ -175,6 +179,7 @@ class contactsShow extends Component<{}>{
             arr = this.props.edit_contact_item
             this.setState({ isLoading: true})
             updateContact(this.props.token, this.props.contact_group.data.id, arr).then(data => {
+                updateContactGroup(this.props.token, data.data.id, this.props.edit_contact_groups_item)
                 this.setState({ 
                     isLoading: false,
                     isEdit: false
@@ -191,6 +196,10 @@ class contactsShow extends Component<{}>{
 
     onAdd() {
         this.setState({ addModal: true })
+    }
+
+    onNewNote() {
+        this.setState({ addNewNoteModal: true })
     }
 
     render() {
@@ -311,9 +320,35 @@ class contactsShow extends Component<{}>{
                     visible = {this.state.addModal}
                     transparent = {true}
                     onRequestClose = {() => {
-                        alert('Modal has been closed')
+                        this.setState({ addModal: false })
                     }}>
-                    <SelectAddModal onClickedBack = {() => this.setState({ addModal: false })}/>
+                    <SelectAddModal 
+                        onClickedBack = {() => this.setState({ addModal: false })} 
+                        onNewNote = {() => this.setState({ addModal: false, addNewNoteModal: true, addNewOfferModal: false })}
+                        onNewOffer = {() => this.setState({ addModal: false, addNewNoteModal: false, addNewOfferModal: true })}
+                    />
+                </Modal>
+                <Modal
+                    animationType = 'slide'
+                    transparent = {false}
+                    visible = {this.state.addNewNoteModal}
+                    transparent = {true}
+                    onRequestClose = {() => {
+                        this.setState({ addNewNoteModal: false })
+                    }}>
+                    <AddNewNoteModal 
+                        onClickedBack = {() => this.setState({ addNewNoteModal: false })}
+                    />
+                </Modal>
+                <Modal
+                    animationType = 'slide'
+                    transparent = {false}
+                    visible = {this.state.addNewOfferModal}
+                    transparent = {true}
+                    onRequestClose = {() => {
+                        this.setState({ addNewOfferModal: false })
+                    }}>
+                    <AddNewOfferModal onClickedBack = {() => this.setState({ addNewOfferModal: false })}/>
                 </Modal>
             </Container>
         )
@@ -324,7 +359,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
         contact_group: state.contacts.contact_groups,
-        edit_contact_item: state.contacts.edit_contact_item
+        edit_contact_item: state.contacts.edit_contact_item,
+        edit_contact_groups_item: state.contacts.edit_contact_groups_item,
     }
 }
 

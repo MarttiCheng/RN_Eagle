@@ -89,16 +89,18 @@ export default {
         flexDirection:'row',
         marginTop: 5,
         flex: 1,
+        flexWrap: 'wrap',
+        width: width - 83,
     },
     eachtag: {
         backgroundColor: '#B4BCC8',
-        paddingLeft: 8,
-        paddingRight: 8,
+        paddingHorizontal: 8,
         height: 16,
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 10
+        marginRight: 10,
+        marginBottom: 5
     },
     tagTxt: {
         fontSize: 10,

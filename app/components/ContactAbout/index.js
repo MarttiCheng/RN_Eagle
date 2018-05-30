@@ -21,11 +21,7 @@ const { width, height } = Dimensions.get('window')
 var property_alerts_subscribed = true;
 var sms_subscribed = true;
 var subscribed = true;
-var addGroupsList = [
-    'buyer', 'landlord', 'tenant', 'vendor', 'vendor-past', 'investor', 'looking to rent', 'out of market', 
-    'automatic emails', 'automatic emails - buyer', 'automatic emails - prospective vendor','automatic emails - looking to rent', 
-    'automatic emails - prospective landlord', 'hot', 'cold', 'simpsons', 'appraisal', 'appraisal lost'
-]
+
 var isAddGroup = false
 
 // create a component
@@ -73,7 +69,6 @@ class ContactAbout extends Component {
 
     componentWillMount() {
         getUser(this.props.token, this.props.contact_groups.data.attributes.user_id).then(data => {
-            // console.log(data.data.attributes.first_name + ' ' +  data.data.attributes.last_name)
             this.fetchAbout(data.data.attributes.first_name + ' ' +  data.data.attributes.last_name)
         })
     }
@@ -82,8 +77,7 @@ class ContactAbout extends Component {
         var address1 = ''
         var address2 = ''
         var params = this.props.contact_groups
-
-        // console.log(params.data.attributes)
+        console.log(this.props.contact_groups)
         
         if(!params.data.attributes.address_line_1 || params.data.attributes.address_line_1 == '' || params.data.attributes.address_line_1 == 'null'){
             address1 = '';
@@ -105,7 +99,7 @@ class ContactAbout extends Component {
         var arr = []
         if(params.included){
             for(var i = 0 ; i < params.included.length; i++) {
-                arr.push(params.included[i].attributes.name)
+                arr.push(params.included[i])
             }
         }
         this.setState({
@@ -174,7 +168,7 @@ class ContactAbout extends Component {
                             <TouchableOpacity onPress = {() => this.onGroupItem(index)}>
                                 <Icon1 name="ios-close" size={24} color="#2B3643" style = {{marginTop: 4, width: 24 }}/>
                             </TouchableOpacity>
-                            <Label style = {[styles.categoryItemTxt, {marginLeft: 0}]}>{item}</Label>
+                            <Label style = {[styles.categoryItemTxt, {marginLeft: 0}]}>{item.attributes.name}</Label>
                         </View>
                     )
                 })
@@ -189,7 +183,7 @@ class ContactAbout extends Component {
                 groupList.map((item, index) => {
                     return(
                         <View style = { styles.categoryItem } key = {index}>
-                            <Label style = {styles.categoryItemTxt}>{item}</Label>
+                            <Label style = {styles.categoryItemTxt}>{item.attributes.name}</Label>
                         </View>
                     )
                 })
@@ -203,7 +197,6 @@ class ContactAbout extends Component {
             isAddGroup: isAddGroup
         })
     }
-    
     
     showContactAbout(){
         var params = this.props.contact_groups
@@ -702,7 +695,7 @@ class ContactAbout extends Component {
         }
         var { dispatch } = this.props;
         dispatch ({ type: 'EDIT_CONTACT_ITEM', data: arr})
-
+        dispatch ({ type: 'EDIT_CONTACT_GROUPS_ITEM', data: this.state.contactGroups})
         return (
             <View style = {this.state.isAddGroup? styles.container2: styles.container}>
                 {
@@ -713,10 +706,10 @@ class ContactAbout extends Component {
                     this.state.isAddGroup?
                         <ScrollView  style = {styles.groupAddDialogBox} >
                             {
-                                addGroupsList.map((item, indexe) => {
+                                this.props.addGroupsList.map((item, indexe) => {
                                     return(
                                         <TouchableOpacity style = {styles.eachValue} onPress = {() => this.onEachGroup(item)}>
-                                            <Text style = {styles.eachAddtxt}>{item}</Text>
+                                            <Text style = {styles.eachAddtxt}>{item.attributes.name}</Text>
                                         </TouchableOpacity>
                                     )
                                 })
@@ -733,6 +726,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
         contact_groups: state.contacts.contact_groups,
+        addGroupsList: state.contacts.default_contactGroup_list,
     }
 }
 
