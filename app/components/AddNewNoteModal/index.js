@@ -27,7 +27,7 @@ class AddNewNoteModal extends Component<{}>{
             contactID: '',
             propertyID: '',
             text: '',
-            visibleVendor: false
+            visibleVendor: true
         }
     }
 

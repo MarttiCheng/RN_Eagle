@@ -28,7 +28,7 @@ class AddNewOfferModal extends Component<{}>{
             propertyID: '',
             text: '',
             price: '',
-            visibleVendor: false
+            visibleVendor: true
         }
     }
 
