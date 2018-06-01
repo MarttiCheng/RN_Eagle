@@ -15,7 +15,7 @@ import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-
 const { width, height } = Dimensions.get('window');
 var visibleVendor = false
 
-class AddNewNoteModal extends Component<{}>{
+class AddNewNote extends Component<{}>{
     static navigationOptions = {
         header: null,
         gesturesEnabled: false
@@ -88,4 +88,4 @@ class AddNewNoteModal extends Component<{}>{
     }
 }
 
-export default connect()(AddNewNoteModal);
+export default connect()(AddNewNote);

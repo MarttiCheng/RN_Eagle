@@ -20,8 +20,6 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { updateContact, updateContactGroup } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import SelectAddModal from '../../components/SelectAddModal'
-import AddNewNoteModal from '../../components/AddNewNoteModal/index';
-import AddNewOfferModal from '../../components/AddNewOfferModal/index';
 
 
 const PARALLAX_HEADER_HEIGHT = 150;
@@ -49,8 +47,7 @@ class contactsShow extends Component<{}>{
             isEdit: false,
             isLoading: false,
             addModal: false,
-            addNewNoteModal: false,
-            addNewOfferModal: false,
+            
         }
         this.handleScroll = this.handleScroll.bind(this);
     }
@@ -198,8 +195,10 @@ class contactsShow extends Component<{}>{
         this.setState({ addModal: true })
     }
 
-    onNewNote() {
-        this.setState({ addNewNoteModal: true })
+    onClickedNewNote(){
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewTask'}))
     }
 
     render() {
@@ -324,32 +323,10 @@ class contactsShow extends Component<{}>{
                     }}>
                     <SelectAddModal 
                         onClickedBack = {() => this.setState({ addModal: false })} 
-                        onNewNote = {() => this.setState({ addModal: false, addNewNoteModal: true, addNewOfferModal: false })}
-                        onNewOffer = {() => this.setState({ addModal: false, addNewNoteModal: false, addNewOfferModal: true })}
+                        onClickedNewNote = {() => this.onClickedNewNote()}
                     />
                 </Modal>
-                <Modal
-                    animationType = 'slide'
-                    transparent = {false}
-                    visible = {this.state.addNewNoteModal}
-                    transparent = {true}
-                    onRequestClose = {() => {
-                        this.setState({ addNewNoteModal: false })
-                    }}>
-                    <AddNewNoteModal 
-                        onClickedBack = {() => this.setState({ addNewNoteModal: false })}
-                    />
-                </Modal>
-                <Modal
-                    animationType = 'slide'
-                    transparent = {false}
-                    visible = {this.state.addNewOfferModal}
-                    transparent = {true}
-                    onRequestClose = {() => {
-                        this.setState({ addNewOfferModal: false })
-                    }}>
-                    <AddNewOfferModal onClickedBack = {() => this.setState({ addNewOfferModal: false })}/>
-                </Modal>
+                
             </Container>
         )
     }

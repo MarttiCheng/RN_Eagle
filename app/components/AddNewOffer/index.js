@@ -15,7 +15,7 @@ import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-
 const { width, height } = Dimensions.get('window');
 var visibleVendor = false
 
-class AddNewOfferModal extends Component<{}>{
+class AddNewOffer extends Component<{}>{
     static navigationOptions = {
         header: null,
         gesturesEnabled: false
@@ -98,4 +98,4 @@ class AddNewOfferModal extends Component<{}>{
     }
 }
 
-export default connect()(AddNewOfferModal);
+export default connect()(AddNewOffer);
