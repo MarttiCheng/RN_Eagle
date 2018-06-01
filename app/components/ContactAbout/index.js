@@ -77,7 +77,6 @@ class ContactAbout extends Component {
         var address1 = ''
         var address2 = ''
         var params = this.props.contact_groups
-        console.log(this.props.contact_groups)
         
         if(!params.data.attributes.address_line_1 || params.data.attributes.address_line_1 == '' || params.data.attributes.address_line_1 == 'null'){
             address1 = '';

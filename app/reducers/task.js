@@ -2,6 +2,7 @@ const initialTokenState = {
     tasks: [],
     tasks_completed: [],
     tasks_uncompleted: [],
+    
 }
 
 function task(state = initialTokenState, action) {

@@ -32,11 +32,24 @@ class addNewTask extends Component<{}>{
             bodyTxt: '',
             dueDate: '',
             task_contactList: [],
-            contactName: 'select contact',
+            contactName: '',
+            contactId: '',
+            propertyName: '',
+            propertyId: '',
             property: 'select property',
             appraisal: 'select appraisal',
             permision: 'Who can see this?',
         }  
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // console.log(nextProps.selected_propertyForTask)
+        this.setState({
+            contactName: nextProps.selected_contactForTask.attributes.first_name + ' ' + nextProps.selected_contactForTask.attributes.last_name,
+            contactId: nextProps.selected_contactForTask.id,
+            // propertyName: nextProps.selected_propertyForTask.attributes.full_address,
+            // propertyId: nextProps.selected_propertyForTask.id,
+        })
     }
 
     onSelectPermision(value, label) {
@@ -45,10 +58,15 @@ class addNewTask extends Component<{}>{
 
     onSelectContact() {
         var { dispatch } = this.props
-        dispatch(NavigationActions.navigate({routeName: 'contacts'}))
+        dispatch(NavigationActions.navigate({routeName: 'contactsIndex'}))
+    }
+    onSelectProperty() {
+        var { dispatch } = this.props
+        dispatch(NavigationActions.navigate({routeName: 'propertyIndex'}))
     }
 
     render() {
+        console.log(this.state.propertyName)
         return(
             <Container style = {styles.container}>
                 <StatusBar
@@ -105,14 +123,14 @@ class addNewTask extends Component<{}>{
                     </View>
                     
                     <TouchableOpacity style = {styles.view1} onPress = {() => this.onSelectContact()}>
-                        <Label style = {styles.label2}>Select contact</Label>
-                        {/*<TouchableOpacity>*/}
-                            {/*<Label style = {styles.contactTxt}>{this.state.contactName}</Label>*/}
-                        {/*</TouchableOpacity>*/}
+                        <Label style = {this.state.contactName? styles.label1 : styles.label2}>Select contact</Label>
+                            {
+                                this.state.contactName? <Label style = {styles.contactTxt}>{this.state.contactName}</Label> : null
+                            }
                         <View style = {styles.seperateLine}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {styles.view1}>
+                    <TouchableOpacity style = {styles.view1}  onPress = {() => this.onSelectProperty()}>
                         <Label style = {styles.label2}>Select property</Label>
                         {/*<TouchableOpacity>*/}
                             {/*<Label style = {styles.contactTxt}>{this.state.property}</Label>*/}
@@ -159,6 +177,8 @@ const mapStateToProps = (state, ownProps) => {
         tasks: state.task.tasks,
         completed_task: state.task.tasks_completed,
         uncompleted_task: state.task.tasks_uncompleted,
+        selected_contactForTask: state.contacts.selected_contactForTask,
+        selected_propertyForTask: state.listings.selected_propertyForTask,
     }
 }
 

@@ -1,6 +1,5 @@
 import { Dimensions, Platform, StatusBar } from 'react-native';
 import { Header } from 'react-navigation'
-import {Label} from 'native-base';
 const { width, height } = Dimensions.get('window')
 export default {
     container: {

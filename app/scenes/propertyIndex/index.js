@@ -16,7 +16,7 @@ import { getProperties, getThumbnailUrl } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
 
-class listings extends Component<{}>{
+class propertyIndex extends Component<{}>{
     static navigationOptions = {
         header: null,
         gesturesEnabled: false
@@ -45,9 +45,11 @@ class listings extends Component<{}>{
     }
 
     clickListing(item, index) {
+        console.log(item)
         var { dispatch } = this.props;
-        dispatch ({ type: 'GET_LISTINGS', data: item})
-        dispatch(NavigationActions.navigate({routeName: 'listingsShow', params: {info: item}}))
+        dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: item})
+        Keyboard.dismiss(); 
+        this.props.navigation.goBack(); 
     }
 
     showForSale(item){
@@ -132,12 +134,11 @@ class listings extends Component<{}>{
                     barStyle="light-content"
                 />
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{}}
-                                onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
-                    <Label style = {styles.title}>Listings</Label>
-                    <TouchableOpacity>
-                        <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginLeft: 3}} />
+                    <TouchableOpacity style = {styles.backBtn} onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack();  }}>
+                        <Thumbnail square source = {images.ic_back_btn} style = {styles.backImg}/>
                     </TouchableOpacity>
+                    <Label style = {styles.title}>Listings</Label>
+                    <View style = {styles.blankView} />
                 </View>
                 <Content showsVerticalScrollIndicator = {false}>
                     <View style = {styles.searchBoxView}>
@@ -163,9 +164,6 @@ class listings extends Component<{}>{
                         })
                     }
                 </Content>
-                <TouchableOpacity style = {styles.addBtn}>
-                    <Label style = {styles.addTxt}>+</Label>
-                </TouchableOpacity>
             </Container>
         )
     }
@@ -178,4 +176,4 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 //make this component available to the app
-export default connect(mapStateToProps)(listings);
+export default connect(mapStateToProps)(propertyIndex);

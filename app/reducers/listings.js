@@ -1,5 +1,6 @@
 const initialTokenState = {
     listings: [],
+    selected_propertyForTask: [],
 }
 
 function Listings(state = initialTokenState, action) {
@@ -8,6 +9,11 @@ function Listings(state = initialTokenState, action) {
             return {
                 ...state,
                 listings: action.data
+            };
+        case 'SELECTED_PROPERTY_FOR_TASK' :
+            return {
+                ...state,
+                selected_propertyForTask: action.data
             };
         default :
             return state

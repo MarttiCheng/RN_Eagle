@@ -17,6 +17,8 @@ import tasksShow from '../scenes/tasksShow/index';
 import sendEmail from '../scenes/sendEmail/index';
 import addContact from '../scenes/addContact/index';
 import addNewTask from '../scenes/addNewTask/index';
+import contactsIndex from '../scenes/contactsIndex/index';
+import propertyIndex from '../scenes/propertyIndex/index';
 
 const Drawer = DrawerNavigator(
     {
@@ -34,15 +36,17 @@ const Drawer = DrawerNavigator(
 );
 
 export const AppNavigator = StackNavigator({
-    login: { screen: login },
-    Drawer: { screen: Drawer },
-    contactsShow: { screen: contactsShow },
-    listingsShow: { screen: listingsShow },
-    homeShow: { screen: homeShow },
-    homeEdit: { screen: homeEdit },
-    tasksShow: { screen: tasksShow },
-    addContact: { screen: addContact },
-    addNewTask: { screen: addNewTask },
+        login: { screen: login },
+        Drawer: { screen: Drawer },
+        contactsShow: { screen: contactsShow },
+        listingsShow: { screen: listingsShow },
+        homeShow: { screen: homeShow },
+        homeEdit: { screen: homeEdit },
+        tasksShow: { screen: tasksShow },
+        addContact: { screen: addContact },
+        addNewTask: { screen: addNewTask },
+        contactsIndex: { screen: contactsIndex },
+        propertyIndex: { screen: propertyIndex },
     },{
         headerMode: 'none',
     }

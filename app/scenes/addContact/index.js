@@ -198,7 +198,6 @@ class addContact extends Component<{}>{
         else {
             this.setState({ isLoading: true })
             createNewContact(this.props.token, this.props.userID, arr).then(data => {
-                console.log(data.data.id)
                 updateContactGroup(this.props.token, data.data.id, this.state.contactGroups)
                 this.setState({ 
                     isLoading: false,

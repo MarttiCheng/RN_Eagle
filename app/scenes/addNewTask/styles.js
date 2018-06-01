@@ -95,14 +95,6 @@ export default {
         height: 1,
         backgroundColor: '#e3e3e3'
     },
-    contactTxt123: {
-        paddingTop: 20,
-        paddingBottom: 5,
-        paddingLeft: 15,
-        backgroundColor: 'transparent',
-        borderBottomWidth: 1,
-        borderColor: 'lightgray',
-    },
     contactTxt: {
         backgroundColor:'transparent',
         color:'black',

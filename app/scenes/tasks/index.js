@@ -34,6 +34,7 @@ class tasks extends Component {
     componentWillMount() {
         getCompletedTasks(this.props.token).then(data => {
             getUnCompletedTasks(this.props.token).then(data1 => {
+                console.log(data1)
                 this.setState({
                     isLoading: false,
                     completedTaskList: data.data,

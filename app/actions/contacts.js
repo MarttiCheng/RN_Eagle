@@ -444,7 +444,6 @@ function updateContactGroup(token, id, arr){
         }
         array.push(a)
     }
-    console.log(array)
     return new Promise((resolve, reject) => {
         fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/relationships/contact-groups', {
             method: 'PUT',
