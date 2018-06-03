@@ -76,18 +76,6 @@ export default {
         marginTop: 5,
         marginBottom: 5,
     },
-    dateTxt: {
-        backgroundColor:'transparent',
-        color:'black',
-        fontSize: 20,
-        paddingLeft: 0,
-        paddingRight: 5,
-        paddingTop: 5,
-        paddingBottom: 5,
-        textAlign: 'left',
-        borderWidth: 0,
-        width: width - 30
-    },
     seperateLine: {
         position: 'absolute',
         left: 0,
@@ -108,27 +96,16 @@ export default {
         borderWidth: 0,
         width: width - 30,
     },
-    selectoptionView: {
-        borderWidth : 0, 
-        borderColor : "transparent", 
-        height: 40, 
-        width: width - 30,
+    visibleVendorView: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
-    selectedTxt: {
-        backgroundColor:'transparent',
-        color:'black',
-        fontSize: 20,
-        fontFamily: 'open-sans-regular',
-        marginTop: -5,
-        marginLeft: -10,
+    checkimg: {
+        width: 14,
+        height: 14,
     },
-    optionList_permision: {
-        width: width*0.8, 
-        height: 90, 
-        backgroundColor: 'white',
-    },
-    optiontxt: {
-        fontSize: 18,
+    visibletxt: {
+        fontSize: 14,
         fontFamily: 'open-sans-regular',
     },
 }

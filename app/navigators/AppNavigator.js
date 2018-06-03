@@ -19,6 +19,10 @@ import addContact from '../scenes/addContact/index';
 import addNewTask from '../scenes/addNewTask/index';
 import contactsIndex from '../scenes/contactsIndex/index';
 import propertyIndex from '../scenes/propertyIndex/index';
+import addNewNote from '../scenes/addNewNote/index';
+import addNewEnquiry from '../scenes/addNewEnquiry/index';
+import addNewInspection from '../scenes/addNewInspection/index';
+import addNewOffer from '../scenes/addNewOffer/index';
 
 const Drawer = DrawerNavigator(
     {
@@ -47,6 +51,10 @@ export const AppNavigator = StackNavigator({
         addNewTask: { screen: addNewTask },
         contactsIndex: { screen: contactsIndex },
         propertyIndex: { screen: propertyIndex },
+        addNewNote: { screen: addNewNote },
+        addNewEnquiry: { screen: addNewEnquiry },
+        addNewInspection: { screen: addNewInspection },
+        addNewOffer: { screen: addNewOffer},
     },{
         headerMode: 'none',
     }

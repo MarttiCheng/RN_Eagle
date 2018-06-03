@@ -20,6 +20,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { updateContact, updateContactGroup } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import SelectAddModal from '../../components/SelectAddModal'
+import addNewNote from '../addNewNote/index';
 
 
 const PARALLAX_HEADER_HEIGHT = 150;
@@ -198,7 +199,31 @@ class contactsShow extends Component<{}>{
     onClickedNewNote(){
         var { dispatch } = this.props;
         this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewNote'}))
+    }
+
+    onClickedNewTask() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
         dispatch(NavigationActions.navigate({routeName: 'addNewTask'}))
+    }
+
+    onClickedNewEnquiry() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewEnquiry'}))
+    }
+
+    onClickedNewInspection() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewInspection'}))
+    }
+
+    onClickedNewOffer() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewOffer'}))
     }
 
     render() {
@@ -324,6 +349,10 @@ class contactsShow extends Component<{}>{
                     <SelectAddModal 
                         onClickedBack = {() => this.setState({ addModal: false })} 
                         onClickedNewNote = {() => this.onClickedNewNote()}
+                        onClickedNewTask = {() => this.onClickedNewTask()}
+                        onClickedNewEnquiry = {() => this.onClickedNewEnquiry()}
+                        onClickedNewInspection = {() => this.onClickedNewInspection()}
+                        onClickedNewOffer = {() => this.onClickedNewOffer()}
                     />
                 </Modal>
                 

@@ -45,7 +45,6 @@ class propertyIndex extends Component<{}>{
     }
 
     clickListing(item, index) {
-        console.log(item)
         var { dispatch } = this.props;
         dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: item})
         Keyboard.dismiss(); 
