@@ -465,6 +465,40 @@ function updateContactGroup(token, id, arr){
     })
 }
 
+function createNote(token, id, arr){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_NOTE , {
+            method: 'POST',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/vnd.api+json'
+            },
+            body:JSON.stringify({
+                "data": {
+                    "type": "notes",
+                    "attributes": {
+                        "contact_id": arr.contact_id,
+                        "property_id": arr.property_id,
+                        "text": arr.text,
+                        "account_id": id,
+                        "note_type": arr.note_type,
+                        "offer_price": arr.offer_price,
+                        "permission_type": arr.permission_type
+                        // "visible_to_vendor": arr.visible_to_vendor
+                    }
+                }
+            })
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
 module.exports = {
     getAllContacts,
     getMyContacts,
@@ -484,4 +518,5 @@ module.exports = {
     deleteContactRelationship,
     listContactGroups,
     createNewContact,
+    createNote,
 }

@@ -11,7 +11,7 @@ import images from '../../themes/images';
 import Search from 'react-native-search-box';
 import { NavigationActions } from 'react-navigation'
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome} from '@expo/vector-icons'
-import { getTaskContacts } from '../../actions'
+import { createNote } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import DatePicker from 'react-native-datepicker'
 import Moment from 'react-moment';
@@ -19,7 +19,7 @@ import moment from 'moment'
 import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-keyboard-aware-scroll-view'
 import {Select, Option} from "react-native-chooser";
 
-var isVisiableVendor = false;
+var isVisiableVendor = true;
 
 class addNewOffer extends Component<{}>{
     static navigationOptions = {
@@ -36,7 +36,8 @@ class addNewOffer extends Component<{}>{
             propertyName: '',
             propertyId: '',
             property: 'select property',
-            isVisiableVendor: false
+            isVisiableVendor: true,
+            isSaving: false,
         }  
     }
 
@@ -78,6 +79,29 @@ class addNewOffer extends Component<{}>{
         this.setState({ isVisiableVendor: isVisiableVendor })
     }
 
+    onSave() {
+        var arr = {
+            "contact_id" : this.state.contactId,
+            "property_id" : this.state.propertyId,
+            "text": this.state.bodyTxt,
+            "visible_to_vendor": this.state.isVisiableVendor,
+            "note_type": "Offer",
+            "offer_price": this.state.price,
+            "permission_type": ""
+        }
+        this.setState({ isSaving: true })
+        createNote(this.props.token, this.props.userID, arr).then(data => {
+            console.log(data)
+            this.setState({ isSaving: false })
+            var arr = []
+            Keyboard.dismiss(); 
+            var { dispatch } = this.props;
+            dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: arr})
+            dispatch ({ type: 'SELECTED_CONTACT_FOR_TASK', data: arr})
+            this.props.navigation.goBack();
+        })
+    }
+
     render() {
         return(
             <Container style = {styles.container}>
@@ -92,7 +116,7 @@ class addNewOffer extends Component<{}>{
                     </TouchableOpacity>
                     
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>Add new offer</Label>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress = {() => this.onSave()}>
                         <Label style = {styles.editTxt}>Save</Label>
                     </TouchableOpacity>
                 </View>
@@ -160,7 +184,10 @@ class addNewOffer extends Component<{}>{
                         </TouchableOpacity>
                         <View style = {styles.seperateLine}/>
                     </View>
-                </KeyboardAwareScrollView>              
+                </KeyboardAwareScrollView>  
+                {
+                    this.state.isSaving? <BallIndicator color = {'#2B3643'}  style = {styles.indicator}/> : null
+                }             
             </Container>
         )
     }

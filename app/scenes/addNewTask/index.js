@@ -11,7 +11,7 @@ import images from '../../themes/images';
 import Search from 'react-native-search-box';
 import { NavigationActions } from 'react-navigation'
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome} from '@expo/vector-icons'
-import { getTaskContacts } from '../../actions'
+import { createNote } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import DatePicker from 'react-native-datepicker'
 import Moment from 'react-moment';
@@ -39,6 +39,7 @@ class addNewTask extends Component<{}>{
             property: 'select property',
             appraisal: 'select appraisal',
             permision: 'Who can see this?',
+            isSaving: false,
         }  
     }
 
@@ -79,6 +80,29 @@ class addNewTask extends Component<{}>{
         this.props.navigation.goBack();
     }
 
+    onSave() {
+        var arr = {
+            "contact_id" : this.state.contactId,
+            "property_id" : this.state.propertyId,
+            "text": this.state.bodyTxt,
+            "visible_to_vendor": "",
+            "note_type": "",
+            "offer_price": this.state.price,
+            "permission_type": ""
+        }
+        this.setState({ isSaving: true })
+        createNote(this.props.token, this.props.userID, arr).then(data => {
+            console.log(data)
+            this.setState({ isSaving: false })
+            var arr = []
+            Keyboard.dismiss(); 
+            var { dispatch } = this.props;
+            dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: arr})
+            dispatch ({ type: 'SELECTED_CONTACT_FOR_TASK', data: arr})
+            this.props.navigation.goBack();
+        })
+    }
+
     render() {
         console.log(this.state.propertyId)
         return(
@@ -94,7 +118,7 @@ class addNewTask extends Component<{}>{
                     </TouchableOpacity>
                     
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>Add new task</Label>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress = {() => this.onSave()}>
                         <Label style = {styles.editTxt}>Save</Label>
                     </TouchableOpacity>
                 </View>
@@ -176,7 +200,10 @@ class addNewTask extends Component<{}>{
                         </Select>
                     </View>
 
-                </Content>              
+                </Content>   
+                {
+                    this.state.isSaving? <BallIndicator color = {'#2B3643'}  style = {styles.indicator}/> : null
+                }          
             </Container>
         )
     }

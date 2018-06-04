@@ -28,10 +28,10 @@ class ContactActivity extends Component {
     }
     
     componentWillMount() {
-       getContactActivity(this.props.token, this.props.contact_groups.data.id).then(data => {  
-           this.setState({
-               isLoading: false,
-               activityList: data.data
+        getContactActivity(this.props.token, this.props.contact_groups.data.id).then(data => {  
+            this.setState({
+                isLoading: false,
+                activityList: data.data
            })                
         })
     }
