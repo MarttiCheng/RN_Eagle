@@ -36,6 +36,7 @@ class listings extends Component<{}>{
     componentWillMount() {
         var list = []
         getProperties(this.props.token).then(data => {
+            console.log(data.data)
             this.setState({
                 isLoading: false,
                 listingsList: data.data,

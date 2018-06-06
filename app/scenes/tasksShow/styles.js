@@ -65,7 +65,7 @@ export default {
     assignNameTxt: {
         marginTop: 5,
         color:'black',
-        fontSize: 22,
+        fontSize: 20,
         fontFamily: 'open-sans-regular'
     },
     contactTxt: {
@@ -75,6 +75,8 @@ export default {
         backgroundColor: 'transparent',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
+        fotnSize: 20,
+        fontFamily: 'open-sans-regular'
     },
     contacvView: {
         flexDirection: 'row',

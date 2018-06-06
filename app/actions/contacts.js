@@ -483,8 +483,8 @@ function createNote(token, id, arr){
                         "account_id": id,
                         "note_type": arr.note_type,
                         "offer_price": arr.offer_price,
-                        "permission_type": arr.permission_type
-                        // "visible_to_vendor": arr.visible_to_vendor
+                        "permission_type": arr.permission_type,
+                        "visible_to_vendor": arr.visible_to_vendor
                     }
                 }
             })

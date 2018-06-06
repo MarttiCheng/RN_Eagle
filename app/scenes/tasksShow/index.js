@@ -98,7 +98,7 @@ class tasksShow extends Component<{}>{
         return(
             <View style = {{flex: 1}}>
                 <View style = {styles.titleView}>
-                    <Label>{this.props.tasks.attributes.body}</Label>
+                    <Label style = {styles.assignNameTxt}>{this.props.tasks.attributes.body}</Label>
                 </View>
                 <View style = {styles.assignView}>
                     <Label style = {styles.assignTxt}>Assigned to</Label>

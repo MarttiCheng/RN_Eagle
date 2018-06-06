@@ -11,7 +11,7 @@ import images from '../../themes/images';
 import Search from 'react-native-search-box';
 import { NavigationActions } from 'react-navigation'
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome} from '@expo/vector-icons'
-import { createNote } from '../../actions'
+import { createTask } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import DatePicker from 'react-native-datepicker'
 import Moment from 'react-moment';
@@ -81,17 +81,22 @@ class addNewTask extends Component<{}>{
     }
 
     onSave() {
+        var permision_type = '';
+        if(this.state.permision == 'Everyone'){
+            permision_type = 'everyone'
+        }
+        else {
+            permision_type = 'exclusive'
+        }
         var arr = {
-            "contact_id" : this.state.contactId,
-            "property_id" : this.state.propertyId,
-            "text": this.state.bodyTxt,
-            "visible_to_vendor": "",
-            "note_type": "",
-            "offer_price": this.state.price,
-            "permission_type": ""
+            "due_date": this.state.dueDate,
+            "body": this.state.bodyTxt,
+            "permission_type": permision_type,
+            "property_id": this.state.propertyId,
+            "contact_id": this.state.contactId,
         }
         this.setState({ isSaving: true })
-        createNote(this.props.token, this.props.userID, arr).then(data => {
+        createTask(this.props.token, this.props.userID, arr).then(data => {
             console.log(data)
             this.setState({ isSaving: false })
             var arr = []
