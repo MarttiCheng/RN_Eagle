@@ -88,6 +88,7 @@ export default {
         padding: 15,
         backgroundColor: 'white',
         marginBottom: 15,
+        marginTop: 15
         // alignItems: 'center'
     },
     selectoptionView: {
@@ -131,18 +132,6 @@ export default {
         borderColor: 'lightgray',
         fontSize: 15,
     },
-    saveBtn: {
-        backgroundColor: '#33e098',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 100,
-        height: 40,
-        marginTop: 10,
-        marginLeft: (width-130)/2
-    },
-    saveTxt: {
-        color: 'white'
-    },
     nameListView: {
         width: width - 30,
         paddingVertical: 0,
@@ -164,7 +153,34 @@ export default {
         top: 100,
         right: (width-60)/2,
         padding: 10,
-
-
-    }
+    },
+    addTxt: {
+        fontSize: 16,
+        color: 'black',
+        textAlign: 'center',
+        marginBottom: 10
+    },
+    saveBtnView: {
+        width: (width - 45) * 2 /3,
+        height: 36,
+        borderRadius: 5,
+        backgroundColor: '#35AA47',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    saveTxt: {
+        color:'white',
+        fontSize: 13,
+        fontFamily: 'open-sans-regular'
+    },
+    saveBtn: {
+        backgroundColor: '#35AA47',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 200,
+        height: 36,
+        borderRadius: 5,
+        marginLeft: (width-230)/2,
+        marginTop: 10,
+    },
 }

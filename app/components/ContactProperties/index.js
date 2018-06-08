@@ -37,7 +37,7 @@ class ContactProperties extends Component {
     }
 
     componentWillMount() {
-        getContactProperty_Vendor(this.props.token, this.props.contact_groups.data.id).then(data => {
+        getContactProperty_Vendor(this.props.token, this.props.contactInfo.data.id).then(data => {
             if(data.included){
                 this.setState({
                     vendorList: data.included,
@@ -223,7 +223,8 @@ class ContactProperties extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
-        contact_groups: state.contacts.contact_groups,
+        // contact_groups: state.contacts.contact_groups,
+        contact_id: state.contacts.contact_id,
     }
 }
 

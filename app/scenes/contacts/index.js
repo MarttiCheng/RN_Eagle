@@ -14,6 +14,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
 import { getAllContacts, getMyContacts,getMyContacts1, getContactGroups, getContactRelationships, listContactGroups } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
+import {Select, Option} from "react-native-chooser";
 
 var isAllContacts = false;
 var isMyContacts = false;
@@ -39,7 +40,7 @@ class contacts extends Component<{}>{
             isAllContacts: false,
             isMyContacts: false,
             display: 'All contacts',
-            group: 'All groups',
+            group: 'All Groups',
             groupList: [],
             groupID: ''
         }
@@ -55,7 +56,7 @@ class contacts extends Component<{}>{
         var subAllGroupList = [{
             "attributes": {
                 "created_at": "2017-11-22T14:58:46.961+11:00",
-                "name": "All group",
+                "name": "All Groups",
             },
             "id": "-1",
             "links": {
@@ -107,7 +108,7 @@ class contacts extends Component<{}>{
         var subAllGroupList = [{
             "attributes": {
                 "created_at": "2017-11-22T14:58:46.961+11:00",
-                "name": "All group",
+                "name": "All Groups",
             },
             "id": "-1",
             "links": {
@@ -193,7 +194,8 @@ class contacts extends Component<{}>{
     clickItemContact(item, index) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACTS_ALL', data: this.state.contactsList})
-        dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
+        // dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
+        dispatch ({ type: 'GET_CONTACT_ID', data: item.data.id})
         
         Animated.parallel([
             Animated.timing(                  
@@ -216,9 +218,9 @@ class contacts extends Component<{}>{
             isAllContacts: false,
             isMyContacts: false,
             display: 'All contacts',
-            group: 'All groups'
+            group: 'All Groups'
         })
-        dispatch(NavigationActions.navigate({routeName: 'contactsShow'}))
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: item.data.attributes.first_name + ' ' + item.data.attributes.last_name}}))
     }
     
     showContactGroups(index){
@@ -306,7 +308,7 @@ class contacts extends Component<{}>{
             isAllContacts: false,
             isMyContacts: false,
             display: 'All contacts',
-            group: 'All groups'
+            group: 'All Groups'
         })
     }
 
@@ -381,6 +383,10 @@ class contacts extends Component<{}>{
         dispatch(NavigationActions.navigate({routeName: 'addContact'}))
     }
 
+    onSelectDisplay(value, label) {
+        this.setState({display : value});
+    }
+
     render() {
         return(
             <Container style = {styles.container}>
@@ -428,12 +434,27 @@ class contacts extends Component<{}>{
 
                 <Animated.View style={[styles.filterView, {transform: [ {translateY: this.state.y1},{scaleY: this.state.scale1}]}]}>
                     <Text style = {styles.displayTxt}>Display</Text>
-                    <TouchableOpacity onPress = {() => this.onAllContacts()}>
+                    {/*<TouchableOpacity onPress = {() => this.onAllContacts()}>
                         <View transparent style = {styles.dropView1}>
                             <Text style = {styles.contactTxt}>{this.state.display}</Text>
                             <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
+
+                    <Select
+                        onSelect = {this.onSelectDisplay.bind(this)}
+                        defaultText  = {this.state.display}
+                        style = {styles.selectoptionView}
+                        textStyle = {styles.selectedTxt}
+                        backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
+                        transparent = {true}
+                        optionListStyle = {styles.optionList}
+                    >
+                        <Option value = "All contacts" styleText = {styles.optiontxt}>All contacts</Option>
+                        <Option value = "My contacts" styleText = {styles.optiontxt}>My contacts</Option>
+                    </Select>
+
+                    
                     
                     <Text style = {styles.groupTxt}>Group</Text>
                     <TouchableOpacity onPress = {() => this.onMyContacts()}>
@@ -445,7 +466,7 @@ class contacts extends Component<{}>{
 
                     <View style = {styles.filterButtonsView}>
                         <Button transparent style = {styles.clearBtn} onPress = {() => this.onClearFilter()}>
-                            <Text style = {styles.clearTxt}>CLEAR FILTER</Text>
+                            <Text style = {styles.clearTxt}>CANCEL</Text>
                         </Button>
                         <Button transparent style = {styles.saveBtn} onPress = {() => this.onSaveFilter()}>
                             <Text style = {styles.clearTxt}>SAVE FILTER</Text>
@@ -461,8 +482,12 @@ class contacts extends Component<{}>{
                                 <TouchableOpacity onPress = {() => this.onmycontactsItem()}>
                                     <Text style = {styles.contactoptionTxt}>My contacts</Text>
                                 </TouchableOpacity>
-                            </View> : null
+                            </View> 
+                            
+                            : null
                     }
+                    
+
                     {
                         this.state.isMyContacts ?
                             <ScrollView style = {styles.myContactsView}>

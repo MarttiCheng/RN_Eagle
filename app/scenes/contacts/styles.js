@@ -200,4 +200,28 @@ export default {
         // justifyContent: 'center',
         backgroundColor: 'white'
     },
+    selectoptionView: {
+        borderWidth : 1, 
+        borderColor : "#e3e3e3", 
+        height: 40, 
+        width: width - 30,
+        marginBottom: 5,
+        marginTop: 5,
+    },
+    selectedTxt: {
+        backgroundColor:'transparent',
+        color:'black',
+        fontSize: 15,
+        fontFamily: 'open-sans-regular',
+        paddingRight: 10,
+    },
+    optionList: {
+        width: width*0.8, 
+        height: 90, 
+        backgroundColor: 'white',
+    },
+    optiontxt: {
+        fontSize: 18,
+        fontFamily: 'open-sans-regular',
+    },
 }

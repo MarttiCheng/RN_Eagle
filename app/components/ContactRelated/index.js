@@ -15,6 +15,8 @@ import Swipeout from 'react-native-swipeout'
 import {Select, Option} from "react-native-chooser";
 import reactNativeFloatingLabelTextInput from 'react-native-floating-label-text-input';
 
+var selected_contact_id = ''
+
 // create a component
 class ContactRelated extends Component {
     constructor(props){
@@ -29,8 +31,10 @@ class ContactRelated extends Component {
             contactNameList: this.props.contact_all,
             search_contactNameList: [],
             isNameListView: false,
-            contact1_id: this.props.contact_groups.data.id,
-            contact2_id: ''
+            contact1_id: this.props.contactInfo.data.id,
+            contact2_id: '',
+            selected_contact_id: '',
+            selected_contact_name: '',
         }
     }
 
@@ -67,12 +71,11 @@ class ContactRelated extends Component {
             'Are you sure you want to remove?',
             [
                 {text: 'OK', onPress: () => this.handlePress(id), style: 'destructive'},
-                // {text: 'OK', onPress: () => { console.log('Pressed ok button') }},
                 {text: 'CANCEL', onPress: () => { console.log('Pressed cancel button') }},
             ],
             { cancelable: false }
         )
-   }
+    }
 
     showContactRelationships(relationList){
         var swipeoutBtns = [
@@ -92,65 +95,76 @@ class ContactRelated extends Component {
         var user_name = ''
         var contact1_name = ''
         var contact2_name = ''
+        var contact1_id = ''
+        var contact2_id = ''
         
-        if(this.props.contact_groups.data.attributes.last_name){
-            user_name = this.props.contact_groups.data.attributes.first_name + ' ' + this.props.contact_groups.data.attributes.last_name
-        }else {
-            user_name = this.props.contact_groups.data.attributes.first_name
-        }
-        if(relationList.attributes.contact1_last_name){
-            contact1_name = relationList.attributes.contact1_first_name + ' ' + relationList.attributes.contact1_last_name
-        }else {
-            contact1_name = relationList.attributes.contact1_first_name
-        }
-        if(relationList.attributes.contact2_last_name){
-            contact2_name = relationList.attributes.contact2_first_name + ' ' + relationList.attributes.contact2_last_name
-        }else {
-            contact2_name = relationList.attributes.contact2_first_name 
-        }
+        if(this.props.contactInfo) {
+            if(this.props.contactInfo.data.attributes.last_name){
+                user_name = this.props.contactInfo.data.attributes.first_name + ' ' + this.props.contactInfo.data.attributes.last_name
+            }else {
+                user_name = this.props.contactInfo.data.attributes.first_name
+            }
+            if(relationList.attributes.contact1_last_name){
+                contact1_name = relationList.attributes.contact1_first_name + ' ' + relationList.attributes.contact1_last_name
+            }else {
+                contact1_name = relationList.attributes.contact1_first_name
+            }
+            if(relationList.attributes.contact2_last_name){
+                contact2_name = relationList.attributes.contact2_first_name + ' ' + relationList.attributes.contact2_last_name
+            }else {
+                contact2_name = relationList.attributes.contact2_first_name 
+            }
 
-        if(user_name == contact1_name){
-            return(
-                <Swipeout right={swipeoutBtns}>
-                    <View style = {styles.view2} >
-                        {
-                            relationList.attributes.contact2_photo_url? <Thumbnail square source = {relationList.attributes.contact2_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
-                            <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                        }
-                        
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label3}>{contact2_name}</Label>
-                            <View style = {styles.tagView}>
-                                <View style = {styles.eachtag}>
-                                    <Label style = {styles.tagTxt}>{relationList.attributes.relationship_type}</Label>
+            if(user_name == contact1_name){
+                return(
+                    <Swipeout right={swipeoutBtns}>
+                        <TouchableOpacity style = {styles.view2} onPress = {() => this.onClickedRelated(relationList.attributes.contact2_id, contact2_name)}>
+                            {
+                                relationList.attributes.contact2_photo_url? <Thumbnail square source = {relationList.attributes.contact2_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                                <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                            }
+                            
+                            <View style = {styles.rowSubView}>
+                                <Label style = {styles.label3}>{contact2_name}</Label>
+                                <View style = {styles.tagView}>
+                                    <View style = {styles.eachtag}>
+                                        <Label style = {styles.tagTxt}>{relationList.attributes.relationship_type}</Label>
+                                    </View>
                                 </View>
                             </View>
-                        </View>
-                    </View>
-                </Swipeout>
-            )
-        }
-        else {
-            return(
-                <Swipeout right={swipeoutBtns}>
-                    <View style = {styles.view2} >
-                        {
-                            relationList.attributes.contact1_photo_url? <Thumbnail square source = {relationList.attributes.contact1_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
-                            <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                        }
-                        
-                        <View style = {styles.rowSubView}>
-                            <Label style = {styles.label3}>{contact1_name}</Label>
-                            <View style = {styles.tagView}>
-                                <View style = {styles.eachtag}>
-                                    <Label style = {styles.tagTxt}>{relationList.attributes.relationship_type}</Label>
+                        </TouchableOpacity>
+                    </Swipeout>
+                )
+            }
+            else {
+                return(
+                    <Swipeout right={swipeoutBtns}>
+                        <TouchableOpacity style = {styles.view2} onPress = {() => this.onClickedRelated(relationList.attributes.contact1_id, contact1_name)}>
+                            {
+                                relationList.attributes.contact1_photo_url? <Thumbnail square source = {relationList.attributes.contact1_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
+                                <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                            }
+                            
+                            <View style = {styles.rowSubView}>
+                                <Label style = {styles.label3}>{contact1_name}</Label>
+                                <View style = {styles.tagView}>
+                                    <View style = {styles.eachtag}>
+                                        <Label style = {styles.tagTxt}>{relationList.attributes.relationship_type}</Label>
+                                    </View>
                                 </View>
                             </View>
-                        </View>
-                    </View>
-                </Swipeout>
-            )
+                        </TouchableOpacity>
+                    </Swipeout>
+                )
+            }
         }
+    }
+
+    onClickedRelated(id, name) {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_CONTACT_ID', data: id})
+        // dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: name}}))
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: name}}))
     }
 
     onSelectRelationShip(value, label) {
@@ -218,7 +232,17 @@ class ContactRelated extends Component {
     render() {
         return (
             <View style = {styles.container}>
+                { this.state.isSaveLoading? <BallIndicator color = {'#2B3643'}  style = {styles.loadingView}/> : null }
+                { 
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 30, marginBottom: 10}}/> : 
+                    this.state.relationShipList.data ?
+                        this.state.relationShipList.data.map((item, index) => {
+                            return this.showContactRelationships(item)
+                        }) :
+                       null
+                }
                 <View style = {styles.saveView}>
+                    <Label style = {styles.addTxt}>Add a related contact</Label>
                     <Input
                         ref = 'contactsname'
                         style = {styles.inputTxt}
@@ -263,7 +287,9 @@ class ContactRelated extends Component {
                     />
 
                     <Button transparent style = {styles.saveBtn} onPress = {() => this.onSave()}>
-                        <Text style = {styles.saveTxt}>Save</Text>
+                        {/*<View style = {styles.saveBtnView}>*/}
+                            <Label style = {styles.saveTxt}>SAVE</Label>
+                        {/*</View>*/}
                     </Button>
                     {
                         (this.state.isNameListView && this.state.search_contactNameList.length > 0)?
@@ -278,16 +304,7 @@ class ContactRelated extends Component {
                     
                 </View>
                 
-                
-                { this.state.isSaveLoading? <BallIndicator color = {'#2B3643'}  style = {styles.loadingView}/> : null }
-                { 
-                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 30, marginBottom: 10}}/> : 
-                    this.state.relationShipList.data ?
-                        this.state.relationShipList.data.map((item, index) => {
-                            return this.showContactRelationships(item)
-                        }) :
-                       null
-                }
+               
             </View>
         );
     }
@@ -297,8 +314,9 @@ const mapStateToProps = (state, ownProps) => {
     return {
         userID: state.user.user_id,
         token: state.user.token, 
-        contact_groups: state.contacts.contact_groups,
+        // contact_groups: state.contacts.contact_groups,
         contact_all: state.contacts.contacts_all,
+        contact_id: state.contacts.contact_id,
     }
 }
 

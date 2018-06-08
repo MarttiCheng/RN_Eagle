@@ -136,6 +136,24 @@ function getContactGroups(token, idList) {
     })
 }
 
+function getContactGroup(token, id) {
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '?include=contact_groups', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
 function getContactRelationships(token, idList) {
     promises = []
     for (var i = 0 ; i < idList.length ; i++ ) {
@@ -507,6 +525,7 @@ module.exports = {
     getContactProperty_Vendor,
     getContractProperty_Enquired,
     getContactGroups,
+    getContactGroup,
     getContactRelationships,
     getContactActivity,
     getContactTasks,

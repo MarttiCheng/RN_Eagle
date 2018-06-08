@@ -181,10 +181,10 @@ class addNewTask extends Component<{}>{
                         <View style = {styles.seperateLine}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {styles.view1}>
+                    {/*<TouchableOpacity style = {styles.view1}>
                         <Label style = {styles.label2}>Select appraisal</Label>
                         <View style = {styles.seperateLine}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
 
                     <View style = {styles.view1}>
                         {

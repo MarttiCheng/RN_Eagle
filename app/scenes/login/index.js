@@ -45,6 +45,7 @@ class login extends Component<{}>{
         if(validator.validate(this.state.email)){
             this.setState({ isLoading: true });
             getToken(this.state.email, this.state.password).then(data => {
+                console.log('*****')
                 if(data.data){
                     this.setState({ isLoading: false });
                     var { dispatch } = this.props;

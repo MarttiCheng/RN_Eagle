@@ -56,7 +56,7 @@ class ContactAbout extends Component {
             keyboardHeight: new Animated.Value(0),
             contactGroups: [],
             isAddGroup: false,
-            isLoading: true,
+            // isLoading: true,
         }
     }
 
@@ -68,15 +68,9 @@ class ContactAbout extends Component {
     };
 
     componentWillMount() {
-        getUser(this.props.token, this.props.contact_groups.data.attributes.user_id).then(data => {
-            this.fetchAbout(data.data.attributes.first_name + ' ' +  data.data.attributes.last_name)
-        })
-    }
-
-    fetchAbout(value) {
         var address1 = ''
         var address2 = ''
-        var params = this.props.contact_groups
+        var params = this.props.contactInfo
         
         if(!params.data.attributes.address_line_1 || params.data.attributes.address_line_1 == '' || params.data.attributes.address_line_1 == 'null'){
             address1 = '';
@@ -114,7 +108,7 @@ class ContactAbout extends Component {
             address1: address1,
             address2: address2,
             backgroundInfo: params.data.attributes.background_info,
-            assignedTo: value,
+            assignedTo: this.props.belongsName,
             source: params.data.attributes.referred_by,
             createdAt: moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma'),
             updatedAt: moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma'),
@@ -126,7 +120,7 @@ class ContactAbout extends Component {
             sms_subscribed: params.data.attributes.sms_subscribed,
             subscribed: params.data.attributes.subscribed,
             contactGroups: arr,
-            isLoading: false
+            // isLoading: false
         })
 
         if (Platform.OS === "android") {
@@ -137,6 +131,10 @@ class ContactAbout extends Component {
                 this.animateKeyboardHeight(0, 300)
             })
         }
+    }
+
+    fetchAbout(value) {
+        
     }
 
     scrollToInput = (reactNode) => {
@@ -198,7 +196,6 @@ class ContactAbout extends Component {
     }
     
     showContactAbout(){
-        var params = this.props.contact_groups
         return(
             <View>
                 <View style = {styles.categoryView1}>
@@ -296,7 +293,6 @@ class ContactAbout extends Component {
     }
 
     showEidtContactAbout(){
-        var params = this.props.contact_groups
         return(
             <KeyboardAwareScrollView
                 ref={ref => this.view = ref}
@@ -652,7 +648,7 @@ class ContactAbout extends Component {
     }
 
     render() {
-        var params = this.props.contact_groups
+        var params = this.props.contactInfo
         var arr = {
             "first_name" : this.state.firstname,
             "last_name" : this.state.lastname,
@@ -698,7 +694,7 @@ class ContactAbout extends Component {
         return (
             <View style = {this.state.isAddGroup? styles.container2: styles.container}>
                 {
-                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showAbout()
+                    this.showAbout()
                 }
                 
                 {

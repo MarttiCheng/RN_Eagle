@@ -28,7 +28,7 @@ class ContactActivity extends Component {
     }
     
     componentWillMount() {
-        getContactActivity(this.props.token, this.props.contact_groups.data.id).then(data => {  
+        getContactActivity(this.props.token, this.props.contactInfo.data.id).then(data => {  
             this.setState({
                 isLoading: false,
                 activityList: data.data
@@ -153,7 +153,8 @@ class ContactActivity extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
-        contact_groups: state.contacts.contact_groups,
+        // contact_groups: state.contacts.contact_groups,
+        contact_id: state.contacts.contact_id,
     }
 }
 
