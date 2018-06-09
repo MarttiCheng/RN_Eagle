@@ -37,7 +37,8 @@ export default {
         paddingTop: 5,
         paddingBottom: 7,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginLeft: 2.5
     },
     title: {
         color: 'white',
@@ -195,25 +196,25 @@ export default {
         alignItems: 'center',
         justifyContent: 'center',
     },
-    saveTxt: {
-        color: 'white',
-        fontSize: 13,
-        textAlign: 'center',
-        fontFamily: 'open-sans-regular',
-    },
-    cancelBtn: {
-        width: (width - 40)/3+20,
-        height: 35,
-        backgroundColor: '#b3bcc8',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    cancelTxt: {
-        color: 'white',
-        fontSize: 13,
-        textAlign: 'center',
-        fontFamily: 'open-sans-regular',
-    },
+    // saveTxt: {
+    //     color: 'white',
+    //     fontSize: 13,
+    //     textAlign: 'center',
+    //     fontFamily: 'open-sans-regular',
+    // },
+    // cancelBtn: {
+    //     width: (width - 40)/3+20,
+    //     height: 35,
+    //     backgroundColor: '#b3bcc8',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    // },
+    // cancelTxt: {
+    //     color: 'white',
+    //     fontSize: 13,
+    //     textAlign: 'center',
+    //     fontFamily: 'open-sans-regular',
+    // },
     groupAddDialogBox: {
         width: width*0.7,
         height: 220,
@@ -234,5 +235,12 @@ export default {
     eachAddtxt: {
         fontSize: 13,
         textAlign: 'left'
+    },
+    saveTxt:{
+        color: 'white', 
+        fontSize: 17, 
+        fontFamily: 'open-sans-regular',
+        width: 50,
+        textAlign: 'left',
     },
 }

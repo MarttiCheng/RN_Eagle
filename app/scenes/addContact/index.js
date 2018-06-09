@@ -227,7 +227,9 @@ class addContact extends Component<{}>{
                     <View style = {styles.titleView}>
                         <Label style = {styles.title}>Add new contact</Label>
                     </View>
-                    <TouchableOpacity style = {{width: 45, height: 45}}/>
+                    <TouchableOpacity onPress = {() => this.onSaveContact()}>
+                        <Label style = {styles.saveTxt}>Save</Label>
+                    </TouchableOpacity>
                 </View>
                 
                 {
@@ -528,14 +530,6 @@ class addContact extends Component<{}>{
                                         <Option value = "Me" styleText = {styles.optiontxt}>Me</Option>
                                     </Select>
                                     <View style = {styles.seperateLine}/>
-                                </View>
-                                <View style = {styles.saveView}>
-                                    <Button transparent style = {styles.saveBtn} onPress = {() => this.onSaveContact()}>
-                                        <Text style = {styles.saveTxt}>Save Contact</Text>
-                                    </Button>
-                                    <Button transparent style = {styles.cancelBtn} onPress = {() => this.onCancel()}>
-                                        <Text style = {styles.cancelTxt}>Cancel</Text>
-                                    </Button>
                                 </View>
                                 <Animated.View style={{height: this.state.keyboardHeight}}/>
                             </View>

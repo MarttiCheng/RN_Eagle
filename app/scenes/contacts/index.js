@@ -16,9 +16,6 @@ import { getAllContacts, getMyContacts,getMyContacts1, getContactGroups, getCont
 import { BallIndicator } from 'react-native-indicators'
 import {Select, Option} from "react-native-chooser";
 
-var isAllContacts = false;
-var isMyContacts = false;
-
 class contacts extends Component<{}>{
     static navigationOptions = {
         header: null,
@@ -37,8 +34,6 @@ class contacts extends Component<{}>{
             search_contactsList: [],
             y1: new Animated.Value((Platform.OS == 'ios')? -40: -28),
             scale1: new Animated.Value(0.001),
-            isAllContacts: false,
-            isMyContacts: false,
             display: 'All contacts',
             group: 'All Groups',
             groupList: [],
@@ -175,7 +170,6 @@ class contacts extends Component<{}>{
                     })
                 })
         }
-        
     }
 
     filterStates = (value) => {
@@ -215,8 +209,6 @@ class contacts extends Component<{}>{
         ]).start();
 
         this.setState({ 
-            isAllContacts: false,
-            isMyContacts: false,
             display: 'All contacts',
             group: 'All Groups'
         })
@@ -283,7 +275,6 @@ class contacts extends Component<{}>{
                 }
             )
         ]).start()
-        
     }
 
     onClearFilter() {
@@ -331,51 +322,7 @@ class contacts extends Component<{}>{
             )
         ]).start();
 
-        this.setState({ 
-            isAllContacts: false,
-            isMyContacts: false,
-        })
-
         this.getMyContacts();
-    }
-
-    onAllContacts() {
-        this.setState({ 
-            isAllContacts: true,
-            isMyContacts: false
-        })
-    }
-    
-    onMyContacts() {
-        this.setState({
-            isAllContacts: false,
-            isMyContacts: true
-        })
-    }
-
-    onallcontactsItem() {
-        this.setState({ 
-            isAllContacts: false,
-            isMyContacts: false,
-            display: 'All contacts'
-        })
-    }
-
-    onmycontactsItem() {
-        this.setState({ 
-            isAllContacts: false,
-            isMyContacts: false,
-            display: 'My contacts'
-        })
-    }
-
-    onallgroupsItem(item) {
-        this.setState({ 
-            isAllContacts: false,
-            isMyContacts: false,
-            group: item.attributes.name,
-            groupID: item.id
-        })
     }
 
     addNewContrat(){
@@ -384,7 +331,16 @@ class contacts extends Component<{}>{
     }
 
     onSelectDisplay(value, label) {
-        this.setState({display : value});
+        this.setState({ 
+            display : value 
+        });
+    }
+
+    onSelectGroup(value, label) {
+        this.setState({ 
+            group: value.name,
+            groupID: value.id
+        })
     }
 
     render() {
@@ -434,35 +390,43 @@ class contacts extends Component<{}>{
 
                 <Animated.View style={[styles.filterView, {transform: [ {translateY: this.state.y1},{scaleY: this.state.scale1}]}]}>
                     <Text style = {styles.displayTxt}>Display</Text>
-                    {/*<TouchableOpacity onPress = {() => this.onAllContacts()}>
-                        <View transparent style = {styles.dropView1}>
-                            <Text style = {styles.contactTxt}>{this.state.display}</Text>
-                            <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
-                        </View>
-                    </TouchableOpacity>*/}
-
-                    <Select
-                        onSelect = {this.onSelectDisplay.bind(this)}
-                        defaultText  = {this.state.display}
-                        style = {styles.selectoptionView}
-                        textStyle = {styles.selectedTxt}
-                        backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
-                        transparent = {true}
-                        optionListStyle = {styles.optionList}
-                    >
-                        <Option value = "All contacts" styleText = {styles.optiontxt}>All contacts</Option>
-                        <Option value = "My contacts" styleText = {styles.optiontxt}>My contacts</Option>
-                    </Select>
-
-                    
+                    <View style = {styles.dropView1}>
+                        <Select
+                            onSelect = {this.onSelectDisplay.bind(this)}
+                            defaultText  = {this.state.display}
+                            style = {styles.selectoptionView}
+                            textStyle = {styles.selectedTxt}
+                            backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
+                            transparent = {true}
+                            optionListStyle = {styles.optionList}
+                        >
+                            <Option value = "All contacts" styleText = {styles.optiontxt}>All contacts</Option>
+                            <Option value = "My contacts" styleText = {styles.optiontxt}>My contacts</Option>
+                        </Select>
+                        <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
+                    </View>
                     
                     <Text style = {styles.groupTxt}>Group</Text>
-                    <TouchableOpacity onPress = {() => this.onMyContacts()}>
-                        <View style = {styles.dropView1}>
-                            <Text style = {styles.contactTxt}>{this.state.group}</Text>
-                            <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
-                        </View>
-                    </TouchableOpacity>
+                    <View style = {styles.dropView1}>
+                        <Select
+                            onSelect = {this.onSelectGroup.bind(this)}
+                            defaultText  = {this.state.group}
+                            style = {styles.selectoptionView}
+                            textStyle = {styles.selectedTxt}
+                            backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
+                            transparent = {true}
+                            optionListStyle = {styles.optionList1}
+                        >   
+                            {
+                                this.state.groupList.map((item, index) => {
+                                    return(
+                                        <Option value = {{name:item.attributes.name, id: item.id}} styleText = {styles.optiontxt}>{item.attributes.name}</Option>
+                                    )
+                                })
+                            }
+                        </Select>
+                        <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
+                    </View>
 
                     <View style = {styles.filterButtonsView}>
                         <Button transparent style = {styles.clearBtn} onPress = {() => this.onClearFilter()}>
@@ -472,37 +436,6 @@ class contacts extends Component<{}>{
                             <Text style = {styles.clearTxt}>SAVE FILTER</Text>
                         </Button>
                     </View>
-
-                    {
-                        this.state.isAllContacts ?
-                            <View style = {styles.allContactsView}>
-                                <TouchableOpacity onPress = {() => this.onallcontactsItem()}>
-                                    <Text style = {styles.contactoptionTxt}>All contacts</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress = {() => this.onmycontactsItem()}>
-                                    <Text style = {styles.contactoptionTxt}>My contacts</Text>
-                                </TouchableOpacity>
-                            </View> 
-                            
-                            : null
-                    }
-                    
-
-                    {
-                        this.state.isMyContacts ?
-                            <ScrollView style = {styles.myContactsView}>
-                                {
-                                    this.state.groupList.map((item, indexe) => {
-                                        return(
-                                            <TouchableOpacity onPress = {() => this.onallgroupsItem(item)}>
-                                                <Text style = {styles.contactoptionTxt}>{item.attributes.name}</Text>
-                                            </TouchableOpacity>
-                                        )
-                                        
-                                    })
-                                }
-                            </ScrollView> : null
-                    }
                 </Animated.View> 
             </Container>
         )

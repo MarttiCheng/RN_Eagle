@@ -108,13 +108,13 @@ export default {
     },
     filterView: {
         width: width,
-        height: 210,
+        height: 200,
         backgroundColor: '#2B3643',
         position: 'absolute',
         top: 0,
         left: 0,
         padding: 15,
-        paddingTop: 20,
+        paddingTop: 5,
         // justifyContent: 'space-between'
     },
     displayTxt: {
@@ -135,7 +135,6 @@ export default {
         borderBottomWidth: 1,
         borderColor: 'white',
         paddingBottom: 5,
-        marginTop: 5,
     },
     contactTxt: {
         color: 'white',
@@ -184,40 +183,28 @@ export default {
         justifyContent: 'center',
         backgroundColor: 'white'
     },
-    contactoptionTxt: {
-        color: 'black',
-        fontSize: 13,
-        textAlign: 'center',
-        fontFamily: 'open-sans-regular',
-        paddingVertical: 5
-    },
-    myContactsView: {
-        position: 'absolute',
-        top: 130,
-        left: 15,
-        width: width - 30,
-        height: 70,
-        // justifyContent: 'center',
-        backgroundColor: 'white'
-    },
     selectoptionView: {
         borderWidth : 1, 
-        borderColor : "#e3e3e3", 
-        height: 40, 
-        width: width - 30,
-        marginBottom: 5,
-        marginTop: 5,
+        borderColor : "transparent", 
+        height: 35, 
+        width: width - 60,
+        marginLeft: -10
     },
     selectedTxt: {
         backgroundColor:'transparent',
-        color:'black',
-        fontSize: 15,
+        color:'white',
+        fontSize: 14,
         fontFamily: 'open-sans-regular',
         paddingRight: 10,
     },
     optionList: {
         width: width*0.8, 
         height: 90, 
+        backgroundColor: 'white',
+    },
+    optionList1: {
+        width: width*0.8, 
+        height: 450, 
         backgroundColor: 'white',
     },
     optiontxt: {

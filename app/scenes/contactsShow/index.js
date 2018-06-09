@@ -197,7 +197,6 @@ class contactsShow extends Component<{}>{
                     isSaving: false,
                     isEdit: false
                 })
-                // this.props.contact_group.data = data.data
                 this.state.contactInfo.data = data.data
             })
         }
