@@ -1,6 +1,6 @@
 //import libraries
 import React, { Component } from 'react';
-import ReactNative,{ StyleSheet, StatusBar, Image, TouchableOpacity, Animated, ScrollView, TextInput, Dimensions, Keyboard, KeyboardAvoidingView } from 'react-native';
+import ReactNative,{ StyleSheet, StatusBar, Image, TouchableOpacity, Animated, ScrollView, TextInput, Dimensions, Keyboard, KeyboardAvoidingView, Modal } from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item, Input
 } from 'native-base'
@@ -56,7 +56,10 @@ class ContactAbout extends Component {
             keyboardHeight: new Animated.Value(0),
             contactGroups: [],
             isAddGroup: false,
+            usersList: [],
+            user_id: null,
             // isLoading: true,
+            phoneModal: false,
         }
     }
 
@@ -95,6 +98,14 @@ class ContactAbout extends Component {
                 arr.push(params.included[i])
             }
         }
+        
+        var arr1 = []
+        for(var i = 0 ; i < this.props.usersList.length ; i++){
+            if(this.props.usersList[i].id !=  this.props.userID){
+                arr1.push(this.props.usersList[i])
+            }
+        }
+
         this.setState({
             firstname: params.data.attributes.first_name,
             lastname: params.data.attributes.last_name,
@@ -109,6 +120,7 @@ class ContactAbout extends Component {
             address2: address2,
             backgroundInfo: params.data.attributes.background_info,
             assignedTo: this.props.belongsName,
+            user_id: this.props.userID,
             source: params.data.attributes.referred_by,
             createdAt: moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma'),
             updatedAt: moment(params.data.attributes.showed_at).format('MMM Do YYYY h:mma'),
@@ -120,6 +132,7 @@ class ContactAbout extends Component {
             sms_subscribed: params.data.attributes.sms_subscribed,
             subscribed: params.data.attributes.subscribed,
             contactGroups: arr,
+            usersList: arr1,
             // isLoading: false
         })
 
@@ -194,6 +207,10 @@ class ContactAbout extends Component {
             isAddGroup: isAddGroup
         })
     }
+
+    onClickMobile(number){
+        this.setState({ phoneModal: true })        
+    }
     
     showContactAbout(){
         return(
@@ -205,11 +222,11 @@ class ContactAbout extends Component {
                     
                 </View>
                 <View style = {styles.groupView1}>
-                    <View style = {(!this.state.mobile || this.state.mobile == '')? styles.blankView : styles.view1}>
+                    <TouchableOpacity style = {(!this.state.mobile || this.state.mobile == '')? styles.blankView : styles.view1} onPress = {() => this.onClickMobile(this.state.mobile)}>
                         <Label style = {styles.label1}>Mobile</Label>
                         <Label style = {styles.label2}>{this.state.mobile}</Label>
                         <View style = {styles.seperateLine}/>
-                    </View>
+                    </TouchableOpacity>
                     <View style = {(!this.state.businessHours || this.state.businessHours == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Business Hours</Label>
                         <Label style = {styles.label2}>{this.state.businessHours}</Label>
@@ -591,8 +608,15 @@ class ContactAbout extends Component {
                             transparent = {true}
                             optionListStyle = {styles.optionList_belong}
                         >
-                            <Option value = "Unassigned" styleText = {styles.optiontxt}>Unassigned</Option>
-                            <Option value = "Me" styleText = {styles.optiontxt}>Me</Option>
+                            <Option value = {{name: 'Unassigned', id: null}} styleText = {styles.optiontxt}>Unassigned</Option>
+                            <Option value = {{name: 'Me', id: this.props.userID}} styleText = {styles.optiontxt}>Me</Option>
+                            {
+                                this.state.usersList.map((item, index) => {
+                                    return(
+                                        <Option value = {{name:item.attributes.first_name + ' ' + item.attributes.last_name , id: item.id}} styleText = {styles.optiontxt}>{item.attributes.first_name} {item.attributes.last_name}</Option>
+                                    )
+                                })
+                            }
                         </Select>
                         <View style = {styles.seperateLine}/>
                     </View>
@@ -619,8 +643,13 @@ class ContactAbout extends Component {
     }
 
     onSelectBelongsTo(value, label) {
-        this.setState({assignedTo : value});
+        console.log(value)
+        this.setState({
+            assignedTo : value.name,
+            user_id: value.id
+        });
     }
+
     onSelectCountry(value, label) {
         this.setState({country_category : value});
     }
@@ -685,6 +714,7 @@ class ContactAbout extends Component {
             "found_addresses": params.data.attributes.found_addresses,
             "found_name": params.data.attributes.found_name,
             "uid": params.data.attributes.uid,
+            "user_id": this.state.user_id,
             "unsubscribe_reason": params.data.attributes.unsubscribe_reason,
             "showed_at": params.data.attributes.showed_at,
         }
@@ -712,6 +742,27 @@ class ContactAbout extends Component {
                         </ScrollView>
                     : null
                 }
+                <Modal
+                    animationType = 'slide'
+                    transparent = {false}
+                    visible = {this.state.phoneModal}
+                    transparent = {true}
+                    onRequestClose = {() => {
+                        this.setState({ phoneModal: false})
+                    }}>
+                    <View style = {styles.modalView}>
+                        <TouchableOpacity style = {styles.blankModalView} onPress = {() => this.setState({ phoneModal: false}) }>
+                        </TouchableOpacity>
+                        <View style = {styles.modalMainView}>
+                            <TouchableOpacity>
+                                <Text style = {styles.selecttxt}>Call</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                            <Text style = {styles.selecttxt}>Send SMS</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         );
     }
@@ -722,6 +773,8 @@ const mapStateToProps = (state, ownProps) => {
         token: state.user.token, 
         contact_groups: state.contacts.contact_groups,
         addGroupsList: state.contacts.default_contactGroup_list,
+        usersList: state.user.usersList,
+        userID: state.user.user_id,
     }
 }
 

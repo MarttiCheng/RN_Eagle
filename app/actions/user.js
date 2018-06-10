@@ -45,7 +45,7 @@ function getUser(token, id){
     })
 }
 
-function getUserList(token, id){
+function getUserList(token){
     return new Promise((resolve, reject) => {
         fetch(API.BASE_URL + API.ALL_USER, {
             method: 'GET',

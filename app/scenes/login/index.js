@@ -11,9 +11,8 @@ import styles from './styles'
 import images from '../../themes/images'
 import contacts from '../contacts/index';
 import { NavigationActions } from 'react-navigation'
-import { getToken } from '../../actions'
+import { getToken, getUserList } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
-import { getAllContacts, getContactGroups, getContactRelationships } from '../../actions'
 var validator = require("email-validator");
 
 // create a component
@@ -47,12 +46,16 @@ class login extends Component<{}>{
             getToken(this.state.email, this.state.password).then(data => {
                 console.log('*****')
                 if(data.data){
-                    this.setState({ isLoading: false });
-                    var { dispatch } = this.props;
-                    console.log('TOKEN -> ', data)
-                    dispatch ({ type: 'GET_TOKEN', data: data.data.id})
-                    dispatch ({ type: 'USER_ID', data: data.data.attributes.user_id})
-                    dispatch(NavigationActions.navigate({routeName: 'contacts'}))
+                    getUserList(data.data.id).then(userList => {
+                        console.log(userList)
+                        this.setState({ isLoading: false });
+                        var { dispatch } = this.props;
+                        console.log('TOKEN -> ', data)
+                        dispatch ({ type: 'GET_TOKEN', data: data.data.id})
+                        dispatch ({ type: 'USER_ID', data: data.data.attributes.user_id})
+                        dispatch ({ type: 'USER_LIST', data: userList.data})
+                        dispatch(NavigationActions.navigate({routeName: 'contacts'}))
+                    })
                 }
                 else {
                     alert("Invalid username and/or password");

@@ -176,8 +176,6 @@ export default {
         width: width*0.8, 
         height: 225, 
         backgroundColor: 'white',
-        // position: 'absolute',
-        // bottom: 0,
     },
     optionList_country: {
         width: width*0.8, 
@@ -186,7 +184,8 @@ export default {
     },
     optionList_belong: {
         width: width*0.8, 
-        height: 90, 
+        minHeight: 90,
+        maxHeight: 225,
         backgroundColor: 'white',
     },
     selectoptionView: {
@@ -259,6 +258,32 @@ export default {
         alignItems: 'center',
         justifyContent: 'center',
         // marginLeft: -5
-    }
+    },
+    modalView: {
+       width: width,
+       height: height,
+       alignItems: 'center',
+       justifyContent: 'center',
+       backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    },
+    modalMainView: {
+        width: width * 0.8,
+        height: 100,
+        backgroundColor: 'white',
+        justifyContent: 'space-between',
+        // alignItems: 'center',
+        borderRadius: 6,
+        padding: 20
+    },
+    selecttxt: {
+        fontSize: 18,
+    },
+    blankModalView: {
+        width: width,
+        height: height,
+        position: 'absolute',
+        top: 0,
+        left: 0
+    },
 }
 

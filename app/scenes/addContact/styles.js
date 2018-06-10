@@ -144,7 +144,8 @@ export default {
     },
     optionList_belong: {
         width: width*0.8, 
-        height: 90, 
+        minHeight: 90,
+        maxHeight: 225,
         backgroundColor: 'white',
     },
     optiontxt: {
@@ -196,25 +197,6 @@ export default {
         alignItems: 'center',
         justifyContent: 'center',
     },
-    // saveTxt: {
-    //     color: 'white',
-    //     fontSize: 13,
-    //     textAlign: 'center',
-    //     fontFamily: 'open-sans-regular',
-    // },
-    // cancelBtn: {
-    //     width: (width - 40)/3+20,
-    //     height: 35,
-    //     backgroundColor: '#b3bcc8',
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    // },
-    // cancelTxt: {
-    //     color: 'white',
-    //     fontSize: 13,
-    //     textAlign: 'center',
-    //     fontFamily: 'open-sans-regular',
-    // },
     groupAddDialogBox: {
         width: width*0.7,
         height: 220,

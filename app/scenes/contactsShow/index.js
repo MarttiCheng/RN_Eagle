@@ -193,11 +193,17 @@ class contactsShow extends Component<{}>{
             this.setState({ isSaving: true})
             updateContact(this.props.token, this.props.contact_id, arr).then(data => {
                 updateContactGroup(this.props.token, data.data.id, this.props.edit_contact_groups_item)
-                this.setState({ 
-                    isSaving: false,
-                    isEdit: false
-                })
-                this.state.contactInfo.data = data.data
+                getContactGroup(this.props.token, this.props.contact_id).then(data1 => {
+                    getUser(this.props.token, data1.data.attributes.user_id).then(data2 => {
+                        this.setState({
+                            isSaving: false,
+                            belongsToName: data2.data.attributes.first_name + ' ' +  data2.data.attributes.last_name,
+                            contactInfo: data1,
+                            isEdit: false
+                        })
+                        this.state.contactInfo.data = data.data
+                    })
+                })                
             })
         }
         else {

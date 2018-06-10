@@ -60,6 +60,8 @@ class addContact extends Component<{}>{
             contactGroups: [],
             isAddGroup: false,
             isLoading: false,
+            usersList: [],
+            user_id: this.props.userID,
         }
     }
 
@@ -71,6 +73,15 @@ class addContact extends Component<{}>{
             this.keyboardHideListener = Keyboard.addListener("keyboardDidHide", () => {
                 this.animateKeyboardHeight(0, 300)
             })
+        }
+        var arr = []
+        for(var i = 0 ; i < this.props.usersList.length ; i++){
+            if(this.props.usersList[i].id !=  this.state.user_id){
+                arr.push(this.props.usersList[i])
+                this.setState({
+                    usersList: arr
+                })
+            }
         }
     }
 
@@ -119,7 +130,11 @@ class addContact extends Component<{}>{
     }
 
     onSelectBelongsTo(value, label) {
-        this.setState({assignedTo : value});
+        console.log(value)
+        this.setState({
+            assignedTo : value.name,
+            user_id: value.id
+        });
     }
 
     onSelectSource(value, label) {
@@ -190,6 +205,7 @@ class addContact extends Component<{}>{
             "uid": null,
             "unsubscribe_reason": null,
             "showed_at": null,
+            "user_id": this.state.user_id
         }
         
         if(this.state.firstname == ''){
@@ -197,11 +213,13 @@ class addContact extends Component<{}>{
         }
         else {
             this.setState({ isLoading: true })
-            createNewContact(this.props.token, this.props.userID, arr).then(data => {
+            createNewContact(this.props.token, this.state.user_id, arr).then(data => {
                 updateContactGroup(this.props.token, data.data.id, this.state.contactGroups)
                 this.setState({ 
                     isLoading: false,
                 })
+                Keyboard.dismiss(); 
+                this.props.navigation.goBack()
             })
         }
         
@@ -526,14 +544,20 @@ class addContact extends Component<{}>{
                                         transparent = {true}
                                         optionListStyle = {styles.optionList_belong}
                                     >
-                                        <Option value = "Unassigned" styleText = {styles.optiontxt}>Unassigned</Option>
-                                        <Option value = "Me" styleText = {styles.optiontxt}>Me</Option>
+                                        <Option value = {{name: 'Unassigned', id: null}} styleText = {styles.optiontxt}>Unassigned</Option>
+                                        <Option value = {{name: 'Me', id: this.state.user_id}} styleText = {styles.optiontxt}>Me</Option>
+                                        {
+                                            this.state.usersList.map((item, index) => {
+                                                return(
+                                                    <Option value = {{name:item.attributes.first_name + ' ' + item.attributes.last_name , id: item.id}} styleText = {styles.optiontxt}>{item.attributes.first_name} {item.attributes.last_name}</Option>
+                                                )
+                                            })
+                                        }
                                     </Select>
                                     <View style = {styles.seperateLine}/>
                                 </View>
                                 <Animated.View style={{height: this.state.keyboardHeight}}/>
                             </View>
-                            
                             {
                                 this.state.isAddGroup?
                                     <ScrollView  style = {styles.groupAddDialogBox} >
@@ -565,6 +589,7 @@ const mapStateToProps = (state, ownProps) => {
         edit_contact_item: state.contacts.edit_contact_item,
         userID: state.user.user_id,
         addGroupsList: state.contacts.default_contactGroup_list,
+        usersList: state.user.usersList
     }
 }
 
