@@ -117,4 +117,30 @@ export default {
         left: (width - 100)/2,
         backgroundColor: 'transparent'
     },
+    selectoptionView: {
+        borderWidth : 1, 
+        borderColor : "transparent", 
+        height: 35, 
+        width: width - 30,
+        marginLeft: -10
+    },
+    selectedTxt: {
+        backgroundColor:'transparent',
+        color:'black',
+        fontSize: 20,
+        fontFamily: 'open-sans-regular',
+        marginTop: -5,
+        marginLeft: -7,
+        paddingLeft: 5,
+        paddingRight: 5,
+    },
+    optionList: {
+        width: width*0.8, 
+        height: 225, 
+        backgroundColor: 'white',
+    },
+    optiontxt: {
+        fontSize: 18,
+        fontFamily: 'open-sans-regular',
+    },
 }

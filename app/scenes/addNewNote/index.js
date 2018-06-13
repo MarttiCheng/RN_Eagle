@@ -34,6 +34,7 @@ class addNewNote extends Component<{}>{
             contactId: this.props.contact_id,
             propertyName: '',
             propertyId: '',
+            noteType: 'General',
             property: 'select property',
             isVisiableVendor: true,
             isSaving: false,
@@ -53,6 +54,12 @@ class addNewNote extends Component<{}>{
                 propertyId: nextProps.selected_propertyForTask.id,
             })
         }
+    }
+
+    componentWillMount() {
+        this.setState({
+            noteType: this.props.navigation.state.params.noteType
+        })
     }
 
     onSelectContact() {
@@ -84,9 +91,8 @@ class addNewNote extends Component<{}>{
             "property_id" : this.state.propertyId,
             "text": this.state.bodyTxt,
             "visible_to_vendor": this.state.isVisiableVendor,
-            "note_type": "",
-            "offer_price": "",
-            "permission_type": ""
+            "permission_type": "",
+            "sub_type": this.state.noteType
         }
         this.setState({ isSaving: true })
         createNote(this.props.token, this.props.userID, arr).then(data => {
@@ -97,6 +103,12 @@ class addNewNote extends Component<{}>{
             dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: arr})
             dispatch ({ type: 'SELECTED_CONTACT_FOR_TASK', data: arr})
             this.props.navigation.goBack();
+        })
+    }
+
+    onSelectNoteType(value, label) {
+        this.setState({ 
+            noteType: value
         })
     }
 
@@ -124,9 +136,23 @@ class addNewNote extends Component<{}>{
                     extraHeight={Platform.OS === "android" ? -500 : undefined}
                     scrollEnabled = {true}
                 >
-                    <View style = {styles.view1} >
+                    <View style = {styles.view1}>
                         <Label style = {styles.label1}>Note Type</Label>
-                            <Label style = {styles.contactTxt}> </Label>
+                        <Select
+                            onSelect = {this.onSelectNoteType.bind(this)}
+                            defaultText  = {this.state.noteType}
+                            style = {styles.selectoptionView}
+                            textStyle = {styles.selectedTxt}
+                            backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
+                            transparent = {true}
+                            optionListStyle = {styles.optionList}
+                        >
+                            <Option value ="General"  styleText = {styles.optiontxt}>General</Option>
+                            <Option value ="Call"  styleText = {styles.optiontxt}>Call</Option>
+                            <Option value ="Email"  styleText = {styles.optiontxt}>Email</Option>
+                            <Option value ="SMS"  styleText = {styles.optiontxt}>SMS</Option>
+                            <Option value ="Meeting"  styleText = {styles.optiontxt}>Meeting</Option>
+                        </Select>
                         <View style = {styles.seperateLine}/>
                     </View>
                     

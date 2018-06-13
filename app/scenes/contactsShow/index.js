@@ -124,7 +124,7 @@ class contactsShow extends Component<{}>{
     showTabView(){
         if(this.state.isAbout){
             return(
-                <ContactAbout  isEdit = {this.state.isEdit} belongsName = {this.state.belongsToName} contactInfo = {this.state.contactInfo}/>
+                <ContactAbout  navigation = {this.props.navigation} isEdit = {this.state.isEdit} belongsName = {this.state.belongsToName} contactInfo = {this.state.contactInfo}/>
             )
         }
         if(this.state.isRelated){
@@ -218,7 +218,7 @@ class contactsShow extends Component<{}>{
     onClickedNewNote(){
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewNote'}))
+        dispatch(NavigationActions.navigate({routeName: 'addNewNote', params: {noteType: 'General'}}))
     }
 
     onClickedNewTask() {

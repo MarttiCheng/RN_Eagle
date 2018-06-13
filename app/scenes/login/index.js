@@ -66,6 +66,11 @@ class login extends Component<{}>{
         }
     }
 
+    onForgotPassword(){
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({ routeName: 'forgotpassword' }))
+    }
+
     render() {
         return (
             <Container style = {styles.container}>
@@ -103,7 +108,7 @@ class login extends Component<{}>{
                     <Button style = {styles.loginBtn} disabled = {this.state.isLoading? true : false} transparent onPress = {() => this.onLogin()}>
                         <Label style = {styles.loginBtnTxt}>Login</Label>
                     </Button>
-                    <Button style = {styles.forgotBtn} transparent>
+                    <Button style = {styles.forgotBtn} transparent onPress = {() => this.onForgotPassword()}>
                         <Label style = {styles.forgortTxt}>Forgot password?</Label>
                     </Button>
                     {

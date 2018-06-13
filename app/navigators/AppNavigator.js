@@ -23,6 +23,7 @@ import addNewNote from '../scenes/addNewNote/index';
 import addNewEnquiry from '../scenes/addNewEnquiry/index';
 import addNewInspection from '../scenes/addNewInspection/index';
 import addNewOffer from '../scenes/addNewOffer/index';
+import forgotPassword from '../scenes/forgotPassword/index';
 
 const Drawer = DrawerNavigator(
     {
@@ -41,6 +42,7 @@ const Drawer = DrawerNavigator(
 
 export const AppNavigator = StackNavigator({
         login: { screen: login },
+        forgotpassword: { screen: forgotPassword },
         Drawer: { screen: Drawer },
         contactsShow: { screen: contactsShow },
         listingsShow: { screen: listingsShow },

@@ -10,5 +10,7 @@ export const API = {
     ALL_USER: '/api/v2/users',
     CONTACT_RELATIONSHIP: '/api/v2/contact-relationships',
     CONTACT_GROUPS: '/api/v2/contact-groups',
+
+    FORGOTPASSWORD_URL: 'https://www.eagleagent.com.au/users/password/new',
     
 }

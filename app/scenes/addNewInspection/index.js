@@ -124,12 +124,6 @@ class addNewInspection extends Component<{}>{
                     extraHeight={Platform.OS === "android" ? -500 : undefined}
                     scrollEnabled = {true}
                 >
-                    <View style = {styles.view1} >
-                        <Label style = {styles.label1}>Note Type</Label>
-                            <Label style = {styles.contactTxt}>Inspection</Label>
-                        <View style = {styles.seperateLine}/>
-                    </View>
-                    
                     <TouchableOpacity style = {styles.view1} onPress = {() => this.onSelectContact()}>
                         <Label style = {this.state.contactName? styles.label1 : styles.label2}>Select contact</Label>
                             {

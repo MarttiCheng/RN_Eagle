@@ -172,7 +172,7 @@ class tasksShow extends Component<{}>{
                     
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>Tasks</Label>
                     <TouchableOpacity onPress = {this._onSearch}>
-                        <Label style = {styles.editTxt}>Save</Label>
+                        <Label style = {styles.editTxt}>Edit</Label>
                     </TouchableOpacity>
                 </View>
                 <Content>

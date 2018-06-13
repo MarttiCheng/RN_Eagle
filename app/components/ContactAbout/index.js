@@ -15,7 +15,7 @@ import {Select, Option} from "react-native-chooser";
 import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-keyboard-aware-scroll-view'
 import Icon1 from 'react-native-vector-icons/Ionicons';
 import { BallIndicator } from 'react-native-indicators'
-// import call from 'react-native-phone-call'
+import { NavigationActions } from 'react-navigation'
 import Communications from 'react-native-communications';
 
 const { width, height } = Dimensions.get('window')
@@ -212,15 +212,21 @@ class ContactAbout extends Component {
     }
 
     onClickMobile(number){
-        this.setState({ phoneModal: true })        
+        this.setState({ phoneModal: true })  
     }
 
     onClickBusinessHours(number) {
         Communications.phonecall(number, true)
+        this.setState({ phoneModal: false})
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'addNewNote',  params: {noteType: 'Call'}}))
     }
 
     onClickAfterHours(number) {
         Communications.phonecall(number, true)
+        this.setState({ phoneModal: false})
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'addNewNote',  params: {noteType: 'Call'}}))
     }
     
     showContactAbout(){
@@ -688,6 +694,9 @@ class ContactAbout extends Component {
 
     onClickCall() {
         Communications.phonecall(this.state.mobile, true)
+        this.setState({ phoneModal: false})
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'addNewNote', params: {noteType: 'Call'}}))
     }
 
     onClickSMS() {
