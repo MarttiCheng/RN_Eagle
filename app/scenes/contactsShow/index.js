@@ -22,8 +22,6 @@ import { BallIndicator } from 'react-native-indicators'
 import SelectAddModal from '../../components/SelectAddModal'
 import addNewNote from '../addNewNote/index';
 
-
-
 const PARALLAX_HEADER_HEIGHT = 150;
 const STICKY_HEADER_HEIGHT = 50; 
 

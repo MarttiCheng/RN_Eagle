@@ -300,7 +300,7 @@ function updateContact(token, id, arr){
                         "found_name": arr.found_name,
                         "uid": arr.uid,
                         "unsubscribe_reason": arr.unsubscribe_reason,
-                        // "user_id": arr.user_id,
+                        "user_id": arr.user_id,
                         "showed_at": arr.showed_at
                     }
                 }
@@ -431,7 +431,7 @@ function createNewContact(token, id, arr){
                         "found_name": arr.found_name,
                         "uid": arr.uid,
                         "unsubscribe_reason": arr.unsubscribe_reason,
-                        // "user_id": arr.user_id,
+                        "user_id": arr.user_id,
                         "showed_at": arr.showed_at
                     }
                 },

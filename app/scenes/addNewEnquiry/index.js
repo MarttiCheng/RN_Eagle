@@ -30,8 +30,8 @@ class addNewEnquiry extends Component<{}>{
         super(props);
         this.state = {
             bodyTxt: '',
-            contactName: '',
-            contactId: '',
+            contactName: this.props.contact_name,
+            contactId: this.props.contact_id,
             propertyName: '',
             propertyId: '',
             property: 'select property',
@@ -182,6 +182,8 @@ const mapStateToProps = (state, ownProps) => {
         token: state.user.token, 
         selected_contactForTask: state.contacts.selected_contactForTask,
         selected_propertyForTask: state.listings.selected_propertyForTask,
+        contact_name: state.contacts.contact_name,
+        contact_id: state.contacts.contact_id,
     }
 }
 

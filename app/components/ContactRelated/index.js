@@ -163,6 +163,7 @@ class ContactRelated extends Component {
     onClickedRelated(id, name) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACT_ID', data: id})
+        dispatch ({ type: 'GET_CONTACT_NAME', data: name})
         // dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: name}}))
         dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: name}}))
     }

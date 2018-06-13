@@ -66,5 +66,5 @@ export default {
         color:'white',
         fontSize: 14,
         fontWeight: 'bold'
-    }
+    },
 }

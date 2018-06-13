@@ -63,7 +63,7 @@ export default {
     menuView: {
         width: width,
         height: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT,
-        paddingTop: (Platform.OS == 'ios')? 20 : StatusBar.currentHeight,
+        // paddingTop: (Platform.OS == 'ios')? 20 : StatusBar.currentHeight,
         flexDirection:'row',
         alignItems:'center',
         backgroundColor: '#2B3643',
@@ -79,7 +79,7 @@ export default {
     title: {
         color: 'white',
         fontSize: 18,
-        // fontFamily: 'open-sans-bold'
+        fontFamily: 'open-sans-regular'
     },
     contentView: {
         flex: 1,

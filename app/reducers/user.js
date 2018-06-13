@@ -27,6 +27,7 @@ function UserToken(state = initialTokenState, action) {
                 token: '',
                 user_id: '',
             };
+        
         default :
             return state
     }

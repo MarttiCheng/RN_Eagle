@@ -12,7 +12,7 @@ import Search from 'react-native-search-box';
 import { NavigationActions, Header } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
-import { getAllContacts, getMyContacts,getMyContacts1, getContactGroups, getContactRelationships, listContactGroups } from '../../actions'
+import { getAllContacts, getMyContacts,getMyContacts1, getContactGroups, getContactRelationships, listContactGroups, getUser } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import {Select, Option} from "react-native-chooser";
 
@@ -37,7 +37,10 @@ class contacts extends Component<{}>{
             display: 'All contacts',
             group: 'All Groups',
             groupList: [],
-            groupID: ''
+            groupID: '',
+            userID: '',
+            userName: '',
+            userEmail: ''
         }
     }
 
@@ -81,16 +84,22 @@ class contacts extends Component<{}>{
             }
             getContactGroups(this.props.token, idList).then(data1 => {
                 listContactGroups(this.props.token).then(groupList => {
-                    dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
-                    subAllGroupList.concat(groupList.data)
-                    for(var i = 0 ; i < groupList.data.length ; i++){
-                        subAllGroupList.push(groupList.data[i])
-                    }
-                    this.setState({
-                        contactsList: data1,
-                        search_contactsList: data1,
-                        isLoading: false,
-                        groupList: subAllGroupList,
+                    getUser(this.props.token, this.props.userID).then(userData => {
+                        console.log(userData)
+                        dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
+                        subAllGroupList.concat(groupList.data)
+                        for(var i = 0 ; i < groupList.data.length ; i++){
+                            subAllGroupList.push(groupList.data[i])
+                        }
+                        this.setState({
+                            contactsList: data1,
+                            search_contactsList: data1,
+                            isLoading: false,
+                            groupList: subAllGroupList,
+                            userID: userData.data.id,
+                            userName: userData.data.attributes.first_name + ' ' + userData.data.attributes.last_name,
+                            userEmail: userData.data.attributes.email,
+                        })
                     })
                 })
             })
@@ -190,6 +199,7 @@ class contacts extends Component<{}>{
         dispatch ({ type: 'GET_CONTACTS_ALL', data: this.state.contactsList})
         // dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
         dispatch ({ type: 'GET_CONTACT_ID', data: item.data.id})
+        dispatch ({ type: 'GET_CONTACT_NAME', data: item.data.attributes.first_name + ' ' + item.data.attributes.last_name})
         
         Animated.parallel([
             Animated.timing(                  
@@ -447,6 +457,7 @@ const mapStateToProps = (state, ownProps) => {
         token: state.user.token,
         contacts: state.contacts.contacts,
         userID: state.user.user_id,
+        
     }
 }
 

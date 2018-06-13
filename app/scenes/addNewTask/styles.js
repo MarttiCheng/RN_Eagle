@@ -48,7 +48,8 @@ export default {
         paddingRight: 15,
         paddingVertical: 5,
         justifyContent: 'center',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        minHeight: 90,
     },
     view1: {
         paddingLeft: 15,

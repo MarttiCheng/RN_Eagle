@@ -31,8 +31,8 @@ class addNewOffer extends Component<{}>{
         this.state = {
             bodyTxt: '',
             price: '',
-            contactName: '',
-            contactId: '',
+            contactName: this.props.contact_name,
+            contactId: this.props.contact_id,
             propertyName: '',
             propertyId: '',
             property: 'select property',
@@ -91,7 +91,6 @@ class addNewOffer extends Component<{}>{
         }
         this.setState({ isSaving: true })
         createNote(this.props.token, this.props.userID, arr).then(data => {
-            console.log(data)
             this.setState({ isSaving: false })
             var arr = []
             Keyboard.dismiss(); 
@@ -198,6 +197,8 @@ const mapStateToProps = (state, ownProps) => {
         token: state.user.token, 
         selected_contactForTask: state.contacts.selected_contactForTask,
         selected_propertyForTask: state.listings.selected_propertyForTask,
+        contact_name: state.contacts.contact_name,
+        contact_id: state.contacts.contact_id,
     }
 }
 

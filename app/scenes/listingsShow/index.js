@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import {
-    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, ScrollableTab
+    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, ScrollableTab, Header
 } from 'native-base'
 import {
     Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
@@ -54,8 +54,7 @@ class listingsShow extends Component<{}>{
                     </TouchableOpacity>
                 </View>
 
-                
-                <Tabs renderTabBar={()=> <ScrollableTab />} initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} locked = {true}>
+                <Tabs renderTabBar={()=> <ScrollableTab />} initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47',height: 3}} locked = {true} style = {{backgroundColor: '#364150'}}>
                     <Tab heading="ABOUT" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <ListingAbout info = {this.props.navigation.state.params.info} navigation = {this.props.navigation}/>
                     </Tab>

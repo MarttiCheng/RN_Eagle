@@ -130,7 +130,6 @@ class addContact extends Component<{}>{
     }
 
     onSelectBelongsTo(value, label) {
-        console.log(value)
         this.setState({
             assignedTo : value.name,
             user_id: value.id

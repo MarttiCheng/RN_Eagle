@@ -9,12 +9,14 @@ import styles from './styles'
 import images from '../../themes/images'
 import Moment from 'react-moment';
 import moment from 'moment'
-import { getContact, getUser } from '../../actions'
+import { getContact } from '../../actions'
 import DatePicker from 'react-native-datepicker'
 import {Select, Option} from "react-native-chooser";
 import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-keyboard-aware-scroll-view'
 import Icon1 from 'react-native-vector-icons/Ionicons';
 import { BallIndicator } from 'react-native-indicators'
+// import call from 'react-native-phone-call'
+import Communications from 'react-native-communications';
 
 const { width, height } = Dimensions.get('window')
 
@@ -74,6 +76,7 @@ class ContactAbout extends Component {
         var address1 = ''
         var address2 = ''
         var params = this.props.contactInfo
+        console.log(params)
         
         if(!params.data.attributes.address_line_1 || params.data.attributes.address_line_1 == '' || params.data.attributes.address_line_1 == 'null'){
             address1 = '';
@@ -211,6 +214,14 @@ class ContactAbout extends Component {
     onClickMobile(number){
         this.setState({ phoneModal: true })        
     }
+
+    onClickBusinessHours(number) {
+        Communications.phonecall(number, true)
+    }
+
+    onClickAfterHours(number) {
+        Communications.phonecall(number, true)
+    }
     
     showContactAbout(){
         return(
@@ -227,16 +238,16 @@ class ContactAbout extends Component {
                         <Label style = {styles.label2}>{this.state.mobile}</Label>
                         <View style = {styles.seperateLine}/>
                     </TouchableOpacity>
-                    <View style = {(!this.state.businessHours || this.state.businessHours == '')? styles.blankView : styles.view1}>
+                    <TouchableOpacity style = {(!this.state.businessHours || this.state.businessHours == '')? styles.blankView : styles.view1} onPress = {() => this.onClickBusinessHours(this.state.businessHours)}>
                         <Label style = {styles.label1}>Business Hours</Label>
                         <Label style = {styles.label2}>{this.state.businessHours}</Label>
                         <View style = {styles.seperateLine}/>
-                    </View>
-                    <View style = {(!this.state.afterHours || this.state.afterHours == '')? styles.blankView : styles.view1}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style = {(!this.state.afterHours || this.state.afterHours == '')? styles.blankView : styles.view1} onPress = {() => this.onClickAfterHours(this.state.afterHours)}>
                         <Label style = {styles.label1}>After Hours</Label>
                         <Label style = {styles.label2}>{this.state.afterHours}</Label>
                         <View style = {styles.seperateLine}/>
-                    </View>
+                    </TouchableOpacity>
                     <View style = {(!this.state.email || this.state.email == '')? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Email</Label>
                         <Label style = {styles.label2}>{this.state.email}</Label>
@@ -643,7 +654,6 @@ class ContactAbout extends Component {
     }
 
     onSelectBelongsTo(value, label) {
-        console.log(value)
         this.setState({
             assignedTo : value.name,
             user_id: value.id
@@ -674,6 +684,14 @@ class ContactAbout extends Component {
                 this.showEidtContactAbout() :
                 this.showContactAbout()
         )
+    }
+
+    onClickCall() {
+        Communications.phonecall(this.state.mobile, true)
+    }
+
+    onClickSMS() {
+        Communications.text(this.state.mobile, '')
     }
 
     render() {
@@ -754,10 +772,10 @@ class ContactAbout extends Component {
                         <TouchableOpacity style = {styles.blankModalView} onPress = {() => this.setState({ phoneModal: false}) }>
                         </TouchableOpacity>
                         <View style = {styles.modalMainView}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress = {() => this.onClickCall()}>
                                 <Text style = {styles.selecttxt}>Call</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress = {() => this.onClickSMS()}>
                             <Text style = {styles.selecttxt}>Send SMS</Text>
                             </TouchableOpacity>
                         </View>

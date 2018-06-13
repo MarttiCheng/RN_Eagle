@@ -42,6 +42,13 @@ class tasks extends Component {
             })
         })
     }
+
+    onAddTask() {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_CONTACT_ID', data: null})
+        dispatch ({ type: 'GET_CONTACT_NAME', data: ''})
+        dispatch(NavigationActions.navigate({routeName: 'addNewTask'}))
+    }
     
     render() {
         return (
@@ -66,7 +73,7 @@ class tasks extends Component {
                         <TaskShow tasksList = {this.state.uncompletedTaskList} isLoading = {this.state.isLoading}/>
                     </Tab>
                 </Tabs>
-                <TouchableOpacity style = {styles.addBtn}>
+                <TouchableOpacity style = {styles.addBtn} onPress = {() => this.onAddTask()}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
             </View>

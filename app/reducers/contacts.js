@@ -7,6 +7,7 @@ const initialTokenState = {
     edit_contact_groups_item: [],
     selected_contactForTask: [],
     contact_id: '',
+    contact_name: '',
 }
 
 function Contacts(state = initialTokenState, action) {
@@ -20,6 +21,11 @@ function Contacts(state = initialTokenState, action) {
             return {
                 ...state,
                 contact_id: action.data
+            };
+        case 'GET_CONTACT_NAME' :
+            return {
+                ...state,
+                contact_name: action.data
             };
         case 'GET_CONTACTS_GROUP':
             return {

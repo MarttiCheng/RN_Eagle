@@ -17,7 +17,7 @@ export default{
         borderRadius: 6,
         paddingHorizontal: 25,
         paddingTop: 5,
-        paddingBottom: 45
+        paddingBottom: 40
     },
     
     blankView: {
@@ -28,12 +28,12 @@ export default{
         left: 0
     },
     selecttxt: {
-        fontSize: 15,
-        paddingVertical: 10,
+        fontSize: 18,
+        paddingVertical: 7,
     },
     cancelText: {
         color: '#ff4f55',
-        fontSize: 13
+        fontSize: 16
     },
     cancelBtn: {
         position: 'absolute',
