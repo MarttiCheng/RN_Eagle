@@ -1,6 +1,7 @@
 const initialTokenState = {
     token: '',
     user_id: '',
+    user_info: [],
     usersList: []
 }
 
@@ -16,6 +17,11 @@ function UserToken(state = initialTokenState, action) {
                 ...state,
                 user_id: action.data
             }
+        case 'USER_INFO':
+            return {
+                ...state,
+                user_info: action.data
+            }   
         case 'USER_LIST':
             return {
                 ...state,
@@ -26,6 +32,8 @@ function UserToken(state = initialTokenState, action) {
                 ...state,
                 token: '',
                 user_id: '',
+                user_info: [],
+                usersList: []
             };
         
         default :

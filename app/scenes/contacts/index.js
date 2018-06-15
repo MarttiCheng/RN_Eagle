@@ -87,6 +87,7 @@ class contacts extends Component<{}>{
                     getUser(this.props.token, this.props.userID).then(userData => {
                         console.log(userData)
                         dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
+                        dispatch ({ type: 'USER_INFO', data: userData.data.attributes})
                         subAllGroupList.concat(groupList.data)
                         for(var i = 0 ; i < groupList.data.length ; i++){
                             subAllGroupList.push(groupList.data[i])
@@ -97,8 +98,6 @@ class contacts extends Component<{}>{
                             isLoading: false,
                             groupList: subAllGroupList,
                             userID: userData.data.id,
-                            userName: userData.data.attributes.first_name + ' ' + userData.data.attributes.last_name,
-                            userEmail: userData.data.attributes.email,
                         })
                     })
                 })

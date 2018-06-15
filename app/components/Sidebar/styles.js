@@ -28,12 +28,21 @@ export default {
         justifyContent: 'center',
         padding: 20,
     },
-    avartarImg: {
+    avatarView: {
+        width: 70,
+        height: 70,
+        backgroundColor: 'white',
+        borderRadius: 35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 50
+    },
+    avatarImg: {
         width: 70,
         height: 70,
         resizeMode: 'cover',
         borderRadius: 35,
-        marginTop: 50
+        // marginTop: 50
     },
     nameTxt:{
         fontSize: 18,
@@ -60,5 +69,12 @@ export default {
         bottom: 0,
         height: 1,
         backgroundColor: '#3F4B5A',
+    },
+    logoutView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
     },
 }

@@ -85,9 +85,41 @@ function createTask(token, id, arr){
     })
 }
 
+function updateTask(token, id, arr){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_TASKS + '/' + id , {
+            method: 'PUT',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/vnd.api+json'
+            },
+            body:JSON.stringify({
+                "data": { 
+                    "type": "tasks", 
+                    "id": id,
+                    "attributes": { 
+                        "due_date": arr.due_date,
+                        "body": arr.body,
+                        "property_id": arr.property_id,
+                        "contact_id": arr.contact_id,
+                    }
+                } 
+            })
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
 module.exports = {
     getCompletedTasks,
     getUnCompletedTasks,
     getTaskContacts,
-    createTask
+    createTask,
+    updateTask,
 }

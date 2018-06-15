@@ -2,7 +2,7 @@ const initialTokenState = {
     tasks: [],
     tasks_completed: [],
     tasks_uncompleted: [],
-    
+    task_detail_info: [],
 }
 
 function task(state = initialTokenState, action) {
@@ -21,6 +21,11 @@ function task(state = initialTokenState, action) {
             return {
                 ...state,
                 tasks_uncompleted: action.data
+            };
+        case 'GET_TASK_DETAIL_INFO' :
+            return {
+                ...state,
+                task_detail_info: action.data
             };
         case 'INIT_TASKS' : 
             return {

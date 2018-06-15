@@ -37,13 +37,33 @@ class Sidebar extends Component<{}>{
 		};
 	}
 
+    logOut() {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'INIT_TOKEN', data: [] })
+        dispatch(NavigationActions.navigate({routeName: 'tasksShow'}));
+    }
+
     render() {
+        console.log('=======')
+        console.log(this.props.user_info)
         return (
             <View style = {styles.container}>
                 <View style = {styles.menuProfileView}>
-                    <Thumbnail square source = {images.avatar_john} style = {styles.avartarImg}/>
-                    <Label style = {styles.nameTxt}>Luke Paverd</Label>
-                    <Label style = {styles.emailTxt}>luke@eaglesoftware.com.au</Label>
+                    {/*<Thumbnail square source = {images.avatar_john} style = {styles.avartarImg}/>*/}
+
+                    {
+                        this.props.user_info.avatar_url == ''?
+                        <View style = {styles.avatarView}>
+                            <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/> 
+                        </View>:
+                        <View style = {styles.avatarView}>
+                            <Thumbnail square source = {this.props.user_info.avatar_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
+                        </View>
+                    }
+
+
+                    <Label style = {styles.nameTxt}>{this.props.user_info.first_name} {this.props.user_info.last_name}</Label>
+                    <Label style = {styles.emailTxt}>{this.props.user_info.email}</Label>
                 </View>
 
                 <View style = {styles.menuView}>
@@ -75,12 +95,26 @@ class Sidebar extends Component<{}>{
                                 <Text style = {styles.menuItem}>Tasks</Text>
                             </View>
                         </TouchableOpacity>
+
+                        
                     </View>
+                    <TouchableOpacity style = {styles.logoutView} onPress = {() => this.logOut()}>
+                        <Text style = {styles.menuItem}>Log Out</Text>
+                    </TouchableOpacity> 
                 </View>                
             </View>
         );
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        token: state.user.token,
+        contacts: state.contacts.contacts,
+        user_info: state.user.user_info,
+        
+    }
+}
+
 //make this component available to the app
-export default connect()(Sidebar);
+export default connect(mapStateToProps)(Sidebar);

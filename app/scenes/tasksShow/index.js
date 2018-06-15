@@ -25,10 +25,19 @@ class tasksShow extends Component<{}>{
             isLoading: true,
             task_contactList: [],
             task_listingsList: [],
+            selected_task_info: [],
         }  
     }
 
     componentWillMount() {
+        this.fetchTaskInfo()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.fetchTaskInfo()
+    }
+
+    fetchTaskInfo() {
         var conList = []
         var listList = []
         getTaskContacts(this.props.token, this.props.tasks.id).then(data => {
@@ -54,6 +63,7 @@ class tasksShow extends Component<{}>{
     }
 
     renderRow(item, index) {
+        var { dispatch } = this.props;
         if(item.type == 'contacts'){
             return(
                 <View style = {styles.contacvView}>
@@ -157,6 +167,11 @@ class tasksShow extends Component<{}>{
         )
     }
 
+    onTaskEdit() {
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'editTask'}))
+    }
+
     render() {
         return(
             <Container style = {styles.container}>
@@ -171,7 +186,7 @@ class tasksShow extends Component<{}>{
                     </TouchableOpacity>
                     
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>Tasks</Label>
-                    <TouchableOpacity onPress = {this._onSearch}>
+                    <TouchableOpacity onPress = {() => this.onTaskEdit()}>
                         <Label style = {styles.editTxt}>Edit</Label>
                     </TouchableOpacity>
                 </View>

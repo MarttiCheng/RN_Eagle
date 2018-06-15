@@ -90,7 +90,7 @@ export default {
     },
     label1: {
         color: 'black',
-        fontSize: 15,
+        fontSize: 18,
         fontFamily: 'open-sans-regular',
     },
     subcontactView: {
