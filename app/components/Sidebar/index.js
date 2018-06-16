@@ -2,24 +2,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, StatusBar, Image, TouchableOpacity,AsyncStorage } from 'react-native';
 import {
-    Content,
-	Text,
-	List,
-	ListItem,
-	Icon,
-	Container,
-	Left,
-	Right,
-	Badge,
-	Button,
-	View,
-	StyleProvider,
-	getTheme,
-	variables,
-	Label,
-    Thumbnail,
+    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Drawer
 } from 'native-base'
 import styles from './styles'
+import { NavigationActions, Header } from 'react-navigation'
 import images from '../../themes/images'
 import { MaterialIcons, FontAwesome, Entypo } from '@expo/vector-icons'
 import { connect } from 'react-redux'
@@ -40,7 +26,7 @@ class Sidebar extends Component<{}>{
     logOut() {
         var { dispatch } = this.props;
         dispatch ({ type: 'INIT_TOKEN', data: [] })
-        dispatch(NavigationActions.navigate({routeName: 'tasksShow'}));
+        dispatch(NavigationActions.navigate({routeName: 'login'}));
     }
 
     render() {

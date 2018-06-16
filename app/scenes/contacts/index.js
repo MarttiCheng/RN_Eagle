@@ -409,8 +409,8 @@ class contacts extends Component<{}>{
                             transparent = {true}
                             optionListStyle = {styles.optionList}
                         >
-                            <Option value = "All contacts" styleText = {styles.optiontxt}>All contacts</Option>
-                            <Option value = "My contacts" styleText = {styles.optiontxt}>My contacts</Option>
+                            <Option value = "All listings" styleText = {styles.optiontxt}>All listings</Option>
+                            <Option value = "My listings" styleText = {styles.optiontxt}>My listings</Option>
                         </Select>
                         <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
                     </View>
