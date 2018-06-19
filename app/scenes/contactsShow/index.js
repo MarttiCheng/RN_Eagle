@@ -71,6 +71,11 @@ class contactsShow extends Component<{}>{
         })
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('===>')
+        console.log(nextProps)
+    }
+
     _onAbout = () => {
         this.setState({
             isAbout: true,

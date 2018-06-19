@@ -39,7 +39,7 @@ function getMyContacts(token, user_id, group_id){
     })
 }
 
-function getMyContacts1(token, user_id, group_id){
+function getMyContacts1(token, user_id){
     return new Promise((resolve, reject) => {
         fetch(API.BASE_URL + API.ALL_CONTACTS + '?filter[user_id]=' + user_id, {
             method: 'GET',

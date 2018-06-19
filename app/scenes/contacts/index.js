@@ -135,48 +135,72 @@ class contacts extends Component<{}>{
             }
         ]
         this.setState({ isLoading: true })
-        {
-            this.state.groupID == -1 ?
-                getMyContacts1(this.props.token, this.props.userID).then(data => {
-                    for(var i = 0; i < data.data.length; i++){
-                        idList.push(data.data[i].id)
-                    }
-                    getContactGroups(this.props.token, idList).then(data1 => {
-                        listContactGroups(this.props.token).then(groupList => {
-                            dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
-                            subAllGroupList.concat(groupList.data)
-                            for(var i = 0 ; i < groupList.data.length ; i++){
-                                subAllGroupList.push(groupList.data[i])
-                            }
-                            this.setState({
-                                contactsList: data1,
-                                search_contactsList: data1,
-                                isLoading: false,
-                                groupList: subAllGroupList,
-                            })
-                        })
-                    })
-                }) :
-                getMyContacts(this.props.token, this.props.userID, this.state.groupID).then(data => {
-                    for(var i = 0; i < data.data.length; i++){
-                        idList.push(data.data[i].id)
-                    }
-                    getContactGroups(this.props.token, idList).then(data1 => {
-                        listContactGroups(this.props.token).then(groupList => {
-                            dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
-                            subAllGroupList.concat(groupList.data)
-                            for(var i = 0 ; i < groupList.data.length ; i++){
-                                subAllGroupList.push(groupList.data[i])
-                            }
-                            this.setState({
-                                contactsList: data1,
-                                search_contactsList: data1,
-                                isLoading: false,
-                                groupList: subAllGroupList,
-                            })
+
+        if(this.state.group == 'All Groups' && this.state.display == 'All contacts') {
+            getAllContacts(this.props.token).then(data => {
+                for(var i = 0; i < data.data.length; i++){
+                    idList.push(data.data[i].id)
+                }
+                getContactGroups(this.props.token, idList).then(data1 => {
+                    listContactGroups(this.props.token).then(groupList => {
+                        dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
+                        subAllGroupList.concat(groupList.data)
+                        for(var i = 0 ; i < groupList.data.length ; i++){
+                            subAllGroupList.push(groupList.data[i])
+                        }
+                        this.setState({
+                            contactsList: data1,
+                            search_contactsList: data1,
+                            isLoading: false,
+                            groupList: subAllGroupList,
                         })
                     })
                 })
+            })
+        }
+        else if(this.state.group == 'All Groups' && this.state.display == 'My contacts') {
+            getMyContacts1(this.props.token, this.props.userID).then(data => {
+                for(var i = 0; i < data.data.length; i++){
+                    idList.push(data.data[i].id)
+                }
+                getContactGroups(this.props.token, idList).then(data1 => {
+                    listContactGroups(this.props.token).then(groupList => {
+                        dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
+                        subAllGroupList.concat(groupList.data)
+                        for(var i = 0 ; i < groupList.data.length ; i++){
+                            subAllGroupList.push(groupList.data[i])
+                        }
+                        this.setState({
+                            contactsList: data1,
+                            search_contactsList: data1,
+                            isLoading: false,
+                            groupList: subAllGroupList,
+                        })
+                    })
+                })
+            }) 
+        }
+        else if(this.state.group != 'All Groups' && this.state.display == 'All contacts') {
+            getMyContacts(this.props.token, this.props.userID, this.state.groupID).then(data => {
+                for(var i = 0; i < data.data.length; i++){
+                    idList.push(data.data[i].id)
+                }
+                getContactGroups(this.props.token, idList).then(data1 => {
+                    listContactGroups(this.props.token).then(groupList => {
+                        dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
+                        subAllGroupList.concat(groupList.data)
+                        for(var i = 0 ; i < groupList.data.length ; i++){
+                            subAllGroupList.push(groupList.data[i])
+                        }
+                        this.setState({
+                            contactsList: data1,
+                            search_contactsList: data1,
+                            isLoading: false,
+                            groupList: subAllGroupList,
+                        })
+                    })
+                })
+            })
         }
     }
 
@@ -409,8 +433,8 @@ class contacts extends Component<{}>{
                             transparent = {true}
                             optionListStyle = {styles.optionList}
                         >
-                            <Option value = "All listings" styleText = {styles.optiontxt}>All listings</Option>
-                            <Option value = "My listings" styleText = {styles.optiontxt}>My listings</Option>
+                            <Option value = "All contacts" styleText = {styles.optiontxt}>All contacts</Option>
+                            <Option value = "My contacts" styleText = {styles.optiontxt}>My contacts</Option>
                         </Select>
                         <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
                     </View>

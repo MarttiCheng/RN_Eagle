@@ -31,6 +31,10 @@ class ContactTask extends Component {
         })
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
+    }
+
     onClickedTask(item) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_TASK_ITEM', data: item})

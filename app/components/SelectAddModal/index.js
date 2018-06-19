@@ -26,6 +26,11 @@ class SelectAddModal extends Component<{}>{
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('===>')
+        console.log(nextProps)
+    }
+
     render(){
         return(
             <View style = {styles.modalView}>

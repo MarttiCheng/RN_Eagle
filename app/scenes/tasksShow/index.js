@@ -34,6 +34,7 @@ class tasksShow extends Component<{}>{
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
         this.fetchTaskInfo()
     }
 

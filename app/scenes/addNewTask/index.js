@@ -103,6 +103,7 @@ class addNewTask extends Component<{}>{
             var { dispatch } = this.props;
             dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: arr})
             dispatch ({ type: 'SELECTED_CONTACT_FOR_TASK', data: arr})
+            dispatch ({ type: 'SET_TASK_FLAG', data: '1'})
             this.props.navigation.goBack();
         })
     }
