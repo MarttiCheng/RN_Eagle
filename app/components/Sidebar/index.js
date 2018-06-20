@@ -30,8 +30,6 @@ class Sidebar extends Component<{}>{
     }
 
     render() {
-        console.log('=======')
-        console.log(this.props.user_info)
         return (
             <View style = {styles.container}>
                 <View style = {styles.menuProfileView}>
@@ -46,7 +44,6 @@ class Sidebar extends Component<{}>{
                             <Thumbnail square source = {this.props.user_info.avatar_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/>
                         </View>
                     }
-
 
                     <Label style = {styles.nameTxt}>{this.props.user_info.first_name} {this.props.user_info.last_name}</Label>
                     <Label style = {styles.emailTxt}>{this.props.user_info.email}</Label>
@@ -85,7 +82,7 @@ class Sidebar extends Component<{}>{
                         
                     </View>
                     <TouchableOpacity style = {styles.logoutView} onPress = {() => this.logOut()}>
-                        <Text style = {styles.menuItem}>Log Out</Text>
+                        <Text style = {styles.logoutTxt}>Log Out</Text>
                     </TouchableOpacity> 
                 </View>                
             </View>
@@ -98,7 +95,6 @@ const mapStateToProps = (state, ownProps) => {
         token: state.user.token,
         contacts: state.contacts.contacts,
         user_info: state.user.user_info,
-        
     }
 }
 

@@ -26,15 +26,12 @@ class tasksShow extends Component<{}>{
             task_contactList: [],
             task_listingsList: [],
             selected_task_info: [],
+            body: this.props.tasks.attributes.body,
+            due_date: this.props.tasks.attributes.due_date
         }  
     }
 
     componentWillMount() {
-        this.fetchTaskInfo()
-    }
-
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
         this.fetchTaskInfo()
     }
 
@@ -53,6 +50,8 @@ class tasksShow extends Component<{}>{
             this.setState({
                 task_contactList: conList,
                 task_listingsList: listList,
+                body: data.data.attributes.body,
+                due_date: data.data.attributes.due_date,
                 isLoading: false
             })
         })
@@ -109,15 +108,15 @@ class tasksShow extends Component<{}>{
         return(
             <View style = {{flex: 1}}>
                 <View style = {styles.titleView}>
-                    <Label style = {styles.assignNameTxt}>{this.props.tasks.attributes.body}</Label>
+                    <Label style = {styles.assignNameTxt}>{this.state.body}</Label>
                 </View>
                 <View style = {styles.assignView}>
                     <Label style = {styles.assignTxt}>Assigned to</Label>
-                    <Label style = {styles.assignNameTxt}>Luke Paverd</Label>
+                    <Label style = {styles.assignNameTxt}>{this.props.user_info.first_name} {this.props.user_info.last_name}</Label>
                 </View>
                 <View style = {styles.assignView}>
                     <Label style = {styles.assignTxt}>Due Date</Label>
-                    <Label style = {styles.assignNameTxt}>{this.props.tasks.attributes.due_date}</Label>
+                    <Label style = {styles.assignNameTxt}>{this.state.due_date}</Label>
                 </View>
 
                 {
@@ -168,9 +167,26 @@ class tasksShow extends Component<{}>{
         )
     }
 
+    handleOnNavigateBack(){
+        this.fetchTaskInfo()
+    }
+
     onTaskEdit() {
         var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'editTask'}))
+        this.props.navigation.navigate('editTask', {
+            onNavigateBack: this.handleOnNavigateBack.bind(this)
+        })
+    }
+
+    back() {
+        Keyboard.dismiss(); 
+        
+        if (this.props.navigation.state.params && typeof this.props.navigation.state.params.onNavigateBack !== "undefined") {
+            this.props.navigation.state.params.onNavigateBack(); 
+        }
+        this.props.navigation.goBack()
+
+        this.setState({ isEdit: false })
     }
 
     render() {
@@ -182,7 +198,7 @@ class tasksShow extends Component<{}>{
                 />
                 
                 <View style = {styles.menuView}>
-                    <TouchableOpacity style = {styles.backBtn} onPress={ () => { Keyboard.dismiss(); this.props.navigation.goBack(); this.setState({ isEdit: false }) }}>
+                    <TouchableOpacity style = {styles.backBtn} onPress={() => this.back() }>
                         <Thumbnail square source = {images.ic_back_btn} style = {styles.backImg}/>
                     </TouchableOpacity>
                     
@@ -207,6 +223,7 @@ const mapStateToProps = (state, ownProps) => {
         tasks: state.task.tasks,
         completed_task: state.task.tasks_completed,
         uncompleted_task: state.task.tasks_uncompleted,
+        user_info: state.user.user_info,
     }
 }
 

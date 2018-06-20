@@ -85,7 +85,6 @@ class contacts extends Component<{}>{
             getContactGroups(this.props.token, idList).then(data1 => {
                 listContactGroups(this.props.token).then(groupList => {
                     getUser(this.props.token, this.props.userID).then(userData => {
-                        console.log(userData)
                         dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
                         dispatch ({ type: 'USER_INFO', data: userData.data.attributes})
                         subAllGroupList.concat(groupList.data)

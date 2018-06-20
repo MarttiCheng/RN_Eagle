@@ -132,4 +132,12 @@ export default {
         fontSize: 18,
         fontFamily: 'open-sans-regular',
     },
+    indicator: {
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        top: height/3,
+        left: (width - 100)/2,
+        backgroundColor: 'transparent'
+    },
 }

@@ -22,6 +22,13 @@ export default {
         marginLeft: 15,
         fontFamily: 'open-sans-regular'
     },
+    logoutTxt: {
+        color: '#B4BCC8',
+        opacity: 1,
+        fontSize: 18,
+        marginLeft: 15,
+        fontFamily: 'open-sans-regular'
+    },
     menuProfileView: {
         backgroundColor: '#2B3643',
         height: 200,
@@ -42,7 +49,6 @@ export default {
         height: 70,
         resizeMode: 'cover',
         borderRadius: 35,
-        // marginTop: 50
     },
     nameTxt:{
         fontSize: 18,

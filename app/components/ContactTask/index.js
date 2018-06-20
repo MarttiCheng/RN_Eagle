@@ -23,8 +23,15 @@ class ContactTask extends Component {
     }
 
     componentWillMount() {
-        console.log(this.props.task_flag)
-       getContactTasks(this.props.token, this.props.contactInfo.data.id).then(data => {  
+       this.fetchContactTask()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.fetchContactTask()
+    }
+
+    fetchContactTask() {
+        getContactTasks(this.props.token, this.props.contactInfo.data.id).then(data => {  
            this.setState({
                isLoading: false,
                tasksList: data.data
@@ -32,14 +39,17 @@ class ContactTask extends Component {
         })
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
+    handleOnNavigateBack(){
+        this.fetchContactTask()
     }
 
     onClickedTask(item) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_TASK_ITEM', data: item})
-        dispatch(NavigationActions.navigate({routeName: 'tasksShow'}))
+
+        this.props.navigation.navigate('tasksShow', {
+            onNavigateBack: this.handleOnNavigateBack.bind(this)
+        })
     }
 
     renderRow(item, index) {

@@ -71,11 +71,6 @@ class contactsShow extends Component<{}>{
         })
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log('===>')
-        console.log(nextProps)
-    }
-
     _onAbout = () => {
         this.setState({
             isAbout: true,
@@ -134,22 +129,22 @@ class contactsShow extends Component<{}>{
         }
         if(this.state.isRelated){
             return(
-                <ContactRelated  contactInfo = {this.state.contactInfo}/>
+                <ContactRelated  navigation = {this.props.navigation} contactInfo = {this.state.contactInfo}/>
             )
         }
         if(this.state.isProperties){
             return(
-                <ContactProperties  contactInfo = {this.state.contactInfo}/>
+                <ContactProperties navigation = {this.props.navigation} contactInfo = {this.state.contactInfo}/>
             )
         }
         if(this.state.isActivity){
             return(
-                <ContactActivity  contactInfo = {this.state.contactInfo}/>
+                <ContactActivity navigation = {this.props.navigation} contactInfo = {this.state.contactInfo}/>
             )
         }
         if(this.state.isTasks){
             return(
-                <ContactTask  contactInfo = {this.state.contactInfo}/>
+                <ContactTask navigation = {this.props.navigation} contactInfo = {this.state.contactInfo}/>
             )
         }
     }
@@ -226,10 +221,23 @@ class contactsShow extends Component<{}>{
         dispatch(NavigationActions.navigate({routeName: 'addNewNote', params: {noteType: 'General'}}))
     }
 
+    handleOnNavigateBack(){
+        this.setState({
+            isAbout: false,
+            isProperties: false,
+            isActivity: false,
+            isTasks: true,
+            isRelated: false,
+        })
+    }
+
     onClickedNewTask() {
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewTask'}))
+
+        this.props.navigation.navigate('addNewTask', {
+            onNavigateBack: this.handleOnNavigateBack.bind(this)
+        })
     }
 
     onClickedNewEnquiry() {

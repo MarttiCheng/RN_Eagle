@@ -57,9 +57,6 @@ class editTask extends Component<{}>{
     }
 
     componentWillMount() {
-        console.log('***')
-        console.log(this.state.contactName)
-        console.log(this.props.tasks)
         this.setState({ isSaving: true })
 
         this.fetchTaskInfo()
@@ -67,9 +64,6 @@ class editTask extends Component<{}>{
 
     fetchTaskInfo() {
         getTaskContacts(this.props.token, this.props.tasks.id).then(data => {
-            console.log('______>')
-            console.log(data)
-            this.setState({ isSaving: false })
             var contact_name = ''
             var contact_id = ''
             var property_name = ''
@@ -90,6 +84,8 @@ class editTask extends Component<{}>{
                 contactId: contact_id,
                 propertyName: property_name,
                 propertyId: property_id,
+                bodyTxt: data.data.attributes.body,
+                dueDate: data.data.attributes.due_date,
             })
         })
     }
@@ -113,7 +109,11 @@ class editTask extends Component<{}>{
         var { dispatch } = this.props;
         dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: arr})
         dispatch ({ type: 'SELECTED_CONTACT_FOR_TASK', data: arr})
-        this.props.navigation.goBack();
+
+        if (this.props.navigation.state.params && typeof this.props.navigation.state.params.onNavigateBack !== "undefined") {
+            this.props.navigation.state.params.onNavigateBack(); 
+        }
+        this.props.navigation.goBack()
     }
 
     onSave() {
@@ -125,15 +125,16 @@ class editTask extends Component<{}>{
         }
         this.setState({ isSaving: true })
         updateTask(this.props.token, this.props.tasks.id, arr).then(data => {
-            console.log(data)
-            this.setState({ isSaving: false })
             this.fetchTaskInfo()
-            // var arr = []
-            // Keyboard.dismiss(); 
-            // var { dispatch } = this.props;
-            // dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: arr})
-            // dispatch ({ type: 'SELECTED_CONTACT_FOR_TASK', data: arr})
-            // this.props.navigation.goBack();
+            var arr = []
+            Keyboard.dismiss(); 
+            var { dispatch } = this.props;
+            dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: arr})
+            dispatch ({ type: 'SELECTED_CONTACT_FOR_TASK', data: arr})
+            // if (this.props.navigation.state.params && typeof this.props.navigation.state.params.onNavigateBack !== "undefined") {
+            //     this.props.navigation.state.params.onNavigateBack(); 
+            // }
+            // this.props.navigation.goBack()
         })
     }
 

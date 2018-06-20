@@ -77,7 +77,8 @@ class addNewTask extends Component<{}>{
         var { dispatch } = this.props;
         dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: arr})
         dispatch ({ type: 'SELECTED_CONTACT_FOR_TASK', data: arr})
-        this.props.navigation.goBack();
+
+        this.props.navigation.goBack()
     }
 
     onSave() {
@@ -104,7 +105,10 @@ class addNewTask extends Component<{}>{
             dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: arr})
             dispatch ({ type: 'SELECTED_CONTACT_FOR_TASK', data: arr})
             dispatch ({ type: 'SET_TASK_FLAG', data: '1'})
-            this.props.navigation.goBack();
+            if (this.props.navigation.state.params && typeof this.props.navigation.state.params.onNavigateBack !== "undefined") {
+                this.props.navigation.state.params.onNavigateBack(); 
+            }
+            this.props.navigation.goBack()
         })
     }
 
@@ -179,11 +183,6 @@ class addNewTask extends Component<{}>{
                         }
                         <View style = {styles.seperateLine}/>
                     </TouchableOpacity>
-
-                    {/*<TouchableOpacity style = {styles.view1}>
-                        <Label style = {styles.label2}>Select appraisal</Label>
-                        <View style = {styles.seperateLine}/>
-                    </TouchableOpacity>*/}
 
                     <View style = {styles.view1}>
                         {
