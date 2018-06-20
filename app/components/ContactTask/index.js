@@ -23,6 +23,7 @@ class ContactTask extends Component {
     }
 
     componentWillMount() {
+        console.log(this.props.task_flag)
        getContactTasks(this.props.token, this.props.contactInfo.data.id).then(data => {  
            this.setState({
                isLoading: false,
@@ -91,6 +92,8 @@ const mapStateToProps = (state, ownProps) => {
         token: state.user.token, 
         // contact_groups: state.contacts.contact_groups,
         contact_id: state.contacts.contact_id,
+        task_flag: state.task.task_flag
+        
     }
 }
 
