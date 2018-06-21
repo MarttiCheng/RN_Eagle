@@ -164,7 +164,6 @@ class ContactRelated extends Component {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACT_ID', data: id})
         dispatch ({ type: 'GET_CONTACT_NAME', data: name})
-        // dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: name}}))
         dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: name}}))
     }
 
@@ -288,9 +287,7 @@ class ContactRelated extends Component {
                     />
 
                     <Button transparent style = {styles.saveBtn} onPress = {() => this.onSave()}>
-                        {/*<View style = {styles.saveBtnView}>*/}
-                            <Label style = {styles.saveTxt}>SAVE</Label>
-                        {/*</View>*/}
+                        <Label style = {styles.saveTxt}>SAVE</Label>
                     </Button>
                     {
                         (this.state.isNameListView && this.state.search_contactNameList.length > 0)?

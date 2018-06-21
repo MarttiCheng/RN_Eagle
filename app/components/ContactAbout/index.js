@@ -60,7 +60,6 @@ class ContactAbout extends Component {
             isAddGroup: false,
             usersList: [],
             user_id: null,
-            // isLoading: true,
             phoneModal: false,
         }
     }
@@ -135,7 +134,6 @@ class ContactAbout extends Component {
             subscribed: params.data.attributes.subscribed,
             contactGroups: arr,
             usersList: arr1,
-            // isLoading: false
         })
 
         if (Platform.OS === "android") {

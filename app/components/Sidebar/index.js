@@ -33,8 +33,6 @@ class Sidebar extends Component<{}>{
         return (
             <View style = {styles.container}>
                 <View style = {styles.menuProfileView}>
-                    {/*<Thumbnail square source = {images.avatar_john} style = {styles.avartarImg}/>*/}
-
                     {
                         this.props.user_info.avatar_url == ''?
                         <View style = {styles.avatarView}>

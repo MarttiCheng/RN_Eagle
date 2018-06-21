@@ -78,16 +78,6 @@ export default {
         fotnSize: 20,
         fontFamily: 'open-sans-regular'
     },
-    contacvView: {
-        flexDirection: 'row',
-        padding: 15,
-        backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        borderBottomWidth: 1,
-        borderTopWidth: 1,
-        borderColor: 'lightgray'
-    },
     label1: {
         color: 'black',
         fontSize: 18,
@@ -180,5 +170,70 @@ export default {
         width: (width-45)*2/3,
         height: 40,
         borderRadius: 4,
-    }
+    },
+    view2: {
+        flex: 1,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent :'center',
+        backgroundColor: 'white',
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor:'lightgray'
+    },
+    avatarImg: {
+        width: 36,
+        height: 36,
+        resizeMode: 'cover',
+        borderRadius: 18,
+        marginLeft: 5
+    },
+    rowSubView: {
+        marginLeft: 15,
+        flex: 1,
+        justifyContent: 'center',
+    },
+    label3: {
+        color: 'black',
+        fontSize: 16,
+        fontFamily: 'open-sans-regular',
+    },
+    tagView: {
+        flexDirection:'row',
+        marginTop: 5,
+        flex: 1,
+    },
+    eachtag: {
+        backgroundColor: '#B4BCC8',
+        paddingLeft: 8,
+        paddingRight: 8,
+        height: 16,
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10
+    },
+    tagTxt: {
+        fontSize: 10,
+        color: 'white',
+        fontFamily: 'open-sans-regular',
+    },
+    swipeView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+    },
+    swipeIcon: {
+        width: 18,
+        height: 18,
+        resizeMode:'contain',
+        tintColor: 'white'
+    },
+    swipeTxt: {
+        color: 'white',
+        fontSize: 12,
+        marginTop: 5
+    },
 }

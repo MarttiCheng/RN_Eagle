@@ -11,8 +11,9 @@ import images from '../../themes/images';
 import Search from 'react-native-search-box';
 import { NavigationActions } from 'react-navigation'
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome} from '@expo/vector-icons'
-import { getTaskContacts } from '../../actions'
+import { getTaskContacts, deleteContactRelationship, getEachContactRelationships, getContactGroup, getContactProperty_Vendor } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
+import Swipeout from 'react-native-swipeout'
 
 class tasksShow extends Component<{}>{
     static navigationOptions = {
@@ -27,7 +28,9 @@ class tasksShow extends Component<{}>{
             task_listingsList: [],
             selected_task_info: [],
             body: this.props.tasks.attributes.body,
-            due_date: this.props.tasks.attributes.due_date
+            due_date: this.props.tasks.attributes.due_date,
+            relationShipList: [],
+            contactInfo: []
         }  
     }
 
@@ -36,23 +39,32 @@ class tasksShow extends Component<{}>{
     }
 
     fetchTaskInfo() {
+
         var conList = []
         var listList = []
         getTaskContacts(this.props.token, this.props.tasks.id).then(data => {
-            for(var i = 0 ; i < data.included.length ; i++) {
-                if(data.included[i].type == 'contacts'){
-                    conList.push(data.included[i])
-                }
-                else {
-                    listList.push(data.included[i])
-                }
-            }
-            this.setState({
-                task_contactList: conList,
-                task_listingsList: listList,
-                body: data.data.attributes.body,
-                due_date: data.data.attributes.due_date,
-                isLoading: false
+            getContactGroup(this.props.token, data.data.attributes.contact_id).then(groupdata => {
+                // getContactProperty_Vendor(this.props.token, data.data.attributes.contact_id).then(propertyData => {
+                //     console.log('&&&')
+                    // console.log(propertyData)
+                    for(var i = 0 ; i < data.included.length ; i++) {
+                        if(data.included[i].type == 'contacts'){
+                            conList.push(data.included[i])
+                        }
+                        else {
+                            listList.push(data.included[i])
+                        }
+                    }
+                    this.setState({
+                        contactInfo: groupdata,
+                        task_contactList: conList,
+                        task_listingsList: listList,
+                        body: data.data.attributes.body,
+                        due_date: data.data.attributes.due_date,
+                        isLoading: false,
+                    })
+                // })
+                
             })
         })
     }
@@ -62,46 +74,86 @@ class tasksShow extends Component<{}>{
         dispatch(NavigationActions.navigate({routeName: 'sendEmail'}))
     }
 
+    onClickedRelated(id, name) {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_CONTACT_ID', data: id})
+        dispatch ({ type: 'GET_CONTACT_NAME', data: name})
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: name}}))
+    }
+
+    onClickProperty(item) {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_LISTINGS', data: item})
+        dispatch(NavigationActions.navigate({routeName: 'listingsShow', params: {info: item}}))
+    }
+
     renderRow(item, index) {
         var { dispatch } = this.props;
+        console.log('---->')
+        console.log(item)
         if(item.type == 'contacts'){
+            var contactName = item.attributes.first_name + ' ' + item.attributes.last_name
             return(
-                <View style = {styles.contacvView}>
-                    <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
-                    <View style = {styles.subcontactView}>
-                        <TouchableOpacity onPress = {() => this.onClickedMail()}>
-                            <View style = {styles.contactItemView}>
-                                <FontAwesome name = 'envelope' size = {18} color = 'white' />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style = {styles.contactItemView}>
-                                <MaterialIcons name = 'sms' size = {18} color = 'white' />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style = {styles.contactItemView}>
-                                <FontAwesome name = 'phone' size = {18} color = 'white' />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style = {{marginLeft: 10}}>
-                            <MaterialCommunityIcons name = 'close' size = {18} color = '#717171' />
-                        </TouchableOpacity>
+                <TouchableOpacity style = {styles.view2} onPress = {() => this.onClickedRelated(item.id, contactName)}>   
+                    {
+                        item.attributes.photo_url?  <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg}/>:
+                        <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                    }
+                    <View style = {styles.rowSubView}>
+                        <Label style = {styles.label1}>{contactName}</Label>
+                        {
+                            this.state.contactInfo.included?
+                            <View style = {styles.tagView}>
+                                {
+                                    this.showContactGroups() 
+                                }
+                            </View> : null
+                        }
+                        
                     </View>
-                </View>
+                </TouchableOpacity>
             )
         }
         else if(item.type == 'properties'){
             return(
-                <View style = {styles.sublistingView}>
+                <TouchableOpacity style = {styles.sublistingView} onPress = {() => this.onClickProperty(item)}>
                     <Thumbnail square source = {{uri: item.attributes.thumbnail}} style = {styles.listingIcon} defaultSource = {images.ic_placeholder_image}/>
-                    <Label style = {styles.listingLable}>{item.attributes.full_address}</Label>
-                    <TouchableOpacity style = {{marginLeft: 10}}>
-                        <MaterialCommunityIcons name = 'close' size = {18} color = '#717171' />
-                    </TouchableOpacity>
-                </View>
+                    <View style = {styles.rowSubView}>
+                        <Label style = {styles.label1}>{item.attributes.full_address}</Label>
+                        <View style = {styles.tagView}>
+                            <View style = { styles.eachtag } >
+                                <Label style = {styles.tagTxt}>{this.capitalizeListingTypeTag(item.attributes.listing_type)}</Label>
+                            </View>
+                            <View style = { styles.eachtag } >
+                                <Label style = {styles.tagTxt}>{this.capitalizeListingTypeTag(item.attributes.property_type)}</Label>
+                            </View>
+                        </View>
+                        <View style = {styles.line1}/>
+                    </View>
+                </TouchableOpacity>
             )
         }
+    }
+
+    capitalizeListingTypeTag(text){
+        var res = text.split('_')
+        var newRes = []
+        for(var i = 0 ; i < res.length ; i++){
+            newRes.push(res[i].charAt(0).toUpperCase() + res[i].slice(1))
+        }
+        return newRes.join(' ')
+    }
+
+    showContactGroups() {
+        return(
+            this.state.contactInfo.included.map((item1, index1) => {
+                return(
+                    <View style = { styles.eachtag } key = {index1}>
+                        <Label style = {styles.tagTxt}>{item1.attributes.name}</Label>
+                    </View>
+                )
+            })
+        )
     }
 
     showTasksDetail(){
@@ -128,9 +180,6 @@ class tasksShow extends Component<{}>{
                                return(this.renderRow(item, index))
                             })
                         }
-                        <Button transparent style = {styles.attachBtn}>
-                            <Label style = {styles.attachTxt}>+ ATTACH CONTACT</Label>
-                        </Button>
                     </View> : null
                 }
 
@@ -143,9 +192,6 @@ class tasksShow extends Component<{}>{
                                 return(this.renderRow(item, index))
                             })
                         }
-                        <Button transparent style = {styles.attachBtn}>
-                            <Label style = {styles.attachTxt}>+ ATTACH CONTACT</Label>
-                        </Button>
                     </View> : null
                 }
 
@@ -180,7 +226,7 @@ class tasksShow extends Component<{}>{
 
     back() {
         Keyboard.dismiss(); 
-        
+
         if (this.props.navigation.state.params && typeof this.props.navigation.state.params.onNavigateBack !== "undefined") {
             this.props.navigation.state.params.onNavigateBack(); 
         }

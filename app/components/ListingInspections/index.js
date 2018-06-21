@@ -25,6 +25,7 @@ class ListingInspections extends Component {
 
     componentWillMount() {
         getListingsInspections(this.props.token, this.props.listings_about.id).then(data => {
+            console.log(data)
             this.setState({
                 isLoading: false,
                 inspectionsList: data.data

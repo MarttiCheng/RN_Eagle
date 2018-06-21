@@ -100,7 +100,6 @@ class ContactTask extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
-        // contact_groups: state.contacts.contact_groups,
         contact_id: state.contacts.contact_id,
         task_flag: state.task.task_flag
         
