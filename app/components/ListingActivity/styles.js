@@ -6,7 +6,7 @@ export default {
     container: {
         flex: 1,
         backgroundColor: '#ddd',
-        
+        paddingBottom: 15,
         paddingLeft: 15,
         paddingRight: 15,
     },
@@ -63,7 +63,7 @@ export default {
     menuView: {
         width: width,
         height: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT,
-        paddingTop: (Platform.OS == 'ios')? 20 : StatusBar.currentHeight,
+        // paddingTop: (Platform.OS == 'ios')? 20 : StatusBar.currentHeight,
         flexDirection:'row',
         alignItems:'center',
         backgroundColor: '#2B3643',

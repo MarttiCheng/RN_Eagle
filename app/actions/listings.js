@@ -38,7 +38,7 @@ function getListingsVendors(token, id){
 
 function getListingsActivity(token, id) {
     return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.ALL_LISTINGS + '/' + id + '/notes' + '?sort=-created_at', {
+        fetch(API.BASE_URL + API.ALL_LISTINGS + '/' + id + '/notes' + '?sort=-created_at' + '&page[offset]=0&page[limit]=20', {
             method: 'GET',
             headers: {
                 'Authorization': token

@@ -199,7 +199,7 @@ function getEachContactRelationships(token, id) {
 
 function getContactActivity(token, id) {
     return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/notes', {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/notes'+ '?sort=-created_at' + '&page[offset]=0&page[limit]=20', {
             method: 'GET',
             headers: {
                 'Authorization': token
