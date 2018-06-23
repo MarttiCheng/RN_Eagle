@@ -1,6 +1,6 @@
 //import libraries
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView, Modal} from 'react-native';
+import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView, Modal, ListView} from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
@@ -18,22 +18,69 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 class ListingActivity extends Component {
     constructor(props){
         super(props)
+
+        let ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
         this.state = {
-            isLoading: true,
+            isLoading: false,
             activityList: [],
             modalVisible: false,
-            selected_note: []
+            selected_note: [],
+            page: 0,
+            dataSource: ds,
+            data: [],
+            fetching: false,
+            refreshing: false,
         }
     }
     
     componentWillMount() {
-       getListingsActivity(this.props.token, this.props.listings_about.id).then(data => {  
+       this._fetchMore(this.state.page)
+    }
+
+    _onRefresh() {
+        if (this.state.refreshing) {
+            return;
+        }
+
+        this.setState({refreshing: true, page: 0});
+
+        getListingsActivity(this.props.token, this.props.listings_about.id, this.state.page).then(data => {  
            this.setState({
                isLoading: false,
-               activityList: data.data
+               refreshing: false,
+           }) 
+        })
+
+    }
+
+    _fetchMore(page) {
+        if (this.state.fetching) {
+            return;
+        }
+
+        this.setState({fetching: true});
+
+
+        getListingsActivity(this.props.token, this.props.listings_about.id, page).then(data => { 
+            var data;
+            if (this.state.refreshing) {
+                data = data.data;
+            } else {
+                data = [...this.state.data, ...data.data];
+            }
+
+           this.setState({
+               isLoading: false,
+               page: page + 1,
+               dataSource: this.state.dataSource.cloneWithRows(data),
+               data: data,
+               fetching: false
            }) 
         })
     }
+
 
     showNoteIcon(note_type) {
         if(note_type == "Email" || note_type == "Property Alert Email"){
@@ -80,9 +127,9 @@ class ListingActivity extends Component {
         })
     }
 
-    renderRow(item, index) {
-        return(
-            <TouchableOpacity key = {index} onPress = {() => this.onClickedNote(item)}>
+    _renderRow(item) {
+        return (
+            <TouchableOpacity onPress = {() => this.onClickedNote(item)}>
                 <View style = {styles.activityItem} >
                     <View style = {styles.view1}>
                         { this.showNoteIcon(item.attributes.note_type) }
@@ -97,18 +144,26 @@ class ListingActivity extends Component {
                     </View>
                 </View>
             </TouchableOpacity>
-        )
+        );
     }
 
     showContactActivity() {
         return(
-            this.state.activityList.map((item, index) => {
-                return( this.renderRow(item, index ));
-            })
+            <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this._renderRow.bind(this)}
+                onEndReached={() => this._fetchMore(this.state.page)}
+                enableEmptySections
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this._onRefresh.bind(this)}
+                    />
+                }
+            />
         )
     }
 
-    
     render() {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>

@@ -6,12 +6,12 @@ export default {
     container: {
         flex: 1,
         backgroundColor: '#ddd',
-        paddingBottom: 15,
         paddingLeft: 15,
         paddingRight: 15,
     },
     activityItem: {
-        marginTop: 20
+        marginTop: 15,
+        marginBottom: 5
     },
     view1: {
         flexDirection: 'row',

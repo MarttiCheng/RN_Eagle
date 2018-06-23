@@ -89,8 +89,6 @@ class tasksShow extends Component<{}>{
 
     renderRow(item, index) {
         var { dispatch } = this.props;
-        console.log('---->')
-        console.log(item)
         if(item.type == 'contacts'){
             var contactName = item.attributes.first_name + ' ' + item.attributes.last_name
             return(
