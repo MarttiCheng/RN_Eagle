@@ -12,19 +12,6 @@ import { Sae, Hoshi } from 'react-native-textinput-effects'
 import { getInspectionPreregistered, getInspectionEnquired, getContactGroups, getContactRelationships } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
-var registerList = [
-    {avatar: images.avatar_female, name: 'Sally Smith', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'John Sample', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-]
-
-var enquiredList = [
-    {avatar: images.avatar_female, name: 'Sally Smith', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'John Sample', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'Sally Smith', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'Sally Smith', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'John Sample', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'John Sample', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-]
 
 // create a component
 class NewAttendee extends Component {
@@ -48,38 +35,28 @@ class NewAttendee extends Component {
         var allList = []
         getInspectionPreregistered(this.props.token, this.props.inspectionInfo.id).then(data => {
             getInspectionEnquired(this.props.token, this.props.inspectionInfo.attributes.property_id).then(data1 => {
-                console.log('1')
-                console.log(data1)
-                if(data1.data.length > 0){
+                if(data.data.length > 0) {
                     for(var i = 0; i < data.included.length; i++){
                         idList1.push(data.included[i].id)
                     }
+                }
+                if(data1.data.length > 0){
                     for(var i = 0; i < data1.included.length; i++){
-                        idList2.push(data.included[i].id)
+                        idList2.push(data1.included[i].id)
                     }
-                    allList = idList1.concat(idList2)
-                    console.log('______')
-                    console.log(allList)
-                    getContactGroups(this.props.token, allList).then(groupData => {
-                        console.log('2')
-                        getContactRelationships(this.props.token, allList).then(relationshipData => {
-                            this.setState({
-                                contactGroups: groupData,
-                                contactRelationships: relationshipData,
-                                isLoading: false,
-                                registerList: data.included,
-                                enquiredList: data1.included,
-                            })
+                }
+                allList = idList1.concat(idList2)
+                getContactGroups(this.props.token, allList).then(groupData => {
+                    getContactRelationships(this.props.token, allList).then(relationshipData => {
+                        this.setState({
+                            contactGroups: groupData,
+                            contactRelationships: relationshipData,
+                            isLoading: false,
+                            registerList: data.data.length > 0? data.included : [],
+                            enquiredList: data1.data.length > 0? data1.included : [],
                         })
                     })
-                }
-                else {
-                    this.setState({
-                        isLoading: false,
-                        registerList: [],
-                        enquiredList: [],
-                    })
-                }
+                })
             })
         })
     }
@@ -112,7 +89,6 @@ class NewAttendee extends Component {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
         dispatch ({ type: 'GET_CONTACTS_RELATIONSHIP', data: this.state.contactRelationships[index]})
-        // dispatch(NavigationActions.navigate({routeName: 'contactsShow'}))
         dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: item.data.attributes.first_name + ' ' + item.data.attributes.last_name}}))
     }
 
@@ -151,7 +127,7 @@ class NewAttendee extends Component {
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
                         <Label style = {styles.label2}>{item.attributes.mobile_phone}</Label>
-                        <Label style = {styles.label2}>{item.attributes.email}</Label>                        
+                        <Label style = {styles.label2}>{item.attributes.email}</Label>
                     </View>
                     <View style = {styles.checkView}>
                         <Label style = {styles.checkTxt}>CHECK IN</Label>

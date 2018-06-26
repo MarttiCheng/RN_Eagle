@@ -61,4 +61,12 @@ export default {
         color: '#364150',
         fontFamily: 'open-sans-bold',
     },
+    BackBtn: {
+        width: width/3,
+        height: 45,
+        borderWidth: 1,
+        borderColor: 'gray',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 }

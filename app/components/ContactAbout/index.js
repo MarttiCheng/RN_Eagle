@@ -23,8 +23,7 @@ const { width, height } = Dimensions.get('window')
 var property_alerts_subscribed = true;
 var sms_subscribed = true;
 var subscribed = true;
-
-var isAddGroup = false
+var isAddGroup = false;
 
 // create a component
 class ContactAbout extends Component {

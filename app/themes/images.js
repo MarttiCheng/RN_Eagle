@@ -24,7 +24,6 @@ const images = {
     ic_delete: require('../assets/img/ic_remove.png'),
     ic_back_btn: require('../assets/img/ic_backbtn.png'),
 
-
     //Dummy images
     barbados_small : require('../assets/img/assets/barbados_small.png'),
     france_small: require('../assets/img/assets/france_small.png'),

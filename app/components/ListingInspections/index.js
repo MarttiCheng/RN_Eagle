@@ -33,8 +33,6 @@ class ListingInspections extends Component {
     }
 
     onClickedInspection(item) {
-        console.log('===')
-        console.log(this.props.info)
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_INSPECTIONS_RELATIONSHIP', data: this.props.info})
         dispatch ({ type: 'ISPECTION_ID', data: item.id })
@@ -70,7 +68,7 @@ class ListingInspections extends Component {
             return(
                 <Label style = {styles.nomoretxt}>There's nothing here.</Label>
             )
-        }        
+        }
     }
     
     render() {

@@ -5,8 +5,6 @@ export default {
     container: {
         flex: 1,
         backgroundColor: 'white',
-        
-        // paddingTop: 10,
     },
     rowView: {
         flex:1,
@@ -157,7 +155,6 @@ export default {
         height: 1,
         width: width,
         backgroundColor: 'lightgray',
-        // marginTop: 12,
         position: 'absolute',
         bottom: 0,
         left: 60

@@ -417,7 +417,6 @@ class contactsShow extends Component<{}>{
 const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
-        // contact_group: state.contacts.contact_groups,
         edit_contact_item: state.contacts.edit_contact_item,
         edit_contact_groups_item: state.contacts.edit_contact_groups_item,
         contact_id: state.contacts.contact_id,

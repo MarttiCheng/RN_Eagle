@@ -219,7 +219,6 @@ class contacts extends Component<{}>{
     clickItemContact(item, index) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACTS_ALL', data: this.state.contactsList})
-        // dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
         dispatch ({ type: 'GET_CONTACT_ID', data: item.data.id})
         dispatch ({ type: 'GET_CONTACT_NAME', data: item.data.attributes.first_name + ' ' + item.data.attributes.last_name})
         
