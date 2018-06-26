@@ -26,25 +26,31 @@ class ListingTasks extends Component {
 
     componentWillMount() {
         getListingsTasks(this.props.token, this.props.listings_about.id).then(data => { 
-           this.setState({
-               isLoading: false,
-               tasksList: data.data
-           })
+            this.setState({
+                isLoading: false,
+                tasksList: data.data
+            })
         })
     }
 
     onClickedTask(item) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_TASK_ITEM', data: item})
-        dispatch(NavigationActions.navigate({routeName: 'tasksShow'}))
+
+        this.props.navigation.navigate('tasksShow', {
+            onNavigateBack: this.handleOnNavigateBack.bind(this)
+        })
     }
 
     renderRow(item, index) {
         return(
             <TouchableOpacity key = {index} onPress = {() => this.onClickedTask(item)}>
                 <View style = {styles.taskItemView}>
-                    <View style = {styles.view1}> 
-                        <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
+                    <View style = {styles.view1}>
+                        {
+                            item.attributes.completed_at? <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/> : 
+                            <Thumbnail square source = {images.ic_checkbox} style = {styles.checkImg}/>
+                        }
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label1}>{item.attributes.body}</Label>
                         </View>

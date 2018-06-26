@@ -37,6 +37,10 @@ class listingsShow extends Component<{}>{
         }  
     }
 
+    addNewProperty() {
+        
+    }
+
     render() {
         return(
             <Container style = {styles.container}>
@@ -63,7 +67,7 @@ class listingsShow extends Component<{}>{
                         <ListingActivity/>
                     </Tab>
                     <Tab heading="INSPECTIONS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}>
-                        <ListingInspections />
+                        <ListingInspections info = {this.props.navigation.state.params.info}/>
                     </Tab>
                     <Tab heading="DOCUMENTS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <ListingDocuments/>
@@ -72,6 +76,10 @@ class listingsShow extends Component<{}>{
                         <ListingTasks/>
                     </Tab>
                 </Tabs>
+
+                <TouchableOpacity style = {styles.addBtn} onPress = {() => this.addNewProperty()}>
+                    <Label style = {styles.addTxt}>+</Label>
+                </TouchableOpacity>
                 
             </Container>
         )

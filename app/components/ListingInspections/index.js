@@ -11,7 +11,7 @@ import images from '../../themes/images'
 import {FontAwesome} from '@expo/vector-icons'
 import { getListingsInspections } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
-
+import { NavigationActions, Header } from 'react-navigation'
 
 // create a component
 class ListingInspections extends Component {
@@ -24,7 +24,11 @@ class ListingInspections extends Component {
     }
 
     componentWillMount() {
+        console.log('!!!!')
+        console.log(this.props.listings_about)
         getListingsInspections(this.props.token, this.props.listings_about.id).then(data => {
+            console.log('&&')
+            console.log(data)
             this.setState({
                 isLoading: false,
                 inspectionsList: data.data
@@ -32,9 +36,17 @@ class ListingInspections extends Component {
         })
     }
 
+    onClickedInspection(item) {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_INSPECTIONS_RELATIONSHIP', data: this.props.info})
+        dispatch ({ type: 'ISPECTION_ID', data: item.id })
+        dispatch ({ type: 'ISPECTION_INFO', data: item })
+        dispatch(NavigationActions.navigate({routeName: 'homeShow'}))
+    }
+
     renderRow(item, index) {
         return(
-            <View style = {styles.activityItem} key = {index} >
+            <TouchableOpacity style = {styles.activityItem} key = {index} onPress = {() => this.onClickedInspection(item)}>
                 <View style = {styles.view1}>
                     <Label style = {styles.dateTxt}>{moment(item.attributes.start_datetime).format('Do MMMM')}</Label>
                 </View>
@@ -44,7 +56,7 @@ class ListingInspections extends Component {
                         {moment(item.attributes.start_datetime).format('h:mma')} - {moment(item.attributes.end_datetime).format('h:mma')}
                     </Label> 
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
     

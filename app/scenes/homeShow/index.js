@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images'
+import moment from 'moment'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import HomeMine from '../../components/HomeMine/index'
 import NewAttendee from '../../components/NewAttendee/index'
@@ -44,8 +45,8 @@ class homeShow extends Component<{}>{
                         <Thumbnail square source = {images.ic_back_btn} style = {styles.backImg}/>
                     </TouchableOpacity>
                     <View style = {styles.titleView}>
-                        <Label style = {styles.title}>50 Bay St, Double Bay</Label>
-                        <Label style = {styles.timetitle}>March 10th 10am - 10:30am</Label>
+                        <Label style = {styles.title}>{this.props.relationship_inspection.attributes.full_address}</Label>
+                        <Label style = {styles.timetitle}>{moment(this.props.inspectionInfo.attributes.start_datetime).format('MMMM Do h:mma')} - {moment(this.props.inspectionInfo.attributes.end_datetime).format('h:mma')}</Label>
                     </View>
                     <TouchableOpacity style = {{width: 45, height: 45}}/>
                 </View>
@@ -68,6 +69,9 @@ class homeShow extends Component<{}>{
 const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token,
+        relationship_inspection: state.home.selected_inspection,
+        inspectionId: state.home.inspectionID,
+        inspectionInfo: state.home.inspectionInfo
     }
 }
 

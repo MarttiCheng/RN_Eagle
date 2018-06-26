@@ -622,7 +622,7 @@ class ContactAbout extends Component {
                             transparent = {true}
                             optionListStyle = {styles.optionList_belong}
                         >
-                            <Option value = {{name: 'Unassigned', id: null}} styleText = {styles.optiontxt}>Unassigned</Option>
+                            <Option value = {{name: 'Unassigned', id: ''}} styleText = {styles.optiontxt}>Unassigned</Option>
                             <Option value = {{name: 'Me', id: this.props.userID}} styleText = {styles.optiontxt}>Me</Option>
                             {
                                 this.state.usersList.map((item, index) => {

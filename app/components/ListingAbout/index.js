@@ -10,6 +10,7 @@ import images from '../../themes/images'
 import { getListingsVendors } from '../../actions'
 import Moment from 'react-moment';
 import moment from 'moment'
+import numeral from 'numeral'
 
 // create a component
 class ListingAbout extends Component {
@@ -103,12 +104,27 @@ class ListingAbout extends Component {
     showListing2() {
         return(
             <View>
-
+                {
+                    (this.props.listings_about.attributes.commercial_floor_area == 0 || !this.props.listings_about.attributes.commercial_floor_area) ? null :
+                    <View style = {styles.view1}>
+                        <Label style = {styles.label1}>Floor area</Label>
+                        <Label style = {styles.label2}>{this.props.listings_about.attributes.commercial_floor_area} {this.props.listings_about.attributes.commercial_floor_area_units}</Label>
+                        <View style = {styles.seperateLine}/>
+                    </View>
+                }
             </View>
         )
     }
     
+    DecimalValue(value) {
+        var units = null
+        units = numeral(value).format('0,0')
+        return units
+    }
+
     render() {
+        console.log('****')
+        console.log(this.props.listings_about.attributes.price)
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 <View>
@@ -156,7 +172,7 @@ class ListingAbout extends Component {
                         (this.props.listings_about.attributes.price == 0 || !this.props.listings_about.attributes.price) ? null :
                         <View style = {styles.view1}>
                             <Label style = {styles.label1}>Internal Price</Label>
-                            <Label style = {styles.label2}>${this.props.listings_about.attributes.price}</Label>
+                            <Label style = {styles.label2}>${this.DecimalValue(this.props.listings_about.attributes.price)}</Label>
                             <View style = {styles.seperateLine}/>
                         </View>
                     }

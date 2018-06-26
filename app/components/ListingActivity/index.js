@@ -23,7 +23,7 @@ class ListingActivity extends Component {
             rowHasChanged: (r1, r2) => r1 !== r2
         });
         this.state = {
-            isLoading: false,
+            isLoading: true,
             activityList: [],
             modalVisible: false,
             selected_note: [],
@@ -46,13 +46,12 @@ class ListingActivity extends Component {
 
         this.setState({refreshing: true, page: 0});
 
-        getListingsActivity(this.props.token, this.props.listings_about.id, this.state.page).then(data => {  
+        getListingsActivity(this.props.token, this.props.listings_about.id, this.state.page).then(data => {
            this.setState({
                isLoading: false,
                refreshing: false,
            }) 
         })
-
     }
 
     _fetchMore(page) {
@@ -61,7 +60,6 @@ class ListingActivity extends Component {
         }
 
         this.setState({fetching: true});
-
 
         getListingsActivity(this.props.token, this.props.listings_about.id, page).then(data => { 
             var data;

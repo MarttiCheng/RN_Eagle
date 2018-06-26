@@ -54,4 +54,25 @@ export default {
         color: 'white',
         fontFamily: 'open-sans-regular'
     },
+    addBtn: {
+        position: 'absolute',
+        right: 20,
+        bottom: 20,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#364150',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#364150',
+        shadowOpacity: 0.8,
+        shadowRadius: 5,
+        shadowOffset: {height: 0, width: 0},
+    },
+    addTxt: {
+        color: 'white',
+        fontSize: 35,
+        fontWeight: '300',
+        marginTop: -5
+    },
 }

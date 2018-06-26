@@ -45,6 +45,8 @@ class HomeSale extends Component {
     }
 
     onClickHome(item, data) {
+        console.log('-->')
+        console.log(item)
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_INSPECTIONS_RELATIONSHIP', data: item})
         dispatch ({ type: 'ISPECTION_ID', data: data.id })

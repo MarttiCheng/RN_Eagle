@@ -1,4 +1,5 @@
 import { API } from '../constants'
+import {Content} from 'native-base';
 
 function getProperties(token) {
     return new Promise((resolve, reject) => {
@@ -77,7 +78,8 @@ function getListingsDocuments(token, id) {
         fetch(API.BASE_URL + API.ALL_LISTINGS + '/' + id + '/documents', {
             method: 'GET',
             headers: {
-                'Authorization': token
+                'Authorization': token,
+                'Content-Type': 'application/vnd.api+json'
             }
         })
         .then((res) => res.json())

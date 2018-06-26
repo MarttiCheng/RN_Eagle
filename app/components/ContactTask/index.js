@@ -53,6 +53,7 @@ class ContactTask extends Component {
     }
 
     renderRow(item, index) {
+        console.log(item)
         return(
             <TouchableOpacity key = {index} onPress = {() => this.onClickedTask(item)}>
                 <View style = {styles.taskItemView}>
@@ -61,9 +62,13 @@ class ContactTask extends Component {
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label1}>{item.attributes.body}</Label>
                         </View>
-                        <Label style = {styles.favoriteDate}>
-                            {moment(item.attributes.due_date).format('DD MMM')}
-                        </Label>
+                        {
+                            moment(item.attributes.due_date).format('DD MMM') == 'Invalid date'? null :
+                                <Label style = {styles.favoriteDate}>
+                                    {moment(item.attributes.due_date).format('DD MMM')}
+                                </Label> 
+                        }
+                        
                     </View>
                     <View style = {styles.line1}/>
                 </View>
