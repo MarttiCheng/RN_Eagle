@@ -123,8 +123,6 @@ class ListingAbout extends Component {
     }
 
     render() {
-        console.log('****')
-        console.log(this.props.listings_about.attributes.price)
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 <View>

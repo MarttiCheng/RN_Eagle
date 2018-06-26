@@ -24,11 +24,7 @@ class ListingInspections extends Component {
     }
 
     componentWillMount() {
-        console.log('!!!!')
-        console.log(this.props.listings_about)
         getListingsInspections(this.props.token, this.props.listings_about.id).then(data => {
-            console.log('&&')
-            console.log(data)
             this.setState({
                 isLoading: false,
                 inspectionsList: data.data
@@ -37,6 +33,8 @@ class ListingInspections extends Component {
     }
 
     onClickedInspection(item) {
+        console.log('===')
+        console.log(this.props.info)
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_INSPECTIONS_RELATIONSHIP', data: this.props.info})
         dispatch ({ type: 'ISPECTION_ID', data: item.id })

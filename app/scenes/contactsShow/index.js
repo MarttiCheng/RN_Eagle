@@ -61,13 +61,23 @@ class contactsShow extends Component<{}>{
             isSaving: true
         })   
         getContactGroup(this.props.token, this.props.contact_id).then(data1 => {
-            getUser(this.props.token, data1.data.attributes.user_id).then(data => {
+            if(data1.data.attributes.user_id){
+                getUser(this.props.token, data1.data.attributes.user_id).then(data => {
+                    this.setState({
+                        isSaving: false,
+                        belongsToName: data.data.attributes.first_name + ' ' +  data.data.attributes.last_name,
+                        contactInfo: data1
+                    })
+                })
+            }
+            else{
                 this.setState({
                     isSaving: false,
-                    belongsToName: data.data.attributes.first_name + ' ' +  data.data.attributes.last_name,
+                    belongsToName: 'Unassigned',
                     contactInfo: data1
                 })
-            })
+            }
+            
         })
     }
 

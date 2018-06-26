@@ -48,6 +48,8 @@ class NewAttendee extends Component {
         var allList = []
         getInspectionPreregistered(this.props.token, this.props.inspectionInfo.id).then(data => {
             getInspectionEnquired(this.props.token, this.props.inspectionInfo.attributes.property_id).then(data1 => {
+                console.log('1')
+                console.log(data1)
                 if(data1.data.length > 0){
                     for(var i = 0; i < data.included.length; i++){
                         idList1.push(data.included[i].id)
@@ -56,7 +58,10 @@ class NewAttendee extends Component {
                         idList2.push(data.included[i].id)
                     }
                     allList = idList1.concat(idList2)
+                    console.log('______')
+                    console.log(allList)
                     getContactGroups(this.props.token, allList).then(groupData => {
+                        console.log('2')
                         getContactRelationships(this.props.token, allList).then(relationshipData => {
                             this.setState({
                                 contactGroups: groupData,
