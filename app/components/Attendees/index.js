@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView} from 'react-native';
 import {
-    Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
+    Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail, Item, Tab, Tabs, ScrollableTab, Header
 } from 'native-base'
 import { connect } from 'react-redux'
 import styles from './styles'
@@ -117,6 +117,32 @@ class Attendees extends Component {
                 )
             }
         }
+        if(category == 1){
+            if(this.state.intcontactGroups[index].included){
+                return(
+                    this.state.intcontactGroups[index].included.map((item1, index1) => {
+                        return(
+                            <View style = { styles.eachtag } key = {index1}>
+                                <Label style = {styles.tagTxt}>{item1.attributes.name}</Label>
+                            </View>
+                        )
+                    })
+                )
+            }
+        }
+        if(category == 2){
+            if(this.state.notcontactGroups[index].included){
+                return(
+                    this.state.notcontactGroups[index].included.map((item1, index1) => {
+                        return(
+                            <View style = { styles.eachtag } key = {index1}>
+                                <Label style = {styles.tagTxt}>{item1.attributes.name}</Label>
+                            </View>
+                        )
+                    })
+                )
+            }
+        }
     }
 
     renderRow(item, index, category) {
@@ -147,36 +173,29 @@ class Attendees extends Component {
         if((this.state.mayInterestedList.length + this.state.interestedList.length + this.state.notInterestedList.length) > 0){
             return(
                 <View>
-                    <View >
-                        {
-                            this.state.mayInterestedList.length == 0 ? null : <Label style = {styles.preregisteredTitle}>Swipe to rate interest</Label>
-                        }
-                        {
-                            this.state.mayInterestedList.map((item, index) => {
-                                return(this.renderRow(item, index, 0));
-                            })
-                        }
-                    </View>
-                    <View >
-                        {
-                            this.state.interestedList.length == 0 ? null : <Label style = {styles.preregisteredTitle}>Interested</Label>
-                        }
-                        {
-                            this.state.interestedList.map((item, index) => {
-                                return(this.renderRow(item, index, 1));
-                            })
-                        }
-                    </View> 
-                    <View >
-                        {
-                            this.state.notInterestedList.length == 0 ? null : <Label style = {styles.preregisteredTitle}>Not Interested</Label>
-                        }
-                        {
-                            this.state.notInterestedList.map((item, index) => {
-                                return(this.renderRow(item, index, 2));
-                            })
-                        }
-                    </View>
+                    <Tabs renderTabBar={()=> <ScrollableTab />} initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#364150',height: 3}} locked = {false} style = {{backgroundColor: '#CFCFCF'}}>
+                        <Tab heading="Interested" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#CFCFCF'}} activeTabStyle = {{backgroundColor: '#CFCFCF'}}> 
+                            {
+                                this.state.interestedList.map((item, index) => {
+                                    return(this.renderRow(item, index, 1));
+                                })
+                            }
+                        </Tab>
+                        <Tab heading="Swipe to rate interests" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#CFCFCF'}} activeTabStyle = {{backgroundColor: '#CFCFCF'}}> 
+                            {
+                                this.state.mayInterestedList.map((item, index) => {
+                                    return(this.renderRow(item, index, 0));
+                                })
+                            }
+                        </Tab>
+                        <Tab heading="Not interested" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#CFCFCF'}} activeTabStyle = {{backgroundColor: '#CFCFCF'}}>
+                            {
+                                this.state.notInterestedList.map((item, index) => {
+                                    return(this.renderRow(item, index, 2));
+                                })
+                            }
+                        </Tab>
+                    </Tabs>
                 </View>
             )
         }

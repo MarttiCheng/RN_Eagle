@@ -119,7 +119,7 @@ class ListingAbout extends Component {
     DecimalValue(value) {
         var units = null
         units = numeral(value).format('0,0')
-        return units
+        return units;
     }
 
     render() {
@@ -174,7 +174,6 @@ class ListingAbout extends Component {
                             <View style = {styles.seperateLine}/>
                         </View>
                     }
-                   
                 </View>
                 
                 {

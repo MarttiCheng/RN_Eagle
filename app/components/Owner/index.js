@@ -73,16 +73,12 @@ class Owner extends Component {
         dispatch(NavigationActions.navigate({routeName: 'sendEmail'}))
     }
 
-    // clickEachVendor(item, index){
-    //     var { dispatch } = this.props;
-    //     dispatch(NavigationActions.navigate({routeName: 'contactsShow'})) 
-    // }
-
     clickEachVendor(item, index) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
+        dispatch ({ type: 'GET_CONTACT_ID', data: item.data.id})
         dispatch ({ type: 'GET_CONTACTS_RELATIONSHIP', data: this.state.contactRelationships[index]})
-        dispatch(NavigationActions.navigate({routeName: 'contactsShow'}))
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: item.data.attributes.first_name + ' ' + item.data.attributes.last_name}}))
     }
 
     renderRow(item, index){

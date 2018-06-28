@@ -88,6 +88,7 @@ class NewAttendee extends Component {
     clickAttendee(item, index) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACTS_GROUP', data: item})
+        dispatch ({ type: 'GET_CONTACT_ID', data: item.data.id})
         dispatch ({ type: 'GET_CONTACTS_RELATIONSHIP', data: this.state.contactRelationships[index]})
         dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: item.data.attributes.first_name + ' ' + item.data.attributes.last_name}}))
     }
@@ -220,9 +221,9 @@ class NewAttendee extends Component {
                                 autoCorrect = {false}
                             />
                         </View>
-                        <View style = {styles.editPropertyView}>
+                        {/*<View style = {styles.editPropertyView}>
                             <Label style = {styles.editTxt}>Edit Property Preferences</Label>
-                        </View>
+                        </View>*/}
                         <View style = {styles.editSegementView}>
                             <TouchableOpacity onPress = {() => this.onNotInterested()}>
                                 <View style = {[styles.nonInterestedView, this.state.isNotInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
@@ -246,11 +247,11 @@ class NewAttendee extends Component {
                                     <Label style = {styles.clearTxt}>Clear</Label>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            {/*<TouchableOpacity>
                                 <View style = {styles.saveBtnView}>
                                     <Label style = {styles.clearTxt}>SAVE</Label>
                                 </View>
-                            </TouchableOpacity>
+                            </TouchableOpacity>*/}
                         </View>
                     </View>
                     

@@ -45,7 +45,7 @@ class homeShow extends Component<{}>{
                         <Thumbnail square source = {images.ic_back_btn} style = {styles.backImg}/>
                     </TouchableOpacity>
                     <View style = {styles.titleView}>
-                        <Label style = {styles.title}>{this.props.relationship_inspection.attributes.full_address}</Label>
+                        <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{this.props.relationship_inspection.attributes.full_address}</Label>
                         <Label style = {styles.timetitle}>{moment(this.props.inspectionInfo.attributes.start_datetime).format('MMMM Do h:mma')} - {moment(this.props.inspectionInfo.attributes.end_datetime).format('h:mma')}</Label>
                     </View>
                     <TouchableOpacity style = {{width: 45, height: 45}}/>

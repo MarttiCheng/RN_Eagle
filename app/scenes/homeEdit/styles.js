@@ -120,7 +120,6 @@ export default {
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 15,
-        marginBottom: 15,
     },
     saveBtnView: {
         width: width - 30,
@@ -208,7 +207,7 @@ export default {
     followRowView: {
         flexDirection: 'row',
         width: width,
-        height: 60,
+        height: 55,
         alignItems: 'center',
         paddingLeft: 25,
         paddingRight: 25,

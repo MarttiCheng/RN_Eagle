@@ -227,7 +227,7 @@ class contacts extends Component<{}>{
                 this.state.y1,            
                 {
                     toValue: (Platform.OS == 'ios')? -40: -28,       
-                    duration: 500,              
+                    duration: 500,
                 },
             ),
             Animated.timing( 

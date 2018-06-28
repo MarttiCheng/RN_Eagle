@@ -206,7 +206,7 @@ class homeEdit extends Component {
                                 <Label style = {styles.follwRowTxt}>View Profile</Label>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        {/*<TouchableOpacity>
                             <View style = {styles.followRowView}>
                                 <FontAwesome name = 'phone' size = {25} color = '#757575' />
                                 <Label style = {styles.follwRowTxt}>Call</Label>
@@ -223,7 +223,7 @@ class homeEdit extends Component {
                                 <FontAwesome name = 'envelope' size = {25} color = '#757575' />
                                 <Label style = {styles.follwRowTxt}>Send Email</Label>
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity>*/}
                     </View>
                     
                 </Content>

@@ -22,7 +22,6 @@ export default {
         fontSize: 18,
         fontFamily: 'open-sans-regular'
     },
-    
     backBtn: {
         width: 45,
         height: 45,
@@ -62,6 +61,7 @@ export default {
         paddingTop: 5,
         paddingBottom: 7,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        maxWidth: width - 94
     },
 }

@@ -166,5 +166,15 @@ export default {
         fontSize: 16, 
         color: '#364150',
         fontFamily: 'open-sans-bold',
-    },    
+    },  
+    inactiveTxt: {
+        fontSize: 13, 
+        color: 'black',
+        fontFamily: 'open-sans-regular'
+    },
+    activeTxt: {
+        fontSize: 13, 
+        color: 'black',
+        fontFamily: 'open-sans-regular'
+    },  
 }

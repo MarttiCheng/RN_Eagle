@@ -46,7 +46,7 @@ class HomeSale extends Component {
 
     onClickHome(item, data) {
         var { dispatch } = this.props;
-        dispatch ({ type: 'GET_INSPECTIONS_RELATIONSHIP', data: item})
+        dispatch ({ type: 'GET_INSPECTIONS_RELATIONSHIP', data: item.data})
         dispatch ({ type: 'ISPECTION_ID', data: data.id })
         dispatch ({ type: 'ISPECTION_INFO', data: data })
         dispatch(NavigationActions.navigate({routeName: 'homeShow'}))
