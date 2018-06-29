@@ -4,6 +4,7 @@ import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncSt
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
+import { getCompletedTasks, getUnCompletedTasks } from '../../actions'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import styles from './styles'
@@ -18,14 +19,38 @@ class TaskShow extends Component {
         super(props)
         this.state = {
             isLoading: true,
-            tasksList: []
+            tasksList: [],
+            completedTaskList: [],
+            uncompletedTaskList: [],
         }
+    }
+
+    componentWillMount() {
+         this.fetchListingsTask()
+    }
+
+    fetchListingsTask() {
+        getCompletedTasks(this.props.token).then(data => {
+            getUnCompletedTasks(this.props.token).then(data1 => {
+                this.setState({
+                    isLoading: false,
+                    completedTaskList: data.data,
+                    uncompletedTaskList: data1.data
+                })
+            })
+        })
+    }
+
+    handleOnNavigateBack(){
+        this.fetchListingsTask()
     }
 
     onClickedTask(item) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_TASK_ITEM', data: item})
-        dispatch(NavigationActions.navigate({routeName: 'tasksShow'}))
+        this.props.navigation.navigate('tasksShow', {
+            onNavigateBack: this.handleOnNavigateBack.bind(this)
+        })
     }
 
     renderRow(item, index) {
@@ -33,13 +58,19 @@ class TaskShow extends Component {
             <TouchableOpacity key = {index} onPress = {() => this.onClickedTask(item)}>
                 <View style = {styles.taskItemView} >
                     <View style = {styles.view1}>
-                        <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
+                        {
+                            item.attributes.completed_at? <Thumbnail square source = {images.ic_checkbox} style = {styles.checkImg}/> : 
+                            <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
+                        }
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label1}>{item.attributes.body}</Label>
                         </View>
-                        <Label style = {styles.dueDate}>
-                            {moment(item.attributes.due_date).format('DD MMM')}
-                        </Label>
+                        {
+                            moment(item.attributes.due_date).format('DD MMM') == 'Invalid date'? null :
+                                <Label style = {styles.dueDate}>
+                                    {moment(item.attributes.due_date).format('DD MMM')}
+                                </Label> 
+                        }
                     </View>
                     <View style = {styles.line1}/>
                 </View>
@@ -48,25 +79,42 @@ class TaskShow extends Component {
     }
 
     showTasks(){
-        if(this.props.tasksList.length > 0){
-            return(
-                this.props.tasksList.map((item, index) => {
-                    return( this.renderRow(item, index ));
-                })
-            )
+        if(this.props.isduetask) {
+            if(this.state.completedTaskList.length > 0){
+                return(
+                    this.state.completedTaskList.map((item, index) => {
+                        return( this.renderRow(item, index ));
+                    })
+                )
+            }
+            else {
+                return(
+                    <Label style = {styles.nomoretxt}>There's nothing here.</Label>
+                )
+            }
+
         }
         else{
-            return(
-                <Label style = {styles.nomoretxt}>There's nothing here.</Label>
-            )
-        } 
+            if(this.state.uncompletedTaskList.length > 0){
+                return(
+                    this.state.uncompletedTaskList.map((item, index) => {
+                        return( this.renderRow(item, index ));
+                    })
+                )
+            }
+            else {
+                return(
+                    <Label style = {styles.nomoretxt}>There's nothing here.</Label>
+                )
+            }
+        }
     }
     
     render() {
         return (
             <Content style = {styles.container}>
                 {
-                    this.props.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showTasks()
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> : this.showTasks()
                 }
             </Content>
         );

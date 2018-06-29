@@ -31,12 +31,12 @@ export default {
     inputItem1: {
         width: width - 40,
         height: 40,
-        marginTop: 40
+        marginTop: 30
     },
     inputItem2: {
         width: width - 40,
         height: 40,
-        marginTop: 20
+        marginTop: 10
     },
     inputTxt: {
         backgroundColor:'#e9ebea',

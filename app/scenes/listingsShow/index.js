@@ -38,7 +38,7 @@ class listingsShow extends Component<{}>{
     }
 
     addNewProperty() {
-        
+
     }
 
     render() {
@@ -62,7 +62,6 @@ class listingsShow extends Component<{}>{
                     <Tab heading="ABOUT" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <ListingAbout info = {this.props.navigation.state.params.info} navigation = {this.props.navigation}/>
                     </Tab>
-                    
                     <Tab heading="ACTIVITY" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
                         <ListingActivity/>
                     </Tab>
@@ -73,7 +72,7 @@ class listingsShow extends Component<{}>{
                         <ListingDocuments/>
                     </Tab>
                     <Tab heading="TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <ListingTasks/>
+                        <ListingTasks navigation = {this.props.navigation}/>
                     </Tab>
                 </Tabs>
 

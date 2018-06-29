@@ -25,12 +25,20 @@ class ListingTasks extends Component {
     }
 
     componentWillMount() {
+        this.fetchListingsTask()
+    }
+
+    fetchListingsTask() {
         getListingsTasks(this.props.token, this.props.listings_about.id).then(data => { 
             this.setState({
                 isLoading: false,
                 tasksList: data.data
             })
         })
+    }
+
+    handleOnNavigateBack(){
+        this.fetchListingsTask()
     }
 
     onClickedTask(item) {
@@ -48,15 +56,18 @@ class ListingTasks extends Component {
                 <View style = {styles.taskItemView}>
                     <View style = {styles.view1}>
                         {
-                            item.attributes.completed_at? <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/> : 
-                            <Thumbnail square source = {images.ic_checkbox} style = {styles.checkImg}/>
+                            item.attributes.completed_at? <Thumbnail square source = {images.ic_checkbox} style = {styles.checkImg}/> : 
+                            <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
                         }
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label1}>{item.attributes.body}</Label>
                         </View>
-                        <Label style = {styles.favoriteDate}>
-                            {moment(item.attributes.due_date).format('DD MMM')}
-                        </Label>
+                        {
+                            moment(item.attributes.due_date).format('DD MMM') == 'Invalid date'? null :
+                                <Label style = {styles.favoriteDate}>
+                                    {moment(item.attributes.due_date).format('DD MMM')}
+                                </Label> 
+                        }
                     </View>
                     <View style = {styles.line1}/>
                 </View>

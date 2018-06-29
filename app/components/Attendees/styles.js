@@ -137,7 +137,7 @@ export default {
         backgroundColor: 'lightgray',
         position: 'absolute',
         bottom: 0,
-        left: 70
+        left: 0
     },
     tagView: {
         flexDirection:'row',

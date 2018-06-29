@@ -28,19 +28,7 @@ class tasks extends Component {
             isLoading: true,
             completedTaskList: [],
             uncompletedTaskList: []
-        }   
-    }
-
-    componentWillMount() {
-        getCompletedTasks(this.props.token).then(data => {
-            getUnCompletedTasks(this.props.token).then(data1 => {
-                this.setState({
-                    isLoading: false,
-                    completedTaskList: data.data,
-                    uncompletedTaskList: data1.data
-                })
-            })
-        })
+        }
     }
 
     onAddTask() {
@@ -49,7 +37,8 @@ class tasks extends Component {
         dispatch ({ type: 'GET_CONTACT_NAME', data: ''})
         dispatch(NavigationActions.navigate({routeName: 'addNewTask'}))
     }
-    
+
+  
     render() {
         return (
             <View style={styles.container}>
@@ -67,10 +56,10 @@ class tasks extends Component {
                 </View>
                 <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47', height: 3}} locked = {true}>
                     <Tab heading="DUE TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <TaskShow tasksList = {this.state.completedTaskList} isLoading = {this.state.isLoading}/>
+                        <TaskShow navigation = {this.props.navigation} isduetask = {true}/>
                     </Tab>
                     <Tab heading="FUTURE TASKS" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <TaskShow tasksList = {this.state.uncompletedTaskList} isLoading = {this.state.isLoading}/>
+                        <TaskShow navigation = {this.props.navigation} isfuturetask = {true}/>
                     </Tab>
                 </Tabs>
                 <TouchableOpacity style = {styles.addBtn} onPress = {() => this.onAddTask()}>
@@ -84,6 +73,7 @@ class tasks extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token, 
+        tasks: state.task.tasks,
     }
 }
 

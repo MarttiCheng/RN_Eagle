@@ -247,11 +247,11 @@ class NewAttendee extends Component {
                                     <Label style = {styles.clearTxt}>Clear</Label>
                                 </View>
                             </TouchableOpacity>
-                            {/*<TouchableOpacity>
+                            <TouchableOpacity>
                                 <View style = {styles.saveBtnView}>
                                     <Label style = {styles.clearTxt}>SAVE</Label>
                                 </View>
-                            </TouchableOpacity>*/}
+                            </TouchableOpacity>
                         </View>
                     </View>
                     

@@ -45,8 +45,6 @@ class tasksShow extends Component<{}>{
         getTaskContacts(this.props.token, this.props.tasks.id).then(data => {
             getContactGroup(this.props.token, data.data.attributes.contact_id).then(groupdata => {
                 // getContactProperty_Vendor(this.props.token, data.data.attributes.contact_id).then(propertyData => {
-                //     console.log('&&&')
-                    // console.log(propertyData)
                     for(var i = 0 ; i < data.included.length ; i++) {
                         if(data.included[i].type == 'contacts'){
                             conList.push(data.included[i])
@@ -64,7 +62,6 @@ class tasksShow extends Component<{}>{
                         isLoading: false,
                     })
                 // })
-                
             })
         })
     }

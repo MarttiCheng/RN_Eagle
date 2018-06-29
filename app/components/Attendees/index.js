@@ -98,7 +98,7 @@ class Attendees extends Component {
         })
     }
 
-    clickAttend(item, index) {
+    clickAttend(item, index, category) {
         var { dispatch } = this.props;
         dispatch(NavigationActions.navigate({routeName: 'homeEdit'}))
     }
@@ -147,7 +147,7 @@ class Attendees extends Component {
 
     renderRow(item, index, category) {
         return(
-            <TouchableOpacity key = {index} onPress = {() => this.clickAttend(item, index)}>
+            <TouchableOpacity key = {index} onPress = {() => this.clickAttend(item, index, category)}>
                 <View style = {styles.rowRenderView}>
                     {
                         item.attributes.photo_url?  <Thumbnail square source = {{uri: item.attributes.photo_url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :

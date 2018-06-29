@@ -106,7 +106,7 @@ class homeEdit extends Component {
                                 onPress={ () => { this.props.navigation.goBack() }} />
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>John Sample</Label>
                     <TouchableOpacity onPress = {this._onSearch}>
-                        <Label style = {styles.editTxt}>Edit</Label>
+                        <Label style = {styles.editTxt}>Save</Label>
                     </TouchableOpacity>
                 </View>
                 <Content style = {styles.mainView} showsVerticalScrollIndicator = {false}>
@@ -162,9 +162,9 @@ class homeEdit extends Component {
                                 autoCorrect = {false}
                             />
                         </View>
-                        <View style = {styles.editPropertyView}>
+                        {/*<View style = {styles.editPropertyView}>
                             <Label style = {styles.editTxt1}>Edit Property Preferences</Label>
-                        </View>
+                        </View>*/}
                         <View style = {styles.editSegementView}>
                             <TouchableOpacity onPress = {() => this.onNotInterested()}>
                                 <View style = {[styles.nonInterestedView, this.state.isNotInterested?{backgroundColor: '#364150'} : {backgroundColor: 'white'}]}>
@@ -183,13 +183,13 @@ class homeEdit extends Component {
                             </TouchableOpacity>
                         </View>
                         
-                        <View style = {styles.buttonView}>
+                        {/*<View style = {styles.buttonView}>
                             <TouchableOpacity>
                                 <View style = {styles.saveBtnView}>
                                     <Label style = {styles.saveTxt}>SAVE</Label>
                                 </View>
                             </TouchableOpacity>
-                        </View>
+                        </View>*/}
                     </View>
                     
                     <View>

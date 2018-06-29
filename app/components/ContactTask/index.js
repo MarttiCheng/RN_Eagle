@@ -53,12 +53,14 @@ class ContactTask extends Component {
     }
 
     renderRow(item, index) {
-        console.log(item)
         return(
             <TouchableOpacity key = {index} onPress = {() => this.onClickedTask(item)}>
                 <View style = {styles.taskItemView}>
                     <View style = {styles.view1}> 
-                        <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
+                        {
+                            item.attributes.completed_at? <Thumbnail square source = {images.ic_checkbox} style = {styles.checkImg}/> : 
+                            <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
+                        }
                         <View style = {styles.rowSubView}>
                             <Label style = {styles.label1}>{item.attributes.body}</Label>
                         </View>
