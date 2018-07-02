@@ -15,11 +15,15 @@ export default {
     },
     txtinput1: {
         width: (width-40)/2,
-        paddingLeft: 30,
+        paddingLeft: 0,
+        fontSize: 15,
+        marginTop: 5
     },
     txtinput2: {
         width: width-30,
-        paddingLeft: 30
+        paddingLeft: 30,
+        fontSize: 10,
+        marginTop: 5
     },
     labelTxt: {
         color: '#0099CC',

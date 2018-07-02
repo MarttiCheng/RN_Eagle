@@ -100,7 +100,8 @@ class Attendees extends Component {
 
     clickAttend(item, index, category) {
         var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'homeEdit'}))
+        dispatch ({ type: 'SELECTED_CONTACT_INFO', data: item})
+        dispatch(NavigationActions.navigate({routeName: 'homeEdit', params: {category: category}}))
     }
 
     showContactGroups(index, category){

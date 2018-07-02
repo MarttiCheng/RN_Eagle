@@ -38,7 +38,6 @@ class tasks extends Component {
         dispatch(NavigationActions.navigate({routeName: 'addNewTask'}))
     }
 
-  
     render() {
         return (
             <View style={styles.container}>

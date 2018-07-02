@@ -170,55 +170,62 @@ class NewAttendee extends Component {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 <View>
-                    <View style = {{paddingLeft: 15, paddingRight: 15,}}>
+                    <View style = {{paddingLeft: 15, paddingRight: 15, paddingTop: 5}}>
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'First Name'}
-                                borderColor = {'#0099CC'}
+                                borderColor = {'transparent'}
                                 style = {styles.txtinput1}
+                                
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                             <Hoshi
                                 label = {'Last Name'}
-                                borderColor = {'#0099CC'}
+                                borderColor = {'transparent'}
                                 style = {styles.txtinput1}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                         </View>
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'Mobile'}
-                                borderColor = {'#0099CC'}
+                                borderColor = {'transparent'}
                                 style = {styles.txtinput1}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                             <Hoshi
                                 label = {'Phone'}
-                                borderColor = {'#0099CC'}
+                                borderColor = {'transparent'}
                                 style = {styles.txtinput1}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                         </View>
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'Email'}
-                                borderColor = {'#0099CC'}
+                                borderColor = {'transparent'}
                                 style = {styles.txtinput2}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                         </View>
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'Notes'}
-                                borderColor = {'#0099CC'}
+                                borderColor = {'transparent'}
                                 style = {styles.txtinput2}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                         </View>
                         {/*<View style = {styles.editPropertyView}>

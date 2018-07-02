@@ -8,6 +8,7 @@ const initialTokenState = {
     selected_contactForTask: [],
     contact_id: '',
     contact_name: '',
+    selected_contact_info: [],
 }
 
 function Contacts(state = initialTokenState, action) {
@@ -61,6 +62,11 @@ function Contacts(state = initialTokenState, action) {
             return {
                 ...state,
                 selected_contactForTask: action.data
+            };
+        case 'SELECTED_CONTACT_INFO' :
+            return {
+                ...state,
+                selected_contact_info: action.data
             };
         default :
             return state

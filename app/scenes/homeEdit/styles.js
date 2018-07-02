@@ -43,16 +43,32 @@ export default {
         flex:1,
         flexDirection: 'row',
         width: width - 30,
+        marginTop: 5,
         alignItems: 'center',
         justifyContent: 'space-between'
     },
     txtinput1: {
         width: (width-40)/2,
-        paddingLeft: 30,
+        paddingLeft: 0,
+        fontSize: 15,
+        marginTop: 5,
+        fontFamily: 'open-sans-regular',
     },
     txtinput2: {
         width: width-30,
-        paddingLeft: 30
+        paddingLeft: 30,
+        fontSize: 10,
+        marginTop: 5,
+        fontFamily: 'open-sans-regular',
+    },
+    textInput: {
+        position: 'absolute',
+        bottom: 2,
+        left: 5,
+        padding: 0,
+        color: '#6a7989',
+        fontSize: 18,
+        fontFamily: 'open-sans-regular',
     },
     labelTxt: {
         color: '#0099CC',
@@ -220,5 +236,13 @@ export default {
         color: 'black',
         fontSize: 16,
         marginLeft: 20,
+    },
+    labelStyle1: {
+        fontSize: 12,
+        fontFamily: 'open-sans-regular',
+    },
+    labelStyle2: {
+        fontSize: 15,
+        fontFamily: 'open-sans-regular',
     },
 }

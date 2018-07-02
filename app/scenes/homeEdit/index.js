@@ -16,15 +16,6 @@ var registerList = [
     {avatar: images.avatar_male, name: 'John Sample', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
 ]
 
-var enquiredList = [
-    {avatar: images.avatar_female, name: 'Sally Smith', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'John Sample', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'Sally Smith', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'Sally Smith', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'John Sample', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'John Sample', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-]
-
 // create a component
 class homeEdit extends Component {
     static navigationOptions = {
@@ -38,6 +29,12 @@ class homeEdit extends Component {
             isNotInterested: false,
             isMaybeInterested: true,
             isInterestd: false,
+            firstName: this.props.selected_contact_info.attributes.first_name,
+            lastName: this.props.selected_contact_info.attributes.last_name,
+            mobile: this.props.selected_contact_info.attributes.mobile_phone,
+            phone: this.props.selected_contact_info.attributes.business_hours_phone,
+            email: this.props.selected_contact_info.attributes.email,
+            notes: this.props.selected_contact_info.attributes.background_info,
         }
     }
 
@@ -91,7 +88,8 @@ class homeEdit extends Component {
     
     OnViewProfile() {
         var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {info: {name:'John Sample', avatar: images.avatar_male, job: 'Looking to rent, Vendor'}}}))
+        dispatch ({ type: 'GET_CONTACT_ID', data: this.props.selected_contact_info.id})
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: this.props.selected_contact_info.attributes.first_name + ' ' + this.props.selected_contact_info.attributes.last_name}}))
     }
 
     render() {
@@ -104,62 +102,92 @@ class homeEdit extends Component {
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
                                 onPress={ () => { this.props.navigation.goBack() }} />
-                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>John Sample</Label>
+                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{this.props.selected_contact_info.attributes.first_name} {this.props.selected_contact_info.attributes.last_name}</Label>
                     <TouchableOpacity onPress = {this._onSearch}>
                         <Label style = {styles.editTxt}>Save</Label>
                     </TouchableOpacity>
                 </View>
                 <Content style = {styles.mainView} showsVerticalScrollIndicator = {false}>
                     <Label style = {styles.editInspectionTxt}>Edit Inspection</Label>
-                    <View style = {{padding: 15}}>
+                    <View style = {{padding: 15, paddingTop: 5}}>
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'First Name'}
-                                borderColor = {'#0099CC'}
+                                value = {this.state.firstName}
+                                onChangeText = { text => this.setState({ firstName: text })}
+                                borderColor = {'transparent'}
+                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput1}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                             <Hoshi
                                 label = {'Last Name'}
-                                borderColor = {'#0099CC'}
+                                value = {this.state.lastName}
+                                onChangeText = { text => this.setState({ lastName: text })}
+                                borderColor = {'transparent'}
+                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput1}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                         </View>
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'Mobile'}
-                                borderColor = {'#0099CC'}
+                                value = {this.state.mobile}
+                                onChangeText = { text => this.setState({ mobile: text })}
+                                borderColor = {'transparent'}
+                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput1}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                             <Hoshi
                                 label = {'Phone'}
-                                borderColor = {'#0099CC'}
+                                value = {this.state.phone}
+                                onChangeText = { text => this.setState({ phone: text })}
+                                borderColor = {'transparent'}
+                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput1}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                         </View>
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'Email'}
-                                borderColor = {'#0099CC'}
+                                value = {this.state.email}
+                                onChangeText = { text => this.setState({ email: text })}
+                                borderColor = {'transparent'}
+                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput2}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                         </View>
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'Notes'}
-                                borderColor = {'#0099CC'}
+                                value = {this.state.notes}
+                                onChangeText = { text => this.setState({ notes: text })}
+                                borderColor = {'transparent'}
+                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput2}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                height = {43}
                             />
                         </View>
                         {/*<View style = {styles.editPropertyView}>
@@ -206,24 +234,6 @@ class homeEdit extends Component {
                                 <Label style = {styles.follwRowTxt}>View Profile</Label>
                             </View>
                         </TouchableOpacity>
-                        {/*<TouchableOpacity>
-                            <View style = {styles.followRowView}>
-                                <FontAwesome name = 'phone' size = {25} color = '#757575' />
-                                <Label style = {styles.follwRowTxt}>Call</Label>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style = {styles.followRowView}>
-                                <MaterialIcons name = 'sms' size = {25} color = '#757575' />
-                                <Label style = {styles.follwRowTxt}>Send SMS</Label>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style = {styles.followRowView}>
-                                <FontAwesome name = 'envelope' size = {25} color = '#757575' />
-                                <Label style = {styles.follwRowTxt}>Send Email</Label>
-                            </View>
-                        </TouchableOpacity>*/}
                     </View>
                     
                 </Content>
@@ -234,9 +244,10 @@ class homeEdit extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        
+        token: state.user.token,
+        selected_contact_info: state.contacts.selected_contact_info,
     }
 }
 
-export default connect()(homeEdit)
+export default connect(mapStateToProps)(homeEdit)
 
