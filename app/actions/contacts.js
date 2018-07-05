@@ -519,6 +519,24 @@ function createNote(token, id, arr){
     })
 }
 
+function searchContacts(token, query){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '?filter[query]=' + query, {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
 module.exports = {
     getAllContacts,
     getMyContacts,
@@ -540,4 +558,5 @@ module.exports = {
     listContactGroups,
     createNewContact,
     createNote,
+    searchContacts,
 }

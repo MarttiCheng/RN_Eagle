@@ -65,12 +65,7 @@ class tasksShow extends Component<{}>{
             })
         })
     }
-
-    onClickedMail(){
-        var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'sendEmail'}))
-    }
-
+    
     onClickedRelated(id, name) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACT_ID', data: id})

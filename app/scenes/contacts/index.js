@@ -185,6 +185,7 @@ class contacts extends Component<{}>{
                     idList.push(data.data[i].id)
                 }
                 getContactGroups(this.props.token, idList).then(data1 => {
+                    dispatch ({ type: 'GET_CONTACTS_ALL', data: this.state.contactsList})
                     listContactGroups(this.props.token).then(groupList => {
                         dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
                         subAllGroupList.concat(groupList.data)
@@ -296,7 +297,6 @@ class contacts extends Component<{}>{
                     toValue: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT + 20,                    
                     duration: 500,              
                 },
-                
             ),
             Animated.timing( 
                 this.state.scale1,
@@ -342,7 +342,6 @@ class contacts extends Component<{}>{
                     toValue: (Platform.OS == 'ios')? -40: -28,       
                     duration: 500,              
                 },
-                
             ),
             Animated.timing( 
                 this.state.scale1,

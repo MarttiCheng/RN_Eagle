@@ -110,12 +110,6 @@ export default {
         borderRadius: 18,
         marginLeft: 5
     },
-    subView1: {
-        borderTopWidth: 1,
-        borderColor: 'lightgray',
-        backgroundColor: 'white',
-        flex: 1,
-    },
     subView2: {
         borderTopWidth: 1,
         borderColor: 'lightgray',

@@ -244,5 +244,5 @@ export default {
     labelStyle2: {
         fontSize: 15,
         fontFamily: 'open-sans-regular',
-    },
+    }
 }

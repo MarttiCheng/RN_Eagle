@@ -1,6 +1,7 @@
 //import libraries
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, Image, Alert, TouchableOpacity, TextInput, AsyncStorage, ActivityIndicator, ScrollView} from 'react-native';
+import ReactNative, { StyleSheet, StatusBar, Image, Alert, TouchableOpacity, TextInput, AsyncStorage, ActivityIndicator, ScrollView, Platform, Keyboard, Animated
+} from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item, Input
 } from 'native-base'
@@ -14,6 +15,7 @@ import moment from 'moment'
 import Swipeout from 'react-native-swipeout'
 import {Select, Option} from "react-native-chooser";
 import reactNativeFloatingLabelTextInput from 'react-native-floating-label-text-input';
+import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-keyboard-aware-scroll-view'
 
 var selected_contact_id = ''
 
@@ -231,7 +233,13 @@ class ContactRelated extends Component {
 
     render() {
         return (
-            <View style = {styles.container}>
+            <KeyboardAwareScrollView
+                ref={ref => this.view = ref}
+                style={styles.container}
+                enableOnAndroid
+                extraHeight={Platform.OS === "android" ? -1500 : undefined}
+                scrollEnabled = {true}
+            ><View>
                 { this.state.isSaveLoading? <BallIndicator color = {'#2B3643'}  style = {styles.loadingView}/> : null }
                 { 
                     this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 30, marginBottom: 10}}/> : 
@@ -273,7 +281,7 @@ class ContactRelated extends Component {
                         <Option value = "House Mate" styleText = {styles.optiontxt}>House Mate</Option>
                         <Option value = "Ex-Spouse" styleText = {styles.optiontxt}>Ex-Spouse</Option>
                     </Select>
-                    <TextInput
+                    <Input
                         ref = 'note'
                         style = {styles.inputTxt1}
                         onChangeText = { text => this.setState({ note: text })}
@@ -301,9 +309,8 @@ class ContactRelated extends Component {
                     }
                     
                 </View>
-                
-               
-            </View>
+                </View>
+            </KeyboardAwareScrollView>
         );
     }
 }

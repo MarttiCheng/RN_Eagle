@@ -10,11 +10,8 @@ import styles from './styles'
 import images from '../../themes/images'
 import { NavigationActions } from 'react-navigation'
 import { Sae, Hoshi } from 'react-native-textinput-effects'
+import listingsShow from '../listingsShow/index';
 
-var registerList = [
-    {avatar: images.avatar_female, name: 'Sally Smith', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-    {avatar: images.avatar_male, name: 'John Sample', phone: '0400 484 784', email: 'sally@smith.com', job: 'Director at Eagle Software'},
-]
 
 // create a component
 class homeEdit extends Component {
@@ -35,6 +32,30 @@ class homeEdit extends Component {
             phone: this.props.selected_contact_info.attributes.business_hours_phone,
             email: this.props.selected_contact_info.attributes.email,
             notes: this.props.selected_contact_info.attributes.background_info,
+        }
+    }
+
+    componentWillMount() {
+        if(this.props.navigation.state.params.category == 0) {
+            this.setState({
+                isNotInterested: false,
+                isMaybeInterested: true,
+                isInterestd: false,
+            })
+        }
+        else if(this.props.navigation.state.params.category == 1) {
+            this.setState({
+                isNotInterested: false,
+                isMaybeInterested: false,
+                isInterestd: true,
+            })
+        }
+        else {
+            this.setState({
+                isNotInterested: true,
+                isMaybeInterested: false,
+                isInterestd: false,
+            })
         }
     }
 
@@ -92,6 +113,12 @@ class homeEdit extends Component {
         dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: this.props.selected_contact_info.attributes.first_name + ' ' + this.props.selected_contact_info.attributes.last_name}}))
     }
 
+    OnSendEmail() {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_LISTINGS', data: this.props.selected_contact_info})
+        dispatch(NavigationActions.navigate({routeName: 'sendEmail'}))
+    }
+
     render() {
         return (
             <Container style = {styles.container}>
@@ -128,7 +155,7 @@ class homeEdit extends Component {
                                 value = {this.state.lastName}
                                 onChangeText = { text => this.setState({ lastName: text })}
                                 borderColor = {'transparent'}
-                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
+                                labelStyle = {this.state.lastName? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput1}
                                 inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
@@ -142,7 +169,7 @@ class homeEdit extends Component {
                                 value = {this.state.mobile}
                                 onChangeText = { text => this.setState({ mobile: text })}
                                 borderColor = {'transparent'}
-                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
+                                labelStyle = {this.state.mobile? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput1}
                                 inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
@@ -154,7 +181,7 @@ class homeEdit extends Component {
                                 value = {this.state.phone}
                                 onChangeText = { text => this.setState({ phone: text })}
                                 borderColor = {'transparent'}
-                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
+                                labelStyle = {this.state.phone? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput1}
                                 inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
@@ -168,7 +195,7 @@ class homeEdit extends Component {
                                 value = {this.state.email}
                                 onChangeText = { text => this.setState({ email: text })}
                                 borderColor = {'transparent'}
-                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
+                                labelStyle = {this.state.email? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput2}
                                 inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
@@ -182,7 +209,7 @@ class homeEdit extends Component {
                                 value = {this.state.notes}
                                 onChangeText = { text => this.setState({ notes: text })}
                                 borderColor = {'transparent'}
-                                labelStyle = {this.state.firstName? styles.labelStyle1 : styles.labelStyle2}
+                                labelStyle = {this.state.notes? styles.labelStyle1 : styles.labelStyle2}
                                 style = {styles.txtinput2}
                                 inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
@@ -222,7 +249,7 @@ class homeEdit extends Component {
                     
                     <View>
                         <Label style = {styles.editInspectionTxt}>Follow up</Label>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress = {() => this.OnSendEmail()}>
                             <View style = {styles.followRowView}>
                                 <MaterialIcons name = 'attach-file' size = {25} color = '#757575' />
                                 <Label style = {styles.follwRowTxt}>Send Document</Label>

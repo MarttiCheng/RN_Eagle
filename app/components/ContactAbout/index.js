@@ -1,6 +1,7 @@
 //import libraries
 import React, { Component } from 'react';
-import ReactNative,{ StyleSheet, StatusBar, Image, TouchableOpacity, Animated, ScrollView, TextInput, Dimensions, Keyboard, KeyboardAvoidingView, Modal } from 'react-native';
+import ReactNative,{ StyleSheet, StatusBar, Image, TouchableOpacity, Animated, ScrollView, TextInput, Dimensions, Keyboard, KeyboardAvoidingView, Modal, Platform, 
+} from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item, Input
 } from 'native-base'
@@ -266,9 +267,6 @@ class ContactAbout extends Component {
                         <Label style = {styles.label2}>{this.state.backgroundInfo}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                </View>
-
-                <View style = {styles.subView1}>
                     <View style = {styles.view1}>
                         <Label style = {styles.label1}>Belongs to</Label>
                         <Label style = {styles.label2}>{this.state.assignedTo}</Label>

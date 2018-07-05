@@ -170,41 +170,36 @@ class Attendees extends Component {
         )
     }
 
-    showAttendeesList(){
-        if((this.state.mayInterestedList.length + this.state.interestedList.length + this.state.notInterestedList.length) > 0){
-            return(
+    showAttendeesList() {
+        return(
+            <View>
                 <View>
-                    <Tabs renderTabBar={()=> <ScrollableTab />} initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#364150',height: 3}} locked = {false} style = {{backgroundColor: '#CFCFCF'}}>
-                        <Tab heading="Interested" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#CFCFCF'}} activeTabStyle = {{backgroundColor: '#CFCFCF'}}> 
-                            {
-                                this.state.interestedList.map((item, index) => {
-                                    return(this.renderRow(item, index, 1));
-                                })
-                            }
-                        </Tab>
-                        <Tab heading="Swipe to rate interests" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#CFCFCF'}} activeTabStyle = {{backgroundColor: '#CFCFCF'}}> 
-                            {
-                                this.state.mayInterestedList.map((item, index) => {
-                                    return(this.renderRow(item, index, 0));
-                                })
-                            }
-                        </Tab>
-                        <Tab heading="Not interested" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#CFCFCF'}} activeTabStyle = {{backgroundColor: '#CFCFCF'}}>
-                            {
-                                this.state.notInterestedList.map((item, index) => {
-                                    return(this.renderRow(item, index, 2));
-                                })
-                            }
-                        </Tab>
-                    </Tabs>
+                    <Label style = {styles.preregisteredTitle}>Swipe to rate interest</Label>
+                    {
+                        this.state.mayInterestedList.map((item, index) => {
+                            return (this.renderRow(item, index, 0))
+                        })
+                    }
                 </View>
-            )
-        }
-        else {
-            return(
-                <Label style = {styles.nomoretxt}>There's nothing here.</Label>
-            )
-        }
+                <View>
+                    <Label style = {styles.preregisteredTitle}>Interested</Label>
+                    {
+                        this.state.interestedList.map((item, index) => {
+                            return (this.renderRow(item, index, 1))
+                        })
+                    }
+                </View>
+                <View>
+                    <Label style = {styles.preregisteredTitle}>Not Interested</Label>
+                    {
+                        this.state.notInterestedList.map((item, index) => {
+                            return (this.renderRow(item, index, 2))
+                        })
+                    }
+                </View>
+                
+            </View>
+        )
     }
     
     render() {
