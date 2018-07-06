@@ -70,7 +70,7 @@ class HomeMine extends Component {
                 <Thumbnail square source = {images.barbados_small} style = {styles.avatarImg}/>
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{moment(item.attributes.start_datetime).format('h:mma')} - {moment(item.attributes.end_datetime).format('h:mma')}</Label>
-                        <Label style = {styles.label2}>50 Bay St, Double Bay</Label>
+                        <Label style = {styles.label2}>{this.state.inspectionsRelationShips[index].data.attributes.full_address}</Label>
                     </View>
                     <Label style = {styles.saleTxt}>Mine</Label>
                 </TouchableOpacity>
