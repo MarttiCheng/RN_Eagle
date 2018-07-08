@@ -4,14 +4,14 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, 
   ScrollableTab
 } from 'native-base'
-import {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, TextInput, Animated, Dimensions
+import ReactNative, {
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, TextInput, Animated, Dimensions, KeyboardAvoidingView
 } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import styles from './styles'
 import images from '../../themes/images'
 import TaskShow from '../../components/TaskShow'
-import { getCompletedTasks, getUnCompletedTasks, searchContacts } from '../../actions'
+import { getCompletedTasks, getUnCompletedTasks, searchContacts, getListingsDocuments } from '../../actions'
 import {connect} from 'react-redux';
 import { MaterialCommunityIcons, Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import Accordion from 'react-native-collapsible/Accordion';
@@ -42,11 +42,12 @@ class sendEmail extends Component {
         super(props);
         
         this.state = {
+            keyboardHeight: new Animated.Value(0),
             isLoading: true,
             completedTaskList: [],
             uncompletedTaskList: [],
             subject: '',
-            composeemail: '',
+            composeemail: 'Hi ' + this.props.selected_contact_info.attributes.first_name,
             toEmail: '',
             toEmailName: '',
             toEmailContactPhoto: '',
@@ -63,7 +64,8 @@ class sendEmail extends Component {
             filterContactList:[],
             filterContactList1: [],
             filterContactList2: [],
-            
+            documentList: [],
+
             isToEmailNameTextFieldHidden: false,
             isToEmailFieldHidden: false,
             isCcEmailNameTextFieldHidden: false,
@@ -81,11 +83,49 @@ class sendEmail extends Component {
         }   
     }
 
-    componentWillMount() {        
-        // console.log(this.props.relationship_inspection)
-        // console.log(this.props.selected_contact_info)
+    animateKeyboardHeight = (toValue, duration) => {
+        Animated.timing(
+            this.state.keyboardHeight,
+            {toValue, duration},
+        ).start();
+    };
+
+    componentWillMount() {
+        getListingsDocuments(this.props.token, this.state.propertyId).then(data => {
+            console.log(data)
+            this.setState({
+                isLoading: false,
+                documentList: data.data
+            })
+
+            if (Platform.OS === "android") {
+                this.keyboardShowListener = Keyboard.addListener("keyboardDidShow", ({endCoordinates}) => {
+                    this.animateKeyboardHeight(endCoordinates.height, 0)
+                });
+                this.keyboardHideListener = Keyboard.addListener("keyboardDidHide", () => {
+                    this.animateKeyboardHeight(0, 300)
+                })
+            }
+        })
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.selected_contactForTask.length != 0){
+            this.setState({
+                contactName: nextProps.selected_contactForTask.attributes.first_name + ' ' + nextProps.selected_contactForTask.attributes.last_name,
+                contactId: nextProps.selected_contactForTask.id,
+                contactPhoto: nextProps.selected_contactForTask.attributes.photo_url,
+            })
+        }
+        if(nextProps.selected_propertyForTask.length != 0){
+            this.setState({
+                propertyName: nextProps.selected_propertyForTask.attributes.full_address,
+                propertyId: nextProps.selected_propertyForTask.id,
+                propertyPhoto: nextProps.selected_propertyForTask.attributes.thumbnail,
+                open1: !this.state.open1
+            })
+        }
+    }
 
     onSendMail(){
         // alert('send')
@@ -279,17 +319,42 @@ class sendEmail extends Component {
         })
     }
 
-    handleOnNavigateBack(){
-        this.fetchContactTask()
+    onSelectContact() {
+        var { dispatch } = this.props
+        dispatch(NavigationActions.navigate({routeName: 'contactsIndex'}))
     }
 
     onClickListing() {
-        // var { dispatch } = this.props
-        // dispatch(NavigationActions.navigate({routeName: 'propertyIndex'}))
-        this.props.navigation.navigate('propertyIndex', {
-            onNavigateBack: this.handleOnNavigateBack.bind(this)
+        var { dispatch } = this.props
+        dispatch(NavigationActions.navigate({routeName: 'propertyIndex'}))
+    }
+
+    removeListing() {
+        this.setState({
+            propertyName: '',
+            propertyId: '',
+            propertyPhoto: '',
+            open1: !this.state.open1
         })
     }
+
+    removeContact() {
+        this.setState({
+            contactName: '',
+            contactId: '',
+            contactPhoto: '',
+        })
+    }
+
+    scrollToInput = (reactNode) => {
+        this.view.scrollToFocusedInput(reactNode)
+    };
+
+    handleOnFocus = (e) => {
+        if (Platform.OS === "android") {
+            this.scrollToInput(ReactNative.findNodeHandle(e.target))
+        }
+    };
 
     render() {
         const { animatedValue } = this.state;
@@ -305,7 +370,7 @@ class sendEmail extends Component {
             inputRange: [0, maxHeight1 * .3, maxHeight1],
             outputRange: [0, 0, 200],
         });
-
+        
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -329,7 +394,6 @@ class sendEmail extends Component {
                     style={styles.mainView}
                     enableOnAndroid
                     extraHeight={Platform.OS === "android" ? 500 : undefined}
-                    scrollEnabled = {true}
                 >
                     <View style = {{borderBottomWidth: 1, borderColor: 'lightgray'}}>
                         <View style = {styles.toView}>
@@ -492,48 +556,58 @@ class sendEmail extends Component {
                             animatedValue={animatedValue1}>
                             <View style={{ flex: 1 }}>
                                 <Animated.View style={{ height1, justifyContent: 'center', backgroundColor: 'transparent' }}>
-                                    <View>
+                                    <View style={{ flex: 1 }}>
                                         <TouchableOpacity style = {styles.view1} onPress = {() => this.onClickListing()}>
                                             <Text style = {styles.label1}>Listing</Text>
-                                            <View style = {[styles.contactSubView, {marginLeft: 10}]}>
-                                                {
-                                                    this.state.propertyPhoto? <Thumbnail square source = {{uri: this.state.propertyPhoto}} style = {styles.avatarImg}/> : 
-                                                    <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                                                }
-                                                <Text style = {styles.nameTxt}>{this.state.propertyName}</Text>
-                                                <TouchableOpacity onPress = {() => this.removeCcEmail()}>
-                                                    <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
-                                                </TouchableOpacity>
-                                            </View> 
-                                        </TouchableOpacity>
-                                        <View style = {styles.view1}>
-                                            <Text style = {styles.label1}>Contact</Text>
-                                            <View style = {[styles.contactSubView, {marginLeft: 10}]}>
-                                                {
-                                                    this.state.contactPhoto? <Thumbnail square source = {this.state.contactPhoto} style = {styles.avatarImg}/> : 
-                                                    <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                                                }
-                                                <Text style = {styles.nameTxt}>{this.state.contactName}</Text>
-                                                <TouchableOpacity onPress = {() => this.removeCcEmail()}>
-                                                    <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 7}}/>
-                                                </TouchableOpacity>
-                                            </View> 
-                                        </View>
-                                        <View style = {styles.view2}>
-                                            <Text style = {styles.label1}>Attachment</Text>
-                                            <View>
                                             {
-                                                attachmentList.map((item, index) => {
-                                                    return(
-                                                        <View style = {styles.eachAttachView}>
-                                                            <Text style = {styles.eachAttachTxt}>{item}</Text>
-                                                            <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
-                                                        </View>
-                                                    )
-                                                })
+                                                this.state.propertyName?
+                                                <View style = {[styles.contactSubView, {marginLeft: 10}]}>
+                                                    {
+                                                        this.state.propertyPhoto? <Thumbnail square source = {{uri: this.state.propertyPhoto}} style = {styles.avatarImg}/> : 
+                                                        <Thumbnail square source = {images.placeholderImage} style = {styles.avatarImg}/>
+                                                    }
+                                                    <Text style = {styles.nameTxt}>{this.state.propertyName}</Text>
+                                                    <TouchableOpacity onPress = {() => this.removeListing()}>
+                                                        <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 7}}/>
+                                                    </TouchableOpacity>
+                                                </View> : null
                                             }
-                                            </View>
-                                        </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style = {styles.view1} onPress = {() => this.onSelectContact()}>
+                                            <Text style = {styles.label1}>Contact</Text>
+                                            {
+                                                this.state.contactName?
+                                                <View style = {[styles.contactSubView, {marginLeft: 10}]}>
+                                                    {
+                                                        this.state.contactPhoto? <Thumbnail square source = {this.state.contactPhoto} style = {styles.avatarImg}/> : 
+                                                        <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                                                    }
+                                                    <Text style = {styles.nameTxt}>{this.state.contactName}</Text>
+                                                    <TouchableOpacity onPress = {() => this.removeContact()}>
+                                                        <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 7}}/>
+                                                    </TouchableOpacity>
+                                                </View>  : null
+                                            }
+                                        </TouchableOpacity>
+                                        {
+                                            (this.state.propertyName && this.state.documentList.length != 0)?
+                                            <View style = {styles.view2}>
+                                                <Text style = {styles.label1}>Attachment</Text>
+                                                <View>
+                                                {
+                                                    attachmentList.map((item, index) => {
+                                                        return(
+                                                            <View style = {styles.eachAttachView}>
+                                                                <Text style = {styles.eachAttachTxt}>{item.title}</Text>
+                                                                <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
+                                                            </View>
+                                                        )
+                                                    })
+                                                }
+                                                </View>
+                                            </View> : null
+                                        }
+                                        
                                     </View>
                                     
                                 </Animated.View>
@@ -554,6 +628,7 @@ class sendEmail extends Component {
                     </View>
                     <View style = {styles.emailView}>
                         <TextInput
+                        onFocus={this.handleOnFocus}
                             style = {styles.inputTxt}
                             onChangeText = { text => this.setState({ composeemail: text })}
                             value = {this.state.composeemail}
@@ -585,6 +660,8 @@ const mapStateToProps = (state, ownProps) => {
         token: state.user.token, 
         relationship_inspection: state.home.selected_inspection,
         selected_contact_info: state.contacts.selected_contact_info,
+        selected_propertyForTask: state.listings.selected_propertyForTask,
+        selected_contactForTask: state.contacts.selected_contactForTask,
     }
 }
 

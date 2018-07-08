@@ -75,11 +75,9 @@ export default {
         marginLeft: 5
     }, 
     nametxt: {
-        flex: 1,
-        color:'black',
         fontSize: 16,
-        marginLeft: 15,
-        fontFamily: 'open-sans-regular'
+        color: '#000',
+        fontFamily: 'open-sans-regular',
     },
     subcontactView: {
         flexDirection: 'row',
@@ -98,10 +96,36 @@ export default {
     },
     line: {
         height: 1,
-        width: width-70,
+        width: width,
         backgroundColor: 'lightgray',
         position: 'absolute',
-        left: 70,
+        left: 0,
         bottom: 0
+    },
+    rowSubView: {
+        marginLeft: 15,
+        flex: 1,
+    },
+    tagView: {
+        flexDirection:'row',
+        marginTop: 5,
+        flex: 1,
+        flexWrap: 'wrap',
+        width: width - 83,
+    },
+    eachtag: {
+        backgroundColor: '#B4BCC8',
+        paddingHorizontal: 8,
+        height: 16,
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10,
+        marginBottom: 5
+    },
+    tagTxt: {
+        fontSize: 10,
+        color: 'white',
+        fontFamily: 'open-sans-regular',
     },
 }

@@ -199,7 +199,7 @@ class contactsShow extends Component<{}>{
         if(this.state.isEdit){
             arr = this.props.edit_contact_item
             this.setState({ isSaving: true})
-            updateContact(this.props.token, this.props.contact_id, arr).then(data => {
+            updateContact('PUT', this.props.token, this.props.contact_id, arr).then(data => {
                 updateContactGroup(this.props.token, data.data.id, this.props.edit_contact_groups_item)
                 getContactGroup(this.props.token, this.props.contact_id).then(data1 => {
                     getUser(this.props.token, data1.data.attributes.user_id).then(data2 => {

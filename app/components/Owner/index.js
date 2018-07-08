@@ -53,6 +53,7 @@ class Owner extends Component {
                     idList.push(data.data[i].id)
                 }
                 getContactGroups(this.props.token, idList).then(data1 => {
+                    console.log(data1)
                     getContactRelationships(this.props.token, idList).then(data2 => {
                         this.setState({
                             ownersList: data.data,
@@ -68,10 +69,7 @@ class Owner extends Component {
         })
     }
 
-    onClickedMail(){
-        var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'sendEmail'}))
-    }
+   
 
     clickEachVendor(item, index) {
         var { dispatch } = this.props;
@@ -79,6 +77,20 @@ class Owner extends Component {
         dispatch ({ type: 'GET_CONTACT_ID', data: item.data.id})
         dispatch ({ type: 'GET_CONTACTS_RELATIONSHIP', data: this.state.contactRelationships[index]})
         dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: item.data.attributes.first_name + ' ' + item.data.attributes.last_name}}))
+    }
+
+    showContactGroups(index){
+        if(this.state.contactGroups[index].included){
+            return(
+                this.state.contactGroups[index].included.map((item1, index1) => {
+                    return(
+                        <View style = { styles.eachtag } key = {index1}>
+                            <Label style = {styles.tagTxt}>{item1.attributes.name}</Label>
+                        </View>
+                    )
+                })
+            )
+        }
     }
 
     renderRow(item, index){
@@ -90,25 +102,18 @@ class Owner extends Component {
                         <Thumbnail square source = {{uri: item.attributes.photo_url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
                         <Thumbnail square style = {styles.avatarImg} source = {images.ic_placeholder_image}/>
                     }
-                    <Label style = {styles.nametxt}>{item.attributes.first_name} {item.attributes.last_name}</Label>
+                    {/*<Label style = {styles.nametxt}>{item.attributes.first_name} {item.attributes.last_name}</Label>*/}
+                    
 
-                    <View style = {styles.subcontactView}>
-                        <TouchableOpacity onPress = {() => this.onClickedMail()}>
-                            <View style = {styles.contactItemView}>
-                                <FontAwesome name = 'envelope' size = {18} color = 'white' />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style = {styles.contactItemView}>
-                                <MaterialIcons name = 'sms' size = {18} color = 'white' />
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style = {styles.contactItemView}>
-                                <FontAwesome name = 'phone' size = {18} color = 'white' />
-                            </View>
-                        </TouchableOpacity>
+                    <View style = {styles.rowSubView}>
+                        <Label style = {styles.nametxt}>{item.attributes.first_name} {item.attributes.last_name}</Label>
+                        <View style = {styles.tagView}>
+                            {
+                                this.showContactGroups(index) 
+                            }
+                        </View>
                     </View>
+                    
                     <View style = {styles.line}/>
                 </View>
                 

@@ -48,7 +48,7 @@ class propertyIndex extends Component<{}>{
         var { dispatch } = this.props;
         dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: item})
         Keyboard.dismiss(); 
-        this.props.navigation.goBack(); 
+        this.props.navigation.goBack()
     }
 
     showForSale(item){

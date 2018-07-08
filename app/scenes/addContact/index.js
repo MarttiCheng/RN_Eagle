@@ -11,7 +11,7 @@ import styles from './styles'
 import images from '../../themes/images'
 import { NavigationActions } from 'react-navigation'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import { updateContact, updateContactGroup, createNewContact } from '../../actions'
+import { updateContactGroup, createNewContact } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-keyboard-aware-scroll-view'
 import {Select, Option} from "react-native-chooser";

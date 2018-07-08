@@ -251,10 +251,10 @@ function getThumbnailUrl(token, URL){
     })
 }
 
-function updateContact(token, id, arr){
+function updateContact(postmethod,token, id, arr){
     return new Promise((resolve, reject) => {
         fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id, {
-            method: 'PUT',
+            method: postmethod,
             headers: {
                 'Authorization': token,
                 'Content-Type': 'application/vnd.api+json'

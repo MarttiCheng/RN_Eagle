@@ -39,7 +39,7 @@ class ListingDocuments extends Component {
         return(
             <View style = {styles.view1} key = {index}>
                 <MaterialCommunityIcons name = 'file-pdf' size = {20} color = '#757575' style = {{marginLeft: 10}} />
-                <Label style = {styles.label1}>item.title</Label>
+                <Label style = {styles.label1}>{item.title}</Label>
             </View>
         )
     }

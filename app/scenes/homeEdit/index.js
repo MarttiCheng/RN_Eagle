@@ -11,7 +11,7 @@ import images from '../../themes/images'
 import { NavigationActions } from 'react-navigation'
 import { Sae, Hoshi } from 'react-native-textinput-effects'
 import listingsShow from '../listingsShow/index';
-
+import { updateContact } from '../../actions'
 
 // create a component
 class homeEdit extends Component {
@@ -87,25 +87,6 @@ class homeEdit extends Component {
         var { dispatch } = this.props;
         dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {info: item}}))
     }
-
-    renderRow(item, index) {
-        return(
-           <TouchableOpacity key = {index} onPress = {() => this.clickAttendee(item, index)}>
-                <View style = {styles.rowRenderView}>
-                    <Thumbnail square source = {item.avatar} style = {styles.avatarImg}/>
-                    <View style = {styles.rowSubView}>
-                        <Label style = {styles.label1}>{item.name}</Label>
-                        <Label style = {styles.label2}>{item.phone}</Label>
-                        <Label style = {styles.label2}>{item.email}</Label>    
-                    </View>
-                    <View style = {styles.checkView}>
-                        <Label style = {styles.checkTxt}>CHECK IN</Label>
-                    </View>
-                    <View style = {styles.line}/>
-                </View>
-            </TouchableOpacity>
-        )
-    }
     
     OnViewProfile() {
         var { dispatch } = this.props;
@@ -117,6 +98,21 @@ class homeEdit extends Component {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_LISTINGS', data: this.props.selected_contact_info})
         dispatch(NavigationActions.navigate({routeName: 'sendEmail'}))
+    }
+
+    _onSearch = () => {
+        var arr = {
+            "first_name" : this.state.firstname,
+            "last_name" : this.state.lastname,
+            "business_hours_phone": this.state.phone,
+            "mobile_phone": this.state.mobile,
+            "email": this.state.email,
+        }
+        console.log(this.state.lastname)
+        updateContact('PATCH', this.props.token, this.props.selected_contact_info.id, arr).then(data => {
+            console.log('--->')
+            console.log(data)
+        })
     }
 
     render() {

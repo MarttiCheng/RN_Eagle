@@ -5,6 +5,7 @@ import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
 import { connect } from 'react-redux'
+import { NavigationActions, Header } from 'react-navigation'
 import styles from './styles'
 import images from '../../themes/images'
 import { getListingsVendors } from '../../actions'
@@ -122,6 +123,13 @@ class ListingAbout extends Component {
         return units;
     }
 
+    onClickVendor(item) {
+        var { dispatch } = this.props;
+        dispatch ({ type: 'GET_CONTACT_ID', data: item.id})
+        dispatch ({ type: 'GET_CONTACT_NAME', data: item.attributes.first_name + ' ' + item.attributes.last_name})
+        dispatch(NavigationActions.navigate({routeName: 'contactsShow', params: {name: item.attributes.first_name + ' ' + item.attributes.last_name}}))
+    }
+
     render() {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
@@ -182,7 +190,7 @@ class ListingAbout extends Component {
                         <Label style = {styles.propertyItemTitle}>Vendor/s</Label>
                         {
                             this.state.vendors.map((item, index) => [
-                                <View style = {styles.view2}>
+                                <TouchableOpacity style = {styles.view2} onPress = {() => this.onClickVendor(item)}>
                                     {
                                         item.attributes.photo_url? <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
                                         <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg} />
@@ -194,7 +202,7 @@ class ListingAbout extends Component {
                                             <Label style = {styles.venderSubtitle}>Vendor</Label>
                                         </View>
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             ])
                         }
                     </View>
