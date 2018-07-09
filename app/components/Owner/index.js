@@ -53,7 +53,6 @@ class Owner extends Component {
                     idList.push(data.data[i].id)
                 }
                 getContactGroups(this.props.token, idList).then(data1 => {
-                    console.log(data1)
                     getContactRelationships(this.props.token, idList).then(data2 => {
                         this.setState({
                             ownersList: data.data,
@@ -167,9 +166,6 @@ const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token,
         inspectionInfo: state.home.inspectionInfo,
-        // mayinterestedList: state.home.attendee_mayinterested_List,
-        // interestedList: state.home.attendee_interested_List,
-        // notinterestedList: state.home.attendee_notinterested_List
     }
 }
 

@@ -47,6 +47,29 @@ export default {
         alignItems: 'center',
         justifyContent: 'space-between'
     },
+    noteView: {
+        flex:1,
+        width: width - 30,
+        marginTop: 15,
+        paddingBottom: 10,
+        borderBottomWidth: 2,
+        borderBottomColor: '#b9c1ca',
+        paddingHorizontal: 5
+    },
+    noteTxt: {
+        color: '#6a7989',
+        fontSize: 12,
+        fontFamily: 'open-sans-regular',
+        marginLeft: 9,
+        marginBottom: 3
+    },
+    noteTextInput: {
+        width: width-30,
+        fontSize: 18,
+        fontFamily: 'open-sans-bold',
+        color: '#6a7989',
+        // fontWeight: '450',
+    },
     txtinput1: {
         width: (width-40)/2,
         paddingLeft: 0,
@@ -244,5 +267,13 @@ export default {
     labelStyle2: {
         fontSize: 15,
         fontFamily: 'open-sans-regular',
-    }
+    },
+    indicator: {
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        top: 150,
+        left: (width - 100)/2,
+        backgroundColor: 'transparent'
+    },
 }

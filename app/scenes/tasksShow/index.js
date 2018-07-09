@@ -44,28 +44,26 @@ class tasksShow extends Component<{}>{
         var listList = []
         getTaskContacts(this.props.token, this.props.tasks.id).then(data => {
             getContactGroup(this.props.token, data.data.attributes.contact_id).then(groupdata => {
-                // getContactProperty_Vendor(this.props.token, data.data.attributes.contact_id).then(propertyData => {
-                    for(var i = 0 ; i < data.included.length ; i++) {
-                        if(data.included[i].type == 'contacts'){
-                            conList.push(data.included[i])
-                        }
-                        else {
-                            listList.push(data.included[i])
-                        }
+                for(var i = 0 ; i < data.included.length ; i++) {
+                    if(data.included[i].type == 'contacts'){
+                        conList.push(data.included[i])
                     }
-                    this.setState({
-                        contactInfo: groupdata,
-                        task_contactList: conList,
-                        task_listingsList: listList,
-                        body: data.data.attributes.body,
-                        due_date: data.data.attributes.due_date,
-                        isLoading: false,
-                    })
-                // })
+                    else {
+                        listList.push(data.included[i])
+                    }
+                }
+                this.setState({
+                    contactInfo: groupdata,
+                    task_contactList: conList,
+                    task_listingsList: listList,
+                    body: data.data.attributes.body,
+                    due_date: data.data.attributes.due_date,
+                    isLoading: false,
+                })
             })
         })
     }
-    
+
     onClickedRelated(id, name) {
         var { dispatch } = this.props;
         dispatch ({ type: 'GET_CONTACT_ID', data: id})

@@ -11,7 +11,7 @@ import { NavigationActions } from 'react-navigation'
 import { Sae, Hoshi } from 'react-native-textinput-effects'
 import { getInspectionPreregistered, getInspectionEnquired, getContactGroups, getContactRelationships } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
-
+import { searchContacts } from '../../actions'
 
 // create a component
 class NewAttendee extends Component {
@@ -21,6 +21,12 @@ class NewAttendee extends Component {
             isNotInterested: false,
             isMaybeInterested: true,
             isInterestd: false,
+            firstName: '',
+            lastName: '',
+            mobile: '',
+            phone: '',
+            email: '',
+            notes: '',
             isLoading: true,
             registerList: [],
             enquiredList: [],
@@ -166,6 +172,17 @@ class NewAttendee extends Component {
         )
     }
     
+    onChangeMobile(text) {
+        this.setState({ mobile: text })
+        if(text.length == 10) {
+            searchContacts(this.props.token, text).then((data => {
+                this.setState({ 
+                    filterContactList: data.data
+                })
+            }))
+        }
+    }
+
     render() {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
@@ -174,17 +191,24 @@ class NewAttendee extends Component {
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'First Name'}
+                                value = {this.state.firstName}
+                                onChangeText = { text => this.setState({ firstName: text })}
                                 borderColor = {'transparent'}
+                                labelStyle = {this.state.firstName? styles.labelStyle3 : styles.labelStyle4}
                                 style = {styles.txtinput1}
-                                
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
                                 height = {43}
                             />
                             <Hoshi
                                 label = {'Last Name'}
+                                value = {this.state.lastName}
+                                onChangeText = { text => this.setState({ lastName: text })}
                                 borderColor = {'transparent'}
+                                labelStyle = {this.state.lastName?styles.labelStyle3 : styles.labelStyle4}
                                 style = {styles.txtinput1}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
                                 height = {43}
@@ -193,16 +217,25 @@ class NewAttendee extends Component {
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'Mobile'}
+                                value = {this.state.mobile}
+                                onChangeText = { text => this.onChangeMobile(text)}
                                 borderColor = {'transparent'}
+                                labelStyle = {this.state.mobile? styles.labelStyle3 : styles.labelStyle4}
                                 style = {styles.txtinput1}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
                                 height = {43}
+                                keyboardType = {'numeric'}
                             />
                             <Hoshi
                                 label = {'Phone'}
+                                value = {this.state.phone}
+                                onChangeText = { text => this.setState({ phone: text })}
                                 borderColor = {'transparent'}
+                                labelStyle = {this.state.phone? styles.labelStyle3 : styles.labelStyle4}
                                 style = {styles.txtinput1}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
                                 height = {43}
@@ -211,8 +244,12 @@ class NewAttendee extends Component {
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'Email'}
+                                value = {this.state.email}
+                                onChangeText = { text => this.setState({ email: text })}
                                 borderColor = {'transparent'}
+                                labelStyle = {this.state.email? styles.labelStyle3 : styles.labelStyle4}
                                 style = {styles.txtinput2}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
                                 height = {43}
@@ -221,8 +258,12 @@ class NewAttendee extends Component {
                         <View style = {styles.rowView}>
                             <Hoshi
                                 label = {'Notes'}
+                                value = {this.state.notes}
+                                onChangeText = { text => this.setState({ notes: text })}
                                 borderColor = {'transparent'}
+                                labelStyle = {this.state.notes? styles.labelStyle3 : styles.labelStyle4}
                                 style = {styles.txtinput2}
+                                inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
                                 height = {43}

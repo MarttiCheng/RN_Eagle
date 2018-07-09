@@ -131,10 +131,6 @@ class editTask extends Component<{}>{
             var { dispatch } = this.props;
             dispatch ({ type: 'SELECTED_PROPERTY_FOR_TASK', data: arr})
             dispatch ({ type: 'SELECTED_CONTACT_FOR_TASK', data: arr})
-            // if (this.props.navigation.state.params && typeof this.props.navigation.state.params.onNavigateBack !== "undefined") {
-            //     this.props.navigation.state.params.onNavigateBack(); 
-            // }
-            // this.props.navigation.goBack()
         })
     }
 

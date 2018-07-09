@@ -5,6 +5,7 @@ const initialTokenState = {
     attendee_mayinterested_List: [],
     attendee_interested_List: [],
     attendee_notinterested_List: [],
+    selected_home_note: [],
 }
 
 function Home(state = initialTokenState, action) {
@@ -38,6 +39,11 @@ function Home(state = initialTokenState, action) {
             return {
                 ...state,
                 attendee_notinterested_List: action.data
+            };
+        case 'SELECTED_HOME_NOTE' :
+            return {
+                ...state,
+                selected_home_note: action.data
             };
         default :
             return state

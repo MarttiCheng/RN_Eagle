@@ -11,7 +11,6 @@ export default {
         flex: 1,
         width: width,
         height: (Platform.OS == 'ios')? height-Header.HEIGHT: height - Header.HEIGHT-20
-        // height: 300
     },
     menuView: {
         width: width,

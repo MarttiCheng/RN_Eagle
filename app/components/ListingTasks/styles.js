@@ -5,7 +5,6 @@ export default {
     container: {
         flex: 1,
         backgroundColor: '#ddd',
-        // marginTop: 20,
     },
     taskItemView: {
         marginTop: 0

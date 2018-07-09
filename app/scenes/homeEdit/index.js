@@ -1,6 +1,8 @@
 //import libraries
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView} from 'react-native';
+import { 
+    StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView, Keyboard, TextInput
+} from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
@@ -11,7 +13,9 @@ import images from '../../themes/images'
 import { NavigationActions } from 'react-navigation'
 import { Sae, Hoshi } from 'react-native-textinput-effects'
 import listingsShow from '../listingsShow/index';
-import { updateContact } from '../../actions'
+import { updateContact, updateNote } from '../../actions'
+import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-keyboard-aware-scroll-view'
+import { BallIndicator } from 'react-native-indicators'
 
 // create a component
 class homeEdit extends Component {
@@ -26,37 +30,29 @@ class homeEdit extends Component {
             isNotInterested: false,
             isMaybeInterested: true,
             isInterestd: false,
+            firstName: '',
+            lastName: '',
+            mobile: '',
+            phone: '',
+            email: '',
+            notes: '',
+            isLoading: false
+        }
+    }
+
+    componentWillMount() {
+        this.setState({
+            isNotInterested: this.props.navigation.state.params.category == 2 ? true : false,
+            isMaybeInterested: this.props.navigation.state.params.category == 0 ? true : false,
+            isInterestd: this.props.navigation.state.params.category == 1 ? true : false,
             firstName: this.props.selected_contact_info.attributes.first_name,
             lastName: this.props.selected_contact_info.attributes.last_name,
             mobile: this.props.selected_contact_info.attributes.mobile_phone,
             phone: this.props.selected_contact_info.attributes.business_hours_phone,
             email: this.props.selected_contact_info.attributes.email,
-            notes: this.props.selected_contact_info.attributes.background_info,
-        }
-    }
-
-    componentWillMount() {
-        if(this.props.navigation.state.params.category == 0) {
-            this.setState({
-                isNotInterested: false,
-                isMaybeInterested: true,
-                isInterestd: false,
-            })
-        }
-        else if(this.props.navigation.state.params.category == 1) {
-            this.setState({
-                isNotInterested: false,
-                isMaybeInterested: false,
-                isInterestd: true,
-            })
-        }
-        else {
-            this.setState({
-                isNotInterested: true,
-                isMaybeInterested: false,
-                isInterestd: false,
-            })
-        }
+            notes: this.props.selected_home_note.attributes.text,
+        })
+        
     }
 
     onNotInterested() {
@@ -100,18 +96,36 @@ class homeEdit extends Component {
         dispatch(NavigationActions.navigate({routeName: 'sendEmail'}))
     }
 
-    _onSearch = () => {
-        var arr = {
-            "first_name" : this.state.firstname,
-            "last_name" : this.state.lastname,
+    onBack() {
+        Keyboard.dismiss(); 
+        if (this.props.navigation.state.params && typeof this.props.navigation.state.params.onNavigateBack !== "undefined") {
+            this.props.navigation.state.params.onNavigateBack(); 
+        }
+        this.props.navigation.goBack(); 
+    }
+
+    _onSave = () => {
+        Keyboard.dismiss(); 
+        var arr1 = {
+            "first_name" : this.state.firstName,
+            "last_name" : this.state.lastName,
             "business_hours_phone": this.state.phone,
             "mobile_phone": this.state.mobile,
             "email": this.state.email,
         }
-        console.log(this.state.lastname)
-        updateContact('PATCH', this.props.token, this.props.selected_contact_info.id, arr).then(data => {
-            console.log('--->')
-            console.log(data)
+        var arr2 = {
+            "contact_id": this.props.selected_contact_info.id,
+            "property_id": this.props.relationship_inspection.id,
+            "text": this.state.notes,
+            "account_id": this.props.userID,
+            "interested": this.state.isNotInterested? 'No': this.state.isInterestd? 'Yes' : 'Maybe'
+        }
+        
+        this.setState({ isLoading: true })
+        updateContact('PATCH', this.props.token, this.props.selected_contact_info.id, arr1).then(data => {
+            updateNote(this.props.token, this.props.selected_home_note.id, this.props.userID, arr2).then(data1 => {
+                this.setState({ isLoading: false })
+            })
         })
     }
 
@@ -124,13 +138,19 @@ class homeEdit extends Component {
                 />
                 <View style = {styles.menuView}>
                     <MaterialCommunityIcons name = 'arrow-left' size = {25} color = 'white'
-                                onPress={ () => { this.props.navigation.goBack() }} />
+                                onPress={ () => this.onBack()} />
                     <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{this.props.selected_contact_info.attributes.first_name} {this.props.selected_contact_info.attributes.last_name}</Label>
-                    <TouchableOpacity onPress = {this._onSearch}>
+                    <TouchableOpacity onPress = {this._onSave}>
                         <Label style = {styles.editTxt}>Save</Label>
                     </TouchableOpacity>
                 </View>
-                <Content style = {styles.mainView} showsVerticalScrollIndicator = {false}>
+                <KeyboardAwareScrollView
+                    ref={ref => this.view = ref}
+                    style={styles.mainView}
+                    enableOnAndroid
+                    extraHeight={Platform.OS === "android" ? -1500 : undefined}
+                    scrollEnabled = {true}
+                >
                     <Label style = {styles.editInspectionTxt}>Edit Inspection</Label>
                     <View style = {{padding: 15, paddingTop: 5}}>
                         <View style = {styles.rowView}>
@@ -196,23 +216,24 @@ class homeEdit extends Component {
                                 inputStyle = {styles.textInput}
                                 autoCapitalize = {'none'}
                                 autoCorrect = {false}
+                                keyboardType = 'email-address'
                                 height = {43}
                             />
                         </View>
-                        <View style = {styles.rowView}>
-                            <Hoshi
-                                label = {'Notes'}
-                                value = {this.state.notes}
+                        <View style = {styles.noteView}>
+                            <Text style = {styles.noteTxt}>Note</Text>
+                            <TextInput
+                                style = {styles.noteTextInput}
+                                multiline={true}
                                 onChangeText = { text => this.setState({ notes: text })}
-                                borderColor = {'transparent'}
-                                labelStyle = {this.state.notes? styles.labelStyle1 : styles.labelStyle2}
-                                style = {styles.txtinput2}
-                                inputStyle = {styles.textInput}
-                                autoCapitalize = {'none'}
+                                value = {this.state.notes}
+                                placeholder = "Note"
+                                placeholderTextColor = "#999"
+                                autoCapitalize = 'none'
                                 autoCorrect = {false}
-                                height = {43}
                             />
                         </View>
+                        
                         {/*<View style = {styles.editPropertyView}>
                             <Label style = {styles.editTxt1}>Edit Property Preferences</Label>
                         </View>*/}
@@ -259,7 +280,10 @@ class homeEdit extends Component {
                         </TouchableOpacity>
                     </View>
                     
-                </Content>
+                </KeyboardAwareScrollView>
+                {
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {styles.indicator}/> : null
+                }
             </Container>
         );
     }
@@ -269,6 +293,9 @@ const mapStateToProps = (state, ownProps) => {
     return {
         token: state.user.token,
         selected_contact_info: state.contacts.selected_contact_info,
+        relationship_inspection: state.home.selected_inspection,
+        userID: state.user.user_id,
+        selected_home_note: state.home.selected_home_note
     }
 }
 

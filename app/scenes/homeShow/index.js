@@ -52,13 +52,13 @@ class homeShow extends Component<{}>{
                 </View>
                 <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47', height: 3}} locked = {true}>
                     <Tab heading="NEW ATTENDEE" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <NewAttendee/>
+                        <NewAttendee navigation = {this.props.navigation}/>
                     </Tab>
                     <Tab heading="ATTENDEES" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <Attendees/>
+                        <Attendees navigation = {this.props.navigation}/>
                     </Tab>
                     <Tab heading="OWNER/S" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 
-                        <Owner/>
+                        <Owner navigation = {this.props.navigation}/>
                     </Tab>
                 </Tabs>
             </Container>

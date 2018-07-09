@@ -17,13 +17,24 @@ export default {
         width: (width-40)/2,
         paddingLeft: 0,
         fontSize: 15,
-        marginTop: 5
+        marginTop: 5,
+        fontFamily: 'open-sans-regular',
     },
     txtinput2: {
         width: width-30,
         paddingLeft: 30,
         fontSize: 10,
-        marginTop: 5
+        marginTop: 5,
+        fontFamily: 'open-sans-regular',
+    },
+    textInput: {
+        position: 'absolute',
+        bottom: 2,
+        left: 5,
+        padding: 0,
+        color: '#6a7989',
+        fontSize: 18,
+        fontFamily: 'open-sans-regular',
     },
     labelTxt: {
         color: '#0099CC',
@@ -153,6 +164,14 @@ export default {
     label2: {
         fontSize: 12,
         color: '#999',
+        fontFamily: 'open-sans-regular',
+    },
+    labelStyle3: {
+        fontSize: 12,
+        fontFamily: 'open-sans-regular',
+    },
+    labelStyle4: {
+        fontSize: 15,
         fontFamily: 'open-sans-regular',
     },
     line: {

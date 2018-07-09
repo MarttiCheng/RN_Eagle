@@ -115,7 +115,6 @@ export default {
         left: 0,
         padding: 15,
         paddingTop: 5,
-        // justifyContent: 'space-between'
     },
     displayTxt: {
         color: 'white',

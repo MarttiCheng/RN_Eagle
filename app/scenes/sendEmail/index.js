@@ -92,7 +92,6 @@ class sendEmail extends Component {
 
     componentWillMount() {
         getListingsDocuments(this.props.token, this.state.propertyId).then(data => {
-            console.log(data)
             this.setState({
                 isLoading: false,
                 documentList: data.data
@@ -370,7 +369,7 @@ class sendEmail extends Component {
             inputRange: [0, maxHeight1 * .3, maxHeight1],
             outputRange: [0, 0, 200],
         });
-        
+
         return (
             <View style={styles.container}>
                 <StatusBar

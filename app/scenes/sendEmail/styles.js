@@ -73,7 +73,6 @@ export default {
         borderRadius: 12,
         backgroundColor: '#e0e0e0',
         alignItems: 'center',
-        // flex: 1
     },
     avatarImg: {
         width: 20,
@@ -97,8 +96,6 @@ export default {
         padding: 15,
         alignItmes: 'center',
         justifyContent: 'space-between',
-        // borderBottomWidth: 1,
-        // borderColor: 'lightgray'
     },
     view1: {
         flexDirection: 'row',

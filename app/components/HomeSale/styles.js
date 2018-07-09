@@ -17,7 +17,6 @@ export default {
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor:'lightgray',
-        // fontFamily: 'open-sans-regular',
     },
     view1: {
         paddingLeft: 15,
@@ -27,7 +26,6 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        // flex:1
     },
     rowSubView: {
         marginLeft: 15,

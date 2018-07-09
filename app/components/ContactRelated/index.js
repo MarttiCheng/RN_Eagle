@@ -239,7 +239,7 @@ class ContactRelated extends Component {
                 enableOnAndroid
                 extraHeight={Platform.OS === "android" ? -1500 : undefined}
                 scrollEnabled = {true}
-            ><View>
+            >
                 { this.state.isSaveLoading? <BallIndicator color = {'#2B3643'}  style = {styles.loadingView}/> : null }
                 { 
                     this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 30, marginBottom: 10}}/> : 
@@ -309,7 +309,6 @@ class ContactRelated extends Component {
                     }
                     
                 </View>
-                </View>
             </KeyboardAwareScrollView>
         );
     }
@@ -319,7 +318,6 @@ const mapStateToProps = (state, ownProps) => {
     return {
         userID: state.user.user_id,
         token: state.user.token, 
-        // contact_groups: state.contacts.contact_groups,
         contact_all: state.contacts.contacts_all,
         contact_id: state.contacts.contact_id,
     }

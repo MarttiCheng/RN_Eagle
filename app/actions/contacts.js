@@ -251,7 +251,7 @@ function getThumbnailUrl(token, URL){
     })
 }
 
-function updateContact(postmethod,token, id, arr){
+function updateContact(postmethod, token, id, arr){
     return new Promise((resolve, reject) => {
         fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id, {
             method: postmethod,
@@ -519,6 +519,38 @@ function createNote(token, id, arr){
     })
 }
 
+function updateNote(token, noteid, accountid, arr) {
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_NOTE + '/' + noteid , {
+            method: 'PUT',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/vnd.api+json'
+            },
+            body:JSON.stringify({
+                "data": {
+                    "type": "notes",
+                    "id": noteid,
+                    "attributes": {
+                        "contact_id": arr.contact_id,
+                        "property_id": arr.property_id,
+                        "text": arr.text,
+                        "account_id": accountid,
+                        "interested": arr.interested
+                    }
+                }
+            })
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
+
 function searchContacts(token, query){
     return new Promise((resolve, reject) => {
         fetch(API.BASE_URL + API.ALL_CONTACTS + '?filter[query]=' + query, {
@@ -558,5 +590,6 @@ module.exports = {
     listContactGroups,
     createNewContact,
     createNote,
+    updateNote,
     searchContacts,
 }

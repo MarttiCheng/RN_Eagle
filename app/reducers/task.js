@@ -39,6 +39,7 @@ function task(state = initialTokenState, action) {
                 tasks: [],
                 tasks_completed: [],
                 tasks_uncompleted: [],
+                task_detail_info: [],
             };
         default :
             return state

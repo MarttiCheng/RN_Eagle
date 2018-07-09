@@ -34,6 +34,9 @@ class Attendees extends Component {
             mayInterestedList: [],
             interestedList: [],
             notInterestedList: [],
+            mayInterestedNoteList: [],
+            interestedNoteList: [],
+            notInterestedNoteList: [],
             isLoading: true,
             
             maycontactGroups: [],
@@ -47,9 +50,16 @@ class Attendees extends Component {
     }
 
     componentWillMount() {
+        this.fetchAttee()
+    }
+
+    fetchAttee() {
         var mayinterested = []
         var interested = []
         var notinterested = []
+        var mayinterestedNote = []
+        var interestedNote = []
+        var notinterestedNote = []
         var maygroups = []
         var intgroups = []
         var notgroups = []
@@ -57,7 +67,7 @@ class Attendees extends Component {
         var notrelationships = []
         var intrelationships = []
         var idList = []
-
+        this.setState({ isLoading: true })
         getInspectionAttendees(this.props.token, this.props.inspectionId).then(data => {
             for(var i = 0; i < data.data.length; i++){
                 idList.push(data.data[i].attributes.contact_id)
@@ -67,16 +77,19 @@ class Attendees extends Component {
                     for(var i = 0 ; i < data.data.length ; i++){
                         if(data.data[i].attributes.interested == 'No'){
                             notinterested.push(data.included[i])
+                            notinterestedNote.push(data.data[i])
                             notgroups.push(data1[i])
                             notrelationships.push(data2[i])
                         }
                         else if(data.data[i].attributes.interested == 'Yes') {
                             interested.push(data.included[i])
+                            interestedNote.push(data.data[i])
                             intgroups.push(data1[i])
                             intrelationships.push(data2[i])
                         }
                         else {
                             mayinterested.push(data.included[i])
+                            mayinterestedNote.push(data.data[i])
                             maygroups.push(data1[i])
                             mayrelationships.push(data2[i])
                         }
@@ -85,6 +98,9 @@ class Attendees extends Component {
                         mayInterestedList: mayinterested,
                         interestedList: interested,
                         notInterestedList: notinterested,
+                        mayInterestedNoteList: mayinterestedNote,
+                        interestedNoteList: interestedNote,
+                        notInterestedNoteList: notinterestedNote,
                         maycontactGroups: maygroups,
                         intcontactGroups: intgroups,
                         notcontactGroups: notgroups,
@@ -98,10 +114,19 @@ class Attendees extends Component {
         })
     }
 
-    clickAttend(item, index, category) {
+    handleOnNavigateBack(){
+        this.fetchAttee()
+    }
+
+    clickAttend(item, index, category, noteInfo) {
         var { dispatch } = this.props;
         dispatch ({ type: 'SELECTED_CONTACT_INFO', data: item})
-        dispatch(NavigationActions.navigate({routeName: 'homeEdit', params: {category: category}}))
+        dispatch ({ type: 'SELECTED_HOME_NOTE', data: noteInfo})
+        
+        this.props.navigation.navigate('homeEdit', {
+            onNavigateBack: this.handleOnNavigateBack.bind(this),
+            category: category
+        })
     }
 
     showContactGroups(index, category){
@@ -146,9 +171,9 @@ class Attendees extends Component {
         }
     }
 
-    renderRow(item, index, category) {
+    renderRow(item, index, category, noteInfo) {
         return(
-            <TouchableOpacity key = {index} onPress = {() => this.clickAttend(item, index, category)}>
+            <TouchableOpacity key = {index} onPress = {() => this.clickAttend(item, index, category, noteInfo)}>
                 <View style = {styles.rowRenderView}>
                     {
                         item.attributes.photo_url?  <Thumbnail square source = {{uri: item.attributes.photo_url}} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
@@ -177,7 +202,7 @@ class Attendees extends Component {
                     <Label style = {styles.preregisteredTitle}>Swipe to rate interest</Label>
                     {
                         this.state.mayInterestedList.map((item, index) => {
-                            return (this.renderRow(item, index, 0))
+                            return (this.renderRow(item, index, 0, this.state.mayInterestedNoteList[index]))
                         })
                     }
                 </View>
@@ -185,7 +210,7 @@ class Attendees extends Component {
                     <Label style = {styles.preregisteredTitle}>Interested</Label>
                     {
                         this.state.interestedList.map((item, index) => {
-                            return (this.renderRow(item, index, 1))
+                            return (this.renderRow(item, index, 1, this.state.interestedNoteList[index]))
                         })
                     }
                 </View>
@@ -193,7 +218,7 @@ class Attendees extends Component {
                     <Label style = {styles.preregisteredTitle}>Not Interested</Label>
                     {
                         this.state.notInterestedList.map((item, index) => {
-                            return (this.renderRow(item, index, 2))
+                            return (this.renderRow(item, index, 2, this.state.notInterestedNoteList[index]))
                         })
                     }
                 </View>
