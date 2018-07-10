@@ -30,6 +30,8 @@ export default class App extends Component<{}>{
         Expo.Font.loadAsync({
             'open-sans-bold': require('./app/assets/fonts/OpenSans-Bold.ttf'),
             'open-sans-regular': require('./app/assets/fonts/OpenSans-Regular.ttf'),
+            'Roboto': require("native-base/Fonts/Roboto.ttf"),
+            'Roboto_medium': require("native-base/Fonts/Roboto_medium.ttf")
         });
     }
 

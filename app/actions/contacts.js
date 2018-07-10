@@ -21,6 +21,24 @@ function getAllContacts(token){
     })
 }
 
+// function getAllContacts(token, page){
+//     return new Promise((resolve, reject) => {
+//         fetch(API.BASE_URL + API.ALL_CONTACTS + '?page[offset]=' + page*20 + '&page[limit]=20', {
+//             method: 'GET',
+//             headers: {
+//                 'Authorization': token
+//             }
+//         })
+//         .then((res) => res.json())
+//         .then(data => {
+//             resolve(data);
+//         })
+//         .catch(err => {
+//             reject(err);
+//         })
+//     })
+// }
+
 function getMyContacts(token, user_id, group_id){
     return new Promise((resolve, reject) => {
         fetch(API.BASE_URL + API.ALL_CONTACTS + '?filter[user_id]=' + user_id + '&filter[contact_group_ids]=' + group_id, {
@@ -199,7 +217,7 @@ function getEachContactRelationships(token, id) {
 
 function getContactActivity(token, id) {
     return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/notes'+ '?sort=-created_at' + '&page[offset]=0&page[limit]=20', {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '/' + id + '/notes'+ '?sort=-created_at', {
             method: 'GET',
             headers: {
                 'Authorization': token
