@@ -3,27 +3,9 @@ import { API } from '../constants'
 import {Content} from 'native-base';
 var Promiss = require('bluebird')
 
-function getAllContacts(token){
-    return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.ALL_CONTACTS, {
-            method: 'GET',
-            headers: {
-                'Authorization': token
-            }
-        })
-        .then((res) => res.json())
-        .then(data => {
-            resolve(data);
-        })
-        .catch(err => {
-            reject(err);
-        })
-    })
-}
-
-// function getAllContacts(token, page){
+// function getAllContacts(token){
 //     return new Promise((resolve, reject) => {
-//         fetch(API.BASE_URL + API.ALL_CONTACTS + '?page[offset]=' + page*20 + '&page[limit]=20', {
+//         fetch(API.BASE_URL + API.ALL_CONTACTS, {
 //             method: 'GET',
 //             headers: {
 //                 'Authorization': token
@@ -38,6 +20,24 @@ function getAllContacts(token){
 //         })
 //     })
 // }
+
+function getAllContacts(token, page){
+    return new Promise((resolve, reject) => {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '?page[offset]=' + page*10 + '&page[limit]=10', {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+    })
+}
 
 function getMyContacts(token, user_id, group_id){
     return new Promise((resolve, reject) => {

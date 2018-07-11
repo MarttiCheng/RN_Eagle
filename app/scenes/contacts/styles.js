@@ -7,7 +7,7 @@ export default {
         backgroundColor: 'white'
     },
     searchBoxView: {
-        flex: 1,
+        // flex: 1,
         width: width,
         height: 70,
         paddingLeft: 15,

@@ -4,7 +4,7 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Drawer
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Animated, Platform
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Animated, Platform, RefreshControl
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images'
@@ -16,42 +16,7 @@ import { getAllContacts, getMyContacts,getMyContacts1, getContactGroups, getCont
 import { BallIndicator } from 'react-native-indicators'
 import {Select, Option} from "react-native-chooser";
 
-class contacts extends Component<{}>{
-    static navigationOptions = {
-        header: null,
-        gesturesEnabled: false
-    }
-
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            email: '',
-            password: '',
-            isLoading: false,
-            searchText: '',
-            contactsList: [],
-            search_contactsList: [],
-            y1: new Animated.Value((Platform.OS == 'ios')? -40: -28),
-            scale1: new Animated.Value(0.001),
-            display: 'All contacts',
-            group: 'All Groups',
-            groupList: [],
-            groupID: '',
-            userID: '',
-            userName: '',
-            userEmail: ''
-        }
-    }
-
-    componentWillMount() {
-        this.getAllContacts()
-    }
-
-    getAllContacts(){
-        var { dispatch } = this.props;
-        var idList = []
-        var subAllGroupList = [{
+var subAllGroupList = [{
             "attributes": {
                 "created_at": "2017-11-22T14:58:46.961+11:00",
                 "name": "All Groups",
@@ -77,8 +42,60 @@ class contacts extends Component<{}>{
             "type": "contact_groups",
             }
         ]
-        this.setState({ isLoading: true })
-        getAllContacts(this.props.token).then(data => {
+        
+class contacts extends Component<{}>{
+    static navigationOptions = {
+        header: null,
+        gesturesEnabled: false
+    }
+
+    constructor(props) {
+        super(props);
+        
+        let ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
+        this.state = {
+            email: '',
+            password: '',
+            isLoading: true,
+            searchText: '',
+            contactsList: [],
+            search_contactsList: [],
+            y1: new Animated.Value((Platform.OS == 'ios')? -40: -28),
+            scale1: new Animated.Value(0.001),
+            display: 'All contacts',
+            group: 'All Groups',
+            groupList: [],
+            groupID: '',
+            userID: '',
+            userName: '',
+            userEmail: '',
+            page: 0,
+            dataSource: ds,
+            data: [],
+            fetching: false,
+            refreshing: false,
+        }
+    }
+
+    componentWillMount() {
+        this.getAllContacts(this.state.page)
+    }
+
+    _onRefresh() {
+        var { dispatch } = this.props;
+        var idList = []
+
+        if (this.state.refreshing) {
+            return;
+        }
+
+        this.setState({refreshing: true, page: 0});
+        getAllContacts(this.props.token, 0).then(data => {
+            if(!data) {
+                return;
+            }
             for(var i = 0; i < data.data.length; i++){
                 idList.push(data.data[i].id)
             }
@@ -91,12 +108,97 @@ class contacts extends Component<{}>{
                         for(var i = 0 ; i < groupList.data.length ; i++){
                             subAllGroupList.push(groupList.data[i])
                         }
+
+                        var real_data;
+                        if (this.state.refreshing) {
+                            real_data = data1;
+                        } else {
+                            real_data = [...this.state.data, ...data1];
+                        }
                         this.setState({
                             contactsList: data1,
                             search_contactsList: data1,
                             isLoading: false,
                             groupList: subAllGroupList,
                             userID: userData.data.id,
+                            page: this.state.page + 1,
+                            dataSource: this.state.dataSource.cloneWithRows(real_data),
+                            data: real_data,
+                            fetching: false,
+                            refreshing: false,
+                        })
+                    })
+                })
+            })
+        })
+    }
+
+    getAllContacts(page){
+        var { dispatch } = this.props;
+        var idList = []
+        
+        if (this.state.fetching) {
+            return;
+        }
+
+        this.setState({
+            fetching: true
+        });
+        // getAllContacts(this.props.token).then(data => {
+        //     for(var i = 0; i < data.data.length; i++){
+        //         idList.push(data.data[i].id)
+        //     }
+        //     getContactGroups(this.props.token, idList).then(data1 => {
+        //         listContactGroups(this.props.token).then(groupList => {
+        //             getUser(this.props.token, this.props.userID).then(userData => {
+        //                 dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
+        //                 dispatch ({ type: 'USER_INFO', data: userData.data.attributes})
+        //                 subAllGroupList.concat(groupList.data)
+        //                 for(var i = 0 ; i < groupList.data.length ; i++){
+        //                     subAllGroupList.push(groupList.data[i])
+        //                 }
+        //                 this.setState({
+        //                     contactsList: data1,
+        //                     search_contactsList: data1,
+        //                     isLoading: false,
+        //                     groupList: subAllGroupList,
+        //                     userID: userData.data.id,
+        //                 })
+        //             })
+        //         })
+        //     })
+        // })
+        getAllContacts(this.props.token, page).then(data => {
+            for(var i = 0; i < data.data.length; i++){
+                idList.push(data.data[i].id)
+            }
+            getContactGroups(this.props.token, idList).then(data1 => {
+                listContactGroups(this.props.token).then(groupList => {
+                    getUser(this.props.token, this.props.userID).then(userData => {
+                        dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
+                        dispatch ({ type: 'USER_INFO', data: userData.data.attributes})
+                        subAllGroupList.concat(groupList.data)
+                        for(var i = 0 ; i < groupList.data.length ; i++){
+                            subAllGroupList.push(groupList.data[i])
+                        }
+
+                        var real_data;
+                        if (this.state.refreshing) {
+                            real_data = data1;
+                        } else {
+                            real_data = [...this.state.data, ...data1];
+                        }
+
+                        this.setState({
+                            contactsList: data1,
+                            search_contactsList: data1,
+                            isLoading: false,
+                            groupList: subAllGroupList,
+                            userID: userData.data.id,
+                            page: page + 1,
+                            dataSource: this.state.dataSource.cloneWithRows(real_data),
+                            data: real_data,
+                            fetching: false,
                         })
                     })
                 })
@@ -107,36 +209,11 @@ class contacts extends Component<{}>{
     getMyContacts(){
         var { dispatch } = this.props;
         var idList = []
-        var subAllGroupList = [{
-            "attributes": {
-                "created_at": "2017-11-22T14:58:46.961+11:00",
-                "name": "All Groups",
-            },
-            "id": "-1",
-            "links": {
-                "self": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12",
-            },
-            "relationships": {
-                "account": {
-                    "links": {
-                        "related": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/account",
-                        "self": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/relationships/account",
-                    },
-                },
-                "contacts": {
-                    "links": {
-                        "related": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/contacts",
-                        "self": "https://lnstaging.herokuapp.com/api/v2/contact-groups/12/relationships/contacts",
-                    },
-                },
-            },
-            "type": "contact_groups",
-            }
-        ]
+        
         this.setState({ isLoading: true })
 
         if(this.state.group == 'All Groups' && this.state.display == 'All contacts') {
-            getAllContacts(this.props.token).then(data => {
+            getAllContacts(this.props.token, this.state.page).then(data => {
                 for(var i = 0; i < data.data.length; i++){
                     idList.push(data.data[i].id)
                 }
@@ -262,8 +339,10 @@ class contacts extends Component<{}>{
     }
 
     renderRow(item, index) {
+        console.log(index)
+        console.log('----> ',item.data.id)
         return(
-            <TouchableOpacity key = {index} onPress = {() => this.clickItemContact( this.state.search_contactsList[index], index)}>
+            <TouchableOpacity key = {index} >
                 <View style = {styles.rowView}>
                     {
                         item.data.attributes.photo_url?<Thumbnail square source = {item.data.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
@@ -271,11 +350,7 @@ class contacts extends Component<{}>{
                     }
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.data.attributes.first_name} {item.data.attributes.last_name}</Label>
-                        <View style = {styles.tagView}>
-                            {
-                                this.showContactGroups(index) 
-                            }
-                        </View>
+                        
                     </View>
                     <View style = {styles.line}/>
                 </View>
@@ -389,7 +464,7 @@ class contacts extends Component<{}>{
                         <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginRight: 15}} />
                     </TouchableOpacity>
                 </View>
-                <Content showsVerticalScrollIndicator = {false}>
+                {/*<Content showsVerticalScrollIndicator = {false} style = {{flex: 1}}>*/}
                     <View style = {styles.searchBoxView}>
                         <Search
                             ref = 'search'
@@ -406,13 +481,31 @@ class contacts extends Component<{}>{
                         />
                     </View>
                     
-                    {
+                    {/*{
                         this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> :
                         this.state.search_contactsList.map((item, index) => {
                             return(this.renderRow(item, index))
                         })
+                    }*/}
+                    {/*<ScrollView style = {{flex: 1}}>*/}
+
+                    {
+                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> :
+                        <ListView
+                            dataSource={this.state.dataSource}
+                            renderRow = {(rowData,rowID) => this.renderRow(rowData, rowID)}
+                            onEndReached={() => this.getAllContacts(this.state.page)}
+                            enableEmptySections
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this._onRefresh.bind(this)}
+                                />
+                            }
+                        />
                     }
-                </Content>
+                    {/*</ScrollView>*/}
+                {/*</Content>*/}
 
                 <TouchableOpacity style = {styles.addBtn} onPress = {() => this.addNewContrat()}>
                     <Label style = {styles.addTxt}>+</Label>
@@ -466,7 +559,7 @@ class contacts extends Component<{}>{
                             <Text style = {styles.clearTxt}>SAVE FILTER</Text>
                         </Button>
                     </View>
-                </Animated.View> 
+                </Animated.View>
             </Container>
         )
     }

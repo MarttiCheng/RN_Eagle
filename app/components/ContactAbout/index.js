@@ -271,7 +271,6 @@ class ContactAbout extends Component {
                                 (!this.state.postcode || this.state.postcode == '')? null : <Label style = {styles.label2}> {this.state.postcode}</Label>
                             }
                         </View>
-                        
                         {
                             (!this.state.country_category || this.state.country_category == '')? null : <Label style = {styles.label2}>{this.state.country_category}</Label>
                         }
