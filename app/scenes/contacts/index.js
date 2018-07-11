@@ -9,7 +9,7 @@ import {
 import styles from './styles'
 import images from '../../themes/images'
 import Search from 'react-native-search-box';
-import { NavigationActions, Header } from 'react-navigation'
+import { NavigationActions } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
 import { getAllContacts, getMyContacts,getMyContacts1, getContactGroups, getContactRelationships, listContactGroups, getUser } from '../../actions'
@@ -294,7 +294,7 @@ class contacts extends Component<{}>{
             Animated.timing(                  
                 this.state.y1,            
                 {
-                    toValue: (Platform.OS == 'ios')? Header.HEIGHT: Header.HEIGHT + 20,                    
+                    toValue: (Platform.OS == 'ios')? 64: 76,                    
                     duration: 500,              
                 },
             ),
@@ -357,7 +357,7 @@ class contacts extends Component<{}>{
 
     addNewContrat(){
         var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'addContact'}))
+        dispatch(NavigationActions.navigate({routeName: 'addContact'})) 
     }
 
     onSelectDisplay(value, label) {
@@ -450,7 +450,7 @@ class contacts extends Component<{}>{
                             {
                                 this.state.groupList.map((item, index) => {
                                     return(
-                                        <Option value = {{name:item.attributes.name, id: item.id}} styleText = {styles.optiontxt}>{item.attributes.name}</Option>
+                                        <Option value = {{name:item.attributes.name, id: item.id}} styleText = {styles.optiontxt} key = {index}>{item.attributes.name}</Option>
                                     )
                                 })
                             }

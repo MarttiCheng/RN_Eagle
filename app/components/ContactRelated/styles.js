@@ -1,5 +1,4 @@
 import { Dimensions, Platform, StatusBar } from 'react-native';
-import { Header } from 'react-navigation'
 const { width, height } = Dimensions.get('window')
 
 export default {
@@ -9,7 +8,7 @@ export default {
     },
     container1: {
         width: width,
-        height: (Platform.OS == 'ios')? height-Header.HEIGHT: height - Header.HEIGHT-20,
+        height: (Platform.OS == 'ios')? height-64: height - 76,
         backgroundColor: '#ddd',
     },
     rowSubView: {

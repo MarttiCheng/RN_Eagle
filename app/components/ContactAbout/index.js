@@ -256,10 +256,25 @@ class ContactAbout extends Component {
                         <Label style = {styles.label2}>{this.state.email}</Label>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <View style = {(!this.state.address1 || this.state.address1 == '')? styles.blankView : styles.view1}>
+                    <View style = {(!this.state.address1 || this.state.address1 == '') && !this.state.suburb? styles.blankView : styles.view1}>
                         <Label style = {styles.label1}>Address</Label>
-                        <Label style = {styles.label2}>{this.state.address1}</Label>
-                        <Label style = {styles.label2}>{this.state.address2}</Label>
+                        <Label style = {this.state.address1?styles.label2 : styles.blankView}>{this.state.address1}</Label>
+                        <Label style = {this.state.address2?styles.label2 : styles.blankView}>{this.state.address2}</Label>
+                        <View style = {{flexDirection: 'row'}}>
+                            {
+                                (!this.state.suburb || this.state.suburb == '')? null : <Label style = {styles.label2}>{this.state.suburb}</Label>
+                            }
+                            {
+                                (!this.state.state || this.state.state == '')? null : <Label style = {styles.label2}> {this.state.state}</Label>
+                            }
+                            {
+                                (!this.state.postcode || this.state.postcode == '')? null : <Label style = {styles.label2}> {this.state.postcode}</Label>
+                            }
+                        </View>
+                        
+                        {
+                            (!this.state.country_category || this.state.country_category == '')? null : <Label style = {styles.label2}>{this.state.country_category}</Label>
+                        }
                         <View style = {styles.seperateLine}/>
                     </View>
                     <View style = {(!this.state.backgroundInfo || this.state.backgroundInfo == '')? styles.blankView : styles.view1}>
@@ -314,7 +329,6 @@ class ContactAbout extends Component {
                                 <View style = {styles.seperateLine}/>
                             </View> : null
                     }
-                    
                 </View>
             </View>
         )
