@@ -12,7 +12,7 @@ import Search from 'react-native-search-box';
 import { NavigationActions } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
-import { getAllContacts, getMyContacts,getMyContacts1, getContactGroups, getContactRelationships, listContactGroups, getUser } from '../../actions'
+import { getAllContacts, getMyContacts, getMyContacts1, getContactGroups, listContactGroups, getUser, searchContacts, getContactGroup } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import {Select, Option} from "react-native-chooser";
 
@@ -61,7 +61,6 @@ class contacts extends Component<{}>{
             isLoading: true,
             searchText: '',
             contactsList: [],
-            search_contactsList: [],
             y1: new Animated.Value((Platform.OS == 'ios')? -40: -28),
             scale1: new Animated.Value(0.001),
             display: 'All contacts',
@@ -116,8 +115,7 @@ class contacts extends Component<{}>{
                             real_data = [...this.state.data, ...data1];
                         }
                         this.setState({
-                            contactsList: data1,
-                            search_contactsList: data1,
+                            contactsList: real_data,
                             isLoading: false,
                             groupList: subAllGroupList,
                             userID: userData.data.id,
@@ -126,6 +124,7 @@ class contacts extends Component<{}>{
                             data: real_data,
                             fetching: false,
                             refreshing: false,
+                            searchText: ''
                         })
                     })
                 })
@@ -144,30 +143,7 @@ class contacts extends Component<{}>{
         this.setState({
             fetching: true
         });
-        // getAllContacts(this.props.token).then(data => {
-        //     for(var i = 0; i < data.data.length; i++){
-        //         idList.push(data.data[i].id)
-        //     }
-        //     getContactGroups(this.props.token, idList).then(data1 => {
-        //         listContactGroups(this.props.token).then(groupList => {
-        //             getUser(this.props.token, this.props.userID).then(userData => {
-        //                 dispatch ({ type: 'GET_DEFAULT_CONTACTGROUP_LIST', data: groupList.data})
-        //                 dispatch ({ type: 'USER_INFO', data: userData.data.attributes})
-        //                 subAllGroupList.concat(groupList.data)
-        //                 for(var i = 0 ; i < groupList.data.length ; i++){
-        //                     subAllGroupList.push(groupList.data[i])
-        //                 }
-        //                 this.setState({
-        //                     contactsList: data1,
-        //                     search_contactsList: data1,
-        //                     isLoading: false,
-        //                     groupList: subAllGroupList,
-        //                     userID: userData.data.id,
-        //                 })
-        //             })
-        //         })
-        //     })
-        // })
+
         getAllContacts(this.props.token, page).then(data => {
             for(var i = 0; i < data.data.length; i++){
                 idList.push(data.data[i].id)
@@ -181,17 +157,14 @@ class contacts extends Component<{}>{
                         for(var i = 0 ; i < groupList.data.length ; i++){
                             subAllGroupList.push(groupList.data[i])
                         }
-
                         var real_data;
                         if (this.state.refreshing) {
                             real_data = data1;
                         } else {
                             real_data = [...this.state.data, ...data1];
                         }
-
                         this.setState({
-                            contactsList: data1,
-                            search_contactsList: data1,
+                            contactsList: real_data,
                             isLoading: false,
                             groupList: subAllGroupList,
                             userID: userData.data.id,
@@ -199,6 +172,7 @@ class contacts extends Component<{}>{
                             dataSource: this.state.dataSource.cloneWithRows(real_data),
                             data: real_data,
                             fetching: false,
+                            searchText: ''
                         })
                     })
                 })
@@ -213,7 +187,7 @@ class contacts extends Component<{}>{
         this.setState({ isLoading: true })
 
         if(this.state.group == 'All Groups' && this.state.display == 'All contacts') {
-            getAllContacts(this.props.token, this.state.page).then(data => {
+            getAllContacts(this.props.token, 0).then(data => {
                 for(var i = 0; i < data.data.length; i++){
                     idList.push(data.data[i].id)
                 }
@@ -226,9 +200,10 @@ class contacts extends Component<{}>{
                         }
                         this.setState({
                             contactsList: data1,
-                            search_contactsList: data1,
                             isLoading: false,
                             groupList: subAllGroupList,
+                            dataSource: this.state.dataSource.cloneWithRows(data1),
+                            searchText: ''
                         })
                     })
                 })
@@ -248,9 +223,10 @@ class contacts extends Component<{}>{
                         }
                         this.setState({
                             contactsList: data1,
-                            search_contactsList: data1,
                             isLoading: false,
                             groupList: subAllGroupList,
+                            dataSource: this.state.dataSource.cloneWithRows(data1),
+                            searchText: ' '
                         })
                     })
                 })
@@ -271,9 +247,10 @@ class contacts extends Component<{}>{
                         }
                         this.setState({
                             contactsList: data1,
-                            search_contactsList: data1,
                             isLoading: false,
                             groupList: subAllGroupList,
+                            dataSource: this.state.dataSource.cloneWithRows(data1),
+                            searchText: ' '
                         })
                     })
                 })
@@ -281,15 +258,26 @@ class contacts extends Component<{}>{
         }
     }
 
-    filterStates = (value) => {
-        if(value){
-            this.setState({
-                search_contactsList: this.state.contactsList.filter(item => (item.data.attributes.first_name + item.data.attributes.last_name).toLowerCase().includes(value.toLowerCase())),
+    filterStates = (text) => {
+        var idList = []
+        this.setState({ searchText: text })
+        if(text){
+            searchContacts(this.props.token, text).then(data => {
+                
+                for(var i = 0; i < data.data.length; i++){
+                    idList.push(data.data[i].id)
+                }
+                getContactGroups(this.props.token, idList).then(data1 => {
+                    this.setState({ 
+                        contactsList: data1,
+                        dataSource: this.state.dataSource.cloneWithRows(data1),
+                    })
+                })
             })
         }
         else {
             this.setState({
-                search_contactsList: this.state.contactsList,
+                dataSource: this.state.dataSource.cloneWithRows(this.state.contactsList),
             })
         }
     }
@@ -325,9 +313,9 @@ class contacts extends Component<{}>{
     }
     
     showContactGroups(index){
-        if(this.state.search_contactsList[index].included){
+        if(this.state.contactsList[index].included){
             return(
-                this.state.search_contactsList[index].included.map((item1, index1) => {
+                this.state.contactsList[index].included.map((item1, index1) => {
                     return(
                         <View style = { styles.eachtag } key = {index1}>
                             <Label style = {styles.tagTxt}>{item1.attributes.name}</Label>
@@ -339,10 +327,8 @@ class contacts extends Component<{}>{
     }
 
     renderRow(item, index) {
-        console.log(index)
-        console.log('----> ',item.data.id)
         return(
-            <TouchableOpacity key = {index} >
+            <TouchableOpacity key = {index} onPress = {() => this.clickItemContact( this.state.contactsList[index], index)}>
                 <View style = {styles.rowView}>
                     {
                         item.data.attributes.photo_url?<Thumbnail square source = {item.data.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
@@ -350,7 +336,11 @@ class contacts extends Component<{}>{
                     }
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.data.attributes.first_name} {item.data.attributes.last_name}</Label>
-                        
+                        <View style = {styles.tagView}>
+                            {
+                                this.showContactGroups(index) 
+                            }
+                        </View>
                     </View>
                     <View style = {styles.line}/>
                 </View>
@@ -359,8 +349,9 @@ class contacts extends Component<{}>{
     }
 
     onCancel = () => {
-        this.setState({
-            search_contactsList: this.state.contactsList
+        this.setState({ 
+            searchText: '',
+            dataSource: this.state.dataSource.cloneWithRows(this.state.contactsList)
         })
     }
 
@@ -460,40 +451,38 @@ class contacts extends Component<{}>{
                     <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{marginLeft: 10}}
                                 onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
                     <Label style = {styles.title}>Contacts</Label>
-                    <TouchableOpacity style = {styles.searchButton} onPress = {() => this.onFilter()}>
+                    <TouchableOpacity onPress = {() => this.onFilter()}>
                         <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginRight: 15}} />
                     </TouchableOpacity>
                 </View>
-                {/*<Content showsVerticalScrollIndicator = {false} style = {{flex: 1}}>*/}
-                    <View style = {styles.searchBoxView}>
-                        <Search
-                            ref = 'search'
-                            titleCancelColor = 'black'
-                            backgroundColor = 'lightgray'
-                            cancelTitle = 'Cancel'
-                            contentWidth = {100}
-                            searchIconCollapsedMargin = {30}
-                            searchIconExpandedMargin = {10}
-                            placeholderCollapsedMargin = {15}
-                            placeholderExpandedMargin = {25}
-                            onChangeText={this.filterStates}
-                            onCancel = {this.onCancel}
-                        />
-                    </View>
-                    
-                    {/*{
-                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> :
-                        this.state.search_contactsList.map((item, index) => {
-                            return(this.renderRow(item, index))
-                        })
-                    }*/}
-                    {/*<ScrollView style = {{flex: 1}}>*/}
+                
+                <View style = {styles.searchBoxView}>
+                    <Search
+                        ref = 'search'
+                        titleCancelColor = 'black'
+                        backgroundColor = 'lightgray'
+                        cancelTitle = 'Cancel'
+                        contentWidth = {100}
+                        searchIconCollapsedMargin = {30}
+                        searchIconExpandedMargin = {10}
+                        placeholderCollapsedMargin = {15}
+                        placeholderExpandedMargin = {25}
+                        onChangeText={this.filterStates}
+                        onCancel = {this.onCancel}
+                    />
+                </View>
 
-                    {
-                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 100, marginBottom: 10}}/> :
+                {
+                    this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 0, marginBottom: 200}}/> :
+                    this.state.searchText ?
                         <ListView
                             dataSource={this.state.dataSource}
-                            renderRow = {(rowData,rowID) => this.renderRow(rowData, rowID)}
+                            renderRow = {(rowData,sectionID, rowID) => this.renderRow(rowData, rowID)}
+                            enableEmptySections
+                        /> :
+                        <ListView
+                            dataSource={this.state.dataSource}
+                            renderRow = {(rowData,sectionID, rowID) => this.renderRow(rowData, rowID)}
                             onEndReached={() => this.getAllContacts(this.state.page)}
                             enableEmptySections
                             refreshControl={
@@ -503,9 +492,7 @@ class contacts extends Component<{}>{
                                 />
                             }
                         />
-                    }
-                    {/*</ScrollView>*/}
-                {/*</Content>*/}
+                }
 
                 <TouchableOpacity style = {styles.addBtn} onPress = {() => this.addNewContrat()}>
                     <Label style = {styles.addTxt}>+</Label>
@@ -514,6 +501,7 @@ class contacts extends Component<{}>{
                 <Animated.View style={[styles.filterView, {transform: [ {translateY: this.state.y1},{scaleY: this.state.scale1}]}]}>
                     <Text style = {styles.displayTxt}>Display</Text>
                     <View style = {styles.dropView1}>
+                        <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
                         <Select
                             onSelect = {this.onSelectDisplay.bind(this)}
                             defaultText  = {this.state.display}
@@ -526,11 +514,11 @@ class contacts extends Component<{}>{
                             <Option value = "All contacts" styleText = {styles.optiontxt}>All contacts</Option>
                             <Option value = "My contacts" styleText = {styles.optiontxt}>My contacts</Option>
                         </Select>
-                        <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
                     </View>
                     
                     <Text style = {styles.groupTxt}>Group</Text>
                     <View style = {styles.dropView1}>
+                        <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
                         <Select
                             onSelect = {this.onSelectGroup.bind(this)}
                             defaultText  = {this.state.group}
@@ -548,7 +536,6 @@ class contacts extends Component<{}>{
                                 })
                             }
                         </Select>
-                        <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
                     </View>
 
                     <View style = {styles.filterButtonsView}>

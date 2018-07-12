@@ -27,8 +27,8 @@ class tasksShow extends Component<{}>{
             task_contactList: [],
             task_listingsList: [],
             selected_task_info: [],
-            body: this.props.tasks.attributes.body,
-            due_date: this.props.tasks.attributes.due_date,
+            body: '',
+            due_date: '',
             relationShipList: [],
             contactInfo: []
         }  

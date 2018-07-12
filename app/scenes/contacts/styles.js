@@ -7,9 +7,8 @@ export default {
         backgroundColor: 'white'
     },
     searchBoxView: {
-        // flex: 1,
         width: width,
-        height: 70,
+        height: 60,
         paddingLeft: 15,
         paddingRight: 15,
         justifyContent: 'center',
@@ -17,7 +16,8 @@ export default {
     },
     rowView: {
         flexDirection: 'row',
-        padding: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         alignItems: 'center'
     },
     avatarImg: {
@@ -130,7 +130,6 @@ export default {
     dropView1: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
         borderBottomWidth: 1,
         borderColor: 'white',
         paddingBottom: 5,
@@ -145,7 +144,10 @@ export default {
         height: 12,
         resizeMode: 'contain',
         marginRight: 5,
-        tintColor: 'white'
+        tintColor: 'white',
+        position: 'absolute',
+        bottom: 13,
+        right: 2,
     },
     filterButtonsView: {
         flexDirection: 'row',
@@ -186,8 +188,9 @@ export default {
         borderWidth : 1, 
         borderColor : "transparent", 
         height: 35, 
-        width: width - 60,
-        marginLeft: -10
+        width: width - 20,
+        marginLeft: -10,
+        backgroundColor: 'transparent'
     },
     selectedTxt: {
         backgroundColor:'transparent',

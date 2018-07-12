@@ -4,7 +4,7 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Drawer
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Animated, Platform
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images'
@@ -14,7 +14,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Font } from 'expo'
 import { getProperties, getThumbnailUrl } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
-
+import {Select, Option} from "react-native-chooser";
 
 class listings extends Component<{}>{
     static navigationOptions = {
@@ -30,6 +30,10 @@ class listings extends Component<{}>{
             searchText: '',
             listingsList: [],
             search_listingsList: [],
+            y1: new Animated.Value((Platform.OS == 'ios')? -40: -28),
+            scale1: new Animated.Value(0.001),
+            display: 'All listings',
+            group: 'All type',
         }   
     }
 
@@ -124,6 +128,82 @@ class listings extends Component<{}>{
         }
     }
 
+    onSelectDisplay(value, label) {
+        this.setState({ 
+            display : value 
+        });
+    }
+
+    onSelectGroup(value, label) {
+        this.setState({ 
+            group: value,
+        })
+    }
+
+    onFilter() {
+        Animated.parallel([
+            Animated.timing(                  
+                this.state.y1,            
+                {
+                    toValue: (Platform.OS == 'ios')? 64: 76,                    
+                    duration: 500,              
+                },
+            ),
+            Animated.timing( 
+                this.state.scale1,
+                {
+                    toValue: 1,
+                    duration: 500
+                }
+            )
+        ]).start()
+    }
+
+    onClearFilter() {
+        Animated.parallel([
+            Animated.timing(                  
+                this.state.y1,            
+                {
+                    toValue: (Platform.OS == 'ios')? -40: -28,       
+                    duration: 500,              
+                },
+            ),
+            Animated.timing( 
+                this.state.scale1,
+                {
+                    toValue: 0.001,
+                    duration: 500
+                }
+            )
+        ]).start();
+
+        this.setState({ 
+            isAllContacts: false,
+            isMyContacts: false,
+            display: 'All contacts',
+            group: 'All Groups'
+        })
+    }
+
+    onSaveFilter() {
+        Animated.parallel([
+            Animated.timing(                  
+                this.state.y1,            
+                {
+                    toValue: (Platform.OS == 'ios')? -40: -28,       
+                    duration: 500,              
+                },
+            ),
+            Animated.timing( 
+                this.state.scale1,
+                {
+                    toValue: 0.001,
+                    duration: 500
+                }
+            )
+        ]).start();
+    }
+
     render() {
         return(
             <Container style = {styles.container}>
@@ -132,11 +212,11 @@ class listings extends Component<{}>{
                     barStyle="light-content"
                 />
                 <View style = {styles.menuView}>
-                    <MaterialCommunityIcons name = 'menu' size = {25} color = 'white' style = {{}}
+                    <MaterialCommunityIcons name = 'menu' size = {25} color = 'white'  style = {{marginLeft: 10}}
                                 onPress={ () => { this.props.navigation.navigate('DrawerOpen') }} />
                     <Label style = {styles.title}>Listings</Label>
-                    <TouchableOpacity>
-                        <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginLeft: 3}} />
+                    <TouchableOpacity onPress = {() => this.onFilter()}>
+                        <Thumbnail square source = {images.ic_filter} style = {{width: 18, height: 18, marginRight: 15}} />
                     </TouchableOpacity>
                 </View>
                 <Content showsVerticalScrollIndicator = {false}>
@@ -166,6 +246,59 @@ class listings extends Component<{}>{
                 <TouchableOpacity style = {styles.addBtn}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
+                
+                <Animated.View style={[styles.filterView, {transform: [ {translateY: this.state.y1},{scaleY: this.state.scale1}]}]}>
+                    <Text style = {styles.displayTxt}>Status</Text>
+                    <View style = {styles.dropView1}>
+                        <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
+                        <Select
+                            onSelect = {this.onSelectDisplay.bind(this)}
+                            defaultText  = {this.state.display}
+                            style = {styles.selectoptionView}
+                            textStyle = {styles.selectedTxt}
+                            backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
+                            transparent = {true}
+                            optionListStyle = {styles.optionList}
+                        >
+                            <Option value = "Draft" styleText = {styles.optiontxt}>Draft</Option>
+                            <Option value = "Active" styleText = {styles.optiontxt}>Active</Option>
+                            <Option value = "Sold" styleText = {styles.optiontxt}>Sold</Option>
+                            <Option value = "Leased" styleText = {styles.optiontxt}>Leased</Option>
+                            <Option value = "Withdrawn" styleText = {styles.optiontxt}>Withdrawn</Option>
+                        </Select>
+                        
+                    </View>
+                    
+                    <Text style = {styles.groupTxt}>Type</Text>
+                    <View style = {styles.dropView1}>
+                        <Thumbnail square source = {images.ic_arrowdown} style = {styles.arrowImg}/>
+                        <Select
+                            onSelect = {this.onSelectGroup.bind(this)}
+                            defaultText  = {this.state.group}
+                            style = {styles.selectoptionView}
+                            textStyle = {styles.selectedTxt}
+                            backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
+                            transparent = {true}
+                            optionListStyle = {styles.optionList1}
+                        >   
+                            <Option value = "Residential Sale" styleText = {styles.optiontxt}>Residential Sale</Option>
+                            <Option value = "Residential Rental" styleText = {styles.optiontxt}>Residential Rental</Option>
+                            <Option value = "Land" styleText = {styles.optiontxt}>Land</Option>
+                            <Option value = "Rural" styleText = {styles.optiontxt}>Rural</Option>
+                            <Option value = "Commercial" styleText = {styles.optiontxt}>Commercial</Option>
+                            <Option value = "Businesses" styleText = {styles.optiontxt}>Businesses</Option>
+                        </Select>
+                    </View>
+
+                    <View style = {styles.filterButtonsView}>
+                        <Button transparent style = {styles.clearBtn} onPress = {() => this.onClearFilter()}>
+                            <Text style = {styles.clearTxt}>CANCEL</Text>
+                        </Button>
+                        <Button transparent style = {styles.saveBtn} onPress = {() => this.onSaveFilter()}>
+                            <Text style = {styles.clearTxt}>SAVE FILTER</Text>
+                        </Button>
+                    </View>
+                </Animated.View>
             </Container>
         )
     }

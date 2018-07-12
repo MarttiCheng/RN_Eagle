@@ -3,27 +3,10 @@ import { API } from '../constants'
 import {Content} from 'native-base';
 var Promiss = require('bluebird')
 
-// function getAllContacts(token){
-//     return new Promise((resolve, reject) => {
-//         fetch(API.BASE_URL + API.ALL_CONTACTS, {
-//             method: 'GET',
-//             headers: {
-//                 'Authorization': token
-//             }
-//         })
-//         .then((res) => res.json())
-//         .then(data => {
-//             resolve(data);
-//         })
-//         .catch(err => {
-//             reject(err);
-//         })
-//     })
-// }
 
 function getAllContacts(token, page){
     return new Promise((resolve, reject) => {
-        fetch(API.BASE_URL + API.ALL_CONTACTS + '?page[offset]=' + page*10 + '&page[limit]=10', {
+        fetch(API.BASE_URL + API.ALL_CONTACTS + '?page[offset]=' + page*15 + '&page[limit]=15' + '&sort=-showed_at', {
             method: 'GET',
             headers: {
                 'Authorization': token

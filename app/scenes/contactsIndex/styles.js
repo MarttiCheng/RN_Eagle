@@ -7,7 +7,7 @@ export default {
         backgroundColor: 'white'
     },
     searchBoxView: {
-        flex: 1,
+        // flex: 1,
         width: width,
         height: 70,
         paddingLeft: 15,
@@ -17,7 +17,8 @@ export default {
     },
     rowView: {
         flexDirection: 'row',
-        padding: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         alignItems: 'center'
     },
     avatarImg: {

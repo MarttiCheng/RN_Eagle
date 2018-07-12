@@ -83,7 +83,7 @@ class TaskShow extends Component {
             if(this.state.completedTaskList.length > 0){
                 return(
                     this.state.completedTaskList.map((item, index) => {
-                        return( this.renderRow(item, index ));
+                        return (this.renderRow(item, index));
                     })
                 )
             }
@@ -92,13 +92,12 @@ class TaskShow extends Component {
                     <Label style = {styles.nomoretxt}>There's nothing here.</Label>
                 )
             }
-
         }
         else{
             if(this.state.uncompletedTaskList.length > 0){
                 return(
                     this.state.uncompletedTaskList.map((item, index) => {
-                        return( this.renderRow(item, index ));
+                        return (this.renderRow(item, index));
                     })
                 )
             }

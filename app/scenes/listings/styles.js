@@ -71,8 +71,6 @@ export default {
         alignItems:'center',
         backgroundColor: '#2B3643',
         justifyContent: 'space-between',
-        paddingLeft: 10,
-        paddingRight: 10,
     },
     title: {
         color: 'white',
@@ -111,5 +109,98 @@ export default {
         fontSize: 35,
         fontWeight: '300',
         marginTop: -5
+    },
+    filterView: {
+        width: width,
+        height: 200,
+        backgroundColor: '#2B3643',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        padding: 15,
+        paddingTop: 5,
+    },
+    displayTxt: {
+        color: 'white',
+        fontSize: 12,
+        fontFamily: 'open-sans-regular',
+    },
+    dropView1: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderColor: 'white',
+        paddingBottom: 5,
+    },
+    selectoptionView: {
+        borderWidth : 1, 
+        borderColor : "transparent", 
+        height: 35, 
+        width: width - 20,
+        marginLeft: -10,
+        backgroundColor: 'transparent'
+    },
+    selectedTxt: {
+        backgroundColor:'transparent',
+        color:'white',
+        fontSize: 14,
+        fontFamily: 'open-sans-regular',
+        paddingRight: 10,
+    },
+    optionList: {
+        width: width*0.8, 
+        height: 225, 
+        backgroundColor: 'white',
+    },
+    optiontxt: {
+        fontSize: 18,
+        fontFamily: 'open-sans-regular',
+    },
+    arrowImg: {
+        width: 12,
+        height: 12,
+        resizeMode: 'contain',
+        marginRight: 5,
+        tintColor: 'white',
+        position: 'absolute',
+        bottom: 13,
+        right: 2,
+    },
+    groupTxt: {
+        color: 'white',
+        fontSize: 12,
+        fontFamily: 'open-sans-regular',
+        marginTop: 15,
+    },
+    filterButtonsView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 15
+    },
+    clearBtn: {
+        width: (width - 40)/3+20,
+        height: 35,
+        backgroundColor: '#cfcfcf',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    saveBtn: {
+        width: (width - 40)*2/3-20,
+        height: 35,
+        backgroundColor: '#b3bcc8',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    clearTxt: {
+        color: 'white',
+        fontSize: 13,
+        textAlign: 'center',
+        fontFamily: 'open-sans-regular',
+    },
+    optionList1: {
+        width: width*0.8, 
+        height: 270, 
+        backgroundColor: 'white',
     },
 }
