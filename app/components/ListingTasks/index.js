@@ -13,7 +13,6 @@ import {FontAwesome} from '@expo/vector-icons'
 import { getListingsTasks } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 
-
 // create a component
 class ListingTasks extends Component {
     constructor(props){

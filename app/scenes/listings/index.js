@@ -4,7 +4,7 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Drawer
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Animated, Platform
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Animated, Platform, Modal
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images'
@@ -15,6 +15,7 @@ import { Font } from 'expo'
 import { getProperties, getThumbnailUrl } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import {Select, Option} from "react-native-chooser";
+import SelectAddPropertyModal from '../../components/SelectAddPropertyModal'
 
 class listings extends Component<{}>{
     static navigationOptions = {
@@ -34,6 +35,7 @@ class listings extends Component<{}>{
             scale1: new Animated.Value(0.001),
             display: 'All listings',
             group: 'All type',
+            addModal: false,
         }   
     }
 
@@ -204,6 +206,46 @@ class listings extends Component<{}>{
         ]).start();
     }
 
+    addNewListing() {
+        this.setState({ addModal: true })
+    }
+
+    onClickedNewNote() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewNote', params: {noteType: 'General'}}))
+    }
+
+    onClickedNewTask() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewTask'}))
+    }
+
+    onClickedNewEnquiry() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewEnquiry'}))
+    }
+    
+    onClickedNewInspectionAttendee() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewInspection'}))
+    }
+
+    onClickedNewInspectionTime() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewInspection'}))
+    }
+
+    onClickedNewOffer() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewOffer'}))
+    }
+
     render() {
         return(
             <Container style = {styles.container}>
@@ -243,7 +285,7 @@ class listings extends Component<{}>{
                         })
                     }
                 </Content>
-                <TouchableOpacity style = {styles.addBtn}>
+                <TouchableOpacity style = {styles.addBtn} onPress = {() => this.addNewListing()}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
                 
@@ -266,7 +308,6 @@ class listings extends Component<{}>{
                             <Option value = "Leased" styleText = {styles.optiontxt}>Leased</Option>
                             <Option value = "Withdrawn" styleText = {styles.optiontxt}>Withdrawn</Option>
                         </Select>
-                        
                     </View>
                     
                     <Text style = {styles.groupTxt}>Type</Text>
@@ -299,6 +340,25 @@ class listings extends Component<{}>{
                         </Button>
                     </View>
                 </Animated.View>
+
+                <Modal
+                    animationType = 'slide'
+                    transparent = {false}
+                    visible = {this.state.addModal}
+                    transparent = {true}
+                    onRequestClose = {() => {
+                        this.setState({ addModal: false })
+                    }}>
+                    <SelectAddPropertyModal 
+                        onClickedBack = {() => this.setState({ addModal: false })} 
+                        onClickedNewNote = {() => this.onClickedNewNote()}
+                        onClickedNewTask = {() => this.onClickedNewTask()}
+                        onClickedNewEnquiry = {() => this.onClickedNewEnquiry()}
+                        onClickedNewInspectionAttendee = {() => this.onClickedNewInspectionAttendee()}
+                        onClickedNewInspectionTime = {() => this.onClickedNewInspectionTime()}
+                        onClickedNewOffer = {() => this.onClickedNewOffer()}
+                    />
+                </Modal>
             </Container>
         )
     }

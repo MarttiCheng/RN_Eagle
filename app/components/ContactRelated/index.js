@@ -64,7 +64,6 @@ class ContactRelated extends Component {
                 relationShipList: relationShipData,
             })
         })
-        
     }
 
     removeWatchListItem(id) {
@@ -125,7 +124,6 @@ class ContactRelated extends Component {
                                 relationList.attributes.contact2_photo_url? <Thumbnail square source = {relationList.attributes.contact2_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
                                 <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
                             }
-                            
                             <View style = {styles.rowSubView}>
                                 <Label style = {styles.label3}>{contact2_name}</Label>
                                 <View style = {styles.tagView}>

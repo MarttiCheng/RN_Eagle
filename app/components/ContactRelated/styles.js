@@ -54,7 +54,6 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor:'lightgray'
     },
@@ -88,7 +87,6 @@ export default {
         backgroundColor: 'white',
         marginBottom: 15,
         marginTop: 15
-        // alignItems: 'center'
     },
     selectoptionView: {
         borderWidth : 1, 

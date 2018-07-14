@@ -25,6 +25,7 @@ import addNewInspection from '../scenes/addNewInspection/index';
 import addNewOffer from '../scenes/addNewOffer/index';
 import forgotPassword from '../scenes/forgotPassword/index';
 import editTask from '../scenes/editTask/index';
+import editProperty from '../scenes/editProperty/index';
 
 const Drawer = DrawerNavigator(
     {
@@ -59,6 +60,7 @@ export const AppNavigator = StackNavigator({
         addNewInspection: { screen: addNewInspection },
         addNewOffer: { screen: addNewOffer},
         editTask: { screen: editTask },
+        editProperty: { screen: editProperty }
     },{
         headerMode: 'none',
     }
