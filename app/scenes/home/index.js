@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images'
+import { NavigationActions } from 'react-navigation'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import HomeMine from '../../components/HomeMine/index'
 import HomeRent from '../../components/HomeRent/index';
@@ -25,6 +26,11 @@ class home extends Component<{}>{
         this.state = {
             
         }   
+    }
+
+    addInspection() {
+        var { dispatch } = this.props
+        dispatch(NavigationActions.navigate({routeName: 'addInspection'}))
     }
 
     render() {
@@ -52,7 +58,7 @@ class home extends Component<{}>{
                         <HomeRent navigation = {this.props.navigation}/>
                     </Tab>
                 </Tabs>
-                <TouchableOpacity style = {styles.addBtn}>
+                <TouchableOpacity style = {styles.addBtn} onPress = {() => this.addInspection()}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
             </Container>

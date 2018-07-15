@@ -281,7 +281,6 @@ class editProperty extends Component<{}>{
                         <View style = {!this.state.landSize? styles.blankView : styles.subView1}>
                             <Label style = {styles.label1}>Land size</Label>
                             <TextInput
-                                onFocus={(event: Event) => { this._scrollToInput(ReactNative.findNodeHandle(event.target)) } }
                                 style = {styles.inputTxt}
                                 onChangeText = { text => this.setState({ landSize: text })}
                                 value = {this.state.landSize}

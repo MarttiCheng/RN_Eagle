@@ -11,20 +11,7 @@ import { NavigationActions } from 'react-navigation'
 import homeEdit from '../../scenes/homeEdit/index'
 import { getInspectionAttendees, getContactGroups, getContactRelationships } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
-
-var rateInterestList = [
-    {avatar: images.avatar_female, name: 'Sally Smith', tag: 'Docs sent'},
-    {avatar: images.avatar_male, name: 'John Sample'},
-]
-var interestedList = [
-    {avatar: images.avatar_female, name: 'Sally Smith'},
-    {avatar: images.avatar_male, name: 'John Sample'},
-]
-
-var notInterestedList = [
-    {avatar: images.avatar_female, name: 'Sally Smith'},
-    {avatar: images.avatar_male, name: 'John Sample'},
-]
+import Swipeout from 'react-native-swipeout'
 
 // create a component
 class Attendees extends Component {
