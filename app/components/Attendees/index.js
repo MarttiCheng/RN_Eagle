@@ -160,6 +160,7 @@ class Attendees extends Component {
 
     renderRow(item, index, category, noteInfo) {
         return(
+
             <TouchableOpacity key = {index} onPress = {() => this.clickAttend(item, index, category, noteInfo)}>
                 <View style = {styles.rowRenderView}>
                     {
@@ -209,7 +210,6 @@ class Attendees extends Component {
                         })
                     }
                 </View>
-                
             </View>
         )
     }

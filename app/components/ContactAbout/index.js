@@ -1,6 +1,7 @@
 //import libraries
 import React, { Component } from 'react';
-import ReactNative,{ StyleSheet, StatusBar, Image, TouchableOpacity, Animated, ScrollView, TextInput, Dimensions, Keyboard, KeyboardAvoidingView, Modal, Platform, 
+import ReactNative,{ 
+    StyleSheet, StatusBar, Image, TouchableOpacity, Animated, ScrollView, TextInput, Dimensions, Keyboard, KeyboardAvoidingView, Modal, Platform, 
 } from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item, Input
@@ -339,7 +340,7 @@ class ContactAbout extends Component {
                 ref={ref => this.view = ref}
                 style={styles.container1}
                 enableOnAndroid
-                extraHeight={Platform.OS === "android" ? -500 : undefined}
+                extraHeight={Platform.OS === "android" ? -300 : undefined}
                 scrollEnabled = {false}
             >
                 <View style = {styles.groupAddView}>
@@ -644,7 +645,10 @@ class ContactAbout extends Component {
                         </Select>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <Animated.View style={{height: this.state.keyboardHeight}}/>
+                    <TouchableOpacity style = {styles.deleteView}>
+                        <Label style = {styles.deleteTxt}>Delete</Label>
+                    </TouchableOpacity>
+                    {/*<Animated.View style={{height: this.state.keyboardHeight}}/>*/}
                 </View>
 
             </KeyboardAwareScrollView>
@@ -765,9 +769,9 @@ class ContactAbout extends Component {
                     this.state.isAddGroup?
                         <ScrollView  style = {styles.groupAddDialogBox} >
                             {
-                                this.props.addGroupsList.map((item, indexe) => {
+                                this.props.addGroupsList.map((item, index) => {
                                     return(
-                                        <TouchableOpacity style = {styles.eachValue} onPress = {() => this.onEachGroup(item)}>
+                                        <TouchableOpacity style = {styles.eachValue} onPress = {() => this.onEachGroup(item)} key = {index}>
                                             <Text style = {styles.eachAddtxt}>{item.attributes.name}</Text>
                                         </TouchableOpacity>
                                     )

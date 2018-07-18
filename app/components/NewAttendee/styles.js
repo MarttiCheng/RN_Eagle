@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 const { width, height } = Dimensions.get('window')
 
 export default {
@@ -16,16 +16,12 @@ export default {
     txtinput1: {
         width: (width-40)/2,
         paddingLeft: 0,
-        fontSize: 15,
         marginTop: 5,
-        fontFamily: 'open-sans-regular',
     },
     txtinput2: {
         width: width-30,
         paddingLeft: 30,
-        fontSize: 10,
         marginTop: 5,
-        fontFamily: 'open-sans-regular',
     },
     textInput: {
         position: 'absolute',
@@ -209,4 +205,65 @@ export default {
         fontSize: 10,
         fontFamily: 'open-sans-regular'
     },
+    redbarView: {
+        backgroundColor: 'red',
+        width: width,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingLeft: 15
+    },
+    closeTxt: {
+        fontSize: 14,
+        color: 'white'
+    },
+    detailCloseView: {
+        flex: 1,
+        width: width,
+        height: height,
+        backgroundColor: 'white',
+    },
+    menuView: {
+        width: width,
+        height: (Platform.OS == 'ios')? 59: 51,
+        flexDirection:'row',
+        alignItems:'center',
+        backgroundColor: 'white',
+        justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderBottomWidth: 1,
+        borderColor: 'lightgray'
+    },
+    contentView: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
+    blankView: {
+        width: 25,
+        height: 25,
+        backgroundColor: 'transparent'
+    },
+    title: {
+        color: 'black',
+        fontSize: 16,
+        fontFamily: 'open-sans-regular'
+    },
+    closeEachView: {
+        flexDirection: 'row',
+        padding: 10,
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+    },
+    nameTxt: {
+        color: '#3B3C36	',
+        fontSize: 15,
+        fontFamily: 'open-sans-regular'
+    },
+    emailTxt: {
+        color: 'darkgray',
+        fontSize: 12,
+        fontFamily: 'open-sans-regular'
+    }
 }

@@ -219,20 +219,4 @@ export default {
         color: 'white',
         fontFamily: 'open-sans-regular',
     },
-    swipeView: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-    },
-    swipeIcon: {
-        width: 18,
-        height: 18,
-        resizeMode:'contain',
-        tintColor: 'white'
-    },
-    swipeTxt: {
-        color: 'white',
-        fontSize: 12,
-        marginTop: 5
-    },
 }

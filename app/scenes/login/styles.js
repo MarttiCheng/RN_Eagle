@@ -60,11 +60,13 @@ export default {
     },
     forgotBtn: {
         marginLeft: width-140,
-        marginTop: 20
+        marginTop: 20,
+        backgroundColor: 'transparent'
     },
     forgortTxt: {
         color:'white',
         fontSize: 14,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        backgroundColor: 'transparent'
     },
 }

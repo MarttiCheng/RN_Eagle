@@ -39,31 +39,37 @@ export default {
         width: width,
         flexDirection: 'row',
         padding: 15,
-        alignItmes: 'center',
         justifyContent: 'space-between',
-        
     },
     ccView: {
         width: width,
         flexDirection: 'row',
-        paddingHorizontal: 15,
-        alignItmes: 'center',
+        paddingLeft: 15,
+        paddingRight: 30,
+        alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: -35
     },
     bccView: {
         width: width,
         flexDirection: 'row',
-        paddingHorizontal: 15,
-        alignItmes: 'center',
+        paddingLeft: 15,
+        paddingRight: 30,
+        alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 15
+        marginTop: 17
     },
     subView: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
-        paddingHorizontal: 25,
+        // paddingHorizontal: 25,
         alignItems: 'center'
+    },
+    eachEmailSubView: {
+        flexDirection:  'row',
+        alignItems: 'center',
+        marginRight: 10,
+        marginVertical: 3
     },
     contactSubView: {
         flexDirection: 'row',
@@ -93,14 +99,14 @@ export default {
         flexDirection: 'row',
         width: width,
         padding: 15,
-        alignItmes: 'center',
+        alignItems: 'center',
         justifyContent: 'space-between',
     },
     view1: {
         flexDirection: 'row',
         width: width,
         padding: 15,
-        alignItmes: 'center',
+        alignItems: 'center',
         borderTopWidth: 1,
         borderColor: 'lightgray',
         flex:1
@@ -108,9 +114,16 @@ export default {
     view2: {
         width: width,
         padding: 15,
-        alignItmes: 'center',
         borderTopWidth: 1,
         borderColor: 'lightgray'
+    },
+    emailContentSubView: {
+        width: width - 80, 
+        backgroundColor: 'green', 
+        marginLeft: 10,
+        flexDirection: 'row',
+        flex: 1,
+        flexWrap: 'wrap',
     },
     inputTxt: {
         backgroundColor: 'transparent',
@@ -120,17 +133,18 @@ export default {
         width: width - 30
     },
     inputTxt1: {
-        backgroundColor: 'transparent',
+        backgroundColor: 'yellow',
         color: 'black',
         fontSize: 16,
         fontFamily: 'open-sans-regular',
-        width: width - 90,
-        height: 22
+        width: width/5,
+        height: 24,
+        marginVertical: 3,
     },
     emailView: {
         width: width,
         padding: 15,
-        alignItmes: 'center',
+        alignItems: 'center',
         borderTopWidth: 1,
         borderColor: 'lightgray'
     },
@@ -203,5 +217,28 @@ export default {
         resizeMode: 'cover',
         marginRight: 5,
         tintColor: '#888e95',
+    },
+    selectoptionView: {
+        borderWidth : 0, 
+        borderColor : "#e3e3e3", 
+        height: 20, 
+        width: width - 50
+    },
+    selectedTxt: {
+        backgroundColor: 'transparent',
+        color: 'black',
+        fontSize: 16,
+        fontFamily: 'open-sans-regular',
+        marginTop: -5,
+        marginLeft: -10,
+    },
+    optionList_template: {
+        width: width*0.8, 
+        height: 180,
+        backgroundColor: 'white',
+    },
+    optiontxt: {
+        fontSize: 18,
+        fontFamily: 'open-sans-regular',
     },
 }

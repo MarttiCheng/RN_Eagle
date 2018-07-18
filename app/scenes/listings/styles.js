@@ -16,10 +16,7 @@ export default {
         backgroundColor: 'lightgray'
     },
     rowView: {
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingTop: 10,
-        paddingBottom: 10,
+        padding: 10,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',

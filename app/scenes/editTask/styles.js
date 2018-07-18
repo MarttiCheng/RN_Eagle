@@ -139,4 +139,20 @@ export default {
         left: (width - 100)/2,
         backgroundColor: 'transparent'
     },
+    swipeView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+    },
+    swipeIcon: {
+        width: 18,
+        height: 18,
+        resizeMode:'contain',
+        tintColor: 'white'
+    },
+    swipeTxt: {
+        color: 'white',
+        fontSize: 12,
+        marginTop: 5
+    },
 }

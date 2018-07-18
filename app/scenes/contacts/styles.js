@@ -16,8 +16,7 @@ export default {
     },
     rowView: {
         flexDirection: 'row',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
+        padding: 10,
         alignItems: 'center'
     },
     avatarImg: {
@@ -37,9 +36,9 @@ export default {
         fontFamily: 'open-sans-regular',
     },
     label2: {
-        fontSize: 15,
-        color: '#999',
-        fontFamily: 'open-sans-regular'
+        fontSize: 10,
+        color: 'gray',
+        fontFamily: 'open-sans-regular',
     },
     line: {
         height: 1,

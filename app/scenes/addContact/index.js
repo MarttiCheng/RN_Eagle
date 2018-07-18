@@ -548,7 +548,7 @@ class addContact extends Component<{}>{
                                         {
                                             this.state.usersList.map((item, index) => {
                                                 return(
-                                                    <Option value = {{name:item.attributes.first_name + ' ' + item.attributes.last_name , id: item.id}} styleText = {styles.optiontxt}>{item.attributes.first_name} {item.attributes.last_name}</Option>
+                                                    <Option key = {index} value = {{name:item.attributes.first_name + ' ' + item.attributes.last_name , id: item.id}} styleText = {styles.optiontxt}>{item.attributes.first_name} {item.attributes.last_name}</Option>
                                                 )
                                             })
                                         }
@@ -563,7 +563,7 @@ class addContact extends Component<{}>{
                                         {
                                             this.props.addGroupsList.map((item, indexe) => {
                                                 return(
-                                                    <TouchableOpacity style = {styles.eachValue} onPress = {() => this.onEachGroup(item)}>
+                                                    <TouchableOpacity key = {index} style = {styles.eachValue} onPress = {() => this.onEachGroup(item)}>
                                                         <Text style = {styles.eachAddtxt}>{item.attributes.name}</Text>
                                                     </TouchableOpacity>
                                                 )

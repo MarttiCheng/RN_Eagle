@@ -1,11 +1,10 @@
 //import liraries
 import React, { Component } from 'react';
 import {
-    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, 
-  ScrollableTab
+    Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, ScrollableTab
 } from 'native-base'
 import ReactNative, {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, TextInput, Animated, Dimensions, KeyboardAvoidingView
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, TextInput, Animated, Dimensions, KeyboardAvoidingView, Platform
 } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import styles from './styles'
@@ -17,6 +16,7 @@ import { MaterialCommunityIcons, Ionicons, MaterialIcons, FontAwesome } from '@e
 import Accordion from 'react-native-collapsible/Accordion';
 import Expand  from 'react-native-simple-expand';
 import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-keyboard-aware-scroll-view'
+import {Select, Option} from "react-native-chooser";
 
 const { width, height } = Dimensions.get('window')
 
@@ -73,13 +73,17 @@ class sendEmail extends Component {
             isBccEmailNameTextFieldHidden: false,
             isBccEmailFieldHidden: false,
 
-            templateTxt: '',
+            templateTxt: 'Template',
             contactName: this.props.selected_contact_info.attributes.first_name + ' ' + this.props.selected_contact_info.attributes.last_name,
             contactId: this.props.selected_contact_info.id,
             contactPhoto: this.props.selected_contact_info.attributes.photo_url,
             propertyName: this.props.relationship_inspection.attributes.full_address,
             propertyId: this.props.relationship_inspection.id,
             propertyPhoto: this.props.relationship_inspection.attributes.thumbnail,
+            isClickedAttach: false,
+
+            toText: '',
+            toEmailList: [] 
         }   
     }
 
@@ -94,7 +98,8 @@ class sendEmail extends Component {
         getListingsDocuments(this.props.token, this.state.propertyId).then(data => {
             this.setState({
                 isLoading: false,
-                documentList: data.data
+                documentList: data.data,
+                toEmailList: []
             })
 
             if (Platform.OS === "android") {
@@ -145,7 +150,7 @@ class sendEmail extends Component {
     };
 
     filterContact(text) {
-        this.setState({ toEmailName: text })
+       this.setState({ toText: text })
         if(text){
             searchContacts(this.props.token, text).then((data => {
                 this.setState({ 
@@ -193,13 +198,34 @@ class sendEmail extends Component {
     }
 
     onEachToContact(item) {
+        this.setState({ toText: '' })
         Keyboard.dismiss(); 
+
+        toEmailName = item.attributes.first_name + ' ' + item.attributes.last_name
+        toEmail = item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name
+        toEmailContactPhoto = item.attributes.photo_url
+        istoEmail = false
+
+        data = {
+            'toEmailName' : item.attributes.first_name + ' ' + item.attributes.last_name,
+            'toEmail' : item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name,
+            'toEmailContactPhoto' : item.attributes.photo_url,
+            'istoEmail' : false,
+            'isToEmailFieldHidden' : false,
+            'isToEmailNameTextFieldHidden': true,
+        }
+
+        a = this.state.toEmailList
+        a.push(data)
+        console.log(data)
+
         this.setState({
-            toEmailName: item.attributes.first_name + ' ' + item.attributes.last_name,
-            toEmail: item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name,
+            // toEmailName: item.attributes.first_name + ' ' + item.attributes.last_name,
+            // toEmail: item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name,
             filterContactList: [],
-            isToEmailNameTextFieldHidden: true,
-            toEmailContactPhoto: item.attributes.photo_url,
+            // isToEmailNameTextFieldHidden: true,
+            // toEmailContactPhoto: item.attributes.photo_url,
+            toEmailList: a
         })
     }
 
@@ -231,7 +257,7 @@ class sendEmail extends Component {
                 {
                     this.state.filterContactList.map((item, index) => {
                         return(
-                            <TouchableOpacity onPress = {() => this.onEachToContact(item)}>
+                            <TouchableOpacity key = {index} onPress = {() => this.onEachToContact(item)}>
                                 <Text style = {styles.itemTxt}>{item.attributes.first_name} {item.attributes.last_name}</Text>
                             </TouchableOpacity>
                         )
@@ -247,7 +273,7 @@ class sendEmail extends Component {
                 {
                     this.state.filterContactList1.map((item, index) => {
                         return(
-                            <TouchableOpacity onPress = {() => this.onEachToContact1(item)}>
+                            <TouchableOpacity key = {index} onPress = {() => this.onEachToContact1(item)}>
                                 <Text style = {styles.itemTxt}>{item.attributes.first_name} {item.attributes.last_name}</Text>
                             </TouchableOpacity>
                         )
@@ -263,7 +289,7 @@ class sendEmail extends Component {
                 {
                     this.state.filterContactList2.map((item, index) => {
                         return(
-                            <TouchableOpacity onPress = {() => this.onEachToContact2(item)}>
+                            <TouchableOpacity key = {index} onPress = {() => this.onEachToContact2(item)}>
                                 <Text style = {styles.itemTxt}>{item.attributes.first_name} {item.attributes.last_name}</Text>
                             </TouchableOpacity>
                         )
@@ -273,10 +299,13 @@ class sendEmail extends Component {
         )
     }
     
-    doubleClickToContact() {
-        this.setState({
-            isToEmailFieldHidden: !this.state.isToEmailFieldHidden
-        })
+    doubleClickToContact(item, index) {
+        let { toEmailList } = this.state;
+        let targetPost = toEmailList[index];
+
+        targetPost.isToEmailFieldHidden = !targetPost.isToEmailFieldHidden;
+        toEmailList[index] = targetPost;
+        this.setState({ toEmailList });
     }
 
     doubleClickToContact1() {
@@ -291,13 +320,10 @@ class sendEmail extends Component {
         })
     }
 
-    removeToEmail() {
-        this.setState({
-            isToEmailNameTextFieldHidden: false,
-            isToEmailFieldHidden: false,
-            toEmail: '',
-            toEmailName: '',
-        })
+    removeToEmail(item, index) {
+        let { toEmailList } = this.state;
+        toEmailList.splice(index, 1)
+        this.setState({ toEmailList });
     }
 
     removeCcEmail() {
@@ -345,15 +371,9 @@ class sendEmail extends Component {
         })
     }
 
-    scrollToInput = (reactNode) => {
-        this.view.scrollToFocusedInput(reactNode)
-    };
-
-    handleOnFocus = (e) => {
-        if (Platform.OS === "android") {
-            this.scrollToInput(ReactNative.findNodeHandle(e.target))
-        }
-    };
+    onSelectTemplat(value, label) {
+        this.setState({templateTxt : value});
+    }
 
     render() {
         const { animatedValue } = this.state;
@@ -397,32 +417,64 @@ class sendEmail extends Component {
                     <View style = {{borderBottomWidth: 1, borderColor: 'lightgray'}}>
                         <View style = {styles.toView}>
                             <Text style = {styles.label1}>To</Text>
-                            {
-                                this.state.isToEmailNameTextFieldHidden?
-                                <View style = {styles.subView}>
-                                    <TouchableOpacity onPress = {() => this.doubleClickToContact()}>
-                                        {
-                                            this.state.isToEmailFieldHidden?
-                                            <View style = {styles.contactSubView}>
-                                                <Text style = {styles.nameTxt}>{this.state.toEmail}</Text>
-                                                <TouchableOpacity onPress = {() => this.removeToEmail()}>
-                                                    <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
+
+                        
+                            <View style = {styles.emailContentSubView}>
+                                {/*{
+                                    this.state.isToEmailNameTextFieldHidden?
+                                    <View style = {styles.subView}>
+                                        <TouchableOpacity onPress = {() => this.doubleClickToContact()}>
+                                            {
+                                                this.state.isToEmailFieldHidden?
+                                                <View style = {styles.contactSubView}>
+                                                    <Text style = {styles.nameTxt}>{this.state.toEmail}</Text>
+                                                    <TouchableOpacity onPress = {() => this.removeToEmail()}>
+                                                        <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
+                                                    </TouchableOpacity>
+                                                </View> : 
+                                                <View style = {styles.contactSubView}>
+                                                    {
+                                                        this.state.toEmailContactPhoto? <Thumbnail square source = {this.state.toEmailContactPhoto} style = {styles.avatarImg}/> :
+                                                        <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                                                    }
+                                                    <Text style = {styles.nameTxt}>{this.state.toEmailName}</Text>
+                                                </View>
+                                            }
+                                        </TouchableOpacity>
+                                    </View> : 
+                                    null
+                                }*/}
+                                {
+                                    this.state.toEmailList.length == 0? null :
+                                    this.state.toEmailList.map((item, index) => {
+                                        return(
+                                            <View style = {styles.eachEmailSubView} key = {index}>
+                                                <TouchableOpacity onPress = {() => {this.doubleClickToContact(item, index)}}>
+                                                    {
+                                                        item.isToEmailFieldHidden?
+                                                        <View style = {styles.contactSubView}>
+                                                            <Text style = {styles.nameTxt}>{item.toEmail}</Text>
+                                                            <TouchableOpacity onPress = {() => this.removeToEmail(item, index)}>
+                                                                <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
+                                                            </TouchableOpacity>
+                                                        </View> : 
+                                                        <View style = {styles.contactSubView}>
+                                                            {
+                                                                item.toEmailContactPhoto? <Thumbnail square source = {item.toEmailContactPhoto} style = {styles.avatarImg}/> :
+                                                                <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                                                            }
+                                                            <Text style = {styles.nameTxt}>{item.toEmailName}</Text>
+                                                        </View>
+                                                    }
                                                 </TouchableOpacity>
-                                            </View> : 
-                                            <View style = {styles.contactSubView}>
-                                                {
-                                                    this.state.toEmailContactPhoto? <Thumbnail square source = {this.state.toEmailContactPhoto} style = {styles.avatarImg}/> :
-                                                    <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                                                }
-                                                <Text style = {styles.nameTxt}>{this.state.toEmailName}</Text>
                                             </View>
-                                        }
-                                    </TouchableOpacity>
-                                </View> : 
+                                        )
+                                    })
+                                }
                                 <TextInput
                                     style = {styles.inputTxt1}
                                     onChangeText = { text => this.filterContact(text)}
-                                    value = {this.state.toEmailName}
+                                    value = {this.state.toText}
                                     placeholder = ""
                                     placeholderTextColor = "#999"
                                     returnKeyType = "next"
@@ -430,14 +482,22 @@ class sendEmail extends Component {
                                     autoCapitalize = {'none'}
                                     autoCorrect = {false}
                                 />
-                            }
-                            
+                            </View>
+
+
+
                             <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })}>
                                 {
                                     this.state.open? <Ionicons name = 'ios-arrow-up' size = {18} color = 'gray'/> : <Ionicons name = 'ios-arrow-down' size = {18} color = 'gray'/>
                                 }
                             </TouchableOpacity>
                         </View>
+
+
+
+
+
+
                         <Expand
                             minHeight={0}
                             containerStyle={{ flexGrow: 1 }}
@@ -449,6 +509,7 @@ class sendEmail extends Component {
                                     <Animated.View style={{ height, justifyContent: 'center', backgroundColor: 'transparent' }}>
                                         <View style = {styles.ccView}>
                                             <Text style = {styles.label1}>Cc</Text>
+                                            <View style = {styles.emailContentSubView}>
                                             {
                                                 this.state.isCcEmailNameTextFieldHidden?
                                                 <View style = {styles.subView}>
@@ -471,9 +532,9 @@ class sendEmail extends Component {
                                                         }
                                                         
                                                     </TouchableOpacity>
-                                                </View> : 
+                                                </View> :
                                                 <TextInput
-                                                    style = {[styles.inputTxt1, {width: width - 63}]}
+                                                    style = {styles.inputTxt1}
                                                     onChangeText = { text => this.filterContact1(text)}
                                                     value = {this.state.ccEmailName}
                                                     placeholder = ""
@@ -484,9 +545,11 @@ class sendEmail extends Component {
                                                     autoCorrect = {false}
                                                 />
                                             }
+                                            </View>
                                         </View>
                                         <View style = {styles.bccView}>
                                             <Text style = {styles.label1}>Bcc</Text>
+                                            <View style = {styles.emailContentSubView}>
                                             {
                                                 this.state.isBccEmailNameTextFieldHidden?
                                                 <View style = {styles.subView}>
@@ -510,7 +573,7 @@ class sendEmail extends Component {
                                                     </TouchableOpacity>
                                                 </View> : 
                                                 <TextInput
-                                                    style = {[styles.inputTxt1, {width: width - 63}]}
+                                                    style = {styles.inputTxt1}
                                                     onChangeText = { text => this.filterContact2(text)}
                                                     value = {this.state.bccEmailName}
                                                     placeholder = ""
@@ -521,6 +584,7 @@ class sendEmail extends Component {
                                                     autoCorrect = {false}
                                                 />
                                             }
+                                            </View>
                                         </View>
                                     </Animated.View>
                                 </View>
@@ -530,17 +594,20 @@ class sendEmail extends Component {
                     
                     <View style = {{borderBottomWidth: 1, borderColor: 'lightgray'}}>
                         <View style = {styles.subjectView}>
-                            <TextInput
-                                style = {styles.inputTxt1}
-                                onChangeText = { text => this.setState({ templateTxt: text })}
-                                value = {this.state.templateTxt}
-                                placeholder = "Template"
-                                placeholderTextColor = "#999"
-                                returnKeyType = "next"
-                                underlineColorAndroid='rgba(0,0,0,0)'
-                                autoCapitalize = {'none'}
-                                autoCorrect = {false}
-                            />
+                            <Select
+                                onSelect = {this.onSelectTemplat.bind(this)}
+                                defaultText  = {this.state.templateTxt}
+                                style = {styles.selectoptionView}
+                                textStyle = {styles.selectedTxt}
+                                backdropStyle  = {{backgroundColor : "rgba(0,0,0, 0.7)"}}
+                                transparent = {true}
+                                optionListStyle = {styles.optionList_template}
+                            >
+                                <Option value = "Follow up from inspection" styleText = {styles.optiontxt}>Follow up from inspection</Option>
+                                <Option value = "Vendor report" styleText = {styles.optiontxt}>Vendor report</Option>
+                                <Option value = "Invite to inspetion" styleText = {styles.optiontxt}>Invite to inspetion</Option>
+                                <Option value = "Document after inspection" styleText = {styles.optiontxt}>Document after inspection</Option>
+                            </Select>
                             <TouchableOpacity onPress={() => this.setState({ open1: !this.state.open1 })}>
                                 {
                                     this.state.open1? <Ionicons name = 'ios-arrow-up' size = {18} color = 'gray'/> : <Ionicons name = 'ios-arrow-down' size = {18} color = 'gray'/>
@@ -594,11 +661,15 @@ class sendEmail extends Component {
                                                 <Text style = {styles.label1}>Attachment</Text>
                                                 <View>
                                                 {
-                                                    attachmentList.map((item, index) => {
+                                                    this.state.documentList.map((item, index) => {
+                                                        text = item.attributes.url;
+                                                        parts = text.split('%2F');
                                                         return(
-                                                            <View style = {styles.eachAttachView}>
-                                                                <Text style = {styles.eachAttachTxt}>{item.title}</Text>
-                                                                <Thumbnail square source = {images.ic_uncheckbox} style = {styles.checkImg}/>
+                                                            <View key = {index} style = {styles.eachAttachView}>
+                                                                <Text style = {styles.eachAttachTxt}>{parts[2]}</Text>
+                                                                <TouchableOpacity onPress = {() => {this.setState({ isClickedAttach: !this.state.isClickedAttach})}}>
+                                                                    <Thumbnail square source = {this.state.isClickedAttach?images.ic_checkbox : images.ic_uncheckbox} style = {styles.checkImg}/>
+                                                                </TouchableOpacity>
                                                             </View>
                                                         )
                                                     })
@@ -627,7 +698,6 @@ class sendEmail extends Component {
                     </View>
                     <View style = {styles.emailView}>
                         <TextInput
-                        onFocus={this.handleOnFocus}
                             style = {styles.inputTxt}
                             onChangeText = { text => this.setState({ composeemail: text })}
                             value = {this.state.composeemail}

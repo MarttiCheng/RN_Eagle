@@ -267,7 +267,7 @@ class listings extends Component<{}>{
                             ref = 'search'
                             titleCancelColor = 'black'
                             backgroundColor = 'lightgray'
-                            cancelTitle = 'Cancel'
+                            
                             contentWidth = {100}
                             searchIconCollapsedMargin = {30}
                             searchIconExpandedMargin = {10}

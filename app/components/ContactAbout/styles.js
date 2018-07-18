@@ -250,7 +250,6 @@ export default {
         height: 30,
         alignItems: 'center',
         justifyContent: 'center',
-        // marginLeft: -5
     },
     modalView: {
        width: width,
@@ -264,7 +263,6 @@ export default {
         height: 100,
         backgroundColor: 'white',
         justifyContent: 'space-between',
-        // alignItems: 'center',
         borderRadius: 6,
         padding: 20
     },
@@ -277,6 +275,22 @@ export default {
         position: 'absolute',
         top: 0,
         left: 0
+    },
+    deleteView: {
+        width: width/2,
+        height: 36,
+        backgroundColor: '#2B3643',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        marginTop: 15,
+        marginBottom: 10,
+        marginLeft: width/4
+    },
+    deleteTxt: {
+        color: 'white',
+        fontSize: 13,
+        fontFamily: 'open-sans-regular'
     },
 }
 

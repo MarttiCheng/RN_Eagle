@@ -30,7 +30,7 @@ class home extends Component<{}>{
 
     addInspection() {
         var { dispatch } = this.props
-        dispatch(NavigationActions.navigate({routeName: 'addInspection'}))
+        dispatch(NavigationActions.navigate({routeName: 'addInspection', params: {info: []}}))
     }
 
     render() {

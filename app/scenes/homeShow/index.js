@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images'
+import { NavigationActions } from 'react-navigation'
 import moment from 'moment'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import HomeMine from '../../components/HomeMine/index'
@@ -33,6 +34,11 @@ class homeShow extends Component<{}>{
         }   
     }
 
+    onEdit(){
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'editInspection'}))
+    }
+
     render() {
         return(
             <Container style = {styles.container}>
@@ -48,7 +54,9 @@ class homeShow extends Component<{}>{
                         <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>{this.props.relationship_inspection.attributes.full_address}</Label>
                         <Label style = {styles.timetitle}>{moment(this.props.inspectionInfo.attributes.start_datetime).format('MMMM Do h:mma')} - {moment(this.props.inspectionInfo.attributes.end_datetime).format('h:mma')}</Label>
                     </View>
-                    <TouchableOpacity style = {{width: 45, height: 45}}/>
+                    <TouchableOpacity onPress = {() => this.onEdit()}>
+                        <Label style = {styles.editTxt}>Edit</Label> 
+                    </TouchableOpacity>
                 </View>
                 <Tabs initialPage={0} tabBarUnderlineStyle = {{backgroundColor: '#35AA47', height: 3}} locked = {true}>
                     <Tab heading="NEW ATTENDEE" textStyle = {styles.inactiveTxt} activeTextStyle = {styles.activeTxt} tabStyle = {{backgroundColor: '#364150'}} activeTabStyle = {{backgroundColor: '#364150'}}> 

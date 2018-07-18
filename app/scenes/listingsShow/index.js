@@ -47,43 +47,8 @@ class listingsShow extends Component<{}>{
     }
 
     addNewProperty() {
-        this.setState({ addModal: true })
-    }
-
-    onClickedNewNote() {
-        var { dispatch } = this.props;
-        this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewNote', params: {noteType: 'General'}}))
-    }
-
-    onClickedNewTask() {
-        var { dispatch } = this.props;
-        this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewTask'}))
-    }
-
-    onClickedNewEnquiry() {
-        var { dispatch } = this.props;
-        this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewEnquiry'}))
-    }
-    
-    onClickedNewInspectionAttendee() {
-        var { dispatch } = this.props;
-        this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewInspection'}))
-    }
-
-    onClickedNewInspectionTime() {
-        var { dispatch } = this.props;
-        this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewInspection'}))
-    }
-
-    onClickedNewOffer() {
-        var { dispatch } = this.props;
-        this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewOffer'}))
+        var { dispatch } = this.props
+        dispatch(NavigationActions.navigate({routeName: 'addInspection',  params: {info: this.state.listingInfo}}))
     }
 
     onEditProperty() {
@@ -129,25 +94,6 @@ class listingsShow extends Component<{}>{
                 <TouchableOpacity style = {styles.addBtn} onPress = {() => this.addNewProperty()}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
-
-                <Modal
-                    animationType = 'slide'
-                    transparent = {false}
-                    visible = {this.state.addModal}
-                    transparent = {true}
-                    onRequestClose = {() => {
-                        this.setState({ addModal: false })
-                    }}>
-                    <SelectAddPropertyModal 
-                        onClickedBack = {() => this.setState({ addModal: false })} 
-                        onClickedNewNote = {() => this.onClickedNewNote()}
-                        onClickedNewTask = {() => this.onClickedNewTask()}
-                        onClickedNewEnquiry = {() => this.onClickedNewEnquiry()}
-                        onClickedNewInspectionAttendee = {() => this.onClickedNewInspectionAttendee()}
-                        onClickedNewInspectionTime = {() => this.onClickedNewInspectionTime()}
-                        onClickedNewOffer = {() => this.onClickedNewOffer()}
-                    />
-                </Modal>
                 
             </Container>
         )

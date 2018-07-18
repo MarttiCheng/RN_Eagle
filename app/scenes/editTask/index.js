@@ -4,7 +4,7 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, ScrollableTab
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, TextInput, Dimensions
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, TextInput, Dimensions, Alert
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images';
@@ -18,6 +18,7 @@ import Moment from 'react-moment';
 import moment from 'moment'
 import { KeyboardAwareScrollView, KeyboardAwareSectionView } from 'react-native-keyboard-aware-scroll-view'
 import {Select, Option} from "react-native-chooser";
+import Swipeout from 'react-native-swipeout'
 
 const { width, height } = Dimensions.get('window')
 
@@ -30,7 +31,7 @@ class editTask extends Component<{}>{
         super(props);
         this.state = {
             bodyTxt: this.props.tasks.attributes.body,
-            dueDate: this.props.tasks.attributes.due_date,
+            dueDate: '',
             contactName: '',
             contactId: '',
             propertyName: '',
@@ -134,7 +135,73 @@ class editTask extends Component<{}>{
         })
     }
 
+    handlePress1(){
+        this.setState({ 
+            contactName: '',
+            contactId: '',
+         })
+    }
+
+    handlePress2(){
+        this.setState({ 
+            propertyName: '',
+            propertyId: '',
+         })
+    }
+
+    removeContactItem() {
+        Alert.alert(
+            '',
+            'Are you sure you want to remove?',
+            [
+                {text: 'OK', onPress: () => this.handlePress1(), style: 'destructive'},
+                {text: 'CANCEL', onPress: () => { console.log('Pressed cancel button') }},
+            ],
+            { cancelable: false }
+        )
+    }
+
+    removePropertyItem() {
+        Alert.alert(
+            '',
+            'Are you sure you want to remove?',
+            [
+                {text: 'OK', onPress: () => this.handlePress2(), style: 'destructive'},
+                {text: 'CANCEL', onPress: () => { console.log('Pressed cancel button') }},
+            ],
+            { cancelable: false }
+        )
+    }
+
     showEdit() {
+        var swipeoutContact = [
+            {
+                backgroundColor: '#f8373d',                
+                buttonWidth: 60,
+                onPress: () => { this.removeContactItem() },
+                component:
+                    (
+                        <View style = {styles.swipeView}>
+                            <Thumbnail square source={images.ic_delete} style={styles.swipeIcon}/>
+                            <Text style = {styles.swipeTxt}>Remove</Text>
+                        </View>
+                    )
+            },
+        ]
+        var swipeoutProperty = [
+            {
+                backgroundColor: '#f8373d',                
+                buttonWidth: 60,
+                onPress: () => { this.removePropertyItem() },
+                component:
+                    (
+                        <View style = {styles.swipeView}>
+                            <Thumbnail square source={images.ic_delete} style={styles.swipeIcon}/>
+                            <Text style = {styles.swipeTxt}>Remove</Text>
+                        </View>
+                    )
+            },
+        ]
         return (
             <Content style = {{flex: 1}}>
                 <View style = {styles.bodyView}>
@@ -156,8 +223,8 @@ class editTask extends Component<{}>{
                     <DatePicker
                         style={{width: width - 30}}
                         date={this.state.dueDate}
-                        mode="datetime"
-                        format="MMM Do YYYY h:mm a"
+                        mode="date"
+                        format="YYYY-MM-DD"
                         minDate="1970-05-01"
                         maxDate="2030-06-01"
                         confirmBtnText="Confirm"
@@ -174,22 +241,24 @@ class editTask extends Component<{}>{
                     <View style = {styles.seperateLine}/>
                 </View>
                 
-                <TouchableOpacity style = {styles.view1} onPress = {() => this.onSelectContact()}>
-                    <Label style = {this.state.contactName? styles.label1 : styles.label2}>Select contact</Label>
+                <Swipeout right={swipeoutContact}>
+                    <TouchableOpacity style = {styles.view1} onPress = {() => this.onSelectContact()}>
+                        <Label style = {this.state.contactName? styles.label1 : styles.label2}>Select contact</Label>
+                            {
+                                this.state.contactName? <Label style = {styles.contactTxt}>{this.state.contactName}</Label> : null
+                            }
+                        <View style = {styles.seperateLine}/>
+                    </TouchableOpacity>
+                </Swipeout>
+                <Swipeout right={swipeoutProperty} >
+                    <TouchableOpacity style = {styles.view1}  onPress = {() => this.onSelectProperty()}>
+                        <Label style = {this.state.propertyName? styles.label1 : styles.label2}>Select property</Label>
                         {
-                            this.state.contactName? <Label style = {styles.contactTxt}>{this.state.contactName}</Label> : null
+                            this.state.propertyName? <Label style = {styles.contactTxt}>{this.state.propertyName}</Label> : null
                         }
-                    <View style = {styles.seperateLine}/>
-                </TouchableOpacity>
-
-                <TouchableOpacity style = {styles.view1}  onPress = {() => this.onSelectProperty()}>
-                    <Label style = {this.state.propertyName? styles.label1 : styles.label2}>Select property</Label>
-                    {
-                        this.state.propertyName? <Label style = {styles.contactTxt}>{this.state.propertyName}</Label> : null
-                    }
-                    <View style = {styles.seperateLine}/>
-                </TouchableOpacity>
-
+                        <View style = {styles.seperateLine}/>
+                    </TouchableOpacity>
+                </Swipeout>
             </Content>   
         )
     }

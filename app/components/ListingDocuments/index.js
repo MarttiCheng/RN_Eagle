@@ -27,7 +27,9 @@ class ListingDocuments extends Component {
     }
 
     componentWillMount() {
-        getListingsDocuments(this.props.token, this.props.listings_about.id).then(data => { 
+        getListingsDocuments(this.props.token, this.props.listings_about.id).then(data => {
+            console.log('-->')
+            console.log(data)
             this.setState({
                 isLoading: false,
                 documentList: data.data
@@ -36,10 +38,18 @@ class ListingDocuments extends Component {
     }
 
     renderRow(item, index) {
+        text = item.attributes.url;
+        parts = text.split('%2F');
         return(
             <View style = {styles.view1} key = {index}>
-                <MaterialCommunityIcons name = 'file-pdf' size = {20} color = '#757575' style = {{marginLeft: 10}} />
-                <Label style = {styles.label1}>{item.title}</Label>
+                <MaterialCommunityIcons name = 'file-pdf' size = {20} color = '#757575' />
+                <Label numberOfLines={1} ellipsizeMode ={'tail'} style = {styles.titleTxt}>{parts[2]}</Label>
+                <View style = {styles.downloadView}>
+                    <Label style = {styles.downloadTxt}>DOWNLOAD</Label>
+                </View>
+                <View style = {[styles.downloadView, {width: 45, marginLeft: 6}]}>
+                    <Label style = {styles.downloadTxt}>SEND</Label>
+                </View>
             </View>
         )
     }

@@ -4,7 +4,7 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, ScrollableTab
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Alert
 } from 'react-native'
 import styles from './styles'
 import images from '../../themes/images';
@@ -13,7 +13,6 @@ import { NavigationActions } from 'react-navigation'
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome} from '@expo/vector-icons'
 import { getTaskContacts, deleteContactRelationship, getEachContactRelationships, getContactGroup, getContactProperty_Vendor } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
-import Swipeout from 'react-native-swipeout'
 
 class tasksShow extends Component<{}>{
     static navigationOptions = {
@@ -82,7 +81,7 @@ class tasksShow extends Component<{}>{
         if(item.type == 'contacts'){
             var contactName = item.attributes.first_name + ' ' + item.attributes.last_name
             return(
-                <TouchableOpacity style = {styles.view2} onPress = {() => this.onClickedRelated(item.id, contactName)}>   
+                <TouchableOpacity key = {index} style = {styles.view2} onPress = {() => this.onClickedRelated(item.id, contactName)}>   
                     {
                         item.attributes.photo_url?  <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg}/>:
                         <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
@@ -104,7 +103,7 @@ class tasksShow extends Component<{}>{
         }
         else if(item.type == 'properties'){
             return(
-                <TouchableOpacity style = {styles.sublistingView} onPress = {() => this.onClickProperty(item)}>
+                <TouchableOpacity key = {index} style = {styles.sublistingView} onPress = {() => this.onClickProperty(item)}>
                     <Thumbnail square source = {{uri: item.attributes.thumbnail}} style = {styles.listingIcon} defaultSource = {images.ic_placeholder_image}/>
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.attributes.full_address}</Label>

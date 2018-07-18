@@ -1,6 +1,7 @@
 //import libraries
 import React, { Component } from 'react';
-import ReactNative, { StyleSheet, StatusBar, Image, Alert, TouchableOpacity, TextInput, AsyncStorage, ActivityIndicator, ScrollView, Platform, Keyboard, Animated
+import ReactNative, { 
+    StyleSheet, StatusBar, Image, Alert, TouchableOpacity, TextInput, AsyncStorage, ActivityIndicator, ScrollView, Platform, Keyboard, Animated
 } from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item, Input
@@ -37,8 +38,16 @@ class ContactRelated extends Component {
             contact2_id: '',
             selected_contact_id: '',
             selected_contact_name: '',
+            keyboardHeight: new Animated.Value(0),
         }
     }
+
+    animateKeyboardHeight = (toValue, duration) => {
+        Animated.timing(
+            this.state.keyboardHeight,
+            {toValue, duration},
+        ).start();
+    };
 
     componentWillMount() {
         getEachContactRelationships(this.props.token, this.state.contact1_id).then(relationShipData => {
@@ -50,6 +59,14 @@ class ContactRelated extends Component {
                 relationShipList: relationShipData,
             })
         })
+        if (Platform.OS === "android") {
+            this.keyboardShowListener = Keyboard.addListener("keyboardDidShow", ({endCoordinates}) => {
+                this.animateKeyboardHeight(endCoordinates.height/2, 0)
+            });
+            this.keyboardHideListener = Keyboard.addListener("keyboardDidHide", () => {
+                this.animateKeyboardHeight(0, 300)
+            })
+        }
     }
 
     handlePress(id){
@@ -78,7 +95,7 @@ class ContactRelated extends Component {
         )
     }
 
-    showContactRelationships(relationList){
+    showContactRelationships(relationList, index){
         var swipeoutBtns = [
             {
                 backgroundColor: '#f8373d',                
@@ -118,7 +135,7 @@ class ContactRelated extends Component {
 
             if(user_name == contact1_name){
                 return(
-                    <Swipeout right={swipeoutBtns}>
+                    <Swipeout right={swipeoutBtns} key = {index}>
                         <TouchableOpacity style = {styles.view2} onPress = {() => this.onClickedRelated(relationList.attributes.contact2_id, contact2_name)}>
                             {
                                 relationList.attributes.contact2_photo_url? <Thumbnail square source = {relationList.attributes.contact2_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
@@ -138,7 +155,7 @@ class ContactRelated extends Component {
             }
             else {
                 return(
-                    <Swipeout right={swipeoutBtns}>
+                    <Swipeout right={swipeoutBtns} key = {index}>
                         <TouchableOpacity style = {styles.view2} onPress = {() => this.onClickedRelated(relationList.attributes.contact1_id, contact1_name)}>
                             {
                                 relationList.attributes.contact1_photo_url? <Thumbnail square source = {relationList.attributes.contact1_photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
@@ -198,7 +215,7 @@ class ContactRelated extends Component {
 
     renderRow(item, index) {
         return(
-            <TouchableOpacity onPress = {() => this.onClickContactName(item)}>
+            <TouchableOpacity onPress = {() => this.onClickContactName(item)} key = {index}>
                 <Text style = {styles.nametxt}>{item.data.attributes.first_name} {item.data.attributes.last_name}</Text>
             </TouchableOpacity>
         )
@@ -243,7 +260,7 @@ class ContactRelated extends Component {
                     this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 30, marginBottom: 10}}/> : 
                     this.state.relationShipList.data ?
                         this.state.relationShipList.data.map((item, index) => {
-                            return this.showContactRelationships(item)
+                            return this.showContactRelationships(item, index)
                         }) :
                        null
                 }
@@ -307,6 +324,7 @@ class ContactRelated extends Component {
                     }
                     
                 </View>
+                <Animated.View style={{height: this.state.keyboardHeight}}/>
             </KeyboardAwareScrollView>
         );
     }

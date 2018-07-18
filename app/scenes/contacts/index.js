@@ -336,6 +336,12 @@ class contacts extends Component<{}>{
                     }
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.data.attributes.first_name} {item.data.attributes.last_name}</Label>
+                        {
+                            item.data.attributes.mobile_phone? <Label style = {styles.label2}>{item.data.attributes.mobile_phone}</Label> : null
+                        }
+                        {
+                            item.data.attributes.email? <Label style = {styles.label2}>{item.data.attributes.email}</Label> : null
+                        }
                         <View style = {styles.tagView}>
                             {
                                 this.showContactGroups(index) 
@@ -461,7 +467,7 @@ class contacts extends Component<{}>{
                         ref = 'search'
                         titleCancelColor = 'black'
                         backgroundColor = 'lightgray'
-                        cancelTitle = 'Cancel'
+                        
                         contentWidth = {100}
                         searchIconCollapsedMargin = {30}
                         searchIconExpandedMargin = {10}
@@ -531,7 +537,7 @@ class contacts extends Component<{}>{
                             {
                                 this.state.groupList.map((item, index) => {
                                     return(
-                                        <Option value = {{name:item.attributes.name, id: item.id}} styleText = {styles.optiontxt} key = {index}>{item.attributes.name}</Option>
+                                        <Option key = {index} value = {{name:item.attributes.name, id: item.id}} styleText = {styles.optiontxt} key = {index}>{item.attributes.name}</Option>
                                     )
                                 })
                             }

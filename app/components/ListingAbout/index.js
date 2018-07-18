@@ -190,7 +190,7 @@ class ListingAbout extends Component {
                         <Label style = {styles.propertyItemTitle}>Vendor/s</Label>
                         {
                             this.state.vendors.map((item, index) => [
-                                <TouchableOpacity style = {styles.view2} onPress = {() => this.onClickVendor(item)}>
+                                <TouchableOpacity style = {styles.view2} key = {index} onPress = {() => this.onClickVendor(item)}>
                                     {
                                         item.attributes.photo_url? <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
                                         <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg} />

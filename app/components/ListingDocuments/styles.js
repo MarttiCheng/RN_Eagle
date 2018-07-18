@@ -7,10 +7,7 @@ export default {
         backgroundColor: '#ddd'
     },
     view1: {
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingTop: 15,
-        paddingBottom: 15,
+        padding: 15,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
@@ -26,11 +23,11 @@ export default {
         height: 30,
         resizeMode: 'cover',
     },
-    label1: {
+    titleTxt: {
         color:'black',
         fontSize: 16, 
         fontFamily: 'open-sans-regular',
-        marginLeft: 15,
+        marginLeft: 10,
         flex: 1
     },
     line1: {
@@ -60,5 +57,18 @@ export default {
         fontSize: 16, 
         color: '#364150',
         fontFamily: 'open-sans-bold',
-    }
+    },
+    downloadView: {
+        width: 75,
+        height: 26,
+        borderRadius: 8,
+        backgroundColor: '#2B3643',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    downloadTxt: {
+        color: 'white',
+        fontSize: 10,
+        fontFamily: 'open-sans-regular'
+    },
 }

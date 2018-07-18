@@ -66,21 +66,16 @@ export default {
         fontSize: 18,
         fontFamily: 'open-sans-bold',
         color: '#6a7989',
-        // fontWeight: '450',
     },
     txtinput1: {
         width: (width-40)/2,
         paddingLeft: 0,
-        fontSize: 15,
         marginTop: 5,
-        fontFamily: 'open-sans-regular',
     },
     txtinput2: {
         width: width-30,
         paddingLeft: 30,
-        fontSize: 10,
         marginTop: 5,
-        fontFamily: 'open-sans-regular',
     },
     textInput: {
         position: 'absolute',

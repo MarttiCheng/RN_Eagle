@@ -15,10 +15,6 @@ export default {
         backgroundColor: '#2B3643',
         justifyContent: 'space-between',
     },
-    mainView: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
     backBtn: {
         width: 45,
         height: 45,
@@ -29,6 +25,13 @@ export default {
         width: 16,
         height: 16,
         resizeMode: 'contain',
+    },
+    titleView: {
+        paddingTop: 5,
+        paddingBottom: 7,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 2.5
     },
     title: {
         color: 'white',
@@ -43,47 +46,38 @@ export default {
         color: 'white', 
         fontSize: 17, 
         fontFamily: 'open-sans-regular',
-        width: 45,
+        width: 50,
         textAlign: 'left',
     },
-    groupView: {
-        flex: 1,
-        backgroundColor: 'white', 
-    },
-    subView: {
+    view1: {
         paddingLeft: 15,
         paddingRight: 15,
-        paddingTop: 7,
-        paddingBottom: 7,
+        minHeight: 70,
         justifyContent: 'center',
-    },
-    subView1: {
-        height: 70,
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingTop: 7,
-        paddingBottom: 7,
-        justifyContent: 'center',
+        backgroundColor: 'white',
+        paddingVertical: 5
     },
     label1: {
-        color: '#999',
+        color: '#7c98b6',
         fontSize: 13.5,
         fontFamily: 'open-sans-regular',
-        marginTop: 3,
     },
-    inputTxt: {
+    label2: {
+        color: '#33475b',
+        fontSize: 18,
+        fontFamily: 'open-sans-regular',
+    },
+    contactTxt: {
         backgroundColor:'transparent',
         color:'black',
         fontSize: 20,
-        fontFamily: 'open-sans-regular',
-        paddingLeft: 5,
+        paddingLeft: 0,
         paddingRight: 5,
-        paddingTop: 3,
-        paddingBottom: 3,
-        borderWidth: 1,
-        marginTop: 5,
-        marginBottom: 5,
-        borderColor: '#e3e3e3'
+        paddingTop: 5,
+        paddingBottom: 5,
+        textAlign: 'left',
+        borderWidth: 0,
+        width: width - 30,
     },
     seperateLine: {
         position: 'absolute',
@@ -92,42 +86,6 @@ export default {
         width: width,
         height: 1,
         backgroundColor: '#e3e3e3'
-    },
-    blankView:  {
-        width: 0,
-        height: 0,
-        backgroundColor: 'transparent'
-    },
-    selectoptionView: {
-        borderWidth : 1, 
-        borderColor : "#e3e3e3", 
-        height: 37, 
-        width: width - 30,
-        marginBottom: 5,
-        marginTop: 5,
-    },
-    selectedTxt: {
-        backgroundColor:'transparent',
-        color:'black',
-        fontSize: 20,
-        fontFamily: 'open-sans-regular',
-        marginTop: -5,
-        marginLeft: -10,
-        paddingHorizontal: 5,
-    },
-    optionList_status: {
-        width: width*0.8, 
-        height: 270, 
-        backgroundColor: 'white',
-    },
-    optionList_property: {
-        width: width*0.8, 
-        height: 405, 
-        backgroundColor: 'white',
-    },
-    optiontxt: {
-        fontSize: 18,
-        fontFamily: 'open-sans-regular',
     },
     dateTxt: {
         backgroundColor:'transparent',
@@ -141,27 +99,10 @@ export default {
         borderWidth: 0,
         width: width - 30
     },
-    label3: {
-        color: '#999',
-        fontSize: 13.5,
-        fontFamily: 'open-sans-regular',
-    },
-    label2: {
-        color: 'black',
-        fontSize: 18,
-        fontFamily: 'open-sans-regular',
-    },
-    vendorTxt: {
-        backgroundColor:'transparent',
-        color:'black',
-        fontSize: 20,
-        paddingLeft: 0,
-        paddingRight: 5,
-        paddingTop: 5,
-        paddingBottom: 5,
-        textAlign: 'left',
-        borderWidth: 0,
-        width: width - 30,
+    mainView: {
+        flex: 1,
+        alignItems: 'center',
+        paddingBottom: 10
     },
     deleteView: {
         width: width/2,
@@ -170,13 +111,12 @@ export default {
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
-        marginTop: 15,
-        marginBottom: 10,
-        marginLeft: width/4
+        marginTop: 15 
     },
     deleteTxt: {
         color: 'white',
         fontSize: 13,
         fontFamily: 'open-sans-regular'
     },
+
 }

@@ -1,6 +1,8 @@
 //import libraries
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView} from 'react-native';
+import { 
+    StyleSheet, StatusBar, Image, TouchableOpacity, RefreshControl, AsyncStorage, ActivityIndicator, ScrollView, Modal, Keyboard
+} from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item
 } from 'native-base'
@@ -12,6 +14,12 @@ import { Sae, Hoshi } from 'react-native-textinput-effects'
 import { getInspectionPreregistered, getInspectionEnquired, getContactGroups, getContactRelationships } from '../../actions'
 import { BallIndicator } from 'react-native-indicators'
 import { searchContacts } from '../../actions'
+import { Ionicons } from '@expo/vector-icons'
+
+var closeList = [
+    {firstname: 'Luke', lastname: 'Paverd', email: 'lukevdp@gmail.com', mobile: '0431335238'},
+    {firstname: 'Maggie', lastname: 'Simpson', email: 'maggie.simpson@springfield.net', mobile: '0431335238'},
+]
 
 // create a component
 class NewAttendee extends Component {
@@ -32,6 +40,8 @@ class NewAttendee extends Component {
             enquiredList: [],
             contactGroups: [],
             contactRelationships: [],
+            isCloseMatch: false,
+            modalVisible: false
         }
     }
 
@@ -107,7 +117,6 @@ class NewAttendee extends Component {
                         item.attributes.photo_url? <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
                         <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg} />
                     }
-                    
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
                         <Label style = {styles.label2}>{item.attributes.mobile_phone}</Label>
@@ -130,7 +139,6 @@ class NewAttendee extends Component {
                         item.attributes.photo_url? <Thumbnail square source = {item.attributes.photo_url} style = {styles.avatarImg} defaultSource = {images.ic_placeholder_image}/> :
                         <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
                     }
-                    
                     <View style = {styles.rowSubView}>
                         <Label style = {styles.label1}>{item.attributes.first_name} {item.attributes.last_name}</Label>
                         <Label style = {styles.label2}>{item.attributes.mobile_phone}</Label>
@@ -174,19 +182,47 @@ class NewAttendee extends Component {
     
     onChangeMobile(text) {
         this.setState({ mobile: text })
-        if(text.length == 10) {
-            searchContacts(this.props.token, text).then((data => {
-                this.setState({ 
-                    filterContactList: data.data
-                })
-            }))
+        if(text == '0431335238') {
+            this.setState({
+                isCloseMatch: true
+            })
         }
+        else{
+            this.setState({
+                isCloseMatch: false
+            })
+        }
+    }
+
+    onCloseMatch() {
+        Keyboard.dismiss(); 
+        this.setState({
+            modalVisible: true,
+        })
+    }
+
+    onEachCloseContact() {
+        this.setState({
+            modalVisible: false,
+            isCloseMatch: false,
+            firstName: 'Luke',
+            lastName: 'Paverd',
+            mobile: '0431335238',
+            phone: '0431335238',
+            email: 'lukevdp@gmail.com',
+        })
     }
 
     render() {
         return (
             <Content style = {styles.container} showsVerticalScrollIndicator = {false}>
                 <View>
+                    {
+                        !this.state.isCloseMatch? null :
+                        <TouchableOpacity style = {styles.redbarView} onPress = {() => this.onCloseMatch()}>
+                            <Text style = {styles.closeTxt}>2 close matches</Text>
+                        </TouchableOpacity>
+                    }
                     <View style = {{paddingLeft: 15, paddingRight: 15, paddingTop: 5}}>
                         <View style = {styles.rowView}>
                             <Hoshi
@@ -303,15 +339,44 @@ class NewAttendee extends Component {
                         </View>
                     </View>
                     
-                    
                     <View >
                         {
-                        this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 20, marginBottom: 10}}/> : this.showRegisteredList()
-                    } 
+                            this.state.isLoading? <BallIndicator color = {'#2B3643'}  style = {{marginTop: 20, marginBottom: 10}}/> : this.showRegisteredList()
+                        } 
                     </View>
-
-                    
                 </View>
+                <Modal
+                    animationType = 'slide'
+                    transparent = {false}
+                    visible = {this.state.modalVisible}
+                    onRequestClose = {() => [
+                        alert('Modal has been closed')
+                    ]}>
+                    <Container style = {styles.detailCloseView}>
+                        <View style = {styles.menuView}>
+                            <View style = {styles.blankView}></View>
+                            <Label style = {styles.title}>2 close matches</Label>
+                            <Ionicons name = 'md-close' size = {25} color = 'gray'
+                                onPress={ () => this.setState({ modalVisible:false, isCloseMatch: false } )} />
+                        </View>
+                        <Content style = {styles.contentView}>
+                            {
+                                closeList.map((item, index) => {
+                                    return (
+                                        <TouchableOpacity style = {styles.closeEachView} onPress = {() => this.onEachCloseContact()} key = {index}>
+                                            <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                                            <View style = {{marginLeft: 15}}>
+                                                <Text style = {styles.nameTxt}>{item.firstname} {item.lastname}</Text>
+                                                <Text style = {styles.emailTxt}>{item.email}</Text>
+                                                <Text style = {styles.emailTxt}>{item.mobile}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )
+                                })
+                            }
+                        </Content>
+                    </Container>
+                </Modal>
             </Content>
         );
     }
