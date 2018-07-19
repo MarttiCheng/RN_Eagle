@@ -20,17 +20,6 @@ import {Select, Option} from "react-native-chooser";
 
 const { width, height } = Dimensions.get('window')
 
-var attachmentList = [
-    'contact-of-sale.pdf', 'section 32.pdf','statement of information.pdf'
-]
-
-const SECTIONS = [
-  {
-    title: 'First',
-    content: 'Lorem ipsum...'
-  }
-];
-
 // create a component
 class sendEmail extends Component {
     static navigationOptions = {
@@ -62,15 +51,10 @@ class sendEmail extends Component {
             animatedValue: new Animated.Value(0),
             animatedValue1: new Animated.Value(0),
             filterContactList:[],
-            filterContactList1: [],
-            filterContactList2: [],
             documentList: [],
 
-            isToEmailNameTextFieldHidden: false,
             isToEmailFieldHidden: false,
-            isCcEmailNameTextFieldHidden: false,
             isCcEmailFieldHidden: false,
-            isBccEmailNameTextFieldHidden: false,
             isBccEmailFieldHidden: false,
 
             templateTxt: 'Template',
@@ -83,7 +67,11 @@ class sendEmail extends Component {
             isClickedAttach: false,
 
             toText: '',
-            toEmailList: [] 
+            ccText: '',
+            bccText: '',
+            toEmailList: [],
+            ccEmailList: [],
+            bccEmailList: [],
         }   
     }
 
@@ -99,7 +87,9 @@ class sendEmail extends Component {
             this.setState({
                 isLoading: false,
                 documentList: data.data,
-                toEmailList: []
+                toEmailList: [],
+                ccEmailList: [],
+                bccEmailList: [],
             })
 
             if (Platform.OS === "android") {
@@ -149,8 +139,29 @@ class sendEmail extends Component {
         return this.refs.expand1.state.maxHeight;
     };
 
-    filterContact(text) {
-       this.setState({ toText: text })
+    filterContact(text, index) {
+        if(index == 0) {
+            this.setState({ 
+                toText: text,
+                ccText: '',
+                bccText: ''
+            })
+        }
+        if(index == 1) {
+            this.setState({ 
+                toText: '',
+                ccText: text,
+                bccText: ''
+            })
+        }
+        if(index == 2) {
+            this.setState({
+                toText: '',
+                ccText: '',
+                bccText: text
+            })
+        }
+
         if(text){
             searchContacts(this.props.token, text).then((data => {
                 this.setState({ 
@@ -163,133 +174,94 @@ class sendEmail extends Component {
                 filterContactList: []
             })
         }
+        
     }
 
-    filterContact1(text) {
-        this.setState({ ccEmailName: text })
-        if(text){
-            searchContacts(this.props.token, text).then((data => {
-                this.setState({ 
-                    filterContactList1: data.data
-                })
-            }))
-        }
-        else {
+    onEachToContact(item, index) {
+        if(index == 0){
+            this.setState({ toText: '' })
+            Keyboard.dismiss(); 
+
+            toEmailName = item.attributes.first_name + ' ' + item.attributes.last_name
+            toEmail = item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name
+            toEmailContactPhoto = item.attributes.photo_url
+            istoEmail = false
+
+            data = {
+                'toEmailName' : item.attributes.first_name + ' ' + item.attributes.last_name,
+                'toEmail' : item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name,
+                'toEmailContactPhoto' : item.attributes.photo_url,
+                'istoEmail' : false,
+                'isToEmailFieldHidden' : false,
+            }
+
+            val = this.state.toEmailList
+            val.push(data)
             this.setState({
-                filterContactList1: []
+                filterContactList: [],
+                toEmailList: val
             })
         }
-    }
 
-    filterContact2(text) {
-        this.setState({ bccEmailName: text })
-        if(text){
-            searchContacts(this.props.token, text).then((data => {
-                this.setState({ 
-                    filterContactList2: data.data
-                })
-            }))
-        }
-        else {
+        if(index == 1) {
+            this.setState({ ccText: '' })
+            Keyboard.dismiss(); 
+
+            ccEmailName = item.attributes.first_name + ' ' + item.attributes.last_name
+            ccEmail = item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name
+            ccEmailContactPhoto = item.attributes.photo_url
+            isccEmail = false
+
+            data = {
+                'ccEmailName' : item.attributes.first_name + ' ' + item.attributes.last_name,
+                'ccEmail' : item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name,
+                'ccEmailContactPhoto' : item.attributes.photo_url,
+                'isccEmail' : false,
+                'isCcEmailFieldHidden' : false,
+            }
+
+            val = this.state.ccEmailList
+            val.push(data)
             this.setState({
-                filterContactList2: []
+                filterContactList: [],
+                ccEmailList: val
             })
         }
-    }
 
-    onEachToContact(item) {
-        this.setState({ toText: '' })
-        Keyboard.dismiss(); 
+        if(index == 2) {
+            this.setState({ bccText: '' })
+            Keyboard.dismiss(); 
 
-        toEmailName = item.attributes.first_name + ' ' + item.attributes.last_name
-        toEmail = item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name
-        toEmailContactPhoto = item.attributes.photo_url
-        istoEmail = false
+            bccEmailName = item.attributes.first_name + ' ' + item.attributes.last_name
+            bccEmail = item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name
+            bccEmailContactPhoto = item.attributes.photo_url
+            isbccEmail = false
 
-        data = {
-            'toEmailName' : item.attributes.first_name + ' ' + item.attributes.last_name,
-            'toEmail' : item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name,
-            'toEmailContactPhoto' : item.attributes.photo_url,
-            'istoEmail' : false,
-            'isToEmailFieldHidden' : false,
-            'isToEmailNameTextFieldHidden': true,
+            data = {
+                'bccEmailName' : item.attributes.first_name + ' ' + item.attributes.last_name,
+                'bccEmail' : item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name,
+                'bccEmailContactPhoto' : item.attributes.photo_url,
+                'isbccEmail' : false,
+                'isBccEmailFieldHidden' : false,
+            }
+
+            val = this.state.bccEmailList
+            val.push(data)
+            this.setState({
+                filterContactList: [],
+                bccEmailList: val
+            })
         }
-
-        a = this.state.toEmailList
-        a.push(data)
-        console.log(data)
-
-        this.setState({
-            // toEmailName: item.attributes.first_name + ' ' + item.attributes.last_name,
-            // toEmail: item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name,
-            filterContactList: [],
-            // isToEmailNameTextFieldHidden: true,
-            // toEmailContactPhoto: item.attributes.photo_url,
-            toEmailList: a
-        })
+        
     }
 
-    onEachToContact1(item) {
-        Keyboard.dismiss(); 
-        this.setState({
-            ccEmailName: item.attributes.first_name + ' ' + item.attributes.last_name,
-            ccEmail: item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name,
-            filterContactList1: [],
-            isCcEmailNameTextFieldHidden: true,
-            ccEmailContactPhoto: item.attributes.photo_url,
-        })
-    }
-
-    onEachToContact2(item) {
-        Keyboard.dismiss(); 
-        this.setState({
-            bccEmailName: item.attributes.first_name + ' ' + item.attributes.last_name,
-            bccEmail: item.attributes.email?item.attributes.email : item.attributes.first_name + ' ' + item.attributes.last_name,
-            filterContactList2: [],
-            isBccEmailNameTextFieldHidden: true,
-            bccEmailContactPhoto: item.attributes.photo_url,
-        })
-    }
-
-    showContactList() {
+    showContactList(index) {
         return(
-            <View style = {styles.popView}>
+            <View style = {index == 0?styles.popView: styles.popView1}>
                 {
-                    this.state.filterContactList.map((item, index) => {
+                    this.state.filterContactList.map((item, i) => {
                         return(
-                            <TouchableOpacity key = {index} onPress = {() => this.onEachToContact(item)}>
-                                <Text style = {styles.itemTxt}>{item.attributes.first_name} {item.attributes.last_name}</Text>
-                            </TouchableOpacity>
-                        )
-                    })
-                }
-            </View>
-        )
-    }
-
-    showContactList1() {
-        return(
-            <View style = {styles.popView1}>
-                {
-                    this.state.filterContactList1.map((item, index) => {
-                        return(
-                            <TouchableOpacity key = {index} onPress = {() => this.onEachToContact1(item)}>
-                                <Text style = {styles.itemTxt}>{item.attributes.first_name} {item.attributes.last_name}</Text>
-                            </TouchableOpacity>
-                        )
-                    })
-                }
-            </View>
-        )
-    }
-
-    showContactList2() {
-        return(
-            <View style = {styles.popView2}>
-                {
-                    this.state.filterContactList2.map((item, index) => {
-                        return(
-                            <TouchableOpacity key = {index} onPress = {() => this.onEachToContact2(item)}>
+                            <TouchableOpacity key = {i} onPress = {() => this.onEachToContact(item, index)}>
                                 <Text style = {styles.itemTxt}>{item.attributes.first_name} {item.attributes.last_name}</Text>
                             </TouchableOpacity>
                         )
@@ -308,16 +280,22 @@ class sendEmail extends Component {
         this.setState({ toEmailList });
     }
 
-    doubleClickToContact1() {
-        this.setState({
-            isCcEmailFieldHidden: !this.state.isCcEmailFieldHidden
-        })
+    doubleClickToContact1(item, index) {
+        let { ccEmailList } = this.state;
+        let targetPost = ccEmailList[index];
+
+        targetPost.isCcEmailFieldHidden = !targetPost.isCcEmailFieldHidden;
+        ccEmailList[index] = targetPost;
+        this.setState({ ccEmailList });
     }
 
-    doubleClickToContact2() {
-        this.setState({
-            isBccEmailFieldHidden: !this.state.isBccEmailFieldHidden
-        })
+    doubleClickToContact2(item, index) {
+        let { bccEmailList } = this.state;
+        let targetPost = bccEmailList[index];
+
+        targetPost.isBccEmailFieldHidden = !targetPost.isBccEmailFieldHidden;
+        bccEmailList[index] = targetPost;
+        this.setState({ bccEmailList });
     }
 
     removeToEmail(item, index) {
@@ -326,22 +304,16 @@ class sendEmail extends Component {
         this.setState({ toEmailList });
     }
 
-    removeCcEmail() {
-        this.setState({
-            isCcEmailNameTextFieldHidden: false,
-            isCcEmailFieldHidden: false,
-            ccEmail: '',
-            ccEmailName: '',
-        })
+    removeCcEmail(item, index) {
+        let { ccEmailList } = this.state;
+        ccEmailList.splice(index, 1)
+        this.setState({ ccEmailList });
     }
 
-    removeBccEmail() {
-        this.setState({
-            isBccEmailNameTextFieldHidden: false,
-            isBccEmailFieldHidden: false,
-            bccEmail: '',
-            bccEmailName: '',
-        })
+    removeBccEmail(item, index) {
+        let { bccEmailList } = this.state;
+        bccEmailList.splice(index, 1)
+        this.setState({ bccEmailList });
     }
 
     onSelectContact() {
@@ -380,7 +352,7 @@ class sendEmail extends Component {
         const maxHeight = this.getMaxHeight();
         const height = this.state.animatedValue.interpolate({
             inputRange: [0, maxHeight * .3, maxHeight],
-            outputRange: [0, 0, 100],
+            outputRange: [0, 0, 130],
         });
 
         const { animatedValue1 } = this.state;
@@ -389,7 +361,9 @@ class sendEmail extends Component {
             inputRange: [0, maxHeight1 * .3, maxHeight1],
             outputRange: [0, 0, 200],
         });
-
+        console.log(this.state.open)
+        console.log(height)
+        console.log(height1)
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -416,34 +390,8 @@ class sendEmail extends Component {
                 >
                     <View style = {{borderBottomWidth: 1, borderColor: 'lightgray'}}>
                         <View style = {styles.toView}>
-                            <Text style = {styles.label1}>To</Text>
-
-                        
+                            <Text style = {[styles.label1, {marginTop: 4}]}>To</Text>
                             <View style = {styles.emailContentSubView}>
-                                {/*{
-                                    this.state.isToEmailNameTextFieldHidden?
-                                    <View style = {styles.subView}>
-                                        <TouchableOpacity onPress = {() => this.doubleClickToContact()}>
-                                            {
-                                                this.state.isToEmailFieldHidden?
-                                                <View style = {styles.contactSubView}>
-                                                    <Text style = {styles.nameTxt}>{this.state.toEmail}</Text>
-                                                    <TouchableOpacity onPress = {() => this.removeToEmail()}>
-                                                        <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
-                                                    </TouchableOpacity>
-                                                </View> : 
-                                                <View style = {styles.contactSubView}>
-                                                    {
-                                                        this.state.toEmailContactPhoto? <Thumbnail square source = {this.state.toEmailContactPhoto} style = {styles.avatarImg}/> :
-                                                        <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                                                    }
-                                                    <Text style = {styles.nameTxt}>{this.state.toEmailName}</Text>
-                                                </View>
-                                            }
-                                        </TouchableOpacity>
-                                    </View> : 
-                                    null
-                                }*/}
                                 {
                                     this.state.toEmailList.length == 0? null :
                                     this.state.toEmailList.map((item, index) => {
@@ -473,7 +421,7 @@ class sendEmail extends Component {
                                 }
                                 <TextInput
                                     style = {styles.inputTxt1}
-                                    onChangeText = { text => this.filterContact(text)}
+                                    onChangeText = { text => this.filterContact(text, 0)}
                                     value = {this.state.toText}
                                     placeholder = ""
                                     placeholderTextColor = "#999"
@@ -483,9 +431,6 @@ class sendEmail extends Component {
                                     autoCorrect = {false}
                                 />
                             </View>
-
-
-
                             <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })}>
                                 {
                                     this.state.open? <Ionicons name = 'ios-arrow-up' size = {18} color = 'gray'/> : <Ionicons name = 'ios-arrow-down' size = {18} color = 'gray'/>
@@ -504,39 +449,43 @@ class sendEmail extends Component {
                             ref="expand"
                             value={this.state.open}
                             animatedValue={animatedValue}>
-                            <View style={{ flex: 1 }}>
-                                <View style={{ height: 75 }}>
-                                    <Animated.View style={{ height, justifyContent: 'center', backgroundColor: 'transparent' }}>
+                            {/*<View style={{ flex: 1 }}>*/}
+                                <View style={{ height: 80}}>
+                                    <Animated.View style={{ height, backgroundColor: 'transparent' }}>
                                         <View style = {styles.ccView}>
-                                            <Text style = {styles.label1}>Cc</Text>
+                                            <Text style = {[styles.label1, {marginTop: 4}]}>Cc</Text>
                                             <View style = {styles.emailContentSubView}>
-                                            {
-                                                this.state.isCcEmailNameTextFieldHidden?
-                                                <View style = {styles.subView}>
-                                                    <TouchableOpacity onPress = {() => this.doubleClickToContact1()}>
-                                                        {
-                                                            this.state.isCcEmailFieldHidden?
-                                                            <View style = {styles.contactSubView}>
-                                                                <Text style = {styles.nameTxt}>{this.state.ccEmail}</Text>
-                                                                <TouchableOpacity onPress = {() => this.removeCcEmail()}>
-                                                                    <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
+                                                {
+                                                    this.state.ccEmailList.length == 0? null :
+                                                    this.state.ccEmailList.map((item, index) => {
+                                                        return(
+                                                            <View style = {styles.eachEmailSubView} key = {index}>
+                                                                <TouchableOpacity onPress = {() => {this.doubleClickToContact1(item, index)}}>
+                                                                    {
+                                                                        item.isCcEmailFieldHidden?
+                                                                        <View style = {styles.contactSubView}>
+                                                                            <Text style = {styles.nameTxt}>{item.ccEmail}</Text>
+                                                                            <TouchableOpacity onPress = {() => this.removeCcEmail(item, index)}>
+                                                                                <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
+                                                                            </TouchableOpacity>
+                                                                        </View> : 
+                                                                        <View style = {styles.contactSubView}>
+                                                                            {
+                                                                                item.ccEmailContactPhoto? <Thumbnail square source = {item.ccEmailContactPhoto} style = {styles.avatarImg}/> :
+                                                                                <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                                                                            }
+                                                                            <Text style = {styles.nameTxt}>{item.ccEmailName}</Text>
+                                                                        </View>
+                                                                    }
                                                                 </TouchableOpacity>
-                                                            </View> : 
-                                                            <View style = {styles.contactSubView}>
-                                                                {
-                                                                    this.state.ccEmailContactPhoto? <Thumbnail square source = {this.state.ccEmailContactPhoto} style = {styles.avatarImg}/> :
-                                                                    <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                                                                }
-                                                                <Text style = {styles.nameTxt}>{this.state.ccEmailName}</Text>
                                                             </View>
-                                                        }
-                                                        
-                                                    </TouchableOpacity>
-                                                </View> :
+                                                        )
+                                                    })
+                                                }
                                                 <TextInput
                                                     style = {styles.inputTxt1}
-                                                    onChangeText = { text => this.filterContact1(text)}
-                                                    value = {this.state.ccEmailName}
+                                                    onChangeText = { text => this.filterContact(text, 1)}
+                                                    value = {this.state.ccText}
                                                     placeholder = ""
                                                     placeholderTextColor = "#999"
                                                     returnKeyType = "next"
@@ -544,38 +493,45 @@ class sendEmail extends Component {
                                                     autoCapitalize = {'none'}
                                                     autoCorrect = {false}
                                                 />
-                                            }
                                             </View>
+                                            
                                         </View>
+
+
                                         <View style = {styles.bccView}>
-                                            <Text style = {styles.label1}>Bcc</Text>
+                                            <Text style = {[styles.label1, {marginTop: 4}]}>Bcc</Text>
                                             <View style = {styles.emailContentSubView}>
-                                            {
-                                                this.state.isBccEmailNameTextFieldHidden?
-                                                <View style = {styles.subView}>
-                                                    <TouchableOpacity onPress = {() => this.doubleClickToContact2()}>
-                                                        {
-                                                            this.state.isBccEmailFieldHidden?
-                                                            <View style = {styles.contactSubView}>
-                                                                <Text style = {styles.nameTxt}>{this.state.bccEmail}</Text>
-                                                                <TouchableOpacity onPress = {() => this.removeBccEmail()}>
-                                                                    <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
+                                                {
+                                                    this.state.bccEmailList.length == 0? null :
+                                                    this.state.bccEmailList.map((item, index) => {
+                                                        return(
+                                                            <View style = {styles.eachEmailSubView} key = {index}>
+                                                                <TouchableOpacity onPress = {() => {this.doubleClickToContact2(item, index)}}>
+                                                                    {
+                                                                        item.isBccEmailFieldHidden?
+                                                                        <View style = {styles.contactSubView}>
+                                                                            <Text style = {styles.nameTxt}>{item.bccEmail}</Text>
+                                                                            <TouchableOpacity onPress = {() => this.removeBccEmail(item, index)}>
+                                                                                <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
+                                                                            </TouchableOpacity>
+                                                                        </View> : 
+                                                                        <View style = {styles.contactSubView}>
+                                                                            {
+                                                                                item.bccEmailContactPhoto? <Thumbnail square source = {item.bccEmailContactPhoto} style = {styles.avatarImg}/> :
+                                                                                <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                                                                            }
+                                                                            <Text style = {styles.nameTxt}>{item.bccEmailName}</Text>
+                                                                        </View>
+                                                                    }
                                                                 </TouchableOpacity>
-                                                            </View> : 
-                                                            <View style = {styles.contactSubView}>
-                                                                {
-                                                                    this.state.bccEmailContactPhoto? <Thumbnail square source = {this.state.bccEmailContactPhoto} style = {styles.avatarImg}/> :
-                                                                    <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                                                                }
-                                                                <Text style = {styles.nameTxt}>{this.state.bccEmailName}</Text>
                                                             </View>
-                                                        }
-                                                    </TouchableOpacity>
-                                                </View> : 
+                                                        )
+                                                    })
+                                                }
                                                 <TextInput
                                                     style = {styles.inputTxt1}
-                                                    onChangeText = { text => this.filterContact2(text)}
-                                                    value = {this.state.bccEmailName}
+                                                    onChangeText = { text => this.filterContact(text, 2)}
+                                                    value = {this.state.bccText}
                                                     placeholder = ""
                                                     placeholderTextColor = "#999"
                                                     returnKeyType = "next"
@@ -583,14 +539,14 @@ class sendEmail extends Component {
                                                     autoCapitalize = {'none'}
                                                     autoCorrect = {false}
                                                 />
-                                            }
                                             </View>
                                         </View>
                                     </Animated.View>
                                 </View>
-                            </View>
+                            {/*</View>*/}
                         </Expand>
                     </View>
+
                     
                     <View style = {{borderBottomWidth: 1, borderColor: 'lightgray'}}>
                         <View style = {styles.subjectView}>
@@ -710,13 +666,13 @@ class sendEmail extends Component {
                 </KeyboardAwareScrollView>
 
                 {
-                    this.state.filterContactList.length > 0 ? this.showContactList() : null
+                    this.state.toText && this.state.filterContactList.length > 0 ? this.showContactList(0) : null
                 }
                 {
-                    this.state.filterContactList1.length > 0 ? this.showContactList1() : null
+                    this.state.ccText && this.state.filterContactList.length > 0 ? this.showContactList(1) : null
                 }
                 {
-                    this.state.filterContactList2.length > 0 ? this.showContactList2() : null
+                    this.state.bccText && this.state.filterContactList.length > 0 ? this.showContactList(2) : null
                 }
 
             </View>

@@ -46,16 +46,14 @@ export default {
         flexDirection: 'row',
         paddingLeft: 15,
         paddingRight: 30,
-        alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: -35
+        marginTop: 0,
     },
     bccView: {
         width: width,
         flexDirection: 'row',
         paddingLeft: 15,
         paddingRight: 30,
-        alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 17
     },
@@ -88,7 +86,8 @@ export default {
     },
     label1: {
         fontSize: 16,
-        color: 'gray'
+        color: 'gray',
+        textAlign: 'center',
     },
     nameTxt: {
         fontSize: 13,
@@ -122,7 +121,7 @@ export default {
         backgroundColor: 'green', 
         marginLeft: 10,
         flexDirection: 'row',
-        flex: 1,
+        // flex: 1,
         flexWrap: 'wrap',
     },
     inputTxt: {
