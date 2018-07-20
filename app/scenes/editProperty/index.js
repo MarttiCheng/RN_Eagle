@@ -4,9 +4,9 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, ScrollableTab, Header
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Modal, TextInput, Platform, Animated, Event, Dimensions
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Modal, TextInput, Platform, Animated, Event, Dimensions, Alert
 } from 'react-native'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, FontAwesome} from '@expo/vector-icons'
 import styles from './styles'
 import images from '../../themes/images';
 import Search from 'react-native-search-box';
@@ -591,6 +591,19 @@ class editProperty extends Component<{}>{
     onSelectedItemsChange = selectedItems => {
         this.setState({ selectedItems });
     };
+
+    onDelete() {
+        Alert.alert(
+            '',
+            'Are you sure you want to delete?',
+            [
+                {text: 'OK', onPress: () => { console.log('Pressed cancel button') }},
+                {text: 'CANCEL', onPress: () => { console.log('Pressed cancel button') }},
+            ],
+            { cancelable: false }
+        )
+    }
+
     render() {
         const { selectedItems } = this.state;
         var listing_type = this.state.listingInfo.attributes.listing_type
@@ -860,8 +873,9 @@ class editProperty extends Component<{}>{
                             <View style = {styles.seperateLine}/>
                         </View>
                     </View>
-                    <TouchableOpacity style = {styles.deleteView}>
-                        <Label style = {styles.deleteTxt}>Delete</Label>
+                    <TouchableOpacity style = {styles.deleteView} onPress = {() => this.onDelete()}>
+                        <FontAwesome name = 'trash' size = {20} color = 'white' />
+                        <Label style = {styles.deleteTxt}>  Delete listing</Label>
                     </TouchableOpacity>
                 </KeyboardAwareScrollView>
             </Container>

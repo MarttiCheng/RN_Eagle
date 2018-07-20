@@ -4,7 +4,7 @@ const { width, height } = Dimensions.get('window')
 export default {
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#ddd',
     },
     rowView: {
         flex:1,
@@ -101,14 +101,17 @@ export default {
         paddingTop: 20,
         paddingLeft: 15,
         paddingBottom: 7,
-        backgroundColor: '#CFCFCF',
+        backgroundColor: '#ddd',
         fontSize: 14,
-        fontFamily: 'open-sans-regular'
+        fontFamily: 'open-sans-regular',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray'
     },
     rowRenderView: {
         padding: 15,
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: 'white'
     },
     avatarImg: {
         width: 40,

@@ -105,7 +105,7 @@ export default {
         width: (width - 45) /3,
         height: 36,
         borderRadius: 5,
-        backgroundColor: '#CFCFCF',
+        backgroundColor: 'gray',
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -163,11 +163,13 @@ export default {
         fontFamily: 'open-sans-regular',
     },
     labelStyle3: {
-        fontSize: 12,
+        fontSize: 13.5,
+        color: '#7c98b6',
         fontFamily: 'open-sans-regular',
     },
     labelStyle4: {
-        fontSize: 15,
+        fontSize: 18,
+        color: 'black',
         fontFamily: 'open-sans-regular',
     },
     line: {

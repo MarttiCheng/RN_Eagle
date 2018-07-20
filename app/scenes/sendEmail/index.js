@@ -72,6 +72,8 @@ class sendEmail extends Component {
             toEmailList: [],
             ccEmailList: [],
             bccEmailList: [],
+
+            modifiedHeight: 80
         }   
     }
 
@@ -347,6 +349,33 @@ class sendEmail extends Component {
         this.setState({templateTxt : value});
     }
 
+    changeLayout() {
+        this.setState({ 
+            open: !this.state.open 
+        })
+    }
+
+    _setMaxHeight(event) {
+
+        if(this.state.open == true) {
+            if(event.nativeEvent.layout.height > 31) {
+                this.setState({
+                    modifiedHeight: 110,
+                    open: false
+                })
+            }
+        }
+        else {
+            if(event.nativeEvent.layout.height > 31) {
+                this.setState({
+                    modifiedHeight: 110,
+                    open: true
+                })
+            }
+        }
+
+    }
+
     render() {
         const { animatedValue } = this.state;
         const maxHeight = this.getMaxHeight();
@@ -361,9 +390,7 @@ class sendEmail extends Component {
             inputRange: [0, maxHeight1 * .3, maxHeight1],
             outputRange: [0, 0, 200],
         });
-        console.log(this.state.open)
-        console.log(height)
-        console.log(height1)
+
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -431,15 +458,12 @@ class sendEmail extends Component {
                                     autoCorrect = {false}
                                 />
                             </View>
-                            <TouchableOpacity onPress={() => this.setState({ open: !this.state.open })}>
+                            <TouchableOpacity onPress={() => this.changeLayout() }>
                                 {
                                     this.state.open? <Ionicons name = 'ios-arrow-up' size = {18} color = 'gray'/> : <Ionicons name = 'ios-arrow-down' size = {18} color = 'gray'/>
                                 }
                             </TouchableOpacity>
                         </View>
-
-
-
 
 
 
@@ -449,10 +473,11 @@ class sendEmail extends Component {
                             ref="expand"
                             value={this.state.open}
                             animatedValue={animatedValue}>
-                            {/*<View style={{ flex: 1 }}>*/}
-                                <View style={{ height: 80}}>
+                            <View style={{ flex: 1 }}>
+                                <View style={{ height: this.state.modifiedHeight}}>
                                     <Animated.View style={{ height, backgroundColor: 'transparent' }}>
-                                        <View style = {styles.ccView}>
+                                        <View style = {{flex: 1}}>
+                                        <View style = {styles.ccView} >
                                             <Text style = {[styles.label1, {marginTop: 4}]}>Cc</Text>
                                             <View style = {styles.emailContentSubView}>
                                                 {
@@ -494,7 +519,6 @@ class sendEmail extends Component {
                                                     autoCorrect = {false}
                                                 />
                                             </View>
-                                            
                                         </View>
 
 
@@ -541,9 +565,10 @@ class sendEmail extends Component {
                                                 />
                                             </View>
                                         </View>
+                                        </View>
                                     </Animated.View>
                                 </View>
-                            {/*</View>*/}
+                            </View>
                         </Expand>
                     </View>
 

@@ -1,7 +1,7 @@
 //import libraries
 import React, { Component } from 'react';
 import ReactNative,{ 
-    StyleSheet, StatusBar, Image, TouchableOpacity, Animated, ScrollView, TextInput, Dimensions, Keyboard, KeyboardAvoidingView, Modal, Platform, 
+    StyleSheet, StatusBar, Image, TouchableOpacity, Animated, ScrollView, TextInput, Dimensions, Keyboard, Alert, Modal, Platform, 
 } from 'react-native';
 import {
     Content, Text, List, ListItem, Icon, Container, Left, Right, Button, View, Label, Thumbnail,Item, Input
@@ -19,6 +19,7 @@ import Icon1 from 'react-native-vector-icons/Ionicons';
 import { BallIndicator } from 'react-native-indicators'
 import { NavigationActions } from 'react-navigation'
 import Communications from 'react-native-communications';
+import { FontAwesome } from '@expo/vector-icons'
 
 const { width, height } = Dimensions.get('window')
 
@@ -225,6 +226,18 @@ class ContactAbout extends Component {
         this.setState({ phoneModal: false})
         var { dispatch } = this.props;
         dispatch(NavigationActions.navigate({routeName: 'addNewNote',  params: {noteType: 'Call'}}))
+    }
+
+    onDelete() {
+        Alert.alert(
+            '',
+            'Are you sure you want to delete?',
+            [
+                {text: 'OK', onPress: () => { console.log('Pressed cancel button') }},
+                {text: 'CANCEL', onPress: () => { console.log('Pressed cancel button') }},
+            ],
+            { cancelable: false }
+        )
     }
     
     showContactAbout(){
@@ -645,8 +658,9 @@ class ContactAbout extends Component {
                         </Select>
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <TouchableOpacity style = {styles.deleteView}>
-                        <Label style = {styles.deleteTxt}>Delete</Label>
+                    <TouchableOpacity style = {styles.deleteView} onPress = {() => this.onDelete()}>
+                        <FontAwesome name = 'trash' size = {20} color = 'white' />
+                        <Label style = {styles.deleteTxt}>  Delete contact</Label>
                     </TouchableOpacity>
                     {/*<Animated.View style={{height: this.state.keyboardHeight}}/>*/}
                 </View>

@@ -4,9 +4,9 @@ import {
     Container, Content, Body, Text, Thumbnail, Button, Footer, View, Label, Item, Input, Tab, Tabs, ScrollableTab
 } from 'native-base'
 import {
-    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Modal, Animated, Platform, TextInput, Dimensions
+    Keyboard, AsyncStorage, StatusBar, ListView, ScrollView, TouchableOpacity, Modal, Animated, Platform, TextInput, Dimensions, Alert
 } from 'react-native'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, FontAwesome} from '@expo/vector-icons'
 import styles from './styles'
 import images from '../../themes/images'
 import { NavigationActions } from 'react-navigation'
@@ -55,7 +55,6 @@ class editInspection extends Component<{}>{
         }
     }
 
-    
     onCancel(){
         Keyboard.dismiss(); 
         this.props.navigation.goBack()
@@ -64,6 +63,18 @@ class editInspection extends Component<{}>{
     onSelectProperty() {
         var { dispatch } = this.props
         dispatch(NavigationActions.navigate({routeName: 'propertyIndex'}))
+    }
+
+    onDelete() {
+        Alert.alert(
+            '',
+            'Are you sure you want to delete?',
+            [
+                {text: 'OK', onPress: () => { console.log('Pressed cancel button') }},
+                {text: 'CANCEL', onPress: () => { console.log('Pressed cancel button') }},
+            ],
+            { cancelable: false }
+        )
     }
 
     render() {
@@ -145,8 +156,9 @@ class editInspection extends Component<{}>{
                         />
                         <View style = {styles.seperateLine}/>
                     </View>
-                    <TouchableOpacity style = {styles.deleteView}>
-                        <Label style = {styles.deleteTxt}>Delete</Label>
+                    <TouchableOpacity style = {styles.deleteView} onPress = {() => this.onDelete()}>
+                        <FontAwesome name = 'trash' size = {20} color = 'white' />
+                        <Label style = {styles.deleteTxt}>  Delete inspection time</Label>
                     </TouchableOpacity>
                 </View>
                 </KeyboardAwareScrollView>

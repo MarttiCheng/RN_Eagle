@@ -254,11 +254,13 @@ export default {
         marginLeft: 20,
     },
     labelStyle1: {
-        fontSize: 12,
+        fontSize: 13.5,
+        color: '#7c98b6',
         fontFamily: 'open-sans-regular',
     },
     labelStyle2: {
-        fontSize: 15,
+        fontSize: 18,
+        color: 'black',
         fontFamily: 'open-sans-regular',
     },
     indicator: {

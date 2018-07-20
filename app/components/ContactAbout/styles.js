@@ -277,19 +277,20 @@ export default {
         left: 0
     },
     deleteView: {
-        width: width/2,
+        flexDirection: 'row',
+        width: width - 30,
         height: 36,
-        backgroundColor: '#2B3643',
+        backgroundColor: 'gray',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
         marginTop: 15,
         marginBottom: 10,
-        marginLeft: width/4
+        marginLeft: 15,
     },
     deleteTxt: {
         color: 'white',
-        fontSize: 13,
+        fontSize: 15,
         fontFamily: 'open-sans-regular'
     },
 }

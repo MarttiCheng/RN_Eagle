@@ -55,7 +55,7 @@ export default {
         paddingLeft: 15,
         paddingRight: 30,
         justifyContent: 'space-between',
-        marginTop: 17
+        marginTop: 15
     },
     subView: {
         // flex: 1,
@@ -118,7 +118,7 @@ export default {
     },
     emailContentSubView: {
         width: width - 80, 
-        backgroundColor: 'green', 
+        // backgroundColor: 'green', 
         marginLeft: 10,
         flexDirection: 'row',
         // flex: 1,
@@ -132,7 +132,7 @@ export default {
         width: width - 30
     },
     inputTxt1: {
-        backgroundColor: 'yellow',
+        backgroundColor: 'transparent',
         color: 'black',
         fontSize: 16,
         fontFamily: 'open-sans-regular',
