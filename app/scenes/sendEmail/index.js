@@ -356,7 +356,6 @@ class sendEmail extends Component {
     }
 
     _setMaxHeight(event) {
-
         if(this.state.open == true) {
             if(event.nativeEvent.layout.height > 31) {
                 this.setState({
@@ -373,7 +372,6 @@ class sendEmail extends Component {
                 })
             }
         }
-
     }
 
     render() {
@@ -390,7 +388,7 @@ class sendEmail extends Component {
             inputRange: [0, maxHeight1 * .3, maxHeight1],
             outputRange: [0, 0, 200],
         });
-
+        
         return (
             <View style={styles.container}>
                 <StatusBar

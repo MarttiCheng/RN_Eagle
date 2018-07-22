@@ -30,8 +30,8 @@ class addNewInspection extends Component<{}>{
         super(props);
         this.state = {
             bodyTxt: '',
-            contactName: this.props.contact_name,
-            contactId: this.props.contact_id,
+            contactName: '',
+            contactId: '',
             propertyName: '',
             propertyId: '',
             property: 'select property',
@@ -53,6 +53,15 @@ class addNewInspection extends Component<{}>{
                 propertyId: nextProps.selected_propertyForTask.id,
             })
         }
+    }
+
+    componentWillMount() {
+        this.setState({
+            contactName: this.props.navigation.state.params.contactName? this.props.navigation.state.params.contactName : '',
+            contactId: this.props.navigation.state.params.contactId? this.props.navigation.state.params.contactId : '',
+            propertyName: this.props.navigation.state.params.propertyName? this.props.navigation.state.params.propertyName : '',
+            propertyId: this.props.navigation.state.params.propertyId? this.props.navigation.state.params.propertyId : '',
+        })
     }
 
     onSelectContact() {
@@ -113,7 +122,7 @@ class addNewInspection extends Component<{}>{
                         <Thumbnail square source = {images.ic_back_btn} style = {styles.backImg}/>
                     </TouchableOpacity>
                     
-                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>Add new note</Label>
+                    <Label style = {styles.title} numberOfLines = {1} clip = 'tail'>Log on inspection</Label>
                     <TouchableOpacity onPress = {() => this.onSave()}>
                         <Label style = {styles.editTxt}>Save</Label>
                     </TouchableOpacity>

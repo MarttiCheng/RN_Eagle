@@ -28,7 +28,8 @@ export default {
         bottom: 2,
         left: 5,
         padding: 0,
-        color: '#6a7989',
+        // color: '#6a7989',
+        color: 'black',
         fontSize: 18,
         fontFamily: 'open-sans-regular',
     },
@@ -169,7 +170,7 @@ export default {
     },
     labelStyle4: {
         fontSize: 18,
-        color: 'black',
+        color: '#7c98b6',
         fontFamily: 'open-sans-regular',
     },
     line: {

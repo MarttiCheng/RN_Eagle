@@ -30,8 +30,8 @@ class addNewNote extends Component<{}>{
         super(props);
         this.state = {
             bodyTxt: '',
-            contactName: this.props.contact_name,
-            contactId: this.props.contact_id,
+            contactName: '',
+            contactId: '',
             propertyName: '',
             propertyId: '',
             noteType: 'General',
@@ -58,7 +58,11 @@ class addNewNote extends Component<{}>{
 
     componentWillMount() {
         this.setState({
-            noteType: this.props.navigation.state.params.noteType
+            noteType: this.props.navigation.state.params.noteType,
+            contactName: this.props.navigation.state.params.contactName? this.props.navigation.state.params.contactName : '',
+            contactId: this.props.navigation.state.params.contactId? this.props.navigation.state.params.contactId : '',
+            propertyName: this.props.navigation.state.params.propertyName? this.props.navigation.state.params.propertyName : '',
+            propertyId: this.props.navigation.state.params.propertyId? this.props.navigation.state.params.propertyId : '',
         })
     }
 

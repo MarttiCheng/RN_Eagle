@@ -30,8 +30,8 @@ class addNewEnquiry extends Component<{}>{
         super(props);
         this.state = {
             bodyTxt: '',
-            contactName: this.props.contact_name,
-            contactId: this.props.contact_id,
+            contactName: '',
+            contactId: '',
             propertyName: '',
             propertyId: '',
             property: 'select property',
@@ -53,6 +53,15 @@ class addNewEnquiry extends Component<{}>{
                 propertyId: nextProps.selected_propertyForTask.id,
             })
         }
+    }
+
+    componentWillMount() {
+        this.setState({
+            contactName: this.props.navigation.state.params.contactName? this.props.navigation.state.params.contactName : '',
+            contactId: this.props.navigation.state.params.contactId? this.props.navigation.state.params.contactId : '',
+            propertyName: this.props.navigation.state.params.propertyName? this.props.navigation.state.params.propertyName : '',
+            propertyId: this.props.navigation.state.params.propertyId? this.props.navigation.state.params.propertyId : '',
+        })
     }
 
     onSelectContact() {

@@ -64,8 +64,10 @@ export default {
     noteTextInput: {
         width: width-30,
         fontSize: 18,
-        fontFamily: 'open-sans-bold',
-        color: '#6a7989',
+        fontFamily: 'open-sans-regular',
+        // color: '#6a7989',
+        color: 'black',
+        fontWeight: '400',
     },
     txtinput1: {
         width: (width-40)/2,
@@ -82,7 +84,7 @@ export default {
         bottom: 2,
         left: 5,
         padding: 0,
-        color: '#6a7989',
+        color: 'black',
         fontSize: 18,
         fontFamily: 'open-sans-regular',
     },
@@ -192,7 +194,7 @@ export default {
         flex: 1,
     },
     label1: {
-        color:'black',
+        color: '#7c98b6',
         fontSize: 16,  
         fontFamily: 'open-sans-regular'
     },

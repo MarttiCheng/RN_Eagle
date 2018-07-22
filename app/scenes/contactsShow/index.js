@@ -228,7 +228,7 @@ class contactsShow extends Component<{}>{
     onClickedNewNote(){
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewNote', params: {noteType: 'General'}}))
+        dispatch(NavigationActions.navigate({routeName: 'addNewNote', params: {noteType: 'General', contactName: this.props.navigation.state.params.name, contactId: this.props.contact_id}}))
     }
 
     handleOnNavigateBack(){
@@ -246,26 +246,28 @@ class contactsShow extends Component<{}>{
         this.setState({ addModal: false })
 
         this.props.navigation.navigate('addNewTask', {
-            onNavigateBack: this.handleOnNavigateBack.bind(this)
+            onNavigateBack: this.handleOnNavigateBack.bind(this),
+            contactName: this.props.navigation.state.params.name, 
+            contactId: this.props.contact_id
         })
     }
 
     onClickedNewEnquiry() {
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewEnquiry'}))
+        dispatch(NavigationActions.navigate({routeName: 'addNewEnquiry', params: {contactName: this.props.navigation.state.params.name, contactId: this.props.contact_id}}))
     }
 
     onClickedNewInspection() {
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewInspection'}))
+        dispatch(NavigationActions.navigate({routeName: 'addNewInspection', params: {contactName: this.props.navigation.state.params.name, contactId: this.props.contact_id}}))
     }
 
     onClickedNewOffer() {
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewOffer'}))
+        dispatch(NavigationActions.navigate({routeName: 'addNewOffer', params: {contactName: this.props.navigation.state.params.name, contactId: this.props.contact_id}}))
     }
 
     showMainView() {

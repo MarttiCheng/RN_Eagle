@@ -219,31 +219,31 @@ class listings extends Component<{}>{
     onClickedNewTask() {
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewTask'}))
+        dispatch(NavigationActions.navigate({routeName: 'addNewTask', params: {info: []}}))
     }
 
     onClickedNewEnquiry() {
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewEnquiry'}))
+        dispatch(NavigationActions.navigate({routeName: 'addNewEnquiry', params: {info: []}}))
     }
     
     onClickedNewInspectionAttendee() {
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewInspection'}))
+        dispatch(NavigationActions.navigate({routeName: 'addNewInspection', params: {info: []}}))
     }
 
     onClickedNewInspectionTime() {
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewInspection'}))
+        dispatch(NavigationActions.navigate({routeName: 'addInspection', params: {info: []}}))
     }
 
     onClickedNewOffer() {
         var { dispatch } = this.props;
         this.setState({ addModal: false })
-        dispatch(NavigationActions.navigate({routeName: 'addNewOffer'}))
+        dispatch(NavigationActions.navigate({routeName: 'addNewOffer', params: {info: []}}))
     }
 
     render() {

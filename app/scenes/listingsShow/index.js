@@ -47,8 +47,43 @@ class listingsShow extends Component<{}>{
     }
 
     addNewProperty() {
-        var { dispatch } = this.props
-        dispatch(NavigationActions.navigate({routeName: 'addInspection',  params: {info: this.state.listingInfo}}))
+        this.setState({ addModal: true })
+    }
+    
+    onClickedNewNote() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewNote', params: {noteType: 'General', propertyName: this.state.listingInfo.attributes.full_address, propertyId: this.state.listingInfo.id}}))
+    }
+
+    onClickedNewTask() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewTask', params: {propertyName: this.state.listingInfo.attributes.full_address, propertyId: this.state.listingInfo.id}}))
+    }
+
+    onClickedNewEnquiry() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewEnquiry', params: {propertyName: this.state.listingInfo.attributes.full_address, propertyId: this.state.listingInfo.id}}))
+    }
+    
+    onClickedNewInspectionAttendee() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewInspection', params: {propertyName: this.state.listingInfo.attributes.full_address, propertyId: this.state.listingInfo.id}}))
+    }
+
+    onClickedNewInspectionTime() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addInspection', params: {info: [], propertyName: this.state.listingInfo.attributes.full_address, propertyId: this.state.listingInfo.id }}))
+    }
+
+    onClickedNewOffer() {
+        var { dispatch } = this.props;
+        this.setState({ addModal: false })
+        dispatch(NavigationActions.navigate({routeName: 'addNewOffer', params: {propertyName: this.state.listingInfo.attributes.full_address, propertyId: this.state.listingInfo.id}}))
     }
 
     onEditProperty() {
@@ -94,6 +129,25 @@ class listingsShow extends Component<{}>{
                 <TouchableOpacity style = {styles.addBtn} onPress = {() => this.addNewProperty()}>
                     <Label style = {styles.addTxt}>+</Label>
                 </TouchableOpacity>
+
+                <Modal
+                    animationType = 'slide'
+                    transparent = {false}
+                    visible = {this.state.addModal}
+                    transparent = {true}
+                    onRequestClose = {() => {
+                        this.setState({ addModal: false })
+                    }}>
+                    <SelectAddPropertyModal 
+                        onClickedBack = {() => this.setState({ addModal: false })} 
+                        onClickedNewNote = {() => this.onClickedNewNote()}
+                        onClickedNewTask = {() => this.onClickedNewTask()}
+                        onClickedNewEnquiry = {() => this.onClickedNewEnquiry()}
+                        onClickedNewInspectionAttendee = {() => this.onClickedNewInspectionAttendee()}
+                        onClickedNewInspectionTime = {() => this.onClickedNewInspectionTime()}
+                        onClickedNewOffer = {() => this.onClickedNewOffer()}
+                    />
+                </Modal>
                 
             </Container>
         )

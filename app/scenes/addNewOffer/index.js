@@ -31,8 +31,8 @@ class addNewOffer extends Component<{}>{
         this.state = {
             bodyTxt: '',
             price: '',
-            contactName: this.props.contact_name,
-            contactId: this.props.contact_id,
+            contactName: '',
+            contactId: '',
             propertyName: '',
             propertyId: '',
             property: 'select property',
@@ -54,6 +54,15 @@ class addNewOffer extends Component<{}>{
                 propertyId: nextProps.selected_propertyForTask.id,
             })
         }
+    }
+
+    componentWillMount() {
+        this.setState({
+            contactName: this.props.navigation.state.params.contactName? this.props.navigation.state.params.contactName : '',
+            contactId: this.props.navigation.state.params.contactId? this.props.navigation.state.params.contactId : '',
+            propertyName: this.props.navigation.state.params.propertyName? this.props.navigation.state.params.propertyName : '',
+            propertyId: this.props.navigation.state.params.propertyId? this.props.navigation.state.params.propertyId : '',
+        })
     }
 
     onSelectContact() {
