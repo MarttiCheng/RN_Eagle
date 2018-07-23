@@ -55,12 +55,10 @@ export default {
         paddingLeft: 15,
         paddingRight: 30,
         justifyContent: 'space-between',
-        marginTop: 15
+        marginTop: 10
     },
     subView: {
-        // flex: 1,
         flexDirection: 'row',
-        // paddingHorizontal: 25,
         alignItems: 'center'
     },
     eachEmailSubView: {
@@ -87,7 +85,7 @@ export default {
     label1: {
         fontSize: 16,
         color: 'gray',
-        textAlign: 'center',
+        textAlign: 'left',
     },
     nameTxt: {
         fontSize: 13,
@@ -114,14 +112,12 @@ export default {
         width: width,
         padding: 15,
         borderTopWidth: 1,
-        borderColor: 'lightgray'
+        borderColor: 'lightgray',
     },
     emailContentSubView: {
         width: width - 80, 
-        // backgroundColor: 'green', 
         marginLeft: 10,
         flexDirection: 'row',
-        // flex: 1,
         flexWrap: 'wrap',
     },
     inputTxt: {

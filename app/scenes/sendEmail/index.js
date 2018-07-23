@@ -357,19 +357,26 @@ class sendEmail extends Component {
 
     _setMaxHeight(event) {
         if(this.state.open == true) {
-            if(event.nativeEvent.layout.height > 31) {
-                this.setState({
-                    modifiedHeight: 110,
-                    open: false
-                })
+            if(event.nativeEvent.layout.height > 240){
+                this.setState({ modifiedHeight: 260 })
             }
-        }
-        else {
-            if(event.nativeEvent.layout.height > 31) {
-                this.setState({
-                    modifiedHeight: 110,
-                    open: true
-                })
+            else if(event.nativeEvent.layout.height > 210){
+                this.setState({ modifiedHeight: 230 })
+            }
+            else if(event.nativeEvent.layout.height > 180){
+                this.setState({ modifiedHeight: 200 })
+            }
+            else if(event.nativeEvent.layout.height > 150){
+                this.setState({ modifiedHeight: 170 })
+            }
+            else if(event.nativeEvent.layout.height > 120){
+                this.setState({ modifiedHeight: 140 })
+            }
+            else if(event.nativeEvent.layout.height > 90) {
+                this.setState({ modifiedHeight: 110 })
+            }
+            else {
+                this.setState({ modifiedHeight: 80 })
             }
         }
     }
@@ -379,7 +386,7 @@ class sendEmail extends Component {
         const maxHeight = this.getMaxHeight();
         const height = this.state.animatedValue.interpolate({
             inputRange: [0, maxHeight * .3, maxHeight],
-            outputRange: [0, 0, 130],
+            outputRange: [0, 0, 600],
         });
 
         const { animatedValue1 } = this.state;
@@ -388,7 +395,6 @@ class sendEmail extends Component {
             inputRange: [0, maxHeight1 * .3, maxHeight1],
             outputRange: [0, 0, 200],
         });
-        
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -467,102 +473,102 @@ class sendEmail extends Component {
 
                         <Expand
                             minHeight={0}
-                            containerStyle={{ flexGrow: 1 }}
+                            containerStyle={{ height: this.state.open? this.state.modifiedHeight : 0 }}
                             ref="expand"
                             value={this.state.open}
                             animatedValue={animatedValue}>
                             <View style={{ flex: 1 }}>
-                                <View style={{ height: this.state.modifiedHeight}}>
+                                <View style={{ height: this.state.modifiedHeight }}>
                                     <Animated.View style={{ height, backgroundColor: 'transparent' }}>
-                                        <View style = {{flex: 1}}>
-                                        <View style = {styles.ccView} >
-                                            <Text style = {[styles.label1, {marginTop: 4}]}>Cc</Text>
-                                            <View style = {styles.emailContentSubView}>
-                                                {
-                                                    this.state.ccEmailList.length == 0? null :
-                                                    this.state.ccEmailList.map((item, index) => {
-                                                        return(
-                                                            <View style = {styles.eachEmailSubView} key = {index}>
-                                                                <TouchableOpacity onPress = {() => {this.doubleClickToContact1(item, index)}}>
-                                                                    {
-                                                                        item.isCcEmailFieldHidden?
-                                                                        <View style = {styles.contactSubView}>
-                                                                            <Text style = {styles.nameTxt}>{item.ccEmail}</Text>
-                                                                            <TouchableOpacity onPress = {() => this.removeCcEmail(item, index)}>
-                                                                                <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
-                                                                            </TouchableOpacity>
-                                                                        </View> : 
-                                                                        <View style = {styles.contactSubView}>
-                                                                            {
-                                                                                item.ccEmailContactPhoto? <Thumbnail square source = {item.ccEmailContactPhoto} style = {styles.avatarImg}/> :
-                                                                                <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                                                                            }
-                                                                            <Text style = {styles.nameTxt}>{item.ccEmailName}</Text>
-                                                                        </View>
-                                                                    }
-                                                                </TouchableOpacity>
-                                                            </View>
-                                                        )
-                                                    })
-                                                }
-                                                <TextInput
-                                                    style = {styles.inputTxt1}
-                                                    onChangeText = { text => this.filterContact(text, 1)}
-                                                    value = {this.state.ccText}
-                                                    placeholder = ""
-                                                    placeholderTextColor = "#999"
-                                                    returnKeyType = "next"
-                                                    underlineColorAndroid='rgba(0,0,0,0)'
-                                                    autoCapitalize = {'none'}
-                                                    autoCorrect = {false}
-                                                />
+                                        <View onLayout = {this._setMaxHeight.bind(this)}>
+                                            <View style = {styles.ccView}>
+                                                <Text style = {[styles.label1, {marginTop: 4}]}>Cc</Text>
+                                                <View style = {styles.emailContentSubView}>
+                                                    {
+                                                        this.state.ccEmailList.length == 0? null :
+                                                        this.state.ccEmailList.map((item, index) => {
+                                                            return(
+                                                                <View style = {styles.eachEmailSubView} key = {index}>
+                                                                    <TouchableOpacity onPress = {() => {this.doubleClickToContact1(item, index)}}>
+                                                                        {
+                                                                            item.isCcEmailFieldHidden?
+                                                                            <View style = {styles.contactSubView}>
+                                                                                <Text style = {styles.nameTxt}>{item.ccEmail}</Text>
+                                                                                <TouchableOpacity onPress = {() => this.removeCcEmail(item, index)}>
+                                                                                    <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
+                                                                                </TouchableOpacity>
+                                                                            </View> : 
+                                                                            <View style = {styles.contactSubView}>
+                                                                                {
+                                                                                    item.ccEmailContactPhoto? <Thumbnail square source = {item.ccEmailContactPhoto} style = {styles.avatarImg}/> :
+                                                                                    <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                                                                                }
+                                                                                <Text style = {styles.nameTxt}>{item.ccEmailName}</Text>
+                                                                            </View>
+                                                                        }
+                                                                    </TouchableOpacity>
+                                                                </View>
+                                                            )
+                                                        })
+                                                    }
+                                                    <TextInput
+                                                        style = {styles.inputTxt1}
+                                                        onChangeText = { text => this.filterContact(text, 1)}
+                                                        value = {this.state.ccText}
+                                                        placeholder = ""
+                                                        placeholderTextColor = "#999"
+                                                        returnKeyType = "next"
+                                                        underlineColorAndroid='rgba(0,0,0,0)'
+                                                        autoCapitalize = {'none'}
+                                                        autoCorrect = {false}
+                                                    />
+                                                </View>
                                             </View>
-                                        </View>
 
 
-                                        <View style = {styles.bccView}>
-                                            <Text style = {[styles.label1, {marginTop: 4}]}>Bcc</Text>
-                                            <View style = {styles.emailContentSubView}>
-                                                {
-                                                    this.state.bccEmailList.length == 0? null :
-                                                    this.state.bccEmailList.map((item, index) => {
-                                                        return(
-                                                            <View style = {styles.eachEmailSubView} key = {index}>
-                                                                <TouchableOpacity onPress = {() => {this.doubleClickToContact2(item, index)}}>
-                                                                    {
-                                                                        item.isBccEmailFieldHidden?
-                                                                        <View style = {styles.contactSubView}>
-                                                                            <Text style = {styles.nameTxt}>{item.bccEmail}</Text>
-                                                                            <TouchableOpacity onPress = {() => this.removeBccEmail(item, index)}>
-                                                                                <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
-                                                                            </TouchableOpacity>
-                                                                        </View> : 
-                                                                        <View style = {styles.contactSubView}>
-                                                                            {
-                                                                                item.bccEmailContactPhoto? <Thumbnail square source = {item.bccEmailContactPhoto} style = {styles.avatarImg}/> :
-                                                                                <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
-                                                                            }
-                                                                            <Text style = {styles.nameTxt}>{item.bccEmailName}</Text>
-                                                                        </View>
-                                                                    }
-                                                                </TouchableOpacity>
-                                                            </View>
-                                                        )
-                                                    })
-                                                }
-                                                <TextInput
-                                                    style = {styles.inputTxt1}
-                                                    onChangeText = { text => this.filterContact(text, 2)}
-                                                    value = {this.state.bccText}
-                                                    placeholder = ""
-                                                    placeholderTextColor = "#999"
-                                                    returnKeyType = "next"
-                                                    underlineColorAndroid='rgba(0,0,0,0)'
-                                                    autoCapitalize = {'none'}
-                                                    autoCorrect = {false}
-                                                />
+                                            <View style = {styles.bccView}>
+                                                <Text style = {[styles.label1, {marginTop: 4}]}>Bcc</Text>
+                                                <View style = {styles.emailContentSubView}>
+                                                    {
+                                                        this.state.bccEmailList.length == 0? null :
+                                                        this.state.bccEmailList.map((item, index) => {
+                                                            return(
+                                                                <View style = {styles.eachEmailSubView} key = {index}>
+                                                                    <TouchableOpacity onPress = {() => {this.doubleClickToContact2(item, index)}}>
+                                                                        {
+                                                                            item.isBccEmailFieldHidden?
+                                                                            <View style = {styles.contactSubView}>
+                                                                                <Text style = {styles.nameTxt}>{item.bccEmail}</Text>
+                                                                                <TouchableOpacity onPress = {() => this.removeBccEmail(item, index)}>
+                                                                                    <MaterialCommunityIcons name = 'close-circle' size = {20} color = '#a6a6a6' style = {{marginLeft: 10}}/>
+                                                                                </TouchableOpacity>
+                                                                            </View> : 
+                                                                            <View style = {styles.contactSubView}>
+                                                                                {
+                                                                                    item.bccEmailContactPhoto? <Thumbnail square source = {item.bccEmailContactPhoto} style = {styles.avatarImg}/> :
+                                                                                    <Thumbnail square source = {images.ic_placeholder_image} style = {styles.avatarImg}/>
+                                                                                }
+                                                                                <Text style = {styles.nameTxt}>{item.bccEmailName}</Text>
+                                                                            </View>
+                                                                        }
+                                                                    </TouchableOpacity>
+                                                                </View>
+                                                            )
+                                                        })
+                                                    }
+                                                    <TextInput
+                                                        style = {styles.inputTxt1}
+                                                        onChangeText = { text => this.filterContact(text, 2)}
+                                                        value = {this.state.bccText}
+                                                        placeholder = ""
+                                                        placeholderTextColor = "#999"
+                                                        returnKeyType = "next"
+                                                        underlineColorAndroid='rgba(0,0,0,0)'
+                                                        autoCapitalize = {'none'}
+                                                        autoCorrect = {false}
+                                                    />
+                                                </View>
                                             </View>
-                                        </View>
                                         </View>
                                     </Animated.View>
                                 </View>
